@@ -32,7 +32,7 @@ void main() {
     texCopy.y /= aspectRatio;
 
     // Adjust this value for different levels of pixelation
-    float pixelationFactor = 8000.0;
+    float pixelationFactor = 400.0;
     texCopy = floor(texCopy * pixelationFactor) / pixelationFactor;
 
     // Increase the scaling factor to make the waves larger
