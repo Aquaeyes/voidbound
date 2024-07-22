@@ -15,11 +15,8 @@ import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
-import net.minecraft.world.phys.HitResult
 import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry
 import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
-import team.lodestar.lodestone.systems.particle.world.LodestoneWorldParticle
-import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType
 
 class DividerItem(properties: Properties) : Item(properties){
 
