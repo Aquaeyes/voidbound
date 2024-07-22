@@ -54,7 +54,7 @@ void main() {
     c /= float(5);
     c = 1.17 - pow(c, 1.4);
     vec3 colour = vec3(pow(abs(c), 8.0));
-    colour = clamp(colour + vec3(0.25, 0.35, 0.8), 0.0, 1.0);
+    colour = clamp(colour + vec3(0.7, 0.7, 0.9), 0.0, 1.0);
 
     if (length(colour.rgb) < 0.1 * 3.0) {
         discard;

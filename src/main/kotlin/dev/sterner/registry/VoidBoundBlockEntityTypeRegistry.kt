@@ -3,6 +3,7 @@ package dev.sterner.registry
 import dev.sterner.VoidBound
 import dev.sterner.block.SpiritBinderBlock
 import dev.sterner.blockentity.SpiritBinderBlockEntity
+import dev.sterner.blockentity.SpiritBinderStabilizerBlockEntity
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.Block
@@ -17,8 +18,18 @@ object VoidBoundBlockEntityTypeRegistry {
     var SPIRIT_BINDER = BLOCK_ENTITY_TYPES.register("spirit_binder") {
         BlockEntityType.Builder.of(
             { pos, state -> SpiritBinderBlockEntity(pos, state) },
-            VoidBoundBlockRegistry.SPIRIT_BINDER.get()
+            VoidBoundBlockRegistry.SPIRIT_BINDER.get(),
         )
             .build(null)
     }
+
+    var SPIRIT_BINDER_STABILIZER = BLOCK_ENTITY_TYPES.register("spirit_binder_stabilizer") {
+        BlockEntityType.Builder.of(
+            { pos, state -> SpiritBinderStabilizerBlockEntity(pos, state) },
+            VoidBoundBlockRegistry.SPIRIT_BINDER_STABILIZER.get(),
+        )
+            .build(null)
+    }
+
+
 }

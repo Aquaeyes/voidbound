@@ -19,6 +19,7 @@ object VoidBoundCreativeTabRegistry {
             .displayItems { _: ItemDisplayParameters?, entries: CreativeModeTab.Output ->
                 entries.accept(VoidBoundItemRegistry.DIVIDER.get())
                 entries.accept(VoidBoundItemRegistry.SPIRIT_BINDER.get())
+                entries.accept(VoidBoundItemRegistry.SPIRIT_BINDER_STABILIZER.get())
 
             }.build()
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ResourceLocation(VoidBound.modid, "main"), GROUP!!)

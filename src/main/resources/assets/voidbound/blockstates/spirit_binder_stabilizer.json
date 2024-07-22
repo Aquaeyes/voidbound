@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "": {
+      "model": "voidbound:block/spirit_binder",
+      "x": 180
+    }
+  }
+}

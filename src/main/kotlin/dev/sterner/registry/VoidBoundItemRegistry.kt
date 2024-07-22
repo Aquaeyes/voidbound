@@ -18,4 +18,8 @@ object VoidBoundItemRegistry {
     val SPIRIT_BINDER = ITEMS.register("spirit_binder"){
         BlockItem(VoidBoundBlockRegistry.SPIRIT_BINDER.get(), Item.Properties())
     }
+
+    val SPIRIT_BINDER_STABILIZER = ITEMS.register("spirit_binder_stabilizer"){
+        BlockItem(VoidBoundBlockRegistry.SPIRIT_BINDER_STABILIZER.get(), Item.Properties())
+    }
 }

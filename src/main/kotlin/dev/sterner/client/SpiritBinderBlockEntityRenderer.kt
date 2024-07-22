@@ -1,25 +1,19 @@
 package dev.sterner.client
 
-import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexFormat
 import dev.sterner.VoidBound
 import dev.sterner.blockentity.SpiritBinderBlockEntity
 import dev.sterner.registry.VoidBoundRenderTypes
 import net.minecraft.client.renderer.MultiBufferSource
-import net.minecraft.client.renderer.RenderStateShard
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.resources.ResourceLocation
 import team.lodestar.lodestone.helpers.RenderHelper
-import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry.LodestoneCompositeStateBuilder
-import team.lodestar.lodestone.registry.client.LodestoneShaderRegistry
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
-import team.lodestar.lodestone.systems.rendering.VFXBuilders.WorldVFXBuilder
 import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
-import java.awt.Color
 
 
 class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntityRenderer<SpiritBinderBlockEntity> {
@@ -47,16 +41,13 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
         poseStack.popPose()
     }
 
-
-
     companion object {
         var TOKEN = RenderTypeToken.createCachedToken(
             ResourceLocation(VoidBound.modid, "textures/aura.png")
         )
 
-        val SPHERE_RENDER_TYPE: RenderType = VoidBoundRenderTypes.TRANSPARENT_GLOW_TEXTURE.applyWithModifier(
-            TOKEN
-        ) { b: LodestoneCompositeStateBuilder ->
+        val SPHERE_RENDER_TYPE: RenderType = VoidBoundRenderTypes.TRANSPARENT_GLOW_TEXTURE.applyWithModifier(TOKEN)
+        { b: LodestoneCompositeStateBuilder ->
             b.replaceVertexFormat(
                 VertexFormat.Mode.TRIANGLES
             )
