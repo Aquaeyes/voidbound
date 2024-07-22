@@ -15,11 +15,11 @@ object VoidBoundItemRegistry {
 
     val DIVIDER: RegistryObject<Item> = ITEMS.register("divider") { DividerItem(FabricItemSettings().maxCount(1)) }
 
-    val SPIRIT_BINDER = ITEMS.register("spirit_binder"){
+    val SPIRIT_BINDER = ITEMS.register("spirit_binder") {
         BlockItem(VoidBoundBlockRegistry.SPIRIT_BINDER.get(), Item.Properties())
     }
 
-    val SPIRIT_BINDER_STABILIZER = ITEMS.register("spirit_binder_stabilizer"){
+    val SPIRIT_BINDER_STABILIZER = ITEMS.register("spirit_binder_stabilizer") {
         BlockItem(VoidBoundBlockRegistry.SPIRIT_BINDER_STABILIZER.get(), Item.Properties())
     }
 }

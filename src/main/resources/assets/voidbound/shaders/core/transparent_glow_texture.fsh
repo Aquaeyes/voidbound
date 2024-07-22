@@ -36,7 +36,7 @@ void main() {
     texCopy = floor(texCopy * pixelationFactor) / pixelationFactor;
 
     // Increase the scaling factor to make the waves larger
-    vec2 scaleFactor = vec2(10.0, 10.0); // Adjust these values to control the scale
+    vec2 scaleFactor = vec2(10.0, 10.0);// Adjust these values to control the scale
     texCopy *= scaleFactor;
 
     vec2 p = mod(texCopy * PI * 2.0, PI * 2.0) - 256.0;

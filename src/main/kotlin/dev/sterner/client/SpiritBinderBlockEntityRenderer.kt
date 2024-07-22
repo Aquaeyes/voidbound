@@ -16,7 +16,8 @@ import team.lodestar.lodestone.systems.rendering.VFXBuilders
 import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
 
 
-class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntityRenderer<SpiritBinderBlockEntity> {
+class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
+    BlockEntityRenderer<SpiritBinderBlockEntity> {
 
     override fun render(
         blockEntity: SpiritBinderBlockEntity,
@@ -37,7 +38,7 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
                 0.5f,
                 20,
                 20
-        )
+            )
         poseStack.popPose()
     }
 

@@ -5,7 +5,6 @@ import dev.sterner.block.SpiritBinderBlock
 import dev.sterner.block.SpiritBinderStabilizerBlock
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 

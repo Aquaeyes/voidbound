@@ -18,13 +18,13 @@ import net.minecraft.world.phys.AABB
 import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry
 import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
 
-class DividerItem(properties: Properties) : Item(properties){
+class DividerItem(properties: Properties) : Item(properties) {
 
-    override fun getUseAnimation(stack: ItemStack?): UseAnim {
+    override fun getUseAnimation(stack: ItemStack): UseAnim {
         return UseAnim.BRUSH
     }
 
-    override fun getUseDuration(stack: ItemStack?): Int {
+    override fun getUseDuration(stack: ItemStack): Int {
         return 200
     }
 
@@ -53,7 +53,7 @@ class DividerItem(properties: Properties) : Item(properties){
 
     }
 
-    fun getEntitiesInBox(level: Level, player: Player): Collection<FloatingItemEntity> {
+    private fun getEntitiesInBox(level: Level, player: Player): Collection<FloatingItemEntity> {
         // Calculate the direction the player is looking at
         val lookDirection = player.lookAngle
         val position = player.position()
@@ -77,23 +77,23 @@ class DividerItem(properties: Properties) : Item(properties){
         return entitiesInBox
     }
 
-    override fun canAttackBlock(state: BlockState?, level: Level?, pos: BlockPos?, player: Player): Boolean {
+    override fun canAttackBlock(state: BlockState, level: Level, pos: BlockPos, player: Player): Boolean {
         return false
     }
 
-    override fun getDestroySpeed(stack: ItemStack?, state: BlockState): Float {
+    override fun getDestroySpeed(stack: ItemStack, state: BlockState): Float {
         return 1f
     }
 
-    override fun hurtEnemy(stack: ItemStack, target: LivingEntity?, attacker: LivingEntity): Boolean {
+    override fun hurtEnemy(stack: ItemStack, target: LivingEntity, attacker: LivingEntity): Boolean {
         return false
     }
 
     override fun mineBlock(
         stack: ItemStack,
-        level: Level?,
+        level: Level,
         state: BlockState,
-        pos: BlockPos?,
+        pos: BlockPos,
         miningEntity: LivingEntity
     ): Boolean {
         return false

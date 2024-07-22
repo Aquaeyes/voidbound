@@ -4,7 +4,6 @@ import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.BaseEntityBlock
-import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
@@ -32,19 +31,50 @@ class SpiritBinderStabilizerBlock(properties: Properties) : BaseEntityBlock(
     companion object {
         fun makeShape(): VoxelShape {
             var shape = Shapes.empty()
-            shape = Shapes.join(shape, Shapes.box(1/16.0, 12/16.0, 1/16.0, 15/16.0, 16/16.0, 15/16.0), BooleanOp.OR)
-            shape = Shapes.join(shape, Shapes.box(13/16.0, 10/16.0, 5/16.0, 16/16.0, 16/16.0, 11/16.0), BooleanOp.OR)
-            shape = Shapes.join(shape, Shapes.box(5/16.0, 10/16.0, 0.0, 11/16.0, 16/16.0, 3/16.0), BooleanOp.OR)
-            shape = Shapes.join(shape, Shapes.box(5/16.0, 10/16.0, 13/16.0, 11/16.0, 16/16.0, 16/16.0), BooleanOp.OR)
-            shape = Shapes.join(shape, Shapes.box(0.0, 10/16.0, 5/16.0, 3/16.0, 16/16.0, 11/16.0), BooleanOp.OR)
+            shape = Shapes.join(
+                shape,
+                Shapes.box(1 / 16.0, 12 / 16.0, 1 / 16.0, 15 / 16.0, 16 / 16.0, 15 / 16.0),
+                BooleanOp.OR
+            )
+            shape = Shapes.join(
+                shape,
+                Shapes.box(13 / 16.0, 10 / 16.0, 5 / 16.0, 16 / 16.0, 16 / 16.0, 11 / 16.0),
+                BooleanOp.OR
+            )
+            shape =
+                Shapes.join(shape, Shapes.box(5 / 16.0, 10 / 16.0, 0.0, 11 / 16.0, 16 / 16.0, 3 / 16.0), BooleanOp.OR)
+            shape = Shapes.join(
+                shape,
+                Shapes.box(5 / 16.0, 10 / 16.0, 13 / 16.0, 11 / 16.0, 16 / 16.0, 16 / 16.0),
+                BooleanOp.OR
+            )
+            shape =
+                Shapes.join(shape, Shapes.box(0.0, 10 / 16.0, 5 / 16.0, 3 / 16.0, 16 / 16.0, 11 / 16.0), BooleanOp.OR)
 
-            shape = Shapes.join(shape, Shapes.box(3/16.0, 6/16.0, 3/16.0, 13/16.0, 16/16.0, 13/16.0), BooleanOp.OR)
+            shape = Shapes.join(
+                shape,
+                Shapes.box(3 / 16.0, 6 / 16.0, 3 / 16.0, 13 / 16.0, 16 / 16.0, 13 / 16.0),
+                BooleanOp.OR
+            )
 
-            shape = Shapes.join(shape, Shapes.box(1/16.0, 2/16.0, 1/16.0, 5/16.0, 8/16.0, 5/16.0), BooleanOp.OR)
-            shape = Shapes.join(shape, Shapes.box(1/16.0, 2/16.0, 11/16.0, 5/16.0, 8/16.0, 15/16.0), BooleanOp.OR)
+            shape =
+                Shapes.join(shape, Shapes.box(1 / 16.0, 2 / 16.0, 1 / 16.0, 5 / 16.0, 8 / 16.0, 5 / 16.0), BooleanOp.OR)
+            shape = Shapes.join(
+                shape,
+                Shapes.box(1 / 16.0, 2 / 16.0, 11 / 16.0, 5 / 16.0, 8 / 16.0, 15 / 16.0),
+                BooleanOp.OR
+            )
 
-            shape = Shapes.join(shape, Shapes.box(11/16.0, 2/16.0, 1/16.0, 15/16.0, 8/16.0, 5/16.0), BooleanOp.OR)
-            shape = Shapes.join(shape, Shapes.box(11/16.0, 2/16.0, 11/16.0, 15/16.0, 8/16.0, 15/16.0), BooleanOp.OR)
+            shape = Shapes.join(
+                shape,
+                Shapes.box(11 / 16.0, 2 / 16.0, 1 / 16.0, 15 / 16.0, 8 / 16.0, 5 / 16.0),
+                BooleanOp.OR
+            )
+            shape = Shapes.join(
+                shape,
+                Shapes.box(11 / 16.0, 2 / 16.0, 11 / 16.0, 15 / 16.0, 8 / 16.0, 15 / 16.0),
+                BooleanOp.OR
+            )
             return shape
         }
     }
