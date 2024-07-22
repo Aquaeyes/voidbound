@@ -1,5 +1,7 @@
 {
   "item.voidbound.divider": "Divider",
   "item.voidbound.spirit_binder": "Spirit Binder",
-  "item.voidbound.spirit_binder_stabilizer": "Spirit Binder Stabilizer"
+  "item.voidbound.spirit_binder_stabilizer": "Spirit Binder Stabilizer",
+  "block.voidbound.spirit_binder": "Spirit Binder",
+  "block.voidbound.spirit_binder_stabilizer": "Spirit Binder Stabilizer"
 }
