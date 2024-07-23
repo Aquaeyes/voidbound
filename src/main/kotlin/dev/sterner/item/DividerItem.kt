@@ -1,6 +1,7 @@
 package dev.sterner.item
 
 import com.sammy.malum.common.entity.FloatingItemEntity
+import com.sammy.malum.common.entity.spirit.SpiritItemEntity
 import com.sammy.malum.common.item.IMalumEventResponderItem
 import com.sammy.malum.common.item.spirit.SpiritShardItem
 import com.sammy.malum.registry.common.DamageTypeRegistry
@@ -26,20 +27,6 @@ import java.util.*
 
 
 class DividerItem(properties: Properties) : Item(properties), IMalumEventResponderItem {
-
-    override fun hurtEvent(event: LivingHurtEvent?, attacker: LivingEntity?, target: LivingEntity?, stack: ItemStack?) {
-        var level = attacker!!.level();
-        val damage = event!!.amount * (0.5f + EnchantmentHelper.getSweepingDamageRatio(attacker))
-        val entities = level.getEntities(attacker, target!!.boundingBox.inflate(1.0))
-        entities.forEach { entity ->
-            if (entity is LivingEntity) {
-                if (entity.isAlive) {
-                    entity.hurt(DamageTypeRegistry.create(level, DamageTypeRegistry.SCYTHE_SWEEP, attacker), damage)
-                    entity.knockback(0.4, Mth.sin(attacker.yRot * (Math.PI.toFloat() / 180F)).toDouble(), -Mth.cos(attacker.yRot * (Math.PI.toFloat() / 180F)).toDouble())
-                }
-            }
-        }
-    }
 
     override fun getUseAnimation(stack: ItemStack): UseAnim {
         return UseAnim.BRUSH
@@ -75,6 +62,21 @@ class DividerItem(properties: Properties) : Item(properties), IMalumEventRespond
                         level.addFreshEntity(particle)
                     }
 
+                    for (i in 0..10) {
+                        val dest = spirit.position().add(8.0, (level.random.nextDouble() - 0.5), (level.random.nextDouble() - 0.5))
+                        val nDest = spirit.position().add(-8.0, (level.random.nextDouble() - 0.5), (level.random.nextDouble() - 0.5))
+                        val particle = ParticleEntity(level, dest)
+                        val nParticle = ParticleEntity(level, nDest)
+
+                        particle.setSpirit(spirit.spiritType)
+                        particle.moveTo(spirit.position())
+
+                        nParticle.setSpirit(spirit.spiritType)
+                        nParticle.moveTo(spirit.position())
+
+                        level.addFreshEntity(particle)
+                        level.addFreshEntity(nParticle)
+                    }
                     spirit.discard()
                 }
             }
