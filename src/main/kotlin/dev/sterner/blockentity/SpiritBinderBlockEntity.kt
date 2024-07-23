@@ -41,7 +41,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         if (level != null) {
 
             if (entity == null) {
-                val list = level!!.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0)).filter { it.health / it.maxHealth <= 0.25 }
+                val list = level!!.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0)).filter { it.health / it.maxHealth <= 0.25 && it.isAlive }
                 if (list.isNotEmpty()) {
                     entity = list.first()
                 }
@@ -76,17 +76,16 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         }
     }
 
-    override fun deserializeNBT(nbt: CompoundTag) {
-        super.deserializeNBT(nbt)
-        simpleSpiritCharge = simpleSpiritCharge.deserializeNBT(nbt)
-        alpha = nbt.getFloat("Alpha")
+    override fun load(tag: CompoundTag) {
+        super.load(tag)
+        simpleSpiritCharge = simpleSpiritCharge.deserializeNBT(tag)
+        alpha = tag.getFloat("Alpha")
     }
 
-    override fun serializeNBT(): CompoundTag {
-        val tag = super.serializeNBT()
+    override fun saveAdditional(tag: CompoundTag) {
+        super.saveAdditional(tag)
         simpleSpiritCharge.serializeNBT(tag)
         tag.putFloat("Alpha", alpha)
-        return tag
     }
 
     fun spawnSpiritParticle(entity: LivingEntity, type: MalumSpiritType){
