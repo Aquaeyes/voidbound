@@ -2,6 +2,10 @@ package dev.sterner.item
 
 import com.sammy.malum.common.entity.FloatingItemEntity
 import com.sammy.malum.common.item.spirit.SpiritShardItem
+import com.sammy.malum.registry.common.SpiritTypeRegistry
+import dev.sterner.entity.ParticleEntity
+import dev.sterner.registry.VoidBoundEntityTypeRegistry
+import net.minecraft.client.particle.Particle
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -17,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry
 import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
+import java.util.*
 
 class DividerItem(properties: Properties) : Item(properties) {
 
@@ -45,8 +50,17 @@ class DividerItem(properties: Properties) : Item(properties) {
             val spirits = getEntitiesInBox(level, livingEntity)
             for (spirit in spirits) {
                 if (spirit.item.item is SpiritShardItem) {
-                    WorldParticleBuilder.create(LodestoneParticleRegistry.SPARKLE_PARTICLE)
-                    spirit.kill()
+                    for (spiritType in SpiritTypeRegistry.SPIRITS) {
+                        val dest = ParticleEntity.getRandomOffset(spirit.position(), level.random)
+
+                        val particle = ParticleEntity(level, dest)
+                        particle.setSpirit(spiritType.value)
+                        particle.moveTo(spirit.position())
+
+                        level.addFreshEntity(particle)
+                    }
+
+                    spirit.discard()
                 }
             }
         }
@@ -64,7 +78,7 @@ class DividerItem(properties: Properties) : Item(properties) {
         val centerZ = position.z + lookDirection.z * 2
 
         // Define the bounding box centered at the calculated position
-        val boundingBox = AABB(centerX - 1, centerY - 1, centerZ - 1, centerX + 1, centerY + 1, centerZ + 1)
+        val boundingBox = AABB(centerX - 3, centerY - 3, centerZ - 3, centerX + 3, centerY + 3, centerZ + 3)
 
         // Retrieve entities in the defined bounding box
         val entitiesInBox = mutableListOf<FloatingItemEntity>()
