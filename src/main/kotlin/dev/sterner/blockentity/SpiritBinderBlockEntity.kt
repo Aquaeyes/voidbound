@@ -33,7 +33,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
 
     var alpha: Float = 0f
 
-    var simpleSpiritCharge = SimpleSpiritCharge()
+    private var simpleSpiritCharge = SimpleSpiritCharge()
     var counter = 0
     var entity: PathfinderMob? = null
 
@@ -65,6 +65,12 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
                 }
             }
         }
+    }
+
+    fun removeSpiritFromCharge(type: MalumSpiritType, count: Int) : Boolean {
+        val bl = simpleSpiritCharge.removeFromCharge(type, count)
+        notifyUpdate()
+        return bl
     }
 
     private fun addSpiritToCharge(entity: PathfinderMob) {
