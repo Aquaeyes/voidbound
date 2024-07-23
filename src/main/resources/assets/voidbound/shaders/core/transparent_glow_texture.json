@@ -14,8 +14,7 @@
     "UV2",
     "Normal"
   ],
-  "samplers": [
-  ],
+  "samplers": [],
   "uniforms": [
     {
       "name": "ModelViewMat",
@@ -73,6 +72,14 @@
     },
     {
       "name": "GameTime",
+      "type": "float",
+      "count": 1,
+      "values": [
+        0.0
+      ]
+    },
+    {
+      "name": "Alpha",
       "type": "float",
       "count": 1,
       "values": [

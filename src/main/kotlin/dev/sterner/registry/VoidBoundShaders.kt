@@ -2,6 +2,7 @@ package dev.sterner.registry
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import com.mojang.datafixers.util.Pair
+import com.sammy.malum.MalumMod
 import dev.sterner.VoidBound
 import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.resources.ResourceLocation
@@ -16,7 +17,7 @@ object VoidBoundShaders {
     var GLOW_TEXTURE: ShaderHolder = ShaderHolder(
         ResourceLocation(VoidBound.modid, "transparent_glow_texture"),
         DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP,
-        "LumiTransparency"
+        "LumiTransparency", "Alpha"
     )
 
     fun init() {
