@@ -5,17 +5,18 @@ import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import com.sammy.malum.visual_effects.SpiritLightSpecs
+import dev.sterner.api.SimpleSpiritCharge
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.util.Mth
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.entity.PathfinderMob
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
-import team.lodestar.lodestone.helpers.RandomHelper
 import team.lodestar.lodestone.systems.particle.ParticleEffectSpawner
 import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
 import team.lodestar.lodestone.systems.particle.data.GenericParticleData
@@ -30,26 +31,21 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
     blockState
 ) {
 
-    var aqueousCharge = 0
-    var aerialCharge = 0
-    var arcaneCharge = 0
-    var earthenCharge = 0
-    var eldrichCharge = 0
-    var infernalCharge = 0
-    var sacredCharge = 0
-    var wickedCharge = 0
-    var umbralCharge = 0
+    var alpha: Float = 0f
 
+    var simpleSpiritCharge = SimpleSpiritCharge()
     var counter = 0
     var entity: PathfinderMob? = null
 
     fun tick() {
         if (level != null) {
+
             if (entity == null) {
                 val list = level!!.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0)).filter { it.health / it.maxHealth <= 0.25 }
                 if (list.isNotEmpty()) {
                     entity = list.first()
                 }
+                counter = 0
             } else {
                 val spiritDataOptional = getSpiritData(entity!!)
                 if (spiritDataOptional.isPresent) {
@@ -57,11 +53,14 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
                     for (spirit in spiritDataOptional.get()) {
                         spawnSpiritParticle(entity!!, spirit.type)
                     }
+
                     if (counter > 20 * 5) {
                         counter = 0
                         addSpiritToCharge(entity!!)
+                        alpha = Mth.clamp(simpleSpiritCharge.getTotalCharge() / 20f, 0f, 1f)
                         entity!!.hurt(level!!.damageSources().magic(), 20f)
                         entity = null
+                        notifyUpdate()
                     }
                 }
             }
@@ -72,47 +71,21 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         val list = getSpiritData(entity)
         if (list.isPresent) {
             for (spirit in list.get()) {
-                when (spirit.type){
-                    SpiritTypeRegistry.AQUEOUS_SPIRIT -> aqueousCharge++
-                    SpiritTypeRegistry.AERIAL_SPIRIT -> aerialCharge++
-                    SpiritTypeRegistry.ARCANE_SPIRIT -> arcaneCharge++
-                    SpiritTypeRegistry.EARTHEN_SPIRIT -> earthenCharge++
-                    SpiritTypeRegistry.ELDRITCH_SPIRIT -> eldrichCharge++
-                    SpiritTypeRegistry.INFERNAL_SPIRIT -> infernalCharge++
-                    SpiritTypeRegistry.SACRED_SPIRIT -> sacredCharge++
-                    SpiritTypeRegistry.WICKED_SPIRIT -> wickedCharge++
-                    SpiritTypeRegistry.UMBRAL_SPIRIT -> umbralCharge++
-                }
+                simpleSpiritCharge.addToCharge(spirit.type)
             }
-            notifyUpdate()
         }
     }
 
     override fun deserializeNBT(nbt: CompoundTag) {
         super.deserializeNBT(nbt)
-        aqueousCharge = nbt.getInt("AqueousCharge")
-        aerialCharge = nbt.getInt("AerialCharge")
-        arcaneCharge = nbt.getInt("ArcaneCharge")
-        earthenCharge = nbt.getInt("EarthenCharge")
-        eldrichCharge = nbt.getInt("EldrichCharge")
-        infernalCharge = nbt.getInt("InfernalCharge")
-        sacredCharge = nbt.getInt("SacredCharge")
-        wickedCharge = nbt.getInt("WickedCharge")
-        umbralCharge = nbt.getInt("UmbralCharge")
+        simpleSpiritCharge = simpleSpiritCharge.deserializeNBT(nbt)
+        alpha = nbt.getFloat("Alpha")
     }
 
     override fun serializeNBT(): CompoundTag {
-        var tag = super.serializeNBT()
-        tag.putInt("AqueousCharge", aqueousCharge)
-        tag.putInt("AerialCharge", aerialCharge)
-        tag.putInt("ArcaneCharge", arcaneCharge)
-        tag.putInt("EarthenCharge", earthenCharge)
-        tag.putInt("InfernalCharge", infernalCharge)
-        tag.putInt("EldrichCharge", eldrichCharge)
-        tag.putInt("SacredCharge", sacredCharge)
-        tag.putInt("WickedCharge", wickedCharge)
-        tag.putInt("UmbralCharge", umbralCharge)
-
+        val tag = super.serializeNBT()
+        simpleSpiritCharge.serializeNBT(tag)
+        tag.putFloat("Alpha", alpha)
         return tag
     }
 

@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.util.Mth
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry.LodestoneCompositeStateBuilder
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
@@ -36,7 +37,7 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
         poseStack.pushPose()
         poseStack.translate(0.5, 1.5, 0.5)
 
-        val alpha = 0.4f
+        val alpha = Mth.clamp(blockEntity.alpha,0f, 0.5f)
 
         val renderType = VoidBoundRenderTypes.TRANSPARENT_GLOW_TEXTURE.applyWithModifierAndCache(
             TOKEN
