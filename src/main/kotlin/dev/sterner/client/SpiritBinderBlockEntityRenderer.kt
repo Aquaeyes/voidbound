@@ -59,7 +59,7 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
             20)
 
 
-        FloatingItemEntityRenderer.renderSpiritGlimmer(poseStack, Color(255,255,255,255), Color(100,100,255,255), partialTick)
+        FloatingItemEntityRenderer.renderSpiritGlimmer(poseStack, Color(200,200,255,200), Color(100,100,255,200), partialTick)
         poseStack.popPose()
     }
 
