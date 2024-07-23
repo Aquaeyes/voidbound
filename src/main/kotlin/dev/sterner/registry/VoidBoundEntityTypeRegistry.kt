@@ -23,6 +23,6 @@ object VoidBoundEntityTypeRegistry {
                     w
                 )
             }, MobCategory.MISC
-        ).sized(0.05f, 0.05f).clientTrackingRange(10).build(VoidBound.id("particle_entity").toString())
+        ).sized(0.05f, 0.05f).clientTrackingRange(50).build(VoidBound.id("particle_entity").toString())
     }))
 }

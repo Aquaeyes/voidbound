@@ -9,6 +9,7 @@ import com.sammy.malum.registry.client.MalumRenderTypeTokens
 import dev.sterner.VoidBound
 import dev.sterner.entity.ParticleEntity
 import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.client.renderer.culling.Frustum
 import net.minecraft.client.renderer.entity.EntityRenderer
 import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.resources.ResourceLocation
@@ -35,8 +36,8 @@ class ParticleEntityRenderer(context: EntityRendererProvider.Context) : EntityRe
                 trailBuilder,
                 entity.trailPointBuilder,
                 entity,
-                spiritType.primaryColor,
-                spiritType.secondaryColor,
+                invertColor(spiritType.primaryColor),
+                invertColor(spiritType.secondaryColor),
                 1.0f,
                 partialTick
             )
@@ -44,6 +45,23 @@ class ParticleEntityRenderer(context: EntityRendererProvider.Context) : EntityRe
 
         FloatingItemEntityRenderer.renderSpiritGlimmer(poseStack, Color(200,200,255,200), Color(100,100,255,200), partialTick)
         super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight)
+    }
+
+    fun invertColor(color: Color): Color {
+        val red = 255 - color.red
+        val green = 255 - color.green
+        val blue = 255 - color.blue
+        return Color(red, green, blue)
+    }
+
+    override fun shouldRender(
+        livingEntity: ParticleEntity,
+        camera: Frustum,
+        camX: Double,
+        camY: Double,
+        camZ: Double
+    ): Boolean {
+        return true
     }
 
     override fun getTextureLocation(entity: ParticleEntity): ResourceLocation {

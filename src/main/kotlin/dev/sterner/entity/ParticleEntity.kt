@@ -1,6 +1,5 @@
 package dev.sterner.entity
 
-import com.sammy.malum.common.entity.FloatingEntity
 import com.sammy.malum.common.entity.FloatingItemEntity
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.registry.common.SpiritTypeRegistry
@@ -25,9 +24,9 @@ class ParticleEntity(level: Level) : Entity(VoidBoundEntityTypeRegistry.PARTICLE
     val trailPointBuilder: TrailPointBuilder = TrailPointBuilder.create(10)
     var spiritType: MalumSpiritType? = null
     var destination: Vec3? = null
-
+    var windDown: Float = 1f
     var age: Int = 0
-    var maxAge: Int = 20 * 10
+    var maxAge: Int = 20 * 3
 
     constructor(level: Level, dest: Vec3) : this(level) {
         this.destination = dest
@@ -44,18 +43,21 @@ class ParticleEntity(level: Level) : Entity(VoidBoundEntityTypeRegistry.PARTICLE
             this.discard()
         }
 
-        val friction = 0.5f
+        val friction = 0.95f
         this.deltaMovement = deltaMovement.multiply(friction.toDouble(), friction.toDouble(), friction.toDouble())
         if (this.isAlive) {
             val destination: Vec3? = this.destination
             if (destination != null) {
+                if (this.windDown > 0.0f) {
+                    this.windDown -= 0.02f
+                }
 
-                val velocity = Mth.clamp(1 - 0.25f, 0.0f, 0.75f) * 5.0f
+                val velocity = Mth.clamp(this.windDown - 0.25f, 0.0f, 0.75f) * 5.0f
                 val desiredMotion = destination.subtract(this.position()).normalize().multiply(velocity.toDouble(), velocity.toDouble(), velocity.toDouble())
-                val easing = 0.05f
-                val xMotion = Mth.lerp(easing.toDouble(), deltaMovement.x, desiredMotion.x).toFloat()
-                val yMotion = Mth.lerp(easing.toDouble(), deltaMovement.y, desiredMotion.y).toFloat()
-                val zMotion = Mth.lerp(easing.toDouble(), deltaMovement.z, desiredMotion.z).toFloat()
+                val easing = 0.01
+                val xMotion = Mth.lerp(easing, deltaMovement.x, desiredMotion.x).toFloat()
+                val yMotion = Mth.lerp(easing, deltaMovement.y, desiredMotion.y).toFloat()
+                val zMotion = Mth.lerp(easing, deltaMovement.z, desiredMotion.z).toFloat()
                 val resultingMotion = Vec3(xMotion.toDouble(), yMotion.toDouble(), zMotion.toDouble())
                 this.deltaMovement = resultingMotion
 
@@ -108,12 +110,14 @@ class ParticleEntity(level: Level) : Entity(VoidBoundEntityTypeRegistry.PARTICLE
         this.setSpirit(compound.getString("spiritType"))
         this.age = compound.getInt("age")
         this.maxAge = compound.getInt("maxAge")
+        this.windDown = compound.getFloat("windDown")
     }
 
     override fun addAdditionalSaveData(compound: CompoundTag) {
         compound.putString("spiritType", spiritType!!.identifier)
         compound.putInt("age", this.age)
         compound.putInt("maxAge", this.maxAge)
+        compound.putFloat("windDown", this.windDown)
     }
 
     fun setSpirit(spiritType: MalumSpiritType) {
