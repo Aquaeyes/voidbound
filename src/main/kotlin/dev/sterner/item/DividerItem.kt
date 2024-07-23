@@ -1,12 +1,14 @@
 package dev.sterner.item
 
 import com.sammy.malum.common.entity.FloatingItemEntity
+import com.sammy.malum.common.item.IMalumEventResponderItem
 import com.sammy.malum.common.item.spirit.SpiritShardItem
+import com.sammy.malum.registry.common.DamageTypeRegistry
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.entity.ParticleEntity
-import dev.sterner.registry.VoidBoundEntityTypeRegistry
-import net.minecraft.client.particle.Particle
+import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingHurtEvent
 import net.minecraft.core.BlockPos
+import net.minecraft.util.Mth
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.InteractionResultHolder
@@ -16,14 +18,28 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.UseAnim
 import net.minecraft.world.item.context.UseOnContext
+import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
-import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry
-import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
 import java.util.*
 
-class DividerItem(properties: Properties) : Item(properties) {
+
+class DividerItem(properties: Properties) : Item(properties), IMalumEventResponderItem {
+
+    override fun hurtEvent(event: LivingHurtEvent?, attacker: LivingEntity?, target: LivingEntity?, stack: ItemStack?) {
+        var level = attacker!!.level();
+        val damage = event!!.amount * (0.5f + EnchantmentHelper.getSweepingDamageRatio(attacker))
+        val entities = level.getEntities(attacker, target!!.boundingBox.inflate(1.0))
+        entities.forEach { entity ->
+            if (entity is LivingEntity) {
+                if (entity.isAlive) {
+                    entity.hurt(DamageTypeRegistry.create(level, DamageTypeRegistry.SCYTHE_SWEEP, attacker), damage)
+                    entity.knockback(0.4, Mth.sin(attacker.yRot * (Math.PI.toFloat() / 180F)).toDouble(), -Mth.cos(attacker.yRot * (Math.PI.toFloat() / 180F)).toDouble())
+                }
+            }
+        }
+    }
 
     override fun getUseAnimation(stack: ItemStack): UseAnim {
         return UseAnim.BRUSH
@@ -41,7 +57,6 @@ class DividerItem(properties: Properties) : Item(properties) {
     override fun useOn(context: UseOnContext): InteractionResult {
         val player = context.player
         player!!.startUsingItem(context.hand)
-
         return InteractionResult.CONSUME
     }
 
