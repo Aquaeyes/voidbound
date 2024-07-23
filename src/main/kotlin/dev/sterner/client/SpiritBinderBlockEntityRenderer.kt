@@ -3,6 +3,7 @@ package dev.sterner.client
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexFormat
 import com.sammy.malum.client.SpiritBasedWorldVFXBuilder
+import com.sammy.malum.client.renderer.entity.FloatingItemEntityRenderer
 import dev.sterner.VoidBound
 import dev.sterner.blockentity.SpiritBinderBlockEntity
 import dev.sterner.registry.VoidBoundRenderTypes
@@ -17,6 +18,7 @@ import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry.LodestoneCompositeStateBuilder
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
 import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
+import java.awt.Color
 
 
 class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
@@ -56,6 +58,8 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
             20,
             20)
 
+
+        FloatingItemEntityRenderer.renderSpiritGlimmer(poseStack, Color(255,255,255,255), Color(100,100,255,255), partialTick)
         poseStack.popPose()
     }
 
