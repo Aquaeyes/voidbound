@@ -1,5 +1,6 @@
 package dev.sterner.entity
 
+import com.sammy.malum.common.entity.FloatingEntity
 import com.sammy.malum.common.entity.FloatingItemEntity
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.registry.common.SpiritTypeRegistry
@@ -12,11 +13,9 @@ import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.util.Mth
 import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.MoverType
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
 import team.lodestar.lodestone.systems.rendering.trail.TrailPointBuilder
-import java.util.*
 import kotlin.math.PI
 import kotlin.math.acos
 import kotlin.math.cos
@@ -45,7 +44,7 @@ class ParticleEntity(level: Level) : Entity(VoidBoundEntityTypeRegistry.PARTICLE
             this.discard()
         }
 
-        val friction = 0.95f
+        val friction = 0.5f
         this.deltaMovement = deltaMovement.multiply(friction.toDouble(), friction.toDouble(), friction.toDouble())
         if (this.isAlive) {
             val destination: Vec3? = this.destination
@@ -53,7 +52,7 @@ class ParticleEntity(level: Level) : Entity(VoidBoundEntityTypeRegistry.PARTICLE
 
                 val velocity = Mth.clamp(1 - 0.25f, 0.0f, 0.75f) * 5.0f
                 val desiredMotion = destination.subtract(this.position()).normalize().multiply(velocity.toDouble(), velocity.toDouble(), velocity.toDouble())
-                val easing = 0.1f
+                val easing = 0.05f
                 val xMotion = Mth.lerp(easing.toDouble(), deltaMovement.x, desiredMotion.x).toFloat()
                 val yMotion = Mth.lerp(easing.toDouble(), deltaMovement.y, desiredMotion.y).toFloat()
                 val zMotion = Mth.lerp(easing.toDouble(), deltaMovement.z, desiredMotion.z).toFloat()
@@ -66,7 +65,14 @@ class ParticleEntity(level: Level) : Entity(VoidBoundEntityTypeRegistry.PARTICLE
                     return
                 }
             }
-            this.move(MoverType.SELF, this.deltaMovement)
+
+            val movement = this.deltaMovement
+            val nextX: Double = this.x + movement.x
+            val nextY: Double = this.y + movement.y
+            val nextZ: Double = this.z + movement.z
+
+            this.setPos(nextX, nextY, nextZ)
+            //this.move(MoverType.SELF, this.deltaMovement)
         }
 
         if (level().isClientSide) {
