@@ -34,7 +34,7 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
         poseStack.pushPose()
         poseStack.translate(0.5, 1.5, 0.5)
 
-        val alpha = 0.1f
+        val alpha = 0.4f
 
         val renderType = VoidBoundRenderTypes.TRANSPARENT_GLOW_TEXTURE.applyWithModifierAndCache(
             TOKEN
