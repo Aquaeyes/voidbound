@@ -3,10 +3,12 @@ package dev.sterner.blockentity
 import com.sammy.malum.core.listeners.SpiritDataReloadListener
 import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
+import com.sammy.malum.registry.common.SpiritTypeRegistry
 import com.sammy.malum.visual_effects.SpiritLightSpecs
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.entity.PathfinderMob
@@ -28,42 +30,90 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
     blockState
 ) {
 
-    fun getSpiritData(entity: LivingEntity): Optional<MutableList<SpiritWithCount>> {
-        val key = BuiltInRegistries.ENTITY_TYPE.getKey(entity.type)
-        if (SpiritDataReloadListener.HAS_NO_DATA.contains(key)) {
-            return Optional.empty()
-        } else {
-            val spiritData = SpiritDataReloadListener.SPIRIT_DATA[key]
-            if (spiritData != null) {
-                return Optional.of(spiritData.dataEntries)
-            }
+    var aqueousCharge = 0
+    var aerialCharge = 0
+    var arcaneCharge = 0
+    var earthenCharge = 0
+    var eldrichCharge = 0
+    var infernalCharge = 0
+    var sacredCharge = 0
+    var wickedCharge = 0
+    var umbralCharge = 0
 
-            return when (entity.type.category) {
-                MobCategory.MONSTER -> Optional.of(SpiritDataReloadListener.DEFAULT_MONSTER_SPIRIT_DATA.dataEntries)
-                MobCategory.CREATURE -> Optional.of(SpiritDataReloadListener.DEFAULT_CREATURE_SPIRIT_DATA.dataEntries)
-                MobCategory.AMBIENT -> Optional.of(SpiritDataReloadListener.DEFAULT_AMBIENT_SPIRIT_DATA.dataEntries)
-                MobCategory.AXOLOTLS ->  Optional.of(SpiritDataReloadListener.DEFAULT_AXOLOTL_SPIRIT_DATA.dataEntries)
-                MobCategory.UNDERGROUND_WATER_CREATURE ->  Optional.of(SpiritDataReloadListener.DEFAULT_UNDERGROUND_WATER_CREATURE_SPIRIT_DATA.dataEntries)
-                MobCategory.WATER_CREATURE ->  Optional.of(SpiritDataReloadListener.DEFAULT_WATER_CREATURE_SPIRIT_DATA.dataEntries)
-                MobCategory.WATER_AMBIENT ->  Optional.of(SpiritDataReloadListener.DEFAULT_WATER_AMBIENT_SPIRIT_DATA.dataEntries)
+    var counter = 0
+    var entity: PathfinderMob? = null
 
-                else -> Optional.empty()
+    fun tick() {
+        if (level != null) {
+            if (entity == null) {
+                val list = level!!.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0)).filter { it.health / it.maxHealth <= 0.25 }
+                if (list.isNotEmpty()) {
+                    entity = list.first()
+                }
+            } else {
+                val spiritDataOptional = getSpiritData(entity!!)
+                if (spiritDataOptional.isPresent) {
+                    counter++
+                    for (spirit in spiritDataOptional.get()) {
+                        spawnSpiritParticle(entity!!, spirit.type)
+                    }
+                    if (counter > 20 * 5) {
+                        counter = 0
+                        addSpiritToCharge(entity!!)
+                        entity!!.hurt(level!!.damageSources().magic(), 20f)
+                        entity = null
+                    }
+                }
             }
         }
     }
 
-
-    fun tick() {
-        val entities = level!!.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0))
-
-        for (entity in entities) {
-            val spiritDataOptional = getSpiritData(entity)
-            if (spiritDataOptional.isPresent) {
-                for (spirit in spiritDataOptional.get()) {
-                    spawnSpiritParticle(entity, spirit.type)
+    private fun addSpiritToCharge(entity: PathfinderMob) {
+        val list = getSpiritData(entity)
+        if (list.isPresent) {
+            for (spirit in list.get()) {
+                when (spirit.type){
+                    SpiritTypeRegistry.AQUEOUS_SPIRIT -> aqueousCharge++
+                    SpiritTypeRegistry.AERIAL_SPIRIT -> aerialCharge++
+                    SpiritTypeRegistry.ARCANE_SPIRIT -> arcaneCharge++
+                    SpiritTypeRegistry.EARTHEN_SPIRIT -> earthenCharge++
+                    SpiritTypeRegistry.ELDRITCH_SPIRIT -> eldrichCharge++
+                    SpiritTypeRegistry.INFERNAL_SPIRIT -> infernalCharge++
+                    SpiritTypeRegistry.SACRED_SPIRIT -> sacredCharge++
+                    SpiritTypeRegistry.WICKED_SPIRIT -> wickedCharge++
+                    SpiritTypeRegistry.UMBRAL_SPIRIT -> umbralCharge++
                 }
             }
+            notifyUpdate()
         }
+    }
+
+    override fun deserializeNBT(nbt: CompoundTag) {
+        super.deserializeNBT(nbt)
+        aqueousCharge = nbt.getInt("AqueousCharge")
+        aerialCharge = nbt.getInt("AerialCharge")
+        arcaneCharge = nbt.getInt("ArcaneCharge")
+        earthenCharge = nbt.getInt("EarthenCharge")
+        eldrichCharge = nbt.getInt("EldrichCharge")
+        infernalCharge = nbt.getInt("InfernalCharge")
+        sacredCharge = nbt.getInt("SacredCharge")
+        wickedCharge = nbt.getInt("WickedCharge")
+        umbralCharge = nbt.getInt("UmbralCharge")
+    }
+
+    override fun serializeNBT(): CompoundTag {
+        var tag = super.serializeNBT()
+        tag.putInt("AqueousCharge", aqueousCharge)
+        tag.putInt("AerialCharge", aerialCharge)
+        tag.putInt("ArcaneCharge", arcaneCharge)
+        tag.putInt("EarthenCharge", earthenCharge)
+        tag.putInt("InfernalCharge", infernalCharge)
+        tag.putInt("EldrichCharge", eldrichCharge)
+        tag.putInt("SacredCharge", sacredCharge)
+        tag.putInt("WickedCharge", wickedCharge)
+        tag.putInt("UmbralCharge", umbralCharge)
+
+        return tag
     }
 
     fun spawnSpiritParticle(entity: LivingEntity, type: MalumSpiritType){
@@ -125,5 +175,31 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         }
 
         lightSpecs.spawnParticles()
+    }
+
+    companion object {
+        fun getSpiritData(entity: LivingEntity): Optional<MutableList<SpiritWithCount>> {
+            val key = BuiltInRegistries.ENTITY_TYPE.getKey(entity.type)
+            if (SpiritDataReloadListener.HAS_NO_DATA.contains(key)) {
+                return Optional.empty()
+            } else {
+                val spiritData = SpiritDataReloadListener.SPIRIT_DATA[key]
+                if (spiritData != null) {
+                    return Optional.of(spiritData.dataEntries)
+                }
+
+                return when (entity.type.category) {
+                    MobCategory.MONSTER -> Optional.of(SpiritDataReloadListener.DEFAULT_MONSTER_SPIRIT_DATA.dataEntries)
+                    MobCategory.CREATURE -> Optional.of(SpiritDataReloadListener.DEFAULT_CREATURE_SPIRIT_DATA.dataEntries)
+                    MobCategory.AMBIENT -> Optional.of(SpiritDataReloadListener.DEFAULT_AMBIENT_SPIRIT_DATA.dataEntries)
+                    MobCategory.AXOLOTLS ->  Optional.of(SpiritDataReloadListener.DEFAULT_AXOLOTL_SPIRIT_DATA.dataEntries)
+                    MobCategory.UNDERGROUND_WATER_CREATURE ->  Optional.of(SpiritDataReloadListener.DEFAULT_UNDERGROUND_WATER_CREATURE_SPIRIT_DATA.dataEntries)
+                    MobCategory.WATER_CREATURE ->  Optional.of(SpiritDataReloadListener.DEFAULT_WATER_CREATURE_SPIRIT_DATA.dataEntries)
+                    MobCategory.WATER_AMBIENT ->  Optional.of(SpiritDataReloadListener.DEFAULT_WATER_AMBIENT_SPIRIT_DATA.dataEntries)
+
+                    else -> Optional.empty()
+                }
+            }
+        }
     }
 }
