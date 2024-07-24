@@ -16,7 +16,7 @@ object VoidBoundBlockRegistry {
         SpiritBinderBlock(Properties.of())
     }
 
-    var SPIRIT_BINDER_STABILIZER = BLOCKS.register("spirit_binder_stabilizer") {
+    var SPIRIT_STABILIZER = BLOCKS.register("spirit_stabilizer") {
         SpiritBinderStabilizerBlock(Properties.of())
     }
 }

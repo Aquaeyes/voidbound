@@ -1,9 +1,10 @@
 {
+  "item.voidbound.empty_spirit_shard": "Empty Spirit Shard",
   "item.voidbound.divider": "Divider",
   "item.voidbound.spirit_binder": "Spirit Binder",
-  "item.voidbound.spirit_binder_stabilizer": "Spirit Binder Stabilizer",
+  "item.voidbound.spirit_stabilizer": "Spirit Stabilizer",
   "block.voidbound.spirit_binder": "Spirit Binder",
-  "block.voidbound.spirit_binder_stabilizer": "Spirit Binder Stabilizer",
+  "block.voidbound.spirit_stabilizer": "Spirit Stabilizer",
 
   "itemGroup.voidbound": "Void Bound"
 }

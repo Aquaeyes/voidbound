@@ -37,7 +37,6 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
         poseStack.pushPose()
         poseStack.translate(0.5, 1.5, 0.5)
 
-        //val alpha = Mth.clamp(blockEntity.alpha,0f, 0.5f)
         val interpolatedAlpha = Mth.lerp(partialTick, blockEntity.previousAlpha, blockEntity.alpha)
 
 
@@ -70,7 +69,5 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
         var TOKEN = RenderTypeToken.createCachedToken(
             ResourceLocation(VoidBound.modid, "textures/aura.png")
         )
-
-
     }
 }

@@ -26,8 +26,8 @@ data class SimpleSpiritCharge(
         return charges.values.all { it >= 50 }
     }
 
-    fun addToCharge(type: MalumSpiritType) {
-        charges[type] = (charges[type] ?: 0) + 1
+    fun addToCharge(type: MalumSpiritType, count: Int) {
+        charges[type] = (charges[type] ?: 0) + count
     }
 
     fun removeFromCharge(type: MalumSpiritType, count: Int): Boolean {

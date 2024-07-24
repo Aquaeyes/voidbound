@@ -17,9 +17,10 @@ object VoidBoundCreativeTabRegistry {
         GROUP = FabricItemGroup.builder().title(Component.translatable("itemGroup." + VoidBound.modid))
             .icon { VoidBoundItemRegistry.DIVIDER.get().defaultInstance }
             .displayItems { _: ItemDisplayParameters?, entries: CreativeModeTab.Output ->
+                entries.accept(VoidBoundItemRegistry.EMPTY_SPIRIT_SHARD.get())
                 entries.accept(VoidBoundItemRegistry.DIVIDER.get())
                 entries.accept(VoidBoundItemRegistry.SPIRIT_BINDER.get())
-                entries.accept(VoidBoundItemRegistry.SPIRIT_BINDER_STABILIZER.get())
+                entries.accept(VoidBoundItemRegistry.SPIRIT_STABILIZER.get())
 
             }.build()
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ResourceLocation(VoidBound.modid, "main"), GROUP!!)

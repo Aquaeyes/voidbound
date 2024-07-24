@@ -13,13 +13,17 @@ object VoidBoundItemRegistry {
 
     val ITEMS: LazyRegistrar<Item> = LazyRegistrar.create(BuiltInRegistries.ITEM, VoidBound.modid)
 
+    val EMPTY_SPIRIT_SHARD = ITEMS.register("empty_spirit_shard") {
+        Item(Item.Properties())
+    }
+
     val DIVIDER: RegistryObject<Item> = ITEMS.register("divider") { DividerItem(FabricItemSettings().maxCount(1)) }
 
     val SPIRIT_BINDER = ITEMS.register("spirit_binder") {
         BlockItem(VoidBoundBlockRegistry.SPIRIT_BINDER.get(), Item.Properties())
     }
 
-    val SPIRIT_BINDER_STABILIZER = ITEMS.register("spirit_binder_stabilizer") {
-        BlockItem(VoidBoundBlockRegistry.SPIRIT_BINDER_STABILIZER.get(), Item.Properties())
+    val SPIRIT_STABILIZER = ITEMS.register("spirit_stabilizer") {
+        BlockItem(VoidBoundBlockRegistry.SPIRIT_STABILIZER.get(), Item.Properties())
     }
 }

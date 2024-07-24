@@ -2,6 +2,7 @@ package dev.sterner
 
 import dev.sterner.client.ParticleEntityRenderer
 import dev.sterner.client.SpiritBinderBlockEntityRenderer
+import dev.sterner.client.SpiritStabilizerBlockEntityRenderer
 import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
@@ -32,6 +33,11 @@ object VoidBound : ModInitializer, ClientModInitializer {
         BlockEntityRenderers.register(
             VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER.get(),
             ::SpiritBinderBlockEntityRenderer
+        )
+
+        BlockEntityRenderers.register(
+            VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER_STABILIZER.get(),
+            ::SpiritStabilizerBlockEntityRenderer
         )
 
         EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.PARTICLE_ENTITY.get(), ::ParticleEntityRenderer)

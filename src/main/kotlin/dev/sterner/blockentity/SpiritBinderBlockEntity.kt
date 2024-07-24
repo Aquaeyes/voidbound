@@ -103,7 +103,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         val list = getSpiritData(entity)
         if (list.isPresent) {
             for (spirit in list.get()) {
-                simpleSpiritCharge.addToCharge(spirit.type)
+                simpleSpiritCharge.addToCharge(spirit.type, spirit.count)
             }
             infinite = simpleSpiritCharge.shouldBeInfinite()
             notifyUpdate()
