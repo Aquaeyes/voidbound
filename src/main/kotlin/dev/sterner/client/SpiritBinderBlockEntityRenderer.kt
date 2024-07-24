@@ -37,7 +37,9 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
         poseStack.pushPose()
         poseStack.translate(0.5, 1.5, 0.5)
 
-        val alpha = Mth.clamp(blockEntity.alpha,0f, 0.5f)
+        //val alpha = Mth.clamp(blockEntity.alpha,0f, 0.5f)
+        val interpolatedAlpha = Mth.lerp(partialTick, blockEntity.previousAlpha, blockEntity.alpha)
+
 
         val renderType = VoidBoundRenderTypes.TRANSPARENT_GLOW_TEXTURE.applyWithModifierAndCache(
             TOKEN
@@ -51,7 +53,7 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
             .setRenderType(LodestoneRenderTypeRegistry.applyUniformChanges(
                 renderType
             ) { s: ShaderInstance ->
-                s.safeGetUniform("Alpha").set(alpha)
+                s.safeGetUniform("Alpha").set(interpolatedAlpha)
             })
 
         builder.renderSphere(poseStack,

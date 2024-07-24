@@ -32,6 +32,8 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
 ) {
 
     var alpha: Float = 0f
+    var previousAlpha: Float = 0f
+    var targetAlpha: Float = 0f
 
     private var simpleSpiritCharge = SimpleSpiritCharge()
     var counter = 0
@@ -57,13 +59,18 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
                     if (counter > 20 * 5) {
                         counter = 0
                         addSpiritToCharge(entity!!)
-                        alpha = Mth.clamp(simpleSpiritCharge.getTotalCharge() / 20f, 0f, 1f)
-                        entity!!.hurt(level!!.damageSources().magic(), 20f)
+                        targetAlpha = Mth.clamp(simpleSpiritCharge.getTotalCharge() / 20f, 0f, 1f)
+                        entity!!.hurt(level!!.damageSources().magic(), entity!!.health * 2)
                         entity = null
                         notifyUpdate()
                     }
                 }
             }
+            // Update previousAlpha before changing alpha
+            previousAlpha = alpha
+
+            // Interpolate alpha towards targetAlpha
+            alpha = Mth.lerp(0.05f, alpha, targetAlpha)
         }
     }
 
@@ -86,12 +93,16 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         super.load(tag)
         simpleSpiritCharge = simpleSpiritCharge.deserializeNBT(tag)
         alpha = tag.getFloat("Alpha")
+        previousAlpha = tag.getFloat("PrevAlpha")
+        targetAlpha = tag.getFloat("TargetAlpha")
     }
 
     override fun saveAdditional(tag: CompoundTag) {
         super.saveAdditional(tag)
         simpleSpiritCharge.serializeNBT(tag)
         tag.putFloat("Alpha", alpha)
+        tag.putFloat("PrevAlpha", previousAlpha)
+        tag.putFloat("TargetAlpha", targetAlpha)
     }
 
     fun spawnSpiritParticle(entity: LivingEntity, type: MalumSpiritType){
