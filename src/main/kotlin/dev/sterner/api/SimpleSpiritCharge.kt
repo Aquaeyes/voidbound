@@ -163,4 +163,43 @@ data class SimpleSpiritCharge(
         return aqueousCharge + aerialCharge + arcaneCharge + earthenCharge + eldrichCharge +
                 infernalCharge + sacredCharge + wickedCharge + umbralCharge
     }
+
+    fun rechargeInfiniteCount() {
+        if (aqueousCharge < 50) {
+            aqueousCharge++
+            return
+        }
+        if (aerialCharge < 50) {
+            aerialCharge++
+            return
+        }
+        if (arcaneCharge < 50) {
+            arcaneCharge++
+            return
+        }
+        if (earthenCharge < 50) {
+            earthenCharge++
+            return
+        }
+        if (infernalCharge < 50) {
+            infernalCharge++
+            return
+        }
+        if (eldrichCharge < 50) {
+            eldrichCharge++
+            return
+        }
+        if (sacredCharge < 50) {
+            sacredCharge++
+            return
+        }
+        if (wickedCharge < 50) {
+            wickedCharge++
+            return
+        }
+        if (umbralCharge < 50) {
+            umbralCharge++
+            return
+        }
+    }
 }

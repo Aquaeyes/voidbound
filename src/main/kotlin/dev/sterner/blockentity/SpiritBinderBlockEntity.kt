@@ -37,6 +37,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
     private var simpleSpiritCharge = SimpleSpiritCharge()
     var counter = 0
     var entity: PathfinderMob? = null
+    var rechargeCounter = 0
 
     var infinite = false
         set(value) {
@@ -49,31 +50,41 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
 
     fun tick() {
         if (level != null) {
-
-            if (entity == null) {
-                val list = level!!.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0)).filter { it.health / it.maxHealth <= 0.25 && it.isAlive }
-                if (list.isNotEmpty()) {
-                    entity = list.first()
+            if (infinite) {
+                rechargeCounter++
+                if (rechargeCounter == 20 * 2) {
+                    rechargeCounter = 0
+                    simpleSpiritCharge.rechargeInfiniteCount()
+                    notifyUpdate()
                 }
-                counter = 0
-            } else {
-                val spiritDataOptional = getSpiritData(entity!!)
-                if (spiritDataOptional.isPresent) {
-                    counter++
-                    for (spirit in spiritDataOptional.get()) {
-                        spawnSpiritParticle(entity!!, spirit.type)
-                    }
 
-                    if (counter > 20 * 5) {
-                        counter = 0
-                        addSpiritToCharge(entity!!)
-                        targetAlpha = Mth.clamp(simpleSpiritCharge.getTotalCharge() / 20f, 0f, 1f)
-                        entity!!.hurt(level!!.damageSources().magic(), entity!!.health * 2)
-                        entity = null
-                        notifyUpdate()
+            } else {
+                if (entity == null) {
+                    val list = level!!.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0)).filter { it.health / it.maxHealth <= 0.25 && it.isAlive }
+                    if (list.isNotEmpty()) {
+                        entity = list.first()
+                    }
+                    counter = 0
+                } else {
+                    val spiritDataOptional = getSpiritData(entity!!)
+                    if (spiritDataOptional.isPresent) {
+                        counter++
+                        for (spirit in spiritDataOptional.get()) {
+                            spawnSpiritParticle(entity!!, spirit.type)
+                        }
+
+                        if (counter > 20 * 5) {
+                            counter = 0
+                            addSpiritToCharge(entity!!)
+                            targetAlpha = Mth.clamp(simpleSpiritCharge.getTotalCharge() / 20f, 0f, 1f)
+                            entity!!.hurt(level!!.damageSources().magic(), entity!!.health * 2)
+                            entity = null
+                            notifyUpdate()
+                        }
                     }
                 }
             }
+
             // Update previousAlpha before changing alpha
             previousAlpha = alpha
 
