@@ -4,7 +4,9 @@ import com.sammy.malum.core.listeners.SpiritDataReloadListener
 import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.visual_effects.SpiritLightSpecs
+import dev.sterner.api.Modifier
 import dev.sterner.api.SimpleSpiritCharge
+import dev.sterner.block.SpiritBinderBlock
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
@@ -48,7 +50,32 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
             }
         }
 
-    fun tick() {
+    fun tick(){
+        if (level != null) {
+            if (level!!.getBlockState(blockPos).getValue(SpiritBinderBlock.MODIFIER) == Modifier.BRILLIANT) {
+                tickBrilliantState()
+            } else if (level!!.getBlockState(blockPos).getValue(SpiritBinderBlock.MODIFIER) == Modifier.HEX_ASH) {
+                tickHexAshState()
+            } else {
+                tickNoneState()
+            }
+            // Update previousAlpha before changing alpha
+            previousAlpha = alpha
+
+            // Interpolate alpha towards targetAlpha
+            alpha = Mth.lerp(0.05f, alpha, targetAlpha)
+        }
+    }
+
+    private fun tickHexAshState() {
+
+    }
+
+    private fun tickBrilliantState() {
+
+    }
+
+    private fun tickNoneState() {
         if (level != null) {
             if (infinite) {
                 rechargeCounter++
@@ -85,11 +112,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
                 }
             }
 
-            // Update previousAlpha before changing alpha
-            previousAlpha = alpha
 
-            // Interpolate alpha towards targetAlpha
-            alpha = Mth.lerp(0.05f, alpha, targetAlpha)
         }
     }
 

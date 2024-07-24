@@ -104,7 +104,7 @@ class SpiritBinderBlock(properties: Properties) : BaseEntityBlock(
 
     companion object {
 
-        var MODIFIER: EnumProperty<Modifier> = EnumProperty.create<Modifier>("modifier", Modifier::class.java)
+        var MODIFIER: EnumProperty<Modifier> = EnumProperty.create("modifier", Modifier::class.java)
 
         fun makeShape(): VoxelShape {
             var shape = Shapes.empty()
