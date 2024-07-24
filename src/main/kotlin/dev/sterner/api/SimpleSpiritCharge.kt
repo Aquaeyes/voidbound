@@ -15,6 +15,39 @@ data class SimpleSpiritCharge(
     var wickedCharge: Int = 0,
     var umbralCharge: Int = 0
 ) {
+
+    fun shouldBeInfinite(): Boolean{
+        if (aqueousCharge < 50) {
+            return false
+        }
+        if (aerialCharge < 50) {
+            return false
+        }
+        if (arcaneCharge < 50) {
+            return false
+        }
+        if (earthenCharge < 50) {
+            return false
+        }
+        if (eldrichCharge < 50) {
+            return false
+        }
+        if (infernalCharge < 50) {
+            return false
+        }
+        if (sacredCharge < 50) {
+            return false
+        }
+        if (wickedCharge < 50) {
+            return false
+        }
+        if (umbralCharge < 50) {
+            return false
+        }
+
+        return true
+    }
+
     fun addToCharge(type: MalumSpiritType) {
         when (type) {
             SpiritTypeRegistry.AQUEOUS_SPIRIT -> aqueousCharge++

@@ -3,7 +3,6 @@ package dev.sterner.blockentity
 import com.sammy.malum.core.listeners.SpiritDataReloadListener
 import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
-import com.sammy.malum.registry.common.SpiritTypeRegistry
 import com.sammy.malum.visual_effects.SpiritLightSpecs
 import dev.sterner.api.SimpleSpiritCharge
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
@@ -38,6 +37,8 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
     private var simpleSpiritCharge = SimpleSpiritCharge()
     var counter = 0
     var entity: PathfinderMob? = null
+
+    var infinite = false
 
     fun tick() {
         if (level != null) {
@@ -86,6 +87,8 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
             for (spirit in list.get()) {
                 simpleSpiritCharge.addToCharge(spirit.type)
             }
+            infinite = simpleSpiritCharge.shouldBeInfinite()
+            notifyUpdate()
         }
     }
 
@@ -95,6 +98,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         alpha = tag.getFloat("Alpha")
         previousAlpha = tag.getFloat("PrevAlpha")
         targetAlpha = tag.getFloat("TargetAlpha")
+        infinite = tag.getBoolean("Infinite")
     }
 
     override fun saveAdditional(tag: CompoundTag) {
@@ -103,6 +107,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         tag.putFloat("Alpha", alpha)
         tag.putFloat("PrevAlpha", previousAlpha)
         tag.putFloat("TargetAlpha", targetAlpha)
+        tag.putBoolean("Infinite", infinite)
     }
 
     fun spawnSpiritParticle(entity: LivingEntity, type: MalumSpiritType){
