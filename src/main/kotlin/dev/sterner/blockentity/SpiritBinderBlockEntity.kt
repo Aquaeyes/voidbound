@@ -94,9 +94,6 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
     }
 
     fun removeSpiritFromCharge(type: MalumSpiritType, count: Int) : Boolean {
-        if (infinite) {
-            return true
-        }
         val bl = simpleSpiritCharge.removeFromCharge(type, count)
         notifyUpdate()
         return bl

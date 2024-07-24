@@ -77,55 +77,55 @@ data class SimpleSpiritCharge(
     fun removeFromCharge(type: MalumSpiritType, count: Int): Boolean {
         when (type) {
             SpiritTypeRegistry.AQUEOUS_SPIRIT -> if (aqueousCharge >= count) {
-                aqueousCharge = -count
+                aqueousCharge -= count
             } else {
                 return false
             }
 
             SpiritTypeRegistry.AERIAL_SPIRIT -> if (aerialCharge >= count) {
-                aerialCharge = -count
+                aerialCharge -= count
             } else {
                 return false
             }
 
             SpiritTypeRegistry.ARCANE_SPIRIT -> if (arcaneCharge >= count) {
-                arcaneCharge = -count
+                arcaneCharge -= count
             } else {
                 return false
             }
 
             SpiritTypeRegistry.EARTHEN_SPIRIT -> if (earthenCharge >= count) {
-                earthenCharge = -count
+                earthenCharge -= count
             } else {
                 return false
             }
 
             SpiritTypeRegistry.ELDRITCH_SPIRIT -> if (eldrichCharge >= count) {
-                eldrichCharge = -count
+                eldrichCharge -= count
             } else {
                 return false
             }
 
             SpiritTypeRegistry.INFERNAL_SPIRIT -> if (infernalCharge >= count) {
-                infernalCharge = -count
+                infernalCharge -= count
             } else {
                 return false
             }
 
             SpiritTypeRegistry.SACRED_SPIRIT -> if (sacredCharge >= count) {
-                sacredCharge = -count
+                sacredCharge -= count
             } else {
                 return false
             }
 
             SpiritTypeRegistry.WICKED_SPIRIT -> if (wickedCharge >= count) {
-                wickedCharge = -count
+                wickedCharge -= count
             } else {
                 return false
             }
 
             SpiritTypeRegistry.UMBRAL_SPIRIT -> if (umbralCharge >= count) {
-                umbralCharge = -count
+                umbralCharge -= count
             } else {
                 return false
             }
