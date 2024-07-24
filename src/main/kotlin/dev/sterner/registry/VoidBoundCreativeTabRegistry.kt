@@ -21,6 +21,8 @@ object VoidBoundCreativeTabRegistry {
                 entries.accept(VoidBoundItemRegistry.DIVIDER.get())
                 entries.accept(VoidBoundItemRegistry.SPIRIT_BINDER.get())
                 entries.accept(VoidBoundItemRegistry.SPIRIT_STABILIZER.get())
+                entries.accept(VoidBoundItemRegistry.CALL_OF_THE_VOID.get())
+                entries.accept(VoidBoundItemRegistry.DESTABILIZED_SPIRIT_RIFT.get())
 
             }.build()
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ResourceLocation(VoidBound.modid, "main"), GROUP!!)

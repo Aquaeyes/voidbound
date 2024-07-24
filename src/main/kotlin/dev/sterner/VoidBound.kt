@@ -19,6 +19,8 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
     override fun onInitialize() {
 
+        VoidBoundTags.init()
+
         VoidBoundItemRegistry.ITEMS.register()
         VoidBoundBlockRegistry.BLOCKS.register()
         VoidBoundBlockEntityTypeRegistry.BLOCK_ENTITY_TYPES.register()

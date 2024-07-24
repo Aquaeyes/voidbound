@@ -22,6 +22,9 @@
         "value": "dev.sterner.VoidBound",
         "adapter": "kotlin"
       }
+    ],
+    "cardinal-components-world": [
+      "dev.sterner.registry.VoidBoundComponentRegistry"
     ]
   },
   "mixins": [
@@ -36,5 +39,10 @@
   },
   "suggests": {
     "another-mod": "*"
+  },
+  "custom": {
+    "cardinal-components": [
+      "voidbound:world"
+    ]
   }
 }

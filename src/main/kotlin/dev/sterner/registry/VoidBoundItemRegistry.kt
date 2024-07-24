@@ -1,6 +1,7 @@
 package dev.sterner.registry
 
 import dev.sterner.VoidBound
+import dev.sterner.item.CallOfTheVoidItem
 import dev.sterner.item.DividerItem
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject
@@ -29,5 +30,9 @@ object VoidBoundItemRegistry {
 
     val DESTABILIZED_SPIRIT_RIFT = ITEMS.register("destabilized_spirit_rift") {
         BlockItem(VoidBoundBlockRegistry.DESTABILIZED_SPIRIT_RIFT.get(), Item.Properties())
+    }
+
+    val CALL_OF_THE_VOID = ITEMS.register("call_of_the_void") {
+        CallOfTheVoidItem(Item.Properties())
     }
 }
