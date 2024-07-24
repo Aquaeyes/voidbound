@@ -29,7 +29,7 @@ import java.util.function.Consumer
 import java.util.function.Supplier
 
 class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlockEntity(
-    VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER.get(), blockState
+    VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER.get(), pos, blockState
 ) {
 
     var color: Vector3f = Vector3f(0.8f, 0.8f, 1.0f)
