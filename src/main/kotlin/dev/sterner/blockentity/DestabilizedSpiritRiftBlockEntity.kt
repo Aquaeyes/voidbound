@@ -5,7 +5,6 @@ import dev.sterner.registry.VoidBoundParticleTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 import team.lodestar.lodestone.handlers.RenderHandler
-import team.lodestar.lodestone.helpers.RandomHelper
 import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry
 import team.lodestar.lodestone.systems.easing.Easing
 import team.lodestar.lodestone.systems.particle.SimpleParticleOptions
@@ -23,6 +22,10 @@ class DestabilizedSpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) : Syn
     val firstColor2 = Color(180, 180, 255, 255)
     val secondColor2 = Color(70, 70, 255, 255)
 
+    val x = (worldPosition.x.toFloat() + 0.5f).toDouble()
+    val y = (worldPosition.y.toFloat() + 0.5f).toDouble()
+    val z = (worldPosition.z.toFloat() + 0.5f).toDouble()
+
     fun tick(){
         if (level != null && level!!.isClientSide) {
             if (level!!.gameTime % 16L == 0L) {
@@ -34,7 +37,7 @@ class DestabilizedSpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) : Syn
                     .setScaleData(GenericParticleData.create(0.2f, 0.2f, 0.2f).build())
                     .setTransparencyData(GenericParticleData.create(0.0f, 1.0f, 0.0f).setEasing(Easing.CIRC_IN_OUT).build())
                     .setSpinData(SpinParticleData.create(0.0f, 0.05f).setEasing(Easing.QUARTIC_IN).build())
-                    .spawn(level, blockPos.x + 0.5, blockPos.y + 0.5, blockPos.z + 0.5)
+                    .spawn(level, x, y, z)
             }
 
             if (level!!.gameTime % 16L == 8L) {
@@ -46,25 +49,24 @@ class DestabilizedSpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) : Syn
                     .setScaleData(GenericParticleData.create(0.25f, 0.25f, 0.45f).build())
                     .setTransparencyData(GenericParticleData.create(0.0f, 1.0f, 0.0f).setEasing(Easing.CIRC_IN_OUT).build())
                     .setSpinData(SpinParticleData.create(0.0f, -0.05f).setEasing(Easing.QUARTIC_IN).build())
-                    .spawn(level, blockPos.x + 0.5, blockPos.y + 0.5, blockPos.z + 0.5)
+                    .spawn(level, x, y, z)
             }
 
 
-            if (level!!.gameTime % 8L == 0L) {
-                val x = (worldPosition.x.toFloat() + 0.5f).toDouble()
-                val y = (worldPosition.y.toFloat() + 0.5f).toDouble()
-                val z = (worldPosition.z.toFloat() + 0.5f).toDouble()
+            if (level!!.gameTime % 2L == 0L) {
 
-                val lifeTime = 20 * 2
-                WorldParticleBuilder.create(LodestoneParticleRegistry.STAR_PARTICLE)
+                WorldParticleBuilder.create(LodestoneParticleRegistry.TWINKLE_PARTICLE)
                     .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
-                    .setScaleData(GenericParticleData.create(0.5f, 0.0f).build())
-                    .setTransparencyData(GenericParticleData.create(0.2f, 0.0f).build())
-                    .setColorData(ColorParticleData.create(firstColor2, secondColor2).setEasing(Easing.SINE_IN).setCoefficient(0.5f).build())
-                    .setSpinData(SpinParticleData.create(0.0f, 0.05f).setEasing(Easing.QUARTIC_IN).build())
-                    .setLifetime(lifeTime)
+                    .setScaleData(GenericParticleData.create(0.2f, 0f).build())
+                    .setTransparencyData(GenericParticleData.create(0.2f, 0.8f).build())
+                    .setColorData(
+                        ColorParticleData.create(firstColor, secondColor).setEasing(Easing.SINE_IN).setCoefficient(0.5f)
+                            .build()
+                    )
+                    .setSpinData(SpinParticleData.create(0f, 0.4f).setEasing(Easing.QUARTIC_IN).build())
+                    .setLifetime(20)
                     .enableNoClip()
-                    .spawn(this.level, x, y, z)
+                    .spawn(level, x, y, z)
             }
         }
     }
