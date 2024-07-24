@@ -16,6 +16,18 @@ data class SimpleSpiritCharge(
     var umbralCharge: Int = 0
 ) {
 
+    fun setInfiniteCount(){
+        aqueousCharge = 50
+        aerialCharge = 50
+        earthenCharge = 50
+        arcaneCharge = 50
+        infernalCharge = 50
+        eldrichCharge = 50
+        wickedCharge = 50
+        sacredCharge = 50
+        umbralCharge = 50
+    }
+
     fun shouldBeInfinite(): Boolean{
         if (aqueousCharge < 50) {
             return false

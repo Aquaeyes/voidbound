@@ -42,15 +42,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         set(value) {
             field = value
             if (value) {
-                simpleSpiritCharge.aqueousCharge = 50
-                simpleSpiritCharge.aerialCharge = 50
-                simpleSpiritCharge.earthenCharge = 50
-                simpleSpiritCharge.arcaneCharge = 50
-                simpleSpiritCharge.infernalCharge = 50
-                simpleSpiritCharge.eldrichCharge = 50
-                simpleSpiritCharge.wickedCharge = 50
-                simpleSpiritCharge.sacredCharge = 50
-                simpleSpiritCharge.umbralCharge = 50
+                simpleSpiritCharge.setInfiniteCount()
                 notifyUpdate()
             }
         }
