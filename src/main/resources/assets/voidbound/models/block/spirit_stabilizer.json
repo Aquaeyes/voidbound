@@ -1,0 +1,30 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"texture_size": [32, 32],
+	"textures": {
+		"crucible": "malum:block/spirit_crucible"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 12, 16],
+			"faces": {
+				"north": {"uv": [0, 8, 8, 14], "texture": "#crucible", "cullface": "north"},
+				"east": {"uv": [0, 8, 8, 14], "texture": "#crucible", "cullface": "east"},
+				"south": {"uv": [0, 8, 8, 14], "texture": "#crucible", "cullface": "south"},
+				"west": {"uv": [0, 8, 8, 14], "texture": "#crucible", "cullface": "west"},
+				"up": {"uv": [0, 0, 8, 8], "texture": "#crucible"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#crucible", "cullface": "down"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "bottom",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": [0]
+		}
+	]
+}
