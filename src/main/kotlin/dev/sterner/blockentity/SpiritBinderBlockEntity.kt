@@ -39,6 +39,21 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
     var entity: PathfinderMob? = null
 
     var infinite = false
+        set(value) {
+            field = value
+            if (value) {
+                simpleSpiritCharge.aqueousCharge = 50
+                simpleSpiritCharge.aerialCharge = 50
+                simpleSpiritCharge.earthenCharge = 50
+                simpleSpiritCharge.arcaneCharge = 50
+                simpleSpiritCharge.infernalCharge = 50
+                simpleSpiritCharge.eldrichCharge = 50
+                simpleSpiritCharge.wickedCharge = 50
+                simpleSpiritCharge.sacredCharge = 50
+                simpleSpiritCharge.umbralCharge = 50
+                notifyUpdate()
+            }
+        }
 
     fun tick() {
         if (level != null) {
@@ -76,6 +91,9 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
     }
 
     fun removeSpiritFromCharge(type: MalumSpiritType, count: Int) : Boolean {
+        if (infinite) {
+            return true
+        }
         val bl = simpleSpiritCharge.removeFromCharge(type, count)
         notifyUpdate()
         return bl
