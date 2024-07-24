@@ -1,0 +1,32 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"4": "voidbound:block/spirit_stabilizer_hex_ash",
+		"particle": "voidbound:block/spirit_stabilizer_hex_ash"
+	},
+	"elements": [
+		{
+			"from": [5, 10, 5],
+			"to": [11, 13, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5, 10, 5]},
+			"faces": {
+				"north": {"uv": [5, 11, 11, 14], "texture": "#4"},
+				"east": {"uv": [2, 5, 5, 11], "rotation": 270, "texture": "#4"},
+				"south": {"uv": [5, 2, 11, 5], "texture": "#4"},
+				"west": {"uv": [11, 5, 14, 11], "rotation": 90, "texture": "#4"},
+				"up": {"uv": [11, 11, 5, 5], "texture": "#4"},
+				"down": {"uv": [11, 5, 5, 11], "texture": "#4"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "group",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4, 5]
+		},
+		6
+	]
+}
