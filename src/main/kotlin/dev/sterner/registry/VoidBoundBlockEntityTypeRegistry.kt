@@ -1,6 +1,7 @@
 package dev.sterner.registry
 
 import dev.sterner.VoidBound
+import dev.sterner.blockentity.DestabilizedSpiritRiftBlockEntity
 import dev.sterner.blockentity.SpiritBinderBlockEntity
 import dev.sterner.blockentity.SpiritStabilizerBlockEntity
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
@@ -28,5 +29,12 @@ object VoidBoundBlockEntityTypeRegistry {
             .build(null)
     }
 
+    var DESTABILIZED_SPIRIT_RIFT = BLOCK_ENTITY_TYPES.register("destabilized_spirit_rift") {
+        BlockEntityType.Builder.of(
+            { pos, state -> DestabilizedSpiritRiftBlockEntity(pos, state)},
+            VoidBoundBlockRegistry.DESTABILIZED_SPIRIT_RIFT.get()
+        )
+            .build(null)
+    }
 
 }

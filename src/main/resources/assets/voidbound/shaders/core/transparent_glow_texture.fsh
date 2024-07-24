@@ -8,6 +8,7 @@ uniform sampler2D Sampler0;
 
 uniform float GameTime;
 uniform float Alpha;
+uniform vec3 SphereColor;
 
 uniform vec4 ColorModulator;
 uniform float FogStart;
@@ -55,7 +56,7 @@ void main() {
     c /= float(5);
     c = 1.17 - pow(c, 1.4);
     vec3 colour = vec3(pow(abs(c), 8.0));
-    colour = clamp(colour + vec3(0.8, 0.8, 1.0), 0.0, 1.0);
+    colour = clamp(colour + SphereColor, 0.0, 1.0);
 
     if (length(colour.rgb) < 0.1 * 3.0) {
         discard;

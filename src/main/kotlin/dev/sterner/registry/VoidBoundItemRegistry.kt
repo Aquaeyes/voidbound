@@ -26,4 +26,8 @@ object VoidBoundItemRegistry {
     val SPIRIT_STABILIZER = ITEMS.register("spirit_stabilizer") {
         BlockItem(VoidBoundBlockRegistry.SPIRIT_STABILIZER.get(), Item.Properties())
     }
+
+    val DESTABILIZED_SPIRIT_RIFT = ITEMS.register("destabilized_spirit_rift") {
+        BlockItem(VoidBoundBlockRegistry.DESTABILIZED_SPIRIT_RIFT.get(), Item.Properties())
+    }
 }

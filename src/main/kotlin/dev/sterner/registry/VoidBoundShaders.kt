@@ -17,7 +17,7 @@ object VoidBoundShaders {
     var GLOW_TEXTURE: ShaderHolder = ShaderHolder(
         ResourceLocation(VoidBound.modid, "transparent_glow_texture"),
         DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP,
-        "LumiTransparency", "Alpha"
+        "LumiTransparency", "Alpha", "SphereR", "SphereG", "SphereB"
     )
 
     fun init() {

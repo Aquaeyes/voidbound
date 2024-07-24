@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
+import org.joml.Vector3f
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry.LodestoneCompositeStateBuilder
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
@@ -38,7 +39,7 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
         poseStack.translate(0.5, 1.5, 0.5)
 
         val interpolatedAlpha = Mth.lerp(partialTick, blockEntity.previousAlpha, blockEntity.alpha)
-
+        val rgb: Vector3f = blockEntity.color
 
         val renderType = VoidBoundRenderTypes.TRANSPARENT_GLOW_TEXTURE.applyWithModifierAndCache(
             TOKEN
@@ -48,11 +49,13 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
             )
         }
 
+        println(rgb)
         val builder = VFXBuilders.createWorld()
             .setRenderType(LodestoneRenderTypeRegistry.applyUniformChanges(
                 renderType
             ) { s: ShaderInstance ->
                 s.safeGetUniform("Alpha").set(interpolatedAlpha)
+                s.safeGetUniform("SphereColor").set(rgb)
             })
 
         builder.renderSphere(poseStack,

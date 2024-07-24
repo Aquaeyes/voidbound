@@ -1,5 +1,6 @@
 package dev.sterner
 
+import dev.sterner.client.DestabilizedSpiritRiftBlockEntityRenderer
 import dev.sterner.client.ParticleEntityRenderer
 import dev.sterner.client.SpiritBinderBlockEntityRenderer
 import dev.sterner.client.SpiritStabilizerBlockEntityRenderer
@@ -30,20 +31,14 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
         VoidBoundShaders.init()
 
-        BlockEntityRenderers.register(
-            VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER.get(),
-            ::SpiritBinderBlockEntityRenderer
-        )
-
-        BlockEntityRenderers.register(
-            VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER_STABILIZER.get(),
-            ::SpiritStabilizerBlockEntityRenderer
-        )
+        BlockEntityRenderers.register(VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER.get(), ::SpiritBinderBlockEntityRenderer)
+        BlockEntityRenderers.register(VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER_STABILIZER.get(), ::SpiritStabilizerBlockEntityRenderer)
+        BlockEntityRenderers.register(VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get(), ::DestabilizedSpiritRiftBlockEntityRenderer)
 
         EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.PARTICLE_ENTITY.get(), ::ParticleEntityRenderer)
     }
 
-    fun id(s: String): Any {
-        return ResourceLocation(modid, s)
+    fun id(name: String): Any {
+        return ResourceLocation(modid, name)
     }
 }

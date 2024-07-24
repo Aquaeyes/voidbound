@@ -18,6 +18,7 @@ import net.minecraft.world.entity.PathfinderMob
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
+import org.joml.Vector3f
 import team.lodestar.lodestone.systems.particle.ParticleEffectSpawner
 import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
 import team.lodestar.lodestone.systems.particle.data.GenericParticleData
@@ -28,9 +29,10 @@ import java.util.function.Consumer
 import java.util.function.Supplier
 
 class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlockEntity(
-    VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER.get(), pos,
-    blockState
+    VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER.get(), blockState
 ) {
+
+    var color: Vector3f = Vector3f(0.8f, 0.8f, 1.0f)
 
     var alpha: Float = 0f
     var previousAlpha: Float = 0f
