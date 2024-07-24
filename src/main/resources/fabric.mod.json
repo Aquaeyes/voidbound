@@ -25,6 +25,12 @@
     ],
     "cardinal-components-world": [
       "dev.sterner.registry.VoidBoundComponentRegistry"
+    ],
+    "fabric-datagen": [
+      {
+        "value": "dev.sterner.data.VoidBoundDataGenerator",
+        "adapter": "kotlin"
+      }
     ]
   },
   "mixins": [

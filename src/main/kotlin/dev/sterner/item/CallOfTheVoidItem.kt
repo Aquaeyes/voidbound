@@ -1,5 +1,6 @@
 package dev.sterner.item
 
+import com.sammy.malum.MalumMod
 import com.sammy.malum.common.worldgen.WeepingWellStructure
 import com.sammy.malum.registry.common.worldgen.StructureRegistry
 import dev.sterner.registry.VoidBoundTags
@@ -19,9 +20,7 @@ class CallOfTheVoidItem(properties: Properties) : Item(properties) {
 
         if (level is ServerLevel) {
             //MalumMod.malumPath("weeping_well")
-            var struct: StructureType<WeepingWellStructure> = StructureRegistry.WEEPING_WELL.get()
             val serverLevel = level as ServerLevel
-            val optional = level.registryAccess().registryOrThrow(Registries.STRUCTURE)
             val blockPos = serverLevel.findNearestMapStructure(VoidBoundTags.WEEPING_WELL, entity.onPos, 200, true)
             println("1")
             if (blockPos != null) {
