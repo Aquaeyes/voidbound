@@ -46,6 +46,13 @@ class CallOfTheVoidItem(properties: Properties) : Item(properties) {
         }
         if (tag.contains("Active") && tag.getBoolean("Active")) {
             tag.putBoolean("Active", false)
+            if (tag.contains("StructureLoc")) {
+                tag.remove("StructureLoc")
+            }
+            if (tag.contains("Glowing")) {
+                tag.remove("Glowing")
+            }
+
         } else {
             if (tag.contains("Active") && !tag.getBoolean("Active")) {
                 tag.putBoolean("Active", true)
@@ -75,12 +82,14 @@ class CallOfTheVoidItem(properties: Properties) : Item(properties) {
                     100,
                     false
                 )
-        println(pair?.first)
+
         if (pair?.first != null) {
             if (stack.tag == null) {
                 stack.tag = CompoundTag()
             }
-            stack.tag!!.putLong("StructureLoc", pair.first.asLong())
+            val structPos: BlockPos = (pair.first).offset(6, -25, -6)
+            println(structPos)
+            stack.tag!!.putLong("StructureLoc", structPos.asLong())
         }
     }
 
@@ -147,7 +156,7 @@ class CallOfTheVoidItem(properties: Properties) : Item(properties) {
         val angleInDegrees = Math.toDegrees(angle)
 
         // Check if the angle is within the margin
-        println(angleInDegrees)
+        //println(angleInDegrees)
         return angleInDegrees <= margin
     }
 

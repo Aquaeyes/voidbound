@@ -56,7 +56,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         if (level != null) {
             if (level!!.getBlockState(blockPos).hasProperty(SpiritBinderBlock.MODIFIER) && level!!.getBlockState(blockPos).getValue(SpiritBinderBlock.MODIFIER) == Modifier.BRILLIANT) {
                 tickBrilliantState()
-            } else if (level!!.getBlockState(blockPos).getValue(SpiritBinderBlock.MODIFIER) == Modifier.HEX_ASH) {
+            } else if (level!!.getBlockState(blockPos).hasProperty(SpiritBinderBlock.MODIFIER) && level!!.getBlockState(blockPos).getValue(SpiritBinderBlock.MODIFIER) == Modifier.HEX_ASH) {
                 tickHexAshState()
             } else {
                 tickNoneState()
