@@ -54,10 +54,6 @@ abstract class SyncedBlockEntity(type: BlockEntityType<*>?, pos: BlockPos, state
         sendData()
     }
 
-    fun containedChunk(): LevelChunk {
-        return level!!.getChunkAt(worldPosition)
-    }
-
     override fun deserializeNBT(state: BlockState, nbt: CompoundTag) {
         this.load(nbt)
     }

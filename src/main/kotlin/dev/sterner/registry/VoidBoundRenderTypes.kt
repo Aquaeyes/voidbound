@@ -18,7 +18,7 @@ object VoidBoundRenderTypes {
                 .setShaderState(VoidBoundShaders.GLOW_TEXTURE)
                 .setTransparencyState(StateShards.NORMAL_TRANSPARENCY)
                 .setLightmapState(LodestoneRenderTypeRegistry.LIGHTMAP)
-                .setCullState(LodestoneRenderTypeRegistry.CULL)
+                .setCullState(LodestoneRenderTypeRegistry.NO_CULL)
                 .setTextureState(token.get())
         )
     }
