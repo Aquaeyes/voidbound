@@ -6,6 +6,7 @@ import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.visual_effects.SpiritLightSpecs
 import dev.sterner.api.Modifier
 import dev.sterner.api.SimpleSpiritCharge
+import dev.sterner.api.SyncedBlockEntity
 import dev.sterner.block.SpiritBinderBlock
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos

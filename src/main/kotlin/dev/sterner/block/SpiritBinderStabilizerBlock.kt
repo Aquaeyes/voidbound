@@ -1,11 +1,16 @@
 package dev.sterner.block
 
+import dev.sterner.blockentity.SpiritBinderBlockEntity
+import dev.sterner.blockentity.SpiritStabilizerBlockEntity
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityTicker
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.shapes.BooleanOp
 import net.minecraft.world.phys.shapes.CollisionContext
@@ -18,6 +23,18 @@ class SpiritBinderStabilizerBlock(properties: Properties) : BaseEntityBlock(
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
         return VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER_STABILIZER.get().create(pos, state)
+    }
+
+    override fun <T : BlockEntity?> getTicker(
+        level: Level,
+        blockState: BlockState,
+        blockEntityType: BlockEntityType<T>
+    ): BlockEntityTicker<T> {
+        return BlockEntityTicker { _, _, _, blockEntity ->
+            if (blockEntity is SpiritStabilizerBlockEntity) {
+                (blockEntity as SpiritStabilizerBlockEntity).tick()
+            }
+        }
     }
 
     override fun getRenderShape(state: BlockState): RenderShape {
