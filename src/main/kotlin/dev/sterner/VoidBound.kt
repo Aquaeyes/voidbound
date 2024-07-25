@@ -50,15 +50,6 @@ object VoidBound : ModInitializer, ClientModInitializer {
             val v = if(itemStack.tag != null && itemStack.tag!!.contains("Glowing") && itemStack.tag!!.getBoolean("Glowing")) 1f else 0f
             return@register v
         }
-
-        /*
-            ModelPredicateProviderRegistry.register(EXAMPLE_BOW, Identifier.ofVanilla("pulling"), (itemStack, clientWorld, livingEntity) -> {
-      if (livingEntity == null) {
-        return 0.0F;
-      }
-      return livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-    });
-         */
     }
 
     fun id(name: String): ResourceLocation {

@@ -167,12 +167,6 @@ class CallOfTheVoidItem(properties: Properties) : Item(properties) {
         if (stackTag.contains("Active") && !stackTag.getBoolean("Active")) {
             tooltipComponents.add(Component.translatable("Inactive"))
         }
-        if (stackTag.contains("StructureLoc")) {
-            tooltipComponents.add(Component.translatable("HasStructureLoc"))
-        }
-        if (stackTag.contains("Glowing") && stackTag.getBoolean("Glowing")) {
-            tooltipComponents.add(Component.translatable("Glowing"))
-        }
 
         super.appendHoverText(stack, level, tooltipComponents, isAdvanced)
     }
