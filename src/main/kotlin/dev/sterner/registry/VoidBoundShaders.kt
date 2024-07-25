@@ -2,7 +2,6 @@ package dev.sterner.registry
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import com.mojang.datafixers.util.Pair
-import com.sammy.malum.MalumMod
 import dev.sterner.VoidBound
 import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.resources.ResourceLocation

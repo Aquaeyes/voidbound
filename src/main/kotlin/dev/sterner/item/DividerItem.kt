@@ -1,15 +1,11 @@
 package dev.sterner.item
 
 import com.sammy.malum.common.entity.FloatingItemEntity
-import com.sammy.malum.common.entity.spirit.SpiritItemEntity
 import com.sammy.malum.common.item.IMalumEventResponderItem
 import com.sammy.malum.common.item.spirit.SpiritShardItem
-import com.sammy.malum.registry.common.DamageTypeRegistry
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.entity.ParticleEntity
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingHurtEvent
 import net.minecraft.core.BlockPos
-import net.minecraft.util.Mth
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.InteractionResultHolder
@@ -19,11 +15,9 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.UseAnim
 import net.minecraft.world.item.context.UseOnContext
-import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
-import java.util.*
 
 
 class DividerItem(properties: Properties) : Item(properties), IMalumEventResponderItem {
@@ -63,8 +57,10 @@ class DividerItem(properties: Properties) : Item(properties), IMalumEventRespond
                     }
 
                     for (i in 0..10) {
-                        val dest = spirit.position().add(8.0, (level.random.nextDouble() - 0.5), (level.random.nextDouble() - 0.5))
-                        val nDest = spirit.position().add(-8.0, (level.random.nextDouble() - 0.5), (level.random.nextDouble() - 0.5))
+                        val dest = spirit.position()
+                            .add(8.0, (level.random.nextDouble() - 0.5), (level.random.nextDouble() - 0.5))
+                        val nDest = spirit.position()
+                            .add(-8.0, (level.random.nextDouble() - 0.5), (level.random.nextDouble() - 0.5))
                         val particle = ParticleEntity(level, dest)
                         val nParticle = ParticleEntity(level, nDest)
 

@@ -53,7 +53,8 @@ class ParticleEntity(level: Level) : Entity(VoidBoundEntityTypeRegistry.PARTICLE
                 }
 
                 val velocity = Mth.clamp(this.windDown - 0.25f, 0.0f, 0.75f) * 5.0f
-                val desiredMotion = destination.subtract(this.position()).normalize().multiply(velocity.toDouble(), velocity.toDouble(), velocity.toDouble())
+                val desiredMotion = destination.subtract(this.position()).normalize()
+                    .multiply(velocity.toDouble(), velocity.toDouble(), velocity.toDouble())
                 val easing = 0.01
                 val xMotion = Mth.lerp(easing, deltaMovement.x, desiredMotion.x).toFloat()
                 val yMotion = Mth.lerp(easing, deltaMovement.y, desiredMotion.y).toFloat()

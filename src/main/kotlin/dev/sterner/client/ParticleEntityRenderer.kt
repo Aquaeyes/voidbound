@@ -30,7 +30,9 @@ class ParticleEntityRenderer(context: EntityRendererProvider.Context) : EntityRe
         val spiritType: MalumSpiritType? = entity.spiritType
         if (spiritType != null) {
             val trailBuilder =
-                SpiritBasedWorldVFXBuilder.create(spiritType).setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE_TRIANGLE.applyAndCache(MalumRenderTypeTokens.CONCENTRATED_TRAIL))
+                SpiritBasedWorldVFXBuilder.create(spiritType).setRenderType(
+                    LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE_TRIANGLE.applyAndCache(MalumRenderTypeTokens.CONCENTRATED_TRAIL)
+                )
             RenderUtils.renderEntityTrail(
                 poseStack,
                 trailBuilder,
@@ -43,7 +45,12 @@ class ParticleEntityRenderer(context: EntityRendererProvider.Context) : EntityRe
             )
         }
 
-        FloatingItemEntityRenderer.renderSpiritGlimmer(poseStack, Color(200,200,255,200), Color(100,100,255,200), partialTick)
+        FloatingItemEntityRenderer.renderSpiritGlimmer(
+            poseStack,
+            Color(200, 200, 255, 200),
+            Color(100, 100, 255, 200),
+            partialTick
+        )
         super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight)
     }
 

@@ -4,8 +4,9 @@
   "item.voidbound.spirit_binder": "Spirit Binder",
   "item.voidbound.spirit_stabilizer": "Spirit Stabilizer",
   "item.voidbound.call_of_the_void": "Call of the Void",
+  "item.voidbound.destabilized_spirit_rift": "Spirit Rift",
+  "block.voidbound.destabilized_spirit_rift": "Spirit Rift",
   "block.voidbound.spirit_binder": "Spirit Binder",
   "block.voidbound.spirit_stabilizer": "Spirit Stabilizer",
-
   "itemGroup.voidbound": "Void Bound"
 }

@@ -2,7 +2,6 @@ package dev.sterner.registry
 
 import dev.sterner.VoidBound
 import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.levelgen.structure.Structure
 

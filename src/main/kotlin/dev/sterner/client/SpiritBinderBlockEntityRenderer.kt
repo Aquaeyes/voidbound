@@ -2,14 +2,11 @@ package dev.sterner.client
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexFormat
-import com.sammy.malum.client.SpiritBasedWorldVFXBuilder
 import com.sammy.malum.client.renderer.entity.FloatingItemEntityRenderer
 import dev.sterner.VoidBound
 import dev.sterner.blockentity.SpiritBinderBlockEntity
 import dev.sterner.registry.VoidBoundRenderTypes
-import dev.sterner.registry.VoidBoundShaders
 import net.minecraft.client.renderer.MultiBufferSource
-import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
@@ -57,13 +54,20 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
                 s.safeGetUniform("SphereColor").set(rgb)
             })
 
-        builder.renderSphere(poseStack,
+        builder.renderSphere(
+            poseStack,
             0.5f,
             20,
-            20)
+            20
+        )
 
 
-        FloatingItemEntityRenderer.renderSpiritGlimmer(poseStack, Color(200,200,255,200), Color(100,100,255,200), partialTick)
+        FloatingItemEntityRenderer.renderSpiritGlimmer(
+            poseStack,
+            Color(200, 200, 255, 200),
+            Color(100, 100, 255, 200),
+            partialTick
+        )
         poseStack.popPose()
     }
 

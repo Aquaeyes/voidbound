@@ -1,6 +1,5 @@
 package dev.sterner.client.particle
 
-import com.sammy.malum.client.particles.spiritflame.SpiritFlameParticle
 import net.fabricmc.fabric.impl.client.particle.FabricSpriteProviderImpl
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.particle.Particle
@@ -20,7 +19,7 @@ class RiftParticleType : LodestoneWorldParticleType() {
             mx: Double,
             my: Double,
             mz: Double
-        ): Particle? {
+        ): Particle {
             return RiftParticle(world, data, sprite as FabricSpriteProviderImpl, x, y, z, mx, my, mz)
         }
     }

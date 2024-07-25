@@ -1,6 +1,5 @@
 package dev.sterner.registry
 
-import com.sammy.malum.MalumMod
 import dev.onyxstudios.cca.api.v3.component.ComponentKey
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry
 import dev.onyxstudios.cca.api.v3.world.WorldComponentFactoryRegistry

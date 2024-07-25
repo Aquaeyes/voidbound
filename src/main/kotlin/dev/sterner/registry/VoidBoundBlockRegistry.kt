@@ -4,13 +4,10 @@ import dev.sterner.VoidBound
 import dev.sterner.block.DestabilizedSpiritRiftBlock
 import dev.sterner.block.SpiritBinderBlock
 import dev.sterner.block.SpiritBinderStabilizerBlock
-import dev.sterner.blockentity.DestabilizedSpiritRiftBlockEntity
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
 import net.minecraft.world.level.material.MapColor
 
 object VoidBoundBlockRegistry {

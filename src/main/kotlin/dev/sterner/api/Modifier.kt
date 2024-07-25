@@ -1,6 +1,7 @@
 package dev.sterner.api
 
 import net.minecraft.util.StringRepresentable
+import java.util.*
 
 enum class Modifier(name: String) : StringRepresentable {
     NONE("none"),
@@ -8,6 +9,6 @@ enum class Modifier(name: String) : StringRepresentable {
     HEX_ASH("hex_ash");
 
     override fun getSerializedName(): String {
-        return this.name.toLowerCase()
+        return this.name.lowercase(Locale.getDefault())
     }
 }

@@ -6,7 +6,8 @@ import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 
-class SpiritStabilizerBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntityRenderer<SpiritStabilizerBlockEntity> {
+class SpiritStabilizerBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
+    BlockEntityRenderer<SpiritStabilizerBlockEntity> {
 
     override fun render(
         blockEntity: SpiritStabilizerBlockEntity,

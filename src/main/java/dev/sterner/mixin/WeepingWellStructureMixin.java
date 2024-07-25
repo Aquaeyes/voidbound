@@ -15,7 +15,7 @@ import java.util.Optional;
 public class WeepingWellStructureMixin {
 
     @Inject(method = "findGenerationPoint", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/levelgen/structure/pools/JigsawPlacement;addPieces(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/Holder;Ljava/util/Optional;ILnet/minecraft/core/BlockPos;ZLjava/util/Optional;I)Ljava/util/Optional;"))
-    private void void_bound$cacheStructureLoc(Structure.GenerationContext pContext, CallbackInfoReturnable<Optional<Structure.GenerationStub>> cir, @Local(index = 2) BlockPos validPos){
+    private void void_bound$cacheStructureLoc(Structure.GenerationContext pContext, CallbackInfoReturnable<Optional<Structure.GenerationStub>> cir, @Local(index = 2) BlockPos validPos) {
 
     }
 }

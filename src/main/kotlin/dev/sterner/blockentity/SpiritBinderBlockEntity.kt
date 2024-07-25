@@ -52,11 +52,17 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
             }
         }
 
-    fun tick(){
+    fun tick() {
         if (level != null) {
-            if (level!!.getBlockState(blockPos).hasProperty(SpiritBinderBlock.MODIFIER) && level!!.getBlockState(blockPos).getValue(SpiritBinderBlock.MODIFIER) == Modifier.BRILLIANT) {
+            if (level!!.getBlockState(blockPos).hasProperty(SpiritBinderBlock.MODIFIER) && level!!.getBlockState(
+                    blockPos
+                ).getValue(SpiritBinderBlock.MODIFIER) == Modifier.BRILLIANT
+            ) {
                 tickBrilliantState()
-            } else if (level!!.getBlockState(blockPos).hasProperty(SpiritBinderBlock.MODIFIER) && level!!.getBlockState(blockPos).getValue(SpiritBinderBlock.MODIFIER) == Modifier.HEX_ASH) {
+            } else if (level!!.getBlockState(blockPos).hasProperty(SpiritBinderBlock.MODIFIER) && level!!.getBlockState(
+                    blockPos
+                ).getValue(SpiritBinderBlock.MODIFIER) == Modifier.HEX_ASH
+            ) {
                 tickHexAshState()
             } else {
                 tickNoneState()
@@ -89,7 +95,8 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
 
             } else {
                 if (entity == null) {
-                    val list = level!!.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0)).filter { it.health / it.maxHealth <= 0.25 && it.isAlive }
+                    val list = level!!.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0))
+                        .filter { it.health / it.maxHealth <= 0.25 && it.isAlive }
                     if (list.isNotEmpty()) {
                         entity = list.first()
                     }
@@ -118,7 +125,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         }
     }
 
-    fun removeSpiritFromCharge(type: MalumSpiritType, count: Int) : Boolean {
+    fun removeSpiritFromCharge(type: MalumSpiritType, count: Int): Boolean {
         val bl = simpleSpiritCharge.removeFromCharge(type, count)
         notifyUpdate()
         return bl
@@ -153,12 +160,13 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         tag.putBoolean("Infinite", infinite)
     }
 
-    fun spawnSpiritParticle(entity: LivingEntity, type: MalumSpiritType){
+    fun spawnSpiritParticle(entity: LivingEntity, type: MalumSpiritType) {
         val behavior =
             Consumer<WorldParticleBuilder> { b: WorldParticleBuilder ->
                 b.addTickActor { p: LodestoneWorldParticle ->
                     val particlePos = Vec3(p.x, p.y, p.z)
-                    val targetPos = Vec3(blockPos.x + 0.5, blockPos.y + 1.5, blockPos.z + 0.5) // Target is the center of the block
+                    val targetPos =
+                        Vec3(blockPos.x + 0.5, blockPos.y + 1.5, blockPos.z + 0.5) // Target is the center of the block
                     val direction = targetPos.subtract(particlePos).normalize()
                     p.particleSpeed = direction.scale(0.05) //
                 }
@@ -173,41 +181,43 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         val distance = startPos.distanceTo(Vec3(blockPos.x + 0.5, blockPos.y + 1.5, blockPos.z + 0.5))
         val baseLifetime = 10 // Base lifetime in ticks
         val speed = 0.05 // Speed of the particle
-        val adjustedLifetime = (distance / speed).toInt().coerceAtLeast(baseLifetime) - 20 // Adjusted lifetime based on distance
+        val adjustedLifetime =
+            (distance / speed).toInt().coerceAtLeast(baseLifetime) - 20 // Adjusted lifetime based on distance
 
-        val lightSpecs: ParticleEffectSpawner = SpiritLightSpecs.spiritLightSpecs(level, Vec3(xRand, yRand , zRand), type)
+        val lightSpecs: ParticleEffectSpawner =
+            SpiritLightSpecs.spiritLightSpecs(level, Vec3(xRand, yRand, zRand), type)
         lightSpecs.builder.act { b: WorldParticleBuilder ->
             b.act(behavior)
                 .modifyColorData { d: ColorParticleData ->
                     d.multiplyCoefficient(0.35f)
                 }
                 .modifyData(
-                Supplier { b.scaleData },
-                Consumer { d: GenericParticleData ->
-                    d.multiplyValue(2.0f).multiplyCoefficient(0.9f)
-                })
+                    Supplier { b.scaleData },
+                    Consumer { d: GenericParticleData ->
+                        d.multiplyValue(2.0f).multiplyCoefficient(0.9f)
+                    })
                 .modifyData(
-                Supplier { b.transparencyData },
-                Consumer { d: GenericParticleData ->
-                    d.multiplyCoefficient(0.9f)
-                }).multiplyLifetime(1.5f)
+                    Supplier { b.transparencyData },
+                    Consumer { d: GenericParticleData ->
+                        d.multiplyCoefficient(0.9f)
+                    }).multiplyLifetime(1.5f)
                 .setLifetime(b.particleOptions.lifetimeSupplier.get() as Int + adjustedLifetime)
         }
 
         lightSpecs.bloomBuilder.act { b: WorldParticleBuilder ->
             b.act(behavior).modifyColorData { d: ColorParticleData ->
-                    d.multiplyCoefficient(0.35f)
+                d.multiplyCoefficient(0.35f)
             }
                 .modifyData(
-                Supplier { b.scaleData },
-                Consumer { d: GenericParticleData ->
-                    d.multiplyValue(1.6f).multiplyCoefficient(0.9f)
-                })
+                    Supplier { b.scaleData },
+                    Consumer { d: GenericParticleData ->
+                        d.multiplyValue(1.6f).multiplyCoefficient(0.9f)
+                    })
                 .modifyData(
-                Supplier { b.transparencyData },
-                Consumer { d: GenericParticleData ->
-                    d.multiplyCoefficient(0.9f)
-                })
+                    Supplier { b.transparencyData },
+                    Consumer { d: GenericParticleData ->
+                        d.multiplyCoefficient(0.9f)
+                    })
                 .setLifetime(((b.particleOptions.lifetimeSupplier.get() as Int).toFloat() + adjustedLifetime).toInt())
         }
 
@@ -229,10 +239,10 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
                     MobCategory.MONSTER -> Optional.of(SpiritDataReloadListener.DEFAULT_MONSTER_SPIRIT_DATA.dataEntries)
                     MobCategory.CREATURE -> Optional.of(SpiritDataReloadListener.DEFAULT_CREATURE_SPIRIT_DATA.dataEntries)
                     MobCategory.AMBIENT -> Optional.of(SpiritDataReloadListener.DEFAULT_AMBIENT_SPIRIT_DATA.dataEntries)
-                    MobCategory.AXOLOTLS ->  Optional.of(SpiritDataReloadListener.DEFAULT_AXOLOTL_SPIRIT_DATA.dataEntries)
-                    MobCategory.UNDERGROUND_WATER_CREATURE ->  Optional.of(SpiritDataReloadListener.DEFAULT_UNDERGROUND_WATER_CREATURE_SPIRIT_DATA.dataEntries)
-                    MobCategory.WATER_CREATURE ->  Optional.of(SpiritDataReloadListener.DEFAULT_WATER_CREATURE_SPIRIT_DATA.dataEntries)
-                    MobCategory.WATER_AMBIENT ->  Optional.of(SpiritDataReloadListener.DEFAULT_WATER_AMBIENT_SPIRIT_DATA.dataEntries)
+                    MobCategory.AXOLOTLS -> Optional.of(SpiritDataReloadListener.DEFAULT_AXOLOTL_SPIRIT_DATA.dataEntries)
+                    MobCategory.UNDERGROUND_WATER_CREATURE -> Optional.of(SpiritDataReloadListener.DEFAULT_UNDERGROUND_WATER_CREATURE_SPIRIT_DATA.dataEntries)
+                    MobCategory.WATER_CREATURE -> Optional.of(SpiritDataReloadListener.DEFAULT_WATER_CREATURE_SPIRIT_DATA.dataEntries)
+                    MobCategory.WATER_AMBIENT -> Optional.of(SpiritDataReloadListener.DEFAULT_WATER_AMBIENT_SPIRIT_DATA.dataEntries)
 
                     else -> Optional.empty()
                 }

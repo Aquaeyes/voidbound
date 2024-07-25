@@ -1,8 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "voidbound:block/spirit_stabilizer",
-      "x": 180
+      "model": "voidbound:block/spirit_stabilizer"
     }
   }
 }

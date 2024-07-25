@@ -1,16 +1,13 @@
 package dev.sterner.item
 
-import com.mojang.datafixers.util.Pair
 import com.sammy.malum.MalumMod
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
@@ -22,7 +19,6 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.levelgen.structure.Structure
 import net.minecraft.world.phys.Vec3
-import java.util.*
 import kotlin.math.acos
 
 
@@ -62,13 +58,14 @@ class CallOfTheVoidItem(properties: Properties) : Item(properties) {
             tag.putBoolean("Active", false)
         }
         player.getItemInHand(usedHand).tag = tag
-        player.cooldowns.addCooldown(this, 100)
+        player.cooldowns.addCooldown(this, 160)
         return super.use(level, player, usedHand)
     }
 
-    private fun locateStructure(level: ServerLevel, stack: ItemStack, entity: Player){
+    private fun locateStructure(level: ServerLevel, stack: ItemStack, entity: Player) {
         val registry: Registry<Structure> = level.registryAccess().registryOrThrow(Registries.STRUCTURE)
-        val structureKey: ResourceKey<Structure> = ResourceKey.create(Registries.STRUCTURE, MalumMod.malumPath("weeping_well"))
+        val structureKey: ResourceKey<Structure> =
+            ResourceKey.create(Registries.STRUCTURE, MalumMod.malumPath("weeping_well"))
         val featureHolderSet: HolderSet<Structure> = registry.getHolder(structureKey).map { holders ->
             HolderSet.direct(
                 holders
@@ -90,8 +87,7 @@ class CallOfTheVoidItem(properties: Properties) : Item(properties) {
             if (stack.tag == null) {
                 stack.tag = CompoundTag()
             }
-            val structPos: BlockPos = (pair.first).offset(6, -25, -6)
-            println(structPos)
+            val structPos: BlockPos = (pair.first)
             stack.tag!!.putLong("StructureLoc", structPos.asLong())
         }
     }
@@ -137,7 +133,12 @@ class CallOfTheVoidItem(properties: Properties) : Item(properties) {
         super.inventoryTick(stack, level, entity, slotId, isSelected)
     }
 
-    fun isLookingTowards(playerLookDir: Vec3, playerPos: BlockPos, targetPos: BlockPos, margin: Double): Boolean {
+    private fun isLookingTowards(
+        playerLookDir: Vec3,
+        playerPos: BlockPos,
+        targetPos: BlockPos,
+        margin: Double
+    ): Boolean {
         // Calculate the horizontal direction vector from player to target position
         val targetDir = Vec3(
             (targetPos.x - playerPos.x).toDouble(),
