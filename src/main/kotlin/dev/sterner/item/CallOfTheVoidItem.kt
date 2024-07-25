@@ -43,6 +43,7 @@ class CallOfTheVoidItem(properties: Properties) : Item(properties) {
         var tag = player.getItemInHand(usedHand).tag
         if (tag == null) {
             tag = CompoundTag()
+            tag.putBoolean("Active", true)
         }
         if (tag.contains("Active") && tag.getBoolean("Active")) {
             tag.putBoolean("Active", false)
@@ -53,10 +54,12 @@ class CallOfTheVoidItem(properties: Properties) : Item(properties) {
                 tag.remove("Glowing")
             }
 
-        } else {
-            if (tag.contains("Active") && !tag.getBoolean("Active")) {
+        } else if (tag.contains("Active")) {
+            if (!tag.getBoolean("Active")) {
                 tag.putBoolean("Active", true)
             }
+        } else {
+            tag.putBoolean("Active", false)
         }
         player.getItemInHand(usedHand).tag = tag
         player.cooldowns.addCooldown(this, 100)
