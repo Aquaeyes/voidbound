@@ -6,6 +6,8 @@ import net.minecraft.MethodsReturnNonnullByDefault
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.Connection
+import net.minecraft.network.protocol.Packet
+import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -17,11 +19,19 @@ import net.minecraft.world.level.chunk.LevelChunk
 @MethodsReturnNonnullByDefault
 abstract class SyncedBlockEntity(type: BlockEntityType<*>?, pos: BlockPos, state: BlockState?) :
     BlockEntity(type, pos, state), CustomDataPacketHandlingBlockEntity, CustomUpdateTagHandlingBlockEntity {
+
     override fun getUpdateTag(): CompoundTag {
         return writeClient(CompoundTag())
     }
 
+    /*
     override fun getUpdatePacket(): ClientboundBlockEntityDataPacket? {
+        return ClientboundBlockEntityDataPacket.create(this)
+    }
+
+     */
+
+    override fun getUpdatePacket(): Packet<ClientGamePacketListener>? {
         return ClientboundBlockEntityDataPacket.create(this)
     }
 
@@ -35,7 +45,7 @@ abstract class SyncedBlockEntity(type: BlockEntityType<*>?, pos: BlockPos, state
     }
 
     // Special handling for client update packets
-    fun readClient(tag: CompoundTag?) {
+    fun readClient(tag: CompoundTag) {
         load(tag)
     }
 

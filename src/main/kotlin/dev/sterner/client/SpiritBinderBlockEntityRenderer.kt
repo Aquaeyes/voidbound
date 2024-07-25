@@ -35,7 +35,11 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
         poseStack.pushPose()
         poseStack.translate(0.5, 1.5, 0.5)
 
-        val interpolatedAlpha = Mth.lerp(partialTick, blockEntity.previousAlpha, blockEntity.alpha)
+        var interpolatedAlpha = 0f
+        if (blockEntity.previousAlpha != null && blockEntity.alpha != null) {
+            interpolatedAlpha = Mth.lerp(partialTick, blockEntity.previousAlpha!!, blockEntity.alpha!!)
+        }
+
         val rgb: Vector3f = blockEntity.color
 
         val renderType = VoidBoundRenderTypes.TRANSPARENT_GLOW_TEXTURE.applyWithModifierAndCache(

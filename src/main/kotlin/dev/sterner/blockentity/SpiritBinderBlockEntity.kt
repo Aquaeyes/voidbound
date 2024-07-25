@@ -35,9 +35,9 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
 
     var color: Vector3f = Vector3f(0.8f, 0.8f, 1.0f)
 
-    var alpha: Float = 0f
-    var previousAlpha: Float = 0f
-    var targetAlpha: Float = 0f
+    var alpha: Float? = null
+    var previousAlpha: Float? = null
+    var targetAlpha: Float? = null
 
     private var simpleSpiritCharge = SimpleSpiritCharge()
     var counter = 0
@@ -72,7 +72,9 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
             previousAlpha = alpha
 
             // Interpolate alpha towards targetAlpha
-            alpha = Mth.lerp(0.05f, alpha, targetAlpha)
+            if (alpha != null && targetAlpha != null) {
+                alpha = Mth.lerp(0.05f, alpha!!, targetAlpha!!)
+            }
         }
     }
 
@@ -144,21 +146,38 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
     }
 
     override fun load(tag: CompoundTag) {
-        super.load(tag)
         simpleSpiritCharge = simpleSpiritCharge.deserializeNBT(tag)
-        alpha = tag.getFloat("Alpha")
-        previousAlpha = tag.getFloat("PrevAlpha")
-        targetAlpha = tag.getFloat("TargetAlpha")
+        if (tag.contains("Alpha")) {
+            alpha = tag.getFloat("Alpha")
+        }
+        if (tag.contains("PrevAlpha")) {
+            previousAlpha = tag.getFloat("PrevAlpha")
+        }
+        if (tag.contains("TargetAlpha")) {
+            targetAlpha = tag.getFloat("TargetAlpha")
+        }
         infinite = tag.getBoolean("Infinite")
+
+        super.load(tag)
     }
 
     override fun saveAdditional(tag: CompoundTag) {
-        super.saveAdditional(tag)
         simpleSpiritCharge.serializeNBT(tag)
-        tag.putFloat("Alpha", alpha)
-        tag.putFloat("PrevAlpha", previousAlpha)
-        tag.putFloat("TargetAlpha", targetAlpha)
+        if (alpha != null) {
+            tag.putFloat("Alpha", alpha!!)
+        }
+
+        if (previousAlpha != null) {
+            tag.putFloat("PrevAlpha", previousAlpha!!)
+        }
+
+        if (targetAlpha != null) {
+            tag.putFloat("TargetAlpha", targetAlpha!!)
+        }
+
         tag.putBoolean("Infinite", infinite)
+
+        super.saveAdditional(tag)
     }
 
     fun spawnSpiritParticle(entity: LivingEntity, type: MalumSpiritType) {
