@@ -8,6 +8,6 @@ object VoidBoundDataGenerator : DataGeneratorEntrypoint {
 
     override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
         var pack =  fabricDataGenerator.createPack()
-        pack.addProvider { p,s -> VoidBoundTagProvider(p, s) }
+
     }
 }

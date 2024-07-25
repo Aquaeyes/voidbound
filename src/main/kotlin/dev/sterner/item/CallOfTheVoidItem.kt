@@ -1,36 +1,179 @@
 package dev.sterner.item
 
+import com.mojang.datafixers.util.Pair
 import com.sammy.malum.MalumMod
-import com.sammy.malum.common.worldgen.WeepingWellStructure
-import com.sammy.malum.registry.common.worldgen.StructureRegistry
-import dev.sterner.registry.VoidBoundTags
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderSet
+import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.levelgen.structure.StructureType
+import net.minecraft.world.level.levelgen.structure.Structure
+import net.minecraft.world.phys.Vec3
 import java.util.*
+import kotlin.math.acos
+
 
 class CallOfTheVoidItem(properties: Properties) : Item(properties) {
 
+    var cooldown = 0
+
+    override fun allowNbtUpdateAnimation(
+        player: Player?,
+        hand: InteractionHand?,
+        oldStack: ItemStack?,
+        newStack: ItemStack?
+    ): Boolean {
+        return false
+    }
+
+    override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
+        var tag = player.getItemInHand(usedHand).tag
+        if (tag == null) {
+            tag = CompoundTag()
+        }
+        if (tag.contains("Active") && tag.getBoolean("Active")) {
+            tag.putBoolean("Active", false)
+        } else {
+            if (tag.contains("Active") && !tag.getBoolean("Active")) {
+                tag.putBoolean("Active", true)
+            }
+        }
+        player.getItemInHand(usedHand).tag = tag
+        player.cooldowns.addCooldown(this, 100)
+        return super.use(level, player, usedHand)
+    }
+
+    private fun locateStructure(level: ServerLevel, stack: ItemStack, entity: Player){
+        val registry: Registry<Structure> = level.registryAccess().registryOrThrow(Registries.STRUCTURE)
+        val structureKey: ResourceKey<Structure> = ResourceKey.create(Registries.STRUCTURE, MalumMod.malumPath("weeping_well"))
+        val featureHolderSet: HolderSet<Structure> = registry.getHolder(structureKey).map { holders ->
+            HolderSet.direct(
+                holders
+            )
+        }.orElse(null)
+
+        val pair =
+            level.chunkSource
+                .generator
+                .findNearestMapStructure(
+                    level,
+                    featureHolderSet,
+                    entity.blockPosition(),
+                    100,
+                    false
+                )
+        println(pair?.first)
+        if (pair?.first != null) {
+            if (stack.tag == null) {
+                stack.tag = CompoundTag()
+            }
+            stack.tag!!.putLong("StructureLoc", pair.first.asLong())
+        }
+    }
 
     override fun inventoryTick(stack: ItemStack, level: Level, entity: Entity, slotId: Int, isSelected: Boolean) {
 
-        if (level is ServerLevel) {
-            //MalumMod.malumPath("weeping_well")
-            val serverLevel = level as ServerLevel
-            val blockPos = serverLevel.findNearestMapStructure(VoidBoundTags.WEEPING_WELL, entity.onPos, 200, true)
-            println("1")
-            if (blockPos != null) {
-                println("2 : $blockPos")
+        if (level is ServerLevel && entity is Player) {
 
+            var stackTag = stack.tag
+            if (stackTag == null) {
+                stackTag = CompoundTag()
+            }
+
+            if (stack.hasTag() && stackTag.contains("Active") && stackTag.getBoolean("Active")) {
+                cooldown++
+                if (cooldown >= 100) {
+                    cooldown = 0
+                    if (stack.tag!!.contains("StructureLoc")) {
+
+                    } else {
+                        locateStructure(level, stack, entity)
+                    }
+                }
+                var lookDir: Vec3 = entity.lookAngle
+                var playerPos: BlockPos = entity.onPos
+                var pos: BlockPos = BlockPos.of(stack.tag!!.getLong("StructureLoc"))
+                val margin = 20.0 // margin for error in degrees
+
+                if (isLookingTowards(lookDir, playerPos, pos, margin)) {
+                    stack.tag!!.putBoolean("Glowing", true)
+                } else {
+                    stack.tag!!.putBoolean("Glowing", false)
+                }
+            }
+
+            if (stack.hasTag() && stackTag.contains("Active") && !stackTag.getBoolean("Active")) {
+                if (stack.tag!!.contains("StructureLoc")) {
+                    stack.tag!!.remove("StructureLoc")
+                }
             }
         }
 
-
-
         super.inventoryTick(stack, level, entity, slotId, isSelected)
+    }
+
+    fun isLookingTowards(playerLookDir: Vec3, playerPos: BlockPos, targetPos: BlockPos, margin: Double): Boolean {
+        // Calculate the direction vector from player to target position
+        val targetDir = Vec3(
+            (targetPos.x - playerPos.x).toDouble(),
+            (targetPos.y - playerPos.y).toDouble(),
+            (targetPos.z - playerPos.z).toDouble()
+        )
+
+        // Normalize the vectors
+        val normalizedLookDir = playerLookDir.normalize()
+        val normalizedTargetDir = targetDir.normalize()
+
+        // Calculate the dot product
+        val dotProduct = normalizedLookDir.dot(normalizedTargetDir)
+
+        // Convert the dot product to an angle
+        val angle = acos(dotProduct) // This is in radians
+
+        // Convert radians to degrees
+        val angleInDegrees = Math.toDegrees(angle)
+
+        // Check if the angle is within the margin
+        println(angleInDegrees)
+        return angleInDegrees <= margin
+    }
+
+    override fun appendHoverText(
+        stack: ItemStack,
+        level: Level?,
+        tooltipComponents: MutableList<Component>,
+        isAdvanced: TooltipFlag
+    ) {
+        var stackTag = stack.tag
+        if (stackTag == null) {
+            stackTag = CompoundTag()
+        }
+        if (stackTag.contains("Active") && stackTag.getBoolean("Active")) {
+            tooltipComponents.add(Component.translatable("Active"))
+        }
+        if (stackTag.contains("Active") && !stackTag.getBoolean("Active")) {
+            tooltipComponents.add(Component.translatable("Inactive"))
+        }
+        if (stackTag.contains("StructureLoc")) {
+            tooltipComponents.add(Component.translatable("HasStructureLoc"))
+        }
+        if (stackTag.contains("Glowing") && stackTag.getBoolean("Glowing")) {
+            tooltipComponents.add(Component.translatable("Glowing"))
+        }
+
+        super.appendHoverText(stack, level, tooltipComponents, isAdvanced)
     }
 }

@@ -54,7 +54,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
 
     fun tick(){
         if (level != null) {
-            if (level!!.getBlockState(blockPos).getValue(SpiritBinderBlock.MODIFIER) == Modifier.BRILLIANT) {
+            if (level!!.getBlockState(blockPos).hasProperty(SpiritBinderBlock.MODIFIER) && level!!.getBlockState(blockPos).getValue(SpiritBinderBlock.MODIFIER) == Modifier.BRILLIANT) {
                 tickBrilliantState()
             } else if (level!!.getBlockState(blockPos).getValue(SpiritBinderBlock.MODIFIER) == Modifier.HEX_ASH) {
                 tickHexAshState()
