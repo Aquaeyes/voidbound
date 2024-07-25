@@ -21,7 +21,7 @@ class DestabilizedSpiritRiftBlock(properties: Properties) : BaseEntityBlock(prop
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
-        return Shapes.box(7 / 16.0, 7 / 16.0, 7 / 16.0, 9 / 16.0, 9 / 16.0, 9 / 16.0)
+        return Shapes.box(6 / 16.0, 6 / 16.0, 6 / 16.0, 10 / 16.0, 10 / 16.0, 10 / 16.0)
     }
 
     override fun <T : BlockEntity?> getTicker(
