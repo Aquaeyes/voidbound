@@ -138,15 +138,22 @@ class CallOfTheVoidItem(properties: Properties) : Item(properties) {
     }
 
     fun isLookingTowards(playerLookDir: Vec3, playerPos: BlockPos, targetPos: BlockPos, margin: Double): Boolean {
-        // Calculate the direction vector from player to target position
+        // Calculate the horizontal direction vector from player to target position
         val targetDir = Vec3(
             (targetPos.x - playerPos.x).toDouble(),
-            (targetPos.y - playerPos.y).toDouble(),
+            0.0, // Ignore Y component
             (targetPos.z - playerPos.z).toDouble()
         )
 
+        // Create a horizontal look direction vector (ignore Y component)
+        val lookDirHorizontal = Vec3(
+            playerLookDir.x,
+            0.0, // Ignore Y component
+            playerLookDir.z
+        )
+
         // Normalize the vectors
-        val normalizedLookDir = playerLookDir.normalize()
+        val normalizedLookDir = lookDirHorizontal.normalize()
         val normalizedTargetDir = targetDir.normalize()
 
         // Calculate the dot product
