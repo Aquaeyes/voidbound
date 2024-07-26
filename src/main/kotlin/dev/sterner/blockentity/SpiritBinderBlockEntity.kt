@@ -35,9 +35,9 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
 
     var color: Vector3f = Vector3f(0.8f, 0.8f, 1.0f)
 
-    var alpha: Float? = null
-    var previousAlpha: Float? = null
-    var targetAlpha: Float? = null
+    var alpha: Float = 0f
+    var previousAlpha:  Float = 0f
+    var targetAlpha:  Float = 0f
 
     private var simpleSpiritCharge = SimpleSpiritCharge()
     var counter = 0
@@ -72,9 +72,8 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
             previousAlpha = alpha
 
             // Interpolate alpha towards targetAlpha
-            if (alpha != null && targetAlpha != null) {
-                alpha = Mth.lerp(0.05f, alpha!!, targetAlpha!!)
-            }
+
+            alpha = Mth.lerp(0.05f, alpha, targetAlpha)
         }
     }
 
