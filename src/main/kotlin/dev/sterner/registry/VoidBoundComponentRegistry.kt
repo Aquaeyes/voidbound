@@ -1,10 +1,5 @@
 package dev.sterner.registry
 
-import com.sammy.malum.common.components.MalumComponents.*
-import com.sammy.malum.common.components.MalumItemDataComponent
-import com.sammy.malum.common.components.MalumLivingEntityDataComponent
-import com.sammy.malum.common.components.MalumPlayerDataComponent
-import dev.onyxstudios.cca.api.v3.component.ComponentFactory
 import dev.onyxstudios.cca.api.v3.component.ComponentKey
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry
@@ -16,8 +11,6 @@ import dev.sterner.VoidBound
 import dev.sterner.components.VoidBoundEntityComponent
 import dev.sterner.components.VoidBoundWorldComponent
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.item.ItemEntity
-
 
 class VoidBoundComponentRegistry : WorldComponentInitializer, EntityComponentInitializer {
 
@@ -33,7 +26,6 @@ class VoidBoundComponentRegistry : WorldComponentInitializer, EntityComponentIni
                 )
             }
     }
-
 
     companion object {
         val VOID_BOUND_WORLD_COMPONENT: ComponentKey<VoidBoundWorldComponent> = ComponentRegistry.getOrCreate(
