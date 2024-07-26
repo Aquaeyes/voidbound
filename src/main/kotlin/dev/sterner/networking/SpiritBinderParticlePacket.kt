@@ -36,11 +36,4 @@ class SpiritBinderParticlePacket(var entityId: Int, val pos: BlockPos, val spiri
         buf.writeBlockPos(pos)
         buf.writeUtf(spiritType)
     }
-
-    fun decode(buf: FriendlyByteBuf) : SpiritBinderParticlePacket {
-        val entity = buf.readInt()
-        val spiritType = buf.readUtf()
-        val pos = buf.readBlockPos()
-        return SpiritBinderParticlePacket(entity, pos, spiritType)
-    }
 }
