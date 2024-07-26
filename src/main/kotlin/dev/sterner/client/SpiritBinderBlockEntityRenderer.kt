@@ -31,7 +31,6 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
         packedLight: Int,
         packedOverlay: Int
     ) {
-
         poseStack.pushPose()
         poseStack.translate(0.5, 1.5, 0.5)
 
@@ -42,14 +41,12 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
 
         val rgb: Vector3f = blockEntity.color
 
-        val renderType = VoidBoundRenderTypes.TRANSPARENT_GLOW_TEXTURE.applyWithModifierAndCache(
+        // Obtain the render type
+        val renderType = VoidBoundRenderTypes.TRANSPARENT_GLOW_TEXTURE.apply(
             TOKEN
-        ) { b: LodestoneCompositeStateBuilder ->
-            b.replaceVertexFormat(
-                VertexFormat.Mode.TRIANGLES
-            )
-        }
+        )
 
+        // Create the builder and bind the shader
         val builder = VFXBuilders.createWorld()
             .setRenderType(LodestoneRenderTypeRegistry.applyUniformChanges(
                 renderType
@@ -58,20 +55,17 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
                 s.safeGetUniform("SphereColor").set(rgb)
             })
 
-        builder.renderSphere(
-            poseStack,
-            0.5f,
-            20,
-            20
-        )
+        // Render the sphere
+        builder.renderSphere(poseStack, 0.5f, 20, 20)
 
-
+        // Render the spirit glimmer
         FloatingItemEntityRenderer.renderSpiritGlimmer(
             poseStack,
             Color(200, 200, 255, 200),
             Color(100, 100, 255, 200),
             partialTick
         )
+
         poseStack.popPose()
     }
 

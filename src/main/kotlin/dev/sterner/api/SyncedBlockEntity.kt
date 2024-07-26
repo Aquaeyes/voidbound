@@ -24,13 +24,6 @@ abstract class SyncedBlockEntity(type: BlockEntityType<*>?, pos: BlockPos, state
         return writeClient(CompoundTag())
     }
 
-    /*
-    override fun getUpdatePacket(): ClientboundBlockEntityDataPacket? {
-        return ClientboundBlockEntityDataPacket.create(this)
-    }
-
-     */
-
     override fun getUpdatePacket(): Packet<ClientGamePacketListener>? {
         return ClientboundBlockEntityDataPacket.create(this)
     }

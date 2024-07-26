@@ -13,12 +13,13 @@ object VoidBoundRenderTypes {
         LodestoneRenderTypeRegistry.createGenericRenderType(
             "transparent_glow_texture",
             DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP,
-            VertexFormat.Mode.QUADS,
+            VertexFormat.Mode.TRIANGLES,
             LodestoneRenderTypeRegistry.builder()
                 .setShaderState(VoidBoundShaders.GLOW_TEXTURE)
-                .setTransparencyState(StateShards.NORMAL_TRANSPARENCY)
+                .setTransparencyState(StateShards.ADDITIVE_TRANSPARENCY)
                 .setLightmapState(LodestoneRenderTypeRegistry.LIGHTMAP)
-                .setCullState(LodestoneRenderTypeRegistry.NO_CULL)
+                .setCullState(LodestoneRenderTypeRegistry.CULL)
+
                 .setTextureState(token.get())
         )
     }
