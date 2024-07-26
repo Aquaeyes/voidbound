@@ -25,6 +25,9 @@
     ],
     "cardinal-components-world": [
       "dev.sterner.registry.VoidBoundComponentRegistry"
+    ],
+    "cardinal-components-entity": [
+      "dev.sterner.registry.VoidBoundComponentRegistry"
     ]
   },
   "mixins": [
@@ -42,7 +45,8 @@
   },
   "custom": {
     "cardinal-components": [
-      "voidbound:world"
+      "voidbound:world",
+      "voidbound:entity"
     ]
   }
 }

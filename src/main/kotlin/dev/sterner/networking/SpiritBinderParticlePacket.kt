@@ -1,0 +1,46 @@
+package dev.sterner.networking
+
+import com.sammy.malum.common.packets.particle.base.spirit.SpiritBasedParticleEffectPacket
+import com.sammy.malum.core.handlers.SpiritHarvestHandler
+import dev.sterner.blockentity.SpiritBinderBlockEntity.Companion.spawnSpiritParticle
+import me.pepperbell.simplenetworking.SimpleChannel
+import net.fabricmc.fabric.api.networking.v1.PacketSender
+import net.minecraft.client.Minecraft
+import net.minecraft.client.multiplayer.ClientPacketListener
+import net.minecraft.core.BlockPos
+import net.minecraft.network.FriendlyByteBuf
+import net.minecraft.world.entity.LivingEntity
+import team.lodestar.lodestone.systems.network.LodestoneClientPacket
+
+class SpiritBinderParticlePacket(var entityId: Int, val pos: BlockPos, val spiritType: String) : LodestoneClientPacket() {
+
+    constructor(buf: FriendlyByteBuf) : this(buf.readInt(), buf.readBlockPos(), buf.readUtf())
+
+    override fun executeClient(
+        client: Minecraft,
+        listener: ClientPacketListener?,
+        responseSender: PacketSender?,
+        channel: SimpleChannel?
+    ) {
+        val spirit = SpiritHarvestHandler.getSpiritType(spiritType)
+        if (spirit != null && client.level != null) {
+            val entity = client.level!!.getEntity(entityId)
+            if (entity is LivingEntity) {
+                spawnSpiritParticle(client.level!!, pos, entity, spirit)
+            }
+        }
+    }
+
+    override fun encode(buf: FriendlyByteBuf) {
+        buf.writeInt(entityId)
+        buf.writeBlockPos(pos)
+        buf.writeUtf(spiritType)
+    }
+
+    fun decode(buf: FriendlyByteBuf) : SpiritBinderParticlePacket {
+        val entity = buf.readInt()
+        val spiritType = buf.readUtf()
+        val pos = buf.readBlockPos()
+        return SpiritBinderParticlePacket(entity, pos, spiritType)
+    }
+}

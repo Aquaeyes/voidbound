@@ -8,7 +8,13 @@ import dev.sterner.api.Modifier
 import dev.sterner.api.SimpleSpiritCharge
 import dev.sterner.api.SyncedBlockEntity
 import dev.sterner.block.SpiritBinderBlock
+import dev.sterner.components.VoidBoundEntityComponent
+import dev.sterner.networking.SpiritBinderParticlePacket
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
+import dev.sterner.registry.VoidBoundComponentRegistry
+import dev.sterner.registry.VoidBoundPacketRegistry
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup
+import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
@@ -16,6 +22,7 @@ import net.minecraft.util.Mth
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.entity.PathfinderMob
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
@@ -98,17 +105,21 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
             } else {
                 if (entity == null) {
                     val list = level!!.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0))
-                        .filter { it.health / it.maxHealth <= 0.25 && it.isAlive }
+                        .filter { it.health / it.maxHealth <= 0.25 && it.isAlive && VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(it).spiritBinderPos == null }
                     if (list.isNotEmpty()) {
                         entity = list.first()
+                        VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(entity!!).spiritBinderPos = blockPos
+                        VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.sync(entity!!)
                     }
                     counter = 0
-                } else {
+                } else if (entity != null && VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(entity!!).spiritBinderPos != null) {
                     val spiritDataOptional = getSpiritData(entity!!)
                     if (spiritDataOptional.isPresent) {
                         counter++
                         for (spirit in spiritDataOptional.get()) {
-                            spawnSpiritParticle(entity!!, spirit.type)
+                            for (player in PlayerLookup.tracking(this)) {
+                                VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClient(SpiritBinderParticlePacket(entity!!.id, blockPos, spirit.type.identifier), player)
+                            }
                         }
 
                         if (counter > 20 * 5) {
@@ -179,71 +190,74 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         super.saveAdditional(tag)
     }
 
-    fun spawnSpiritParticle(entity: LivingEntity, type: MalumSpiritType) {
-        val behavior =
-            Consumer<WorldParticleBuilder> { b: WorldParticleBuilder ->
-                b.addTickActor { p: LodestoneWorldParticle ->
-                    val particlePos = Vec3(p.x, p.y, p.z)
-                    val targetPos =
-                        Vec3(blockPos.x + 0.5, blockPos.y + 1.5, blockPos.z + 0.5) // Target is the center of the block
-                    val direction = targetPos.subtract(particlePos).normalize()
-                    p.particleSpeed = direction.scale(0.05) //
-                }
-            }
-        val rand = level!!.random
-        val xRand = entity.x + rand.nextDouble() - 0.5
-        val yRand = entity.y + entity.bbHeight / 1.5 + (rand.nextDouble() - 0.5)
-        val zRand = entity.z + rand.nextDouble() - 0.5
 
-        val startPos = Vec3(xRand, yRand, zRand)
-
-        val distance = startPos.distanceTo(Vec3(blockPos.x + 0.5, blockPos.y + 1.5, blockPos.z + 0.5))
-        val baseLifetime = 10 // Base lifetime in ticks
-        val speed = 0.05 // Speed of the particle
-        val adjustedLifetime =
-            (distance / speed).toInt().coerceAtLeast(baseLifetime) - 20 // Adjusted lifetime based on distance
-
-        val lightSpecs: ParticleEffectSpawner =
-            SpiritLightSpecs.spiritLightSpecs(level, Vec3(xRand, yRand, zRand), type)
-        lightSpecs.builder.act { b: WorldParticleBuilder ->
-            b.act(behavior)
-                .modifyColorData { d: ColorParticleData ->
-                    d.multiplyCoefficient(0.35f)
-                }
-                .modifyData(
-                    Supplier { b.scaleData },
-                    Consumer { d: GenericParticleData ->
-                        d.multiplyValue(2.0f).multiplyCoefficient(0.9f)
-                    })
-                .modifyData(
-                    Supplier { b.transparencyData },
-                    Consumer { d: GenericParticleData ->
-                        d.multiplyCoefficient(0.9f)
-                    }).multiplyLifetime(1.5f)
-                .setLifetime(b.particleOptions.lifetimeSupplier.get() as Int + adjustedLifetime)
-        }
-
-        lightSpecs.bloomBuilder.act { b: WorldParticleBuilder ->
-            b.act(behavior).modifyColorData { d: ColorParticleData ->
-                d.multiplyCoefficient(0.35f)
-            }
-                .modifyData(
-                    Supplier { b.scaleData },
-                    Consumer { d: GenericParticleData ->
-                        d.multiplyValue(1.6f).multiplyCoefficient(0.9f)
-                    })
-                .modifyData(
-                    Supplier { b.transparencyData },
-                    Consumer { d: GenericParticleData ->
-                        d.multiplyCoefficient(0.9f)
-                    })
-                .setLifetime(((b.particleOptions.lifetimeSupplier.get() as Int).toFloat() + adjustedLifetime).toInt())
-        }
-
-        lightSpecs.spawnParticles()
-    }
 
     companion object {
+
+        fun spawnSpiritParticle(level: ClientLevel, blockPos: BlockPos, entity: LivingEntity, type: MalumSpiritType) {
+            val behavior =
+                Consumer<WorldParticleBuilder> { b: WorldParticleBuilder ->
+                    b.addTickActor { p: LodestoneWorldParticle ->
+                        val particlePos = Vec3(p.x, p.y, p.z)
+                        val targetPos =
+                            Vec3(blockPos.x + 0.5, blockPos.y + 1.5, blockPos.z + 0.5) // Target is the center of the block
+                        val direction = targetPos.subtract(particlePos).normalize()
+                        p.particleSpeed = direction.scale(0.05) //
+                    }
+                }
+            val rand = level!!.random
+            val xRand = entity.x + rand.nextDouble() - 0.5
+            val yRand = entity.y + entity.bbHeight / 1.5 + (rand.nextDouble() - 0.5)
+            val zRand = entity.z + rand.nextDouble() - 0.5
+
+            val startPos = Vec3(xRand, yRand, zRand)
+
+            val distance = startPos.distanceTo(Vec3(blockPos.x + 0.5, blockPos.y + 1.5, blockPos.z + 0.5))
+            val baseLifetime = 10 // Base lifetime in ticks
+            val speed = 0.05 // Speed of the particle
+            val adjustedLifetime =
+                (distance / speed).toInt().coerceAtLeast(baseLifetime) - 20 // Adjusted lifetime based on distance
+
+            val lightSpecs: ParticleEffectSpawner =
+                SpiritLightSpecs.spiritLightSpecs(level, Vec3(xRand, yRand, zRand), type)
+            lightSpecs.builder.act { b: WorldParticleBuilder ->
+                b.act(behavior)
+                    .modifyColorData { d: ColorParticleData ->
+                        d.multiplyCoefficient(0.35f)
+                    }
+                    .modifyData(
+                        Supplier { b.scaleData },
+                        Consumer { d: GenericParticleData ->
+                            d.multiplyValue(2.0f).multiplyCoefficient(0.9f)
+                        })
+                    .modifyData(
+                        Supplier { b.transparencyData },
+                        Consumer { d: GenericParticleData ->
+                            d.multiplyCoefficient(0.9f)
+                        }).multiplyLifetime(1.5f)
+                    .setLifetime(b.particleOptions.lifetimeSupplier.get() as Int + adjustedLifetime)
+            }
+
+            lightSpecs.bloomBuilder.act { b: WorldParticleBuilder ->
+                b.act(behavior).modifyColorData { d: ColorParticleData ->
+                    d.multiplyCoefficient(0.35f)
+                }
+                    .modifyData(
+                        Supplier { b.scaleData },
+                        Consumer { d: GenericParticleData ->
+                            d.multiplyValue(1.6f).multiplyCoefficient(0.9f)
+                        })
+                    .modifyData(
+                        Supplier { b.transparencyData },
+                        Consumer { d: GenericParticleData ->
+                            d.multiplyCoefficient(0.9f)
+                        })
+                    .setLifetime(((b.particleOptions.lifetimeSupplier.get() as Int).toFloat() + adjustedLifetime).toInt())
+            }
+
+            lightSpecs.spawnParticles()
+        }
+
         fun getSpiritData(entity: LivingEntity): Optional<MutableList<SpiritWithCount>> {
             val key = BuiltInRegistries.ENTITY_TYPE.getKey(entity.type)
             if (SpiritDataReloadListener.HAS_NO_DATA.contains(key)) {

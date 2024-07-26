@@ -1,5 +1,6 @@
 package dev.sterner
 
+import com.sammy.malum.MalumMod
 import dev.sterner.client.DestabilizedSpiritRiftBlockEntityRenderer
 import dev.sterner.client.ParticleEntityRenderer
 import dev.sterner.client.SpiritBinderBlockEntityRenderer
@@ -20,6 +21,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
     override fun onInitialize() {
 
         VoidBoundTags.init()
+        VoidBoundPacketRegistry.registerVoidBoundPackets()
 
         VoidBoundItemRegistry.ITEMS.register()
         VoidBoundBlockRegistry.BLOCKS.register()
@@ -27,7 +29,6 @@ object VoidBound : ModInitializer, ClientModInitializer {
         VoidBoundEntityTypeRegistry.ENTITY_TYPES.register()
         VoidBoundParticleTypeRegistry.PARTICLES.register()
         VoidBoundCreativeTabRegistry.init()
-
 
     }
 
