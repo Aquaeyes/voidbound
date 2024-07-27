@@ -63,8 +63,8 @@ dependencies {
 	modImplementation("me.shedaniel.cloth:cloth-config-fabric:11.1.118")
 
 	//EMI
-	//modCompileOnly("dev.emi:emi-fabric:${property("emi_version")}:api")
-	//modLocalRuntime("dev.emi:emi-fabric:${property("emi_version")}")
+	modCompileOnly("dev.emi:emi-fabric:${property("emi_version")}:api")
+	modLocalRuntime("dev.emi:emi-fabric:${property("emi_version")}")
 
 	// Trinkets Dependency
 	modImplementation("dev.emi:trinkets:${property("trinkets_version")}")
