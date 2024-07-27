@@ -1,6 +1,10 @@
 package dev.sterner
 
-import com.sammy.malum.MalumMod
+import com.sammy.malum.client.screen.codex.BookWidgetStyle
+import com.sammy.malum.client.screen.codex.PlacedBookEntry
+import com.sammy.malum.client.screen.codex.pages.text.HeadlineTextPage
+import com.sammy.malum.client.screen.codex.screens.ArcanaProgressionScreen
+import com.sammy.malum.common.events.MalumCodexEvents
 import dev.sterner.client.DestabilizedSpiritRiftBlockEntityRenderer
 import dev.sterner.client.ParticleEntityRenderer
 import dev.sterner.client.SpiritBinderBlockEntityRenderer
@@ -18,6 +22,13 @@ object VoidBound : ModInitializer, ClientModInitializer {
     val modid: String = "voidbound"
     private val logger = LoggerFactory.getLogger(modid)
 
+
+    val VOID_GILDED: BookWidgetStyle = BookWidgetStyle(
+        BookWidgetStyle.WidgetStylePreset("void_frame"),
+        BookWidgetStyle.WidgetStylePreset("dark_filling"),
+        BookWidgetStyle.WidgetDesignType.GILDED
+    )
+
     override fun onInitialize() {
 
         VoidBoundTags.init()
@@ -30,7 +41,24 @@ object VoidBound : ModInitializer, ClientModInitializer {
         VoidBoundParticleTypeRegistry.PARTICLES.register()
         VoidBoundCreativeTabRegistry.init()
 
+        MalumCodexEvents.EVENT.register(this::addVoidBoundEntries)
     }
+
+    private fun addVoidBoundEntries(screen: ArcanaProgressionScreen?, entries: MutableList<PlacedBookEntry>?) {
+        screen?.addEntry("call_of_the_void", 0, 12) {
+            it.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.CALL_OF_THE_VOID.get()).setStyle(VOID_GILDED)
+            }.addPage(HeadlineTextPage("call_of_the_void", "call_of_the_void.1"))
+        }
+    }
+
+    /*
+    this.addEntry("ritual_magic", 0, 17, (b) -> {
+            b.configureWidget((w) -> {
+                w.setIcon(ItemRegistry.RITUAL_PLINTH).setStyle(BookWidgetStyle.GILDED_SOULWOOD);
+            }).addPage(new HeadlineTextPage("ritual_magic", "ritual_magic.1"));
+        });
+     */
 
     override fun onInitializeClient() {
 
