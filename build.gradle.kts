@@ -22,7 +22,11 @@ sourceSets {
 }
 
 repositories {
+	flatDir {
+		dirs("libs")
+	}
 	mavenCentral()
+
 	maven ("https://maven.theillusivec4.top/")
 	maven("https://dvs1.progwml6.com/files/maven")
 	maven("https://maven.tterrag.com/")
@@ -37,9 +41,10 @@ repositories {
 	maven("https://mvn.devos.one/snapshots/")
 	maven("https://mvn.devos.one/releases/")
 	maven("https://maven.jamieswhiteshirt.com/libs-release")
-	maven("https://maven.greenhouseteam.dev/releases/")
+	//maven("https://maven.greenhouseteam.dev/releases/")
 	maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") // Forge Config API Port
 	maven("https://maven.shedaniel.me/")
+
 }
 
 dependencies {
@@ -72,7 +77,7 @@ dependencies {
 	//include("team.lodestar.lodestone:lodestone:${property("minecraft_version")}-${property("lodestone_version")}-fabric")
 	modImplementation("team.lodestar.lodestone:lodestone:${property("minecraft_version")}-${property("lodestone_version")}-fabric")
 
-	modImplementation("maven.modrinth:malum:${property("malum_version")}")
+	modImplementation("com.sammy:malum:1.20.1-1.6.2.0e-fabric")
 
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${property("cca_version")}")
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${property("cca_version")}")
@@ -90,7 +95,7 @@ dependencies {
 	modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${property("reach_entity_attributes_version")}")
 	modImplementation("maven.modrinth:fusion-connected-textures:${property("fusion_version")}-fabric-mc${property("minecraft_version")}")
 
-	modImplementation("vectorwing:FarmersDelight:${property("farmers_delight_version")}")
+	//modImplementation("vectorwing:FarmersDelight:${property("farmers_delight_version")}")
 	//modRuntimeOnly("com.simibubi.create:create-fabric-1.20.1:0.5.1-f-build.1417+mc1.20.1")
 }
 

@@ -24,7 +24,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
 
     val VOID_GILDED: BookWidgetStyle = BookWidgetStyle(
-        BookWidgetStyle.WidgetStylePreset("void_frame"),
+        BookWidgetStyle.WidgetStylePreset(modid, "void_frame"),
         BookWidgetStyle.WidgetStylePreset("dark_filling"),
         BookWidgetStyle.WidgetDesignType.GILDED
     )
@@ -51,14 +51,6 @@ object VoidBound : ModInitializer, ClientModInitializer {
             }.addPage(HeadlineTextPage("call_of_the_void", "call_of_the_void.1"))
         }
     }
-
-    /*
-    this.addEntry("ritual_magic", 0, 17, (b) -> {
-            b.configureWidget((w) -> {
-                w.setIcon(ItemRegistry.RITUAL_PLINTH).setStyle(BookWidgetStyle.GILDED_SOULWOOD);
-            }).addPage(new HeadlineTextPage("ritual_magic", "ritual_magic.1"));
-        });
-     */
 
     override fun onInitializeClient() {
 
