@@ -73,9 +73,9 @@ class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegi
     companion object {
         fun createGolemAttributes(): AttributeSupplier.Builder {
             return AttributeSupplier.builder()
-                .add(Attributes.MAX_HEALTH)
-                .add(Attributes.KNOCKBACK_RESISTANCE)
-                .add(Attributes.MOVEMENT_SPEED)
+                .add(Attributes.MAX_HEALTH, 50.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.5)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.75)
                 .add(Attributes.ARMOR)
                 .add(Attributes.ARMOR_TOUGHNESS)
                 .add(Attributes.FOLLOW_RANGE, 16.0)
