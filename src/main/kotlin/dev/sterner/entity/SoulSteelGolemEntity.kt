@@ -25,8 +25,7 @@ class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegi
     override fun registerGoals() {
         goalSelector.addGoal(1, MeleeAttackGoal(this, 1.0, true))
         goalSelector.addGoal(2, MoveTowardsTargetGoal(this, 0.9, 32.0f))
-        goalSelector.addGoal(2, MoveBackToVillageGoal(this, 0.6, false))
-        goalSelector.addGoal(4, GolemRandomStrollInVillageGoal(this, 0.6))
+        goalSelector.addGoal(2, RandomStrollGoal(this, 0.6, 100))
         goalSelector.addGoal(
             7, LookAtPlayerGoal(
                 this,
@@ -46,7 +45,7 @@ class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegi
     override fun handleEntityEvent(id: Byte) {
         if (id.toInt() == 4) {
             this.attackAnimationTick = 10
-            this.playSound(SoundEvents.IRON_GOLEM_ATTACK, 1.0f, 1.0f)
+            this.playSound(SoundEvents.IRON_GOLEM_ATTACK, 0.75f, 1.25f)
         } else {
             super.handleEntityEvent(id)
         }
