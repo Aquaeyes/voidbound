@@ -67,8 +67,6 @@ class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegi
         this.playSound(SoundEvents.IRON_GOLEM_STEP, 0.5f, 1.25f)
     }
 
-
-
     companion object {
         fun createGolemAttributes(): AttributeSupplier.Builder {
             return AttributeSupplier.builder()
@@ -82,5 +80,4 @@ class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegi
                 .add(PortingLibAttributes.STEP_HEIGHT_ADDITION, 1.0)
         }
     }
-
 }
