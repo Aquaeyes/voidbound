@@ -5,14 +5,16 @@ import com.sammy.malum.client.screen.codex.PlacedBookEntry
 import com.sammy.malum.client.screen.codex.pages.text.HeadlineTextPage
 import com.sammy.malum.client.screen.codex.screens.ArcanaProgressionScreen
 import com.sammy.malum.common.events.MalumCodexEvents
-import dev.sterner.client.DestabilizedSpiritRiftBlockEntityRenderer
-import dev.sterner.client.ParticleEntityRenderer
-import dev.sterner.client.SpiritBinderBlockEntityRenderer
-import dev.sterner.client.SpiritStabilizerBlockEntityRenderer
+import dev.sterner.client.*
+import dev.sterner.client.model.SoulSteelGolemEntityModel
+import dev.sterner.entity.SoulSteelGolemEntity
 import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
+import net.minecraft.client.model.geom.ModelLayers
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
@@ -40,6 +42,8 @@ object VoidBound : ModInitializer, ClientModInitializer {
         VoidBoundEntityTypeRegistry.ENTITY_TYPES.register()
         VoidBoundParticleTypeRegistry.PARTICLES.register()
         VoidBoundCreativeTabRegistry.init()
+
+        FabricDefaultAttributeRegistry.register(VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(), SoulSteelGolemEntity.createGolemAttributes())
 
         MalumCodexEvents.EVENT.register(this::addVoidBoundEntries)
     }
@@ -71,6 +75,9 @@ object VoidBound : ModInitializer, ClientModInitializer {
         )
 
         EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.PARTICLE_ENTITY.get(), ::ParticleEntityRenderer)
+        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(), ::SoulSteelGolemEntityRenderer)
+
+        EntityModelLayerRegistry.registerModelLayer(SoulSteelGolemEntityModel.LAYER_LOCATION, SoulSteelGolemEntityModel::createBodyLayer)
 
         ItemProperties.register(
             VoidBoundItemRegistry.CALL_OF_THE_VOID.get(),
