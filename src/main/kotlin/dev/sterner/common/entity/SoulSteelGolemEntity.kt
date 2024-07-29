@@ -1,6 +1,7 @@
 package dev.sterner.common.entity
 
 import dev.sterner.api.GolemCore
+import dev.sterner.common.entity.ai.SetWalkTargetToItem
 import dev.sterner.common.entity.ai.GolemGatherSensor
 import dev.sterner.common.entity.ai.GolemHarvestSensor
 import dev.sterner.common.entity.ai.GolemSpecificSensor
@@ -17,9 +18,7 @@ import net.minecraft.world.entity.PathfinderMob
 import net.minecraft.world.entity.ai.Brain
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
-import net.minecraft.world.entity.ai.behavior.GoToWantedItem
 import net.minecraft.world.entity.ai.behavior.LookAtTargetSink
-import net.minecraft.world.entity.animal.allay.Allay
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.tslat.smartbrainlib.api.SmartBrainOwner
@@ -29,15 +28,12 @@ import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.MoveToWalkTarget
-import net.tslat.smartbrainlib.api.core.behaviour.custom.move.WalkOrRunToWalkTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetPlayerLookTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetRandomLookTarget
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor
-import net.tslat.smartbrainlib.api.core.sensor.custom.NearbyBlocksSensor
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor
-import java.util.function.Predicate
 
 
 class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(), level), SmartBrainOwner<SoulSteelGolemEntity> {
@@ -131,6 +127,7 @@ class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegi
     override fun getCoreTasks(): BrainActivityGroup<out SoulSteelGolemEntity> {
         return BrainActivityGroup.coreTasks(
             LookAtTargetSink(40, 300),
+            SetWalkTargetToItem(),
             MoveToWalkTarget<SoulSteelGolemEntity>(),
         )
     }
