@@ -5,6 +5,7 @@ import dev.sterner.common.entity.ai.SetWalkTargetToItem
 import dev.sterner.common.entity.ai.GolemGatherSensor
 import dev.sterner.common.entity.ai.GolemHarvestSensor
 import dev.sterner.common.entity.ai.GolemSpecificSensor
+import dev.sterner.common.item.GolemCoreItem
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.BlockPos
@@ -14,6 +15,8 @@ import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.Containers
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.PathfinderMob
@@ -22,6 +25,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.ai.behavior.LookAtTargetSink
 import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
@@ -47,6 +51,27 @@ class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegi
 
     init {
         this.setMaxUpStep(1.0f)
+    }
+
+    override fun mobInteract(player: Player, hand: InteractionHand): InteractionResult {
+        if (player.getItemInHand(hand).item is GolemCoreItem) {
+            val item: GolemCoreItem = player.getItemInHand(hand).item as GolemCoreItem
+            if (getGolemCore() == GolemCore.NONE) {
+
+                setGolemCore(item.core)
+                player.getItemInHand(hand).shrink(1)
+
+                return InteractionResult.SUCCESS
+            } else {
+
+                dropCore(level(), position())
+                setGolemCore(item.core)
+                player.getItemInHand(hand).shrink(1)
+
+                return InteractionResult.SUCCESS
+            }
+        }
+        return super.mobInteract(player, hand)
     }
 
     fun onPickUpGolem(level: Level, pos: Vec3) {

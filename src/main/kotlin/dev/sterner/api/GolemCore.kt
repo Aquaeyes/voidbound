@@ -23,7 +23,7 @@ enum class GolemCore : StringRepresentable {
     companion object {
 
         fun getItem(core: GolemCore) : Item? {
-            return when (core.name) {
+            return when (core.serializedName) {
                 "gather" -> VoidBoundItemRegistry.GOLEM_CORE_GATHER.get()
                 "fill" -> VoidBoundItemRegistry.GOLEM_CORE_FILL.get()
                 "empty" -> VoidBoundItemRegistry.GOLEM_CORE_EMPTY.get()
