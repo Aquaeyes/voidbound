@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexFormat
 import com.sammy.malum.client.renderer.entity.FloatingItemEntityRenderer
 import dev.sterner.VoidBound
-import dev.sterner.blockentity.SpiritBinderBlockEntity
+import dev.sterner.common.blockentity.SpiritBinderBlockEntity
 import dev.sterner.registry.VoidBoundRenderTypes
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.ShaderInstance

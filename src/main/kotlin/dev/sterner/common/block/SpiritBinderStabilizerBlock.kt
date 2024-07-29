@@ -1,7 +1,7 @@
-package dev.sterner.block
+package dev.sterner.common.block
 
-import dev.sterner.blockentity.SpiritBinderBlockEntity
-import dev.sterner.blockentity.SpiritStabilizerBlockEntity
+import dev.sterner.common.blockentity.SpiritBinderBlockEntity
+import dev.sterner.common.blockentity.SpiritStabilizerBlockEntity
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.BlockGetter

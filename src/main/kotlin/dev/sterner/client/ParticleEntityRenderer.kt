@@ -7,7 +7,7 @@ import com.sammy.malum.client.renderer.entity.FloatingItemEntityRenderer
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.registry.client.MalumRenderTypeTokens
 import dev.sterner.VoidBound
-import dev.sterner.entity.ParticleEntity
+import dev.sterner.common.entity.ParticleEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.culling.Frustum
 import net.minecraft.client.renderer.entity.EntityRenderer

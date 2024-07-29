@@ -2,7 +2,7 @@ package dev.sterner.networking
 
 import com.sammy.malum.common.packets.particle.base.spirit.SpiritBasedParticleEffectPacket
 import com.sammy.malum.core.handlers.SpiritHarvestHandler
-import dev.sterner.blockentity.SpiritBinderBlockEntity.Companion.spawnSpiritParticle
+import dev.sterner.common.blockentity.SpiritBinderBlockEntity.Companion.spawnSpiritParticle
 import me.pepperbell.simplenetworking.SimpleChannel
 import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.minecraft.client.Minecraft

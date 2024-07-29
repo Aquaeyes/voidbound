@@ -1,6 +1,6 @@
-package dev.sterner.block
+package dev.sterner.common.block
 
-import dev.sterner.blockentity.DestabilizedSpiritRiftBlockEntity
+import dev.sterner.common.blockentity.DestabilizedSpiritRiftBlockEntity
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.BlockGetter

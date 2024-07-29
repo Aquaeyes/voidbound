@@ -7,7 +7,7 @@ import com.sammy.malum.client.screen.codex.screens.ArcanaProgressionScreen
 import com.sammy.malum.common.events.MalumCodexEvents
 import dev.sterner.client.*
 import dev.sterner.client.model.SoulSteelGolemEntityModel
-import dev.sterner.entity.SoulSteelGolemEntity
+import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
@@ -40,6 +40,9 @@ object VoidBound : ModInitializer, ClientModInitializer {
         VoidBoundBlockEntityTypeRegistry.BLOCK_ENTITY_TYPES.register()
         VoidBoundEntityTypeRegistry.ENTITY_TYPES.register()
         VoidBoundParticleTypeRegistry.PARTICLES.register()
+        VoidBoundMemoryTypeRegistry.MEMORY_TYPES.register()
+        VoidBoundSensorTypeRegistry.SENSOR_TYPES.register()
+
         VoidBoundCreativeTabRegistry.init()
 
         FabricDefaultAttributeRegistry.register(VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(), SoulSteelGolemEntity.createGolemAttributes())

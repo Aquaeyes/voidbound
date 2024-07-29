@@ -1,10 +1,10 @@
-package dev.sterner.item
+package dev.sterner.common.item
 
 import com.sammy.malum.common.entity.FloatingItemEntity
 import com.sammy.malum.common.item.IMalumEventResponderItem
 import com.sammy.malum.common.item.spirit.SpiritShardItem
 import com.sammy.malum.registry.common.SpiritTypeRegistry
-import dev.sterner.entity.ParticleEntity
+import dev.sterner.common.entity.ParticleEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult

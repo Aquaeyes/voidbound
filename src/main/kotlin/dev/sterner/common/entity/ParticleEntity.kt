@@ -1,4 +1,4 @@
-package dev.sterner.entity
+package dev.sterner.common.entity
 
 import com.sammy.malum.common.entity.FloatingItemEntity
 import com.sammy.malum.core.systems.spirit.MalumSpiritType

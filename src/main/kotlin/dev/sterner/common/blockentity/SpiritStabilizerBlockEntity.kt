@@ -1,4 +1,4 @@
-package dev.sterner.blockentity
+package dev.sterner.common.blockentity
 
 import com.sammy.malum.visual_effects.SpiritLightSpecs
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry

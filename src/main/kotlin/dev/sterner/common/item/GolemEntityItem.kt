@@ -1,4 +1,4 @@
-package dev.sterner.item
+package dev.sterner.common.item
 
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import net.minecraft.core.BlockPos

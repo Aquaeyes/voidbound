@@ -1,45 +1,65 @@
-package dev.sterner.entity
+package dev.sterner.common.entity
 
+import dev.sterner.api.GolemCore
+import dev.sterner.common.entity.ai.GolemGatherSensor
+import dev.sterner.common.entity.ai.GolemHarvestSensor
+import dev.sterner.common.entity.ai.GolemSpecificSensor
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
-import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.BlockPos
+import net.minecraft.network.syncher.EntityDataSerializers
+import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.Mob
 import net.minecraft.world.entity.PathfinderMob
 import net.minecraft.world.entity.ai.Brain
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
+import net.minecraft.world.entity.ai.behavior.GoToWantedItem
 import net.minecraft.world.entity.ai.behavior.LookAtTargetSink
 import net.minecraft.world.entity.animal.allay.Allay
-import net.minecraft.world.entity.animal.allay.AllayAi
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.tslat.smartbrainlib.api.SmartBrainOwner
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup
-import net.tslat.smartbrainlib.api.core.SmartBrain
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour
-import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle
+import net.tslat.smartbrainlib.api.core.behaviour.custom.move.MoveToWalkTarget
+import net.tslat.smartbrainlib.api.core.behaviour.custom.move.WalkOrRunToWalkTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetPlayerLookTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetRandomLookTarget
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor
+import net.tslat.smartbrainlib.api.core.sensor.custom.NearbyBlocksSensor
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor
+import java.util.function.Predicate
 
 
 class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(), level), SmartBrainOwner<SoulSteelGolemEntity> {
 
     private var attackAnimationTick = 0
+    private var coreEntityData = SynchedEntityData.defineId(SoulSteelGolemEntity::class.java, EntityDataSerializers.STRING)
 
     init {
         this.setMaxUpStep(1.0f)
+    }
+
+    override fun defineSynchedData() {
+        super.defineSynchedData()
+        entityData.define(coreEntityData, GolemCore.NONE.name)
+    }
+
+    fun setGolemCore(core: GolemCore){
+        entityData.set(coreEntityData, core.name)
+    }
+
+    fun getGolemCore() : GolemCore {
+        return GolemCore.valueOf(entityData.get(coreEntityData))
     }
 
     override fun aiStep() {
@@ -99,6 +119,9 @@ class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegi
 
     override fun getSensors(): MutableList<out ExtendedSensor<out SoulSteelGolemEntity>> {
         return ObjectArrayList.of(
+            GolemGatherSensor(),
+            GolemHarvestSensor(),
+            GolemSpecificSensor(),
             NearbyPlayersSensor(),
             NearbyLivingEntitySensor(),
             HurtBySensor(),
@@ -107,13 +130,14 @@ class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegi
 
     override fun getCoreTasks(): BrainActivityGroup<out SoulSteelGolemEntity> {
         return BrainActivityGroup.coreTasks(
-            //LookAtTarget<SoulSteelGolemEntity>(),
             LookAtTargetSink(40, 300),
+            MoveToWalkTarget<SoulSteelGolemEntity>(),
         )
     }
 
     override fun getIdleTasks(): BrainActivityGroup<out SoulSteelGolemEntity> {
         return BrainActivityGroup.idleTasks(
+
             FirstApplicableBehaviour(
                 SetRandomLookTarget(),
                 SetPlayerLookTarget<SoulSteelGolemEntity?>().predicate { it.distanceToSqr(this.position()) < 6 }

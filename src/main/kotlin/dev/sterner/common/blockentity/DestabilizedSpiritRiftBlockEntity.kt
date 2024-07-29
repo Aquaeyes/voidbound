@@ -1,4 +1,4 @@
-package dev.sterner.blockentity
+package dev.sterner.common.blockentity
 
 import dev.sterner.api.SyncedBlockEntity
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry

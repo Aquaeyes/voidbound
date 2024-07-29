@@ -1,8 +1,8 @@
 package dev.sterner.registry
 
 import dev.sterner.VoidBound
-import dev.sterner.entity.SoulSteelGolemEntity
-import dev.sterner.entity.ParticleEntity
+import dev.sterner.common.entity.SoulSteelGolemEntity
+import dev.sterner.common.entity.ParticleEntity
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricEntityTypeBuilder
 import net.minecraft.core.registries.BuiltInRegistries

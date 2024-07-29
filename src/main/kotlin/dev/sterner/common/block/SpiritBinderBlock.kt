@@ -1,8 +1,8 @@
-package dev.sterner.block
+package dev.sterner.common.block
 
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.api.Modifier
-import dev.sterner.blockentity.SpiritBinderBlockEntity
+import dev.sterner.common.blockentity.SpiritBinderBlockEntity
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.world.Containers

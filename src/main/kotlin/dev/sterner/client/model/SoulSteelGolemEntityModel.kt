@@ -3,7 +3,7 @@ package dev.sterner.client.model
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import dev.sterner.VoidBound
-import dev.sterner.entity.SoulSteelGolemEntity
+import dev.sterner.common.entity.SoulSteelGolemEntity
 import net.minecraft.client.model.HierarchicalModel
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.model.geom.ModelPart

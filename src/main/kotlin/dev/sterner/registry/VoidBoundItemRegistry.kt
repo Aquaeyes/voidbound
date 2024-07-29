@@ -1,9 +1,9 @@
 package dev.sterner.registry
 
 import dev.sterner.VoidBound
-import dev.sterner.item.CallOfTheVoidItem
-import dev.sterner.item.DividerItem
-import dev.sterner.item.GolemEntityItem
+import dev.sterner.common.item.CallOfTheVoidItem
+import dev.sterner.common.item.DividerItem
+import dev.sterner.common.item.GolemEntityItem
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings

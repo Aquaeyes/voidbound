@@ -8,8 +8,8 @@ import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy
 import dev.onyxstudios.cca.api.v3.world.WorldComponentFactoryRegistry
 import dev.onyxstudios.cca.api.v3.world.WorldComponentInitializer
 import dev.sterner.VoidBound
-import dev.sterner.components.VoidBoundEntityComponent
-import dev.sterner.components.VoidBoundWorldComponent
+import dev.sterner.common.components.VoidBoundEntityComponent
+import dev.sterner.common.components.VoidBoundWorldComponent
 import net.minecraft.world.entity.LivingEntity
 
 class VoidBoundComponentRegistry : WorldComponentInitializer, EntityComponentInitializer {

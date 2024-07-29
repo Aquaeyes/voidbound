@@ -1,4 +1,4 @@
-package dev.sterner.components
+package dev.sterner.common.components
 
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent
 import net.minecraft.core.BlockPos

@@ -1,4 +1,4 @@
-package dev.sterner.item
+package dev.sterner.common.item
 
 import com.sammy.malum.MalumMod
 import net.minecraft.core.BlockPos

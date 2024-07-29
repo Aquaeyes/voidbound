@@ -1,4 +1,4 @@
-package dev.sterner.blockentity
+package dev.sterner.common.blockentity
 
 import com.sammy.malum.core.listeners.SpiritDataReloadListener
 import com.sammy.malum.core.systems.recipe.SpiritWithCount
@@ -7,8 +7,8 @@ import com.sammy.malum.visual_effects.SpiritLightSpecs
 import dev.sterner.api.Modifier
 import dev.sterner.api.SimpleSpiritCharge
 import dev.sterner.api.SyncedBlockEntity
-import dev.sterner.block.SpiritBinderBlock
-import dev.sterner.components.VoidBoundEntityComponent
+import dev.sterner.common.block.SpiritBinderBlock
+import dev.sterner.common.components.VoidBoundEntityComponent
 import dev.sterner.networking.SpiritBinderParticlePacket
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundComponentRegistry

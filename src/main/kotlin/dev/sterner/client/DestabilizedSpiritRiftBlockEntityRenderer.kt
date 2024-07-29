@@ -2,7 +2,7 @@ package dev.sterner.client
 
 import com.mojang.blaze3d.vertex.PoseStack
 import dev.sterner.VoidBound
-import dev.sterner.blockentity.DestabilizedSpiritRiftBlockEntity
+import dev.sterner.common.blockentity.DestabilizedSpiritRiftBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
