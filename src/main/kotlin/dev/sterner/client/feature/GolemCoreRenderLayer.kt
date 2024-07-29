@@ -2,6 +2,7 @@ package dev.sterner.client.feature
 
 import com.mojang.blaze3d.vertex.PoseStack
 import dev.sterner.VoidBound
+import dev.sterner.api.GolemCore
 import dev.sterner.client.model.GolemCoreModel
 import dev.sterner.client.model.SoulSteelGolemEntityModel
 import dev.sterner.client.renderer.SoulSteelGolemEntityRenderer
@@ -33,8 +34,9 @@ class GolemCoreRenderLayer(
         netHeadYaw: Float,
         headPitch: Float
     ) {
-
-        val texture = VoidBound.id("textures/entity/golem_core_${livingEntity.getGolemCore().serializedName}.png")
-        model.renderToBuffer(poseStack, buffer.getBuffer(RenderType.eyes(texture)), packedLight, OverlayTexture.NO_OVERLAY, 1f,1f,1f,1f)
+        if (livingEntity.getGolemCore() != GolemCore.NONE) {
+            val texture = VoidBound.id("textures/entity/golem_core_${livingEntity.getGolemCore().serializedName}.png")
+            model.renderToBuffer(poseStack, buffer.getBuffer(RenderType.eyes(texture)), packedLight, OverlayTexture.NO_OVERLAY, 1f,1f,1f,1f)
+        }
     }
 }
