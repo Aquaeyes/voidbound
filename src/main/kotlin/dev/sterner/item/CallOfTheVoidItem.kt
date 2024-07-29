@@ -22,7 +22,7 @@ import net.minecraft.world.phys.Vec3
 import kotlin.math.acos
 
 
-class CallOfTheVoidItem(properties: Properties) : Item(properties) {
+class CallOfTheVoidItem : Item(Properties()) {
 
     var cooldown = 0
 

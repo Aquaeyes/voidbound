@@ -27,7 +27,7 @@ object VoidBoundEntityTypeRegistry {
     var SOUL_STEEL_GOLEM_ENTITY = ENTITY_TYPES.register("soul_steel_goal_entity") {
         FabricEntityTypeBuilder.Mob.createMob<SoulSteelGolemEntity>()
             .entityFactory { _, w -> SoulSteelGolemEntity(w) }
-            .dimensions(EntityDimensions(0.5f, 0.5f, true))
+            .dimensions(EntityDimensions(0.5f, 1.1f, true))
             .spawnGroup(MobCategory.CREATURE)
             .defaultAttributes { SoulSteelGolemEntity.createGolemAttributes() }
             .build()

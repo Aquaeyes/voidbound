@@ -3,6 +3,7 @@ package dev.sterner.registry
 import dev.sterner.VoidBound
 import dev.sterner.item.CallOfTheVoidItem
 import dev.sterner.item.DividerItem
+import dev.sterner.item.GolemEntityItem
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
@@ -18,7 +19,9 @@ object VoidBoundItemRegistry {
         Item(Item.Properties())
     }
 
-    val DIVIDER: RegistryObject<Item> = ITEMS.register("divider") { DividerItem(FabricItemSettings().maxCount(1)) }
+    val DIVIDER: RegistryObject<Item> = ITEMS.register("divider") {
+        DividerItem(FabricItemSettings().maxCount(1))
+    }
 
     val SPIRIT_BINDER = ITEMS.register("spirit_binder") {
         BlockItem(VoidBoundBlockRegistry.SPIRIT_BINDER.get(), Item.Properties())
@@ -33,6 +36,10 @@ object VoidBoundItemRegistry {
     }
 
     val CALL_OF_THE_VOID = ITEMS.register("call_of_the_void") {
-        CallOfTheVoidItem(Item.Properties())
+        CallOfTheVoidItem()
+    }
+
+    val SOUL_STEEL_GOLEM = ITEMS.register("soul_steel_golem") {
+        GolemEntityItem()
     }
 }
