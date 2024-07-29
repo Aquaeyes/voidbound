@@ -44,14 +44,13 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
 
     var alpha: Float = 0f
     var previousAlpha:  Float = 0f
-    var targetAlpha:  Float = 0f
-
-    private var simpleSpiritCharge = SimpleSpiritCharge()
-    var counter = 0
     var entity: PathfinderMob? = null
-    var rechargeCounter = 0
 
-    var infinite = false
+    private var targetAlpha:  Float = 0f
+    private var simpleSpiritCharge = SimpleSpiritCharge()
+    private var counter = 0
+    private var rechargeCounter = 0
+    private var infinite = false
         set(value) {
             field = value
             if (value) {
@@ -62,24 +61,30 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
 
     fun tick() {
         if (level != null) {
-            if (level!!.getBlockState(blockPos).hasProperty(SpiritBinderBlock.MODIFIER) && level!!.getBlockState(
-                    blockPos
-                ).getValue(SpiritBinderBlock.MODIFIER) == Modifier.BRILLIANT
-            ) {
-                tickBrilliantState()
-            } else if (level!!.getBlockState(blockPos).hasProperty(SpiritBinderBlock.MODIFIER) && level!!.getBlockState(
-                    blockPos
-                ).getValue(SpiritBinderBlock.MODIFIER) == Modifier.HEX_ASH
-            ) {
-                tickHexAshState()
-            } else {
-                tickNoneState()
+
+            if (infinite) {
+                rechargeCounter++
+                if (rechargeCounter == 20 * 2) {
+                    rechargeCounter = 0
+                    simpleSpiritCharge.rechargeInfiniteCount()
+                    notifyUpdate()
+                }
             }
+
+            if (level!!.getBlockState(blockPos).hasProperty(SpiritBinderBlock.MODIFIER)) {
+                if (level!!.getBlockState(blockPos).getValue(SpiritBinderBlock.MODIFIER) == Modifier.BRILLIANT) {
+                    tickBrilliantState()
+                } else if (level!!.getBlockState(blockPos).getValue(SpiritBinderBlock.MODIFIER) == Modifier.HEX_ASH) {
+                    tickHexAshState()
+                } else {
+                    tickNoneState()
+                }
+            }
+
             // Update previousAlpha before changing alpha
             previousAlpha = alpha
 
             // Interpolate alpha towards targetAlpha
-
             alpha = Mth.lerp(0.05f, alpha, targetAlpha)
         }
     }
@@ -93,48 +98,34 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
     }
 
     private fun tickNoneState() {
-        if (level != null) {
-            if (infinite) {
-                rechargeCounter++
-                if (rechargeCounter == 20 * 2) {
-                    rechargeCounter = 0
-                    simpleSpiritCharge.rechargeInfiniteCount()
+        if (entity == null) {
+            val list = level!!.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0))
+                .filter { it.health / it.maxHealth <= 0.25 && it.isAlive && VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(it).spiritBinderPos == null }
+            if (list.isNotEmpty()) {
+                entity = list.first()
+                VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(entity!!).spiritBinderPos = blockPos
+                VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.sync(entity!!)
+            }
+            counter = 0
+        } else if (VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(entity!!).spiritBinderPos != null) {
+            val spiritDataOptional = getSpiritData(entity!!)
+            if (spiritDataOptional.isPresent) {
+                counter++
+                for (spirit in spiritDataOptional.get()) {
+                    for (player in PlayerLookup.tracking(this)) {
+                        VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClient(SpiritBinderParticlePacket(entity!!.id, blockPos, spirit.type.identifier), player)
+                    }
+                }
+
+                if (counter > 20 * 5) {
+                    counter = 0
+                    addSpiritToCharge(entity!!)
+                    targetAlpha = Mth.clamp(simpleSpiritCharge.getTotalCharge() / 20f, 0f, 1f)
+                    entity!!.hurt(level!!.damageSources().magic(), entity!!.health * 2)
+                    entity = null
                     notifyUpdate()
                 }
-
-            } else {
-                if (entity == null) {
-                    val list = level!!.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0))
-                        .filter { it.health / it.maxHealth <= 0.25 && it.isAlive && VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(it).spiritBinderPos == null }
-                    if (list.isNotEmpty()) {
-                        entity = list.first()
-                        VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(entity!!).spiritBinderPos = blockPos
-                        VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.sync(entity!!)
-                    }
-                    counter = 0
-                } else if (entity != null && VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(entity!!).spiritBinderPos != null) {
-                    val spiritDataOptional = getSpiritData(entity!!)
-                    if (spiritDataOptional.isPresent) {
-                        counter++
-                        for (spirit in spiritDataOptional.get()) {
-                            for (player in PlayerLookup.tracking(this)) {
-                                VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClient(SpiritBinderParticlePacket(entity!!.id, blockPos, spirit.type.identifier), player)
-                            }
-                        }
-
-                        if (counter > 20 * 5) {
-                            counter = 0
-                            addSpiritToCharge(entity!!)
-                            targetAlpha = Mth.clamp(simpleSpiritCharge.getTotalCharge() / 20f, 0f, 1f)
-                            entity!!.hurt(level!!.damageSources().magic(), entity!!.health * 2)
-                            entity = null
-                            notifyUpdate()
-                        }
-                    }
-                }
             }
-
-
         }
     }
 
@@ -190,8 +181,6 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         super.saveAdditional(tag)
     }
 
-
-
     companion object {
 
         fun spawnSpiritParticle(level: ClientLevel, blockPos: BlockPos, entity: LivingEntity, type: MalumSpiritType) {
@@ -205,7 +194,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
                         p.particleSpeed = direction.scale(0.05) //
                     }
                 }
-            val rand = level!!.random
+            val rand = level.random
             val xRand = entity.x + rand.nextDouble() - 0.5
             val yRand = entity.y + entity.bbHeight / 1.5 + (rand.nextDouble() - 0.5)
             val zRand = entity.z + rand.nextDouble() - 0.5
