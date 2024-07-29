@@ -14,7 +14,7 @@ enum class GolemCore : StringRepresentable {
     HARVEST,
     GUARD,
     BUTCHER,
-    CHOP;
+    LUMBER;
 
     override fun getSerializedName(): String {
         return this.name.lowercase()
@@ -30,7 +30,7 @@ enum class GolemCore : StringRepresentable {
                 "harvest" -> VoidBoundItemRegistry.GOLEM_CORE_HARVEST.get()
                 "guard" -> VoidBoundItemRegistry.GOLEM_CORE_GUARD.get()
                 "butcher" -> VoidBoundItemRegistry.GOLEM_CORE_BUTCHER.get()
-                "chop" -> VoidBoundItemRegistry.GOLEM_CORE_CHOP.get()
+                "lumber" -> VoidBoundItemRegistry.GOLEM_CORE_LUMBER.get()
                 else -> null
             }
         }

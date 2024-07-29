@@ -29,7 +29,7 @@ object VoidBoundCreativeTabRegistry {
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_BUTCHER.get())
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_FILL.get())
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_EMPTY.get())
-                entries.accept(VoidBoundItemRegistry.GOLEM_CORE_CHOP.get())
+                entries.accept(VoidBoundItemRegistry.GOLEM_CORE_LUMBER.get())
                 entries.accept(VoidBoundItemRegistry.DESTABILIZED_SPIRIT_RIFT.get())
 
             }.build()
