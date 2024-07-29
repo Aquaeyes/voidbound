@@ -98,7 +98,7 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
         return super.mobInteract(player, hand)
     }
 
-    fun onPickUpGolem(level: Level, pos: Vec3) {
+    private fun onPickUpGolem(level: Level, pos: Vec3) {
         dropCore(level, pos)
         Containers.dropContents(level(), this, inventory)
         Containers.dropItemStack(level, pos.x, pos.y, pos.z, mainHandItem)
