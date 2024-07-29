@@ -8,6 +8,7 @@ import dev.sterner.client.model.SoulSteelGolemEntityModel
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.entity.MobRenderer
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer
 import net.minecraft.resources.ResourceLocation
 import kotlin.math.abs
 
@@ -17,6 +18,7 @@ class SoulSteelGolemEntityRenderer(context: EntityRendererProvider.Context) : Mo
 
     init {
         addLayer(GolemCoreRenderLayer(context, this))
+        addLayer(ItemInHandLayer(this, context.itemInHandRenderer))
     }
 
     override fun setupRotations(
@@ -30,7 +32,7 @@ class SoulSteelGolemEntityRenderer(context: EntityRendererProvider.Context) : Mo
         if (!(entityLiving.walkAnimation.speed().toDouble() < 0.01)) {
             val f = 13.0f
             val g = entityLiving.walkAnimation.position(partialTicks) + 6.0f
-            val h = ((abs((g % 13.0f - 6.5f).toDouble()) - 3.25f) / 3.25f).toFloat()
+            val h = ((abs((g % f - 6.5f).toDouble()) - 3.25f) / 3.25f).toFloat()
             poseStack.mulPose(Axis.ZP.rotationDegrees(6.5f * h))
         }
     }

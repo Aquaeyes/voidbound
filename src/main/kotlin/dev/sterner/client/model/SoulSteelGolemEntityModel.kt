@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import dev.sterner.VoidBound
 import dev.sterner.common.entity.SoulSteelGolemEntity
+import net.minecraft.client.model.ArmedModel
 import net.minecraft.client.model.HierarchicalModel
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.model.geom.ModelPart
@@ -13,12 +14,14 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder
 import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.model.geom.builders.MeshDefinition
 import net.minecraft.util.Mth
+import net.minecraft.world.entity.HumanoidArm
 
 
-class SoulSteelGolemEntityModel(root: ModelPart) : HierarchicalModel<SoulSteelGolemEntity>() {
+class SoulSteelGolemEntityModel(root: ModelPart) : HierarchicalModel<SoulSteelGolemEntity>(), ArmedModel {
 //<T extends IronGolem> extends HierarchicalModel<T>
     private val core: ModelPart = root.getChild("core")
     private val head: ModelPart = core.getChild("head")
+    private val torso: ModelPart = core.getChild("torso")
     private val rightArm: ModelPart = core.getChild("rightArm")
     private val leftArm: ModelPart = core.getChild("leftArm")
     private val rightLeg: ModelPart = core.getChild("rightLeg")
@@ -127,6 +130,25 @@ class SoulSteelGolemEntityModel(root: ModelPart) : HierarchicalModel<SoulSteelGo
             )
 
             return LayerDefinition.create(meshdefinition, 64, 64)
+        }
+    }
+
+
+    override fun translateToHand(side: HumanoidArm, poseStack: PoseStack) {
+        val bl = side == HumanoidArm.RIGHT
+        val modelPart = if (bl) this.rightArm else this.leftArm
+        core.translateAndRotate(poseStack)
+        this.torso.translateAndRotate(poseStack)
+        modelPart.translateAndRotate(poseStack)
+        //poseStack.scale(0.55f, 0.55f, 0.55f)
+        this.offsetStackPosition(poseStack, bl)
+    }
+
+    private fun offsetStackPosition(poseStack: PoseStack, rightSide: Boolean) {
+        if (rightSide) {
+            poseStack.translate(0.046875, -0.15625, 0.078125)
+        } else {
+            poseStack.translate(-0.046875, -0.15625, 0.078125)
         }
     }
 }
