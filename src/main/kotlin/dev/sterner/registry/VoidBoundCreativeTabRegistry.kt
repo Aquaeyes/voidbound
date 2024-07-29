@@ -26,7 +26,7 @@ object VoidBoundCreativeTabRegistry {
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_GATHER.get())
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_GUARD.get())
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_HARVEST.get())
-                entries.accept(VoidBoundItemRegistry.GOLEM_CORE_BUCTHER.get())
+                entries.accept(VoidBoundItemRegistry.GOLEM_CORE_BUTCHER.get())
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_FILL.get())
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_EMPTY.get())
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_CHOP.get())

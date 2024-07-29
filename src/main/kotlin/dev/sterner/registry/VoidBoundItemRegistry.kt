@@ -61,7 +61,7 @@ object VoidBoundItemRegistry {
         GolemCoreItem(GolemCore.CHOP, Item.Properties())
     }
 
-    val GOLEM_CORE_BUCTHER = ITEMS.register("golem_core_butcher") {
+    val GOLEM_CORE_BUTCHER = ITEMS.register("golem_core_butcher") {
         GolemCoreItem(GolemCore.BUTCHER, Item.Properties())
     }
 
