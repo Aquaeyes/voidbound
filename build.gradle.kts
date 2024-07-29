@@ -44,7 +44,7 @@ repositories {
 	//maven("https://maven.greenhouseteam.dev/releases/")
 	maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") // Forge Config API Port
 	maven("https://maven.shedaniel.me/")
-
+	maven("https://dl.cloudsmith.io/public/tslat/sbl/maven/")
 }
 
 dependencies {
@@ -94,6 +94,7 @@ dependencies {
 	//include("com.jamieswhiteshirt:reach-entity-attributes:${property("reach_entity_attributes_version")}")
 	modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${property("reach_entity_attributes_version")}")
 	modImplementation("maven.modrinth:fusion-connected-textures:${property("fusion_version")}-fabric-mc${property("minecraft_version")}")
+	modImplementation("net.tslat.smartbrainlib:SmartBrainLib-fabric-${property("minecraft_version")}:${property("smart_brain_lib_version")}")
 
 	//modImplementation("vectorwing:FarmersDelight:${property("farmers_delight_version")}")
 	//modRuntimeOnly("com.simibubi.create:create-fabric-1.20.1:0.5.1-f-build.1417+mc1.20.1")
