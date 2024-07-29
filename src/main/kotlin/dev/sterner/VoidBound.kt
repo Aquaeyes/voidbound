@@ -14,7 +14,6 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
-import net.minecraft.client.model.geom.ModelLayers
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
@@ -48,9 +47,9 @@ object VoidBound : ModInitializer, ClientModInitializer {
         MalumCodexEvents.EVENT.register(this::addVoidBoundEntries)
     }
 
-    private fun addVoidBoundEntries(screen: ArcanaProgressionScreen?, entries: MutableList<PlacedBookEntry>?) {
-        screen?.addEntry("call_of_the_void", 0, 12) {
-            it.configureWidget {
+    private fun addVoidBoundEntries(screen: ArcanaProgressionScreen?, entries: MutableList<PlacedBookEntry>) {
+        screen?.addEntry("call_of_the_void", 0, 12) { builder ->
+            builder.configureWidget {
                 it.setIcon(VoidBoundItemRegistry.CALL_OF_THE_VOID.get()).setStyle(VOID_GILDED)
             }.addPage(HeadlineTextPage("call_of_the_void", "call_of_the_void.1"))
         }
