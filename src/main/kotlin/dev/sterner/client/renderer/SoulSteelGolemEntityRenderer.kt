@@ -1,8 +1,9 @@
-package dev.sterner.client
+package dev.sterner.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import dev.sterner.VoidBound
+import dev.sterner.client.feature.GolemCoreRenderLayer
 import dev.sterner.client.model.SoulSteelGolemEntityModel
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import net.minecraft.client.renderer.entity.EntityRendererProvider
@@ -13,6 +14,10 @@ import kotlin.math.abs
 class SoulSteelGolemEntityRenderer(context: EntityRendererProvider.Context) : MobRenderer<SoulSteelGolemEntity, SoulSteelGolemEntityModel>(
     context, SoulSteelGolemEntityModel(context.bakeLayer(SoulSteelGolemEntityModel.LAYER_LOCATION)), 0.2f
 ) {
+
+    init {
+        addLayer(GolemCoreRenderLayer(context, this))
+    }
 
     override fun setupRotations(
         entityLiving: SoulSteelGolemEntity,

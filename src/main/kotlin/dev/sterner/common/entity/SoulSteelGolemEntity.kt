@@ -8,6 +8,7 @@ import dev.sterner.common.entity.ai.GolemSpecificSensor
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.BlockPos
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.sounds.SoundEvent
@@ -39,7 +40,6 @@ import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor
 class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(), level), SmartBrainOwner<SoulSteelGolemEntity> {
 
     private var attackAnimationTick = 0
-    private var coreEntityData = SynchedEntityData.defineId(SoulSteelGolemEntity::class.java, EntityDataSerializers.STRING)
 
     init {
         this.setMaxUpStep(1.0f)
@@ -48,6 +48,16 @@ class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegi
     override fun defineSynchedData() {
         super.defineSynchedData()
         entityData.define(coreEntityData, GolemCore.NONE.name)
+    }
+
+    override fun addAdditionalSaveData(compound: CompoundTag) {
+        super.addAdditionalSaveData(compound)
+        GolemCore.writeNbt(compound, getGolemCore())
+    }
+
+    override fun readAdditionalSaveData(compound: CompoundTag) {
+        super.readAdditionalSaveData(compound)
+        setGolemCore(GolemCore.readNbt(compound))
     }
 
     fun setGolemCore(core: GolemCore){
@@ -91,6 +101,9 @@ class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegi
     }
 
     companion object {
+
+        private var coreEntityData = SynchedEntityData.defineId(SoulSteelGolemEntity::class.java, EntityDataSerializers.STRING)
+
         fun createGolemAttributes(): AttributeSupplier.Builder {
             return LivingEntity.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 50.0)

@@ -34,7 +34,7 @@ class GolemEntityItem : Item(Properties().stacksTo(1)) {
                     itemStack,
                     context.player,
                     blockPos2,
-                    MobSpawnType.SPAWN_EGG,
+                    MobSpawnType.MOB_SUMMONED,
                     true,
                     blockPos != blockPos2 && direction == Direction.UP
                 )

@@ -1,7 +1,6 @@
-package dev.sterner.client
+package dev.sterner.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
-import com.mojang.blaze3d.vertex.VertexFormat
 import com.sammy.malum.client.renderer.entity.FloatingItemEntityRenderer
 import dev.sterner.VoidBound
 import dev.sterner.common.blockentity.SpiritBinderBlockEntity
@@ -14,7 +13,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
 import org.joml.Vector3f
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
-import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry.LodestoneCompositeStateBuilder
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
 import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
 import java.awt.Color
