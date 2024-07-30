@@ -31,10 +31,21 @@
 
   "malum.gui.book.entry.soul_steel_golem": "Soul Steel Golem",
   "malum.gui.book.entry.soul_steel_golem.description": "Santa's little helpers",
+  "malum.gui.book.entry.page.headline.soul_steel_golem": "Soul Steel Golem",
+  "malum.gui.book.entry.page.text.soul_steel_golem.1": "A lil golem init",
+
   "malum.gui.book.entry.gather_core": "Gather Core",
   "malum.gui.book.entry.gather_core.description": "I like Items",
+  "malum.gui.book.entry.page.headline.gather_core": "Gather Core",
+  "malum.gui.book.entry.page.text.gather_core.1": "Makes golems gather item and place in chests",
+
   "malum.gui.book.entry.guard_core": "Guard Core",
   "malum.gui.book.entry.guard_core.description": "I don't like Undead",
+  "malum.gui.book.entry.page.headline.guard_core": "Guard Core",
+  "malum.gui.book.entry.page.text.guard_core.1": "Makes golems kill hostile mobs",
+
   "malum.gui.book.entry.harvest_core": "Harvest Core",
-  "malum.gui.book.entry.harvest_core.description": "I like Crops"
+  "malum.gui.book.entry.harvest_core.description": "I like Crops",
+  "malum.gui.book.entry.page.headline.harvest_core": "Harvest Core",
+  "malum.gui.book.entry.page.text.harvest_core.1": "Makes golems harvest and replant crops"
 }
