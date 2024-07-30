@@ -1,21 +1,18 @@
+@file:Suppress("NAME_SHADOWING")
+
 package dev.sterner.api
 
 import dev.sterner.common.entity.SoulSteelGolemEntity
-import net.minecraft.core.Direction
 import net.minecraft.world.Container
-import net.minecraft.world.Containers
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.WorldlyContainer
 import net.minecraft.world.entity.ai.behavior.BehaviorUtils
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.phys.Vec3
 import kotlin.math.min
 
 object ItemUtils {
 
-    fun throwItemsTowardPos(golem: SoulSteelGolemEntity, stacks: List<ItemStack>, pos: Vec3) {
+    private fun throwItemsTowardPos(golem: SoulSteelGolemEntity, stacks: List<ItemStack>, pos: Vec3) {
         if (stacks.isNotEmpty()) {
             for (itemStack in stacks) {
                 BehaviorUtils.throwItem(golem, itemStack, pos.add(0.0, 1.0, 0.0))
@@ -23,7 +20,7 @@ object ItemUtils {
         }
     }
 
-    fun removeOneItemFromItemEntity(itemEntity: ItemEntity): ItemStack {
+    private fun removeOneItemFromItemEntity(itemEntity: ItemEntity): ItemStack {
         val itemStack = itemEntity.item
         val itemStack2 = itemStack.split(1)
         if (itemStack.isEmpty) {
@@ -36,9 +33,8 @@ object ItemUtils {
     }
 
     fun pickUpItem(golem: SoulSteelGolemEntity, itemEntity: ItemEntity) {
-        val itemStack: ItemStack
         golem.take(itemEntity, 64)
-        itemStack = removeOneItemFromItemEntity(itemEntity)
+        val itemStack: ItemStack = removeOneItemFromItemEntity(itemEntity)
 
         putInInventory(golem, itemStack)
 

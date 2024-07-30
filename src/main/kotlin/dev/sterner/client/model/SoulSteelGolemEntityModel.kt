@@ -6,7 +6,6 @@ import dev.sterner.VoidBound
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import net.minecraft.client.model.ArmedModel
 import net.minecraft.client.model.HierarchicalModel
-import net.minecraft.client.model.IronGolemModel
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.PartPose
@@ -19,7 +18,7 @@ import net.minecraft.world.entity.HumanoidArm
 
 
 class SoulSteelGolemEntityModel(root: ModelPart) : HierarchicalModel<SoulSteelGolemEntity>(), ArmedModel {
-//<T extends IronGolem> extends HierarchicalModel<T>
+    //<T extends IronGolem> extends HierarchicalModel<T>
     private val core: ModelPart = root.getChild("core")
     private val head: ModelPart = core.getChild("head")
     private val torso: ModelPart = core.getChild("torso")
@@ -62,8 +61,12 @@ class SoulSteelGolemEntityModel(root: ModelPart) : HierarchicalModel<SoulSteelGo
     }
 
 
-
-    override fun prepareMobModel(entity: SoulSteelGolemEntity, limbSwing: Float, limbSwingAmount: Float, partialTick: Float) {
+    override fun prepareMobModel(
+        entity: SoulSteelGolemEntity,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        partialTick: Float
+    ) {
         val i: Int = entity.getAttackAnimationTick()
         if (i > 0) {
             rightArm.xRot = -2.0f + 1.5f * Mth.triangleWave(i.toFloat() - partialTick, 10.0f)
@@ -144,7 +147,7 @@ class SoulSteelGolemEntityModel(root: ModelPart) : HierarchicalModel<SoulSteelGo
         this.torso.translateAndRotate(poseStack)
         modelPart.translateAndRotate(poseStack)
         //poseStack.scale(0.55f, 0.55f, 0.55f)
-        poseStack.translate(-0.6f,-0.3f,0f)
+        poseStack.translate(-0.6f, -0.3f, 0f)
         this.offsetStackPosition(poseStack, bl)
     }
 

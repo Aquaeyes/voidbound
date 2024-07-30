@@ -26,7 +26,8 @@ class SetCropWalkTarget : ExtendedBehaviour<SoulSteelGolemEntity>() {
             BrainUtils.clearMemory(entity, VoidBoundMemoryTypeRegistry.NEARBY_CROPS.get())
         } else {
 
-            val crops: List<Pair<BlockPos, BlockState>>? = BrainUtils.getMemory(entity, VoidBoundMemoryTypeRegistry.NEARBY_CROPS.get())
+            val crops: List<Pair<BlockPos, BlockState>>? =
+                BrainUtils.getMemory(entity, VoidBoundMemoryTypeRegistry.NEARBY_CROPS.get())
 
             val closestCrop = crops?.minByOrNull { it.first.distSqr(entity.blockPosition()) }
 

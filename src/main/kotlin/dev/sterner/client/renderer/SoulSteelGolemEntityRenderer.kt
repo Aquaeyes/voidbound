@@ -12,9 +12,10 @@ import net.minecraft.client.renderer.entity.layers.ItemInHandLayer
 import net.minecraft.resources.ResourceLocation
 import kotlin.math.abs
 
-class SoulSteelGolemEntityRenderer(context: EntityRendererProvider.Context) : MobRenderer<SoulSteelGolemEntity, SoulSteelGolemEntityModel>(
-    context, SoulSteelGolemEntityModel(context.bakeLayer(SoulSteelGolemEntityModel.LAYER_LOCATION)), 0.2f
-) {
+class SoulSteelGolemEntityRenderer(context: EntityRendererProvider.Context) :
+    MobRenderer<SoulSteelGolemEntity, SoulSteelGolemEntityModel>(
+        context, SoulSteelGolemEntityModel(context.bakeLayer(SoulSteelGolemEntityModel.LAYER_LOCATION)), 0.2f
+    ) {
 
     init {
         addLayer(GolemCoreRenderLayer(context, this))

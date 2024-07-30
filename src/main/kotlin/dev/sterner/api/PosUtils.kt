@@ -24,7 +24,12 @@ object PosUtils {
         }
     }
 
-    fun generateRandomDirection(pos: BlockPos, random: RandomSource, horizontalDistance: Int, verticalDistance: Int): BlockPos {
+    fun generateRandomDirection(
+        pos: BlockPos,
+        random: RandomSource,
+        horizontalDistance: Int,
+        verticalDistance: Int
+    ): BlockPos {
         val i = random.nextInt(2 * horizontalDistance + 1) - horizontalDistance
         val j = random.nextInt(2 * verticalDistance + 1) - verticalDistance
         val k = random.nextInt(2 * horizontalDistance + 1) - horizontalDistance

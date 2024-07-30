@@ -1,6 +1,5 @@
 package dev.sterner.networking
 
-import com.sammy.malum.common.packets.particle.base.spirit.SpiritBasedParticleEffectPacket
 import com.sammy.malum.core.handlers.SpiritHarvestHandler
 import dev.sterner.common.blockentity.SpiritBinderBlockEntity.Companion.spawnSpiritParticle
 import me.pepperbell.simplenetworking.SimpleChannel
@@ -12,7 +11,8 @@ import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.entity.LivingEntity
 import team.lodestar.lodestone.systems.network.LodestoneClientPacket
 
-class SpiritBinderParticlePacket(var entityId: Int, val pos: BlockPos, val spiritType: String) : LodestoneClientPacket() {
+class SpiritBinderParticlePacket(var entityId: Int, val pos: BlockPos, val spiritType: String) :
+    LodestoneClientPacket() {
 
     constructor(buf: FriendlyByteBuf) : this(buf.readInt(), buf.readBlockPos(), buf.readUtf())
 

@@ -20,8 +20,8 @@ import net.tslat.smartbrainlib.util.BrainUtils
 import java.util.function.BiPredicate
 
 class GolemHarvestSensor : PredicateSensor<BlockState, SoulSteelGolemEntity>(
-    BiPredicate{
-        state: BlockState, entity: SoulSteelGolemEntity -> entity.getGolemCore() == GolemCore.HARVEST && state.`is`(BlockTags.CROPS)
+    BiPredicate { state: BlockState, entity: SoulSteelGolemEntity ->
+        entity.getGolemCore() == GolemCore.HARVEST && state.`is`(BlockTags.CROPS)
     }
 ) {
 

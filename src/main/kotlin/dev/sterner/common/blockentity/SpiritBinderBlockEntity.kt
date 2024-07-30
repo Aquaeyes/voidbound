@@ -8,7 +8,6 @@ import dev.sterner.api.Modifier
 import dev.sterner.api.SimpleSpiritCharge
 import dev.sterner.api.SyncedBlockEntity
 import dev.sterner.common.block.SpiritBinderBlock
-import dev.sterner.common.components.VoidBoundEntityComponent
 import dev.sterner.networking.SpiritBinderParticlePacket
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundComponentRegistry
@@ -22,7 +21,6 @@ import net.minecraft.util.Mth
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.entity.PathfinderMob
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
@@ -43,10 +41,10 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
     var color: Vector3f = Vector3f(0.8f, 0.8f, 1.0f)
 
     var alpha: Float = 0f
-    var previousAlpha:  Float = 0f
+    var previousAlpha: Float = 0f
     var entity: PathfinderMob? = null
 
-    private var targetAlpha:  Float = 0f
+    private var targetAlpha: Float = 0f
     private var simpleSpiritCharge = SimpleSpiritCharge()
     private var counter = 0
     private var rechargeCounter = 0
@@ -100,7 +98,11 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
     private fun tickNoneState() {
         if (entity == null) {
             val list = level!!.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0))
-                .filter { it.health / it.maxHealth <= 0.25 && it.isAlive && VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(it).spiritBinderPos == null }
+                .filter {
+                    it.health / it.maxHealth <= 0.25 && it.isAlive && VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(
+                        it
+                    ).spiritBinderPos == null
+                }
             if (list.isNotEmpty()) {
                 entity = list.first()
                 VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(entity!!).spiritBinderPos = blockPos
@@ -113,7 +115,13 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
                 counter++
                 for (spirit in spiritDataOptional.get()) {
                     for (player in PlayerLookup.tracking(this)) {
-                        VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClient(SpiritBinderParticlePacket(entity!!.id, blockPos, spirit.type.identifier), player)
+                        VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClient(
+                            SpiritBinderParticlePacket(
+                                entity!!.id,
+                                blockPos,
+                                spirit.type.identifier
+                            ), player
+                        )
                     }
                 }
 
@@ -189,7 +197,11 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
                     b.addTickActor { p: LodestoneWorldParticle ->
                         val particlePos = Vec3(p.x, p.y, p.z)
                         val targetPos =
-                            Vec3(blockPos.x + 0.5, blockPos.y + 1.5, blockPos.z + 0.5) // Target is the center of the block
+                            Vec3(
+                                blockPos.x + 0.5,
+                                blockPos.y + 1.5,
+                                blockPos.z + 0.5
+                            ) // Target is the center of the block
                         val direction = targetPos.subtract(particlePos).normalize()
                         p.particleSpeed = direction.scale(0.05) //
                     }

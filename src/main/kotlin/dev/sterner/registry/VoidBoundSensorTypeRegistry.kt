@@ -13,14 +13,14 @@ object VoidBoundSensorTypeRegistry {
     var SENSOR_TYPES = LazyRegistrar.create(BuiltInRegistries.SENSOR_TYPE, VoidBound.modid)
 
     var GOLEM_GATHER_SENSOR = SENSOR_TYPES.register("golem_gather") {
-        SensorType( ::GolemGatherSensor )
+        SensorType(::GolemGatherSensor)
     }
 
     var GOLEM_HARVEST_SENSOR = SENSOR_TYPES.register("golem_harvest") {
-        SensorType( ::GolemHarvestSensor )
+        SensorType(::GolemHarvestSensor)
     }
 
     var GOLEM_GUARD_SENSOR = SENSOR_TYPES.register("golem_guard") {
-        SensorType( ::GolemGuardSensor )
+        SensorType(::GolemGuardSensor)
     }
 }

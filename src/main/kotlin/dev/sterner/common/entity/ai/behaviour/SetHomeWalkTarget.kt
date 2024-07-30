@@ -14,8 +14,10 @@ import java.util.function.BiFunction
 import java.util.function.BiPredicate
 
 class SetHomeWalkTarget : ExtendedBehaviour<SoulSteelGolemEntity>() {
-    private var speedModifier: BiFunction<SoulSteelGolemEntity, Vec3, Float> = BiFunction { entity: SoulSteelGolemEntity, targetPos: Vec3? -> 1f }
-    private var positionPredicate: BiPredicate<SoulSteelGolemEntity, Vec3?> = BiPredicate { entity: SoulSteelGolemEntity, pos: Vec3? -> true }
+    private var speedModifier: BiFunction<SoulSteelGolemEntity, Vec3, Float> =
+        BiFunction { entity: SoulSteelGolemEntity, targetPos: Vec3? -> 1f }
+    private var positionPredicate: BiPredicate<SoulSteelGolemEntity, Vec3?> =
+        BiPredicate { entity: SoulSteelGolemEntity, pos: Vec3? -> true }
 
     override fun getMemoryRequirements(): List<Pair<MemoryModuleType<*>, MemoryStatus>> {
         return MEMORY_REQUIREMENTS
@@ -54,9 +56,11 @@ class SetHomeWalkTarget : ExtendedBehaviour<SoulSteelGolemEntity>() {
     }
 
 
-
     companion object {
         private val MEMORY_REQUIREMENTS: List<Pair<MemoryModuleType<*>, MemoryStatus>> =
-            ObjectArrayList.of(Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT), Pair.of(MemoryModuleType.HOME, MemoryStatus.VALUE_PRESENT))
+            ObjectArrayList.of(
+                Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT),
+                Pair.of(MemoryModuleType.HOME, MemoryStatus.VALUE_PRESENT)
+            )
     }
 }

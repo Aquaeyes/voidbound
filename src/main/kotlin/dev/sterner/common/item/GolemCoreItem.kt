@@ -2,7 +2,6 @@ package dev.sterner.common.item
 
 import dev.sterner.api.GolemCore
 import net.minecraft.ChatFormatting
-import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
 import net.minecraft.network.chat.TextColor
@@ -16,8 +15,8 @@ import java.awt.Color
 
 class GolemCoreItem(val core: GolemCore, properties: Properties) : Item(properties.rarity(Rarity.UNCOMMON)) {
 
-    val color = Color(-19164)
-    val txtColor = TextColor.fromRgb(ColorHelper.darker(color, 1, 0.75f).rgb)
+    private val color = Color(-19164)
+    private val txtColor: TextColor = TextColor.fromRgb(ColorHelper.darker(color, 1, 0.75f).rgb)
 
     override fun appendHoverText(
         stack: ItemStack,
@@ -25,9 +24,19 @@ class GolemCoreItem(val core: GolemCore, properties: Properties) : Item(properti
         tooltipComponents: MutableList<Component>,
         isAdvanced: TooltipFlag
     ) {
-        var coreName: String = core.name.lowercase()
-        tooltipComponents.add(Component.translatable("tooltip.voidbound.$coreName").withStyle(ChatFormatting.ITALIC).withStyle(
-            Style.EMPTY.withColor(txtColor)))
+        val coreName: String = core.name.lowercase()
+        tooltipComponents.add(
+            Component.translatable("tooltip.voidbound.$coreName").withStyle(ChatFormatting.ITALIC).withStyle(
+                Style.EMPTY.withColor(txtColor)
+            )
+        )
+        if (!core.implemented) {
+            tooltipComponents.add(
+                Component.translatable("Not yet implemented").withStyle(ChatFormatting.ITALIC).withStyle(
+                    Style.EMPTY.withColor(Color.red.rgb)
+                )
+            )
+        }
 
         super.appendHoverText(stack, level, tooltipComponents, isAdvanced)
     }

@@ -36,12 +36,14 @@ class SpiritStabilizerBlockEntity(pos: BlockPos, blockState: BlockState) : Block
             if (level!!.gameTime % 8L == 0L) {
 
                 val random = level!!.random
-                val colorData = ColorParticleData.create(firstColor, secondColor).setCoefficient(1.5f).setEasing(Easing.BOUNCE_IN_OUT).build()
+                val colorData = ColorParticleData.create(firstColor, secondColor).setCoefficient(1.5f)
+                    .setEasing(Easing.BOUNCE_IN_OUT).build()
 
                 val lifeTime = RandomHelper.randomBetween(random, 40, 60)
                 val scale = RandomHelper.randomBetween(random, 0.3f, 0.4f)
 
-                val lightSpecs: ParticleEffectSpawner = SpiritLightSpecs.spiritLightSpecs(this.level, Vec3(x, y, z), colorData)
+                val lightSpecs: ParticleEffectSpawner =
+                    SpiritLightSpecs.spiritLightSpecs(this.level, Vec3(x, y, z), colorData)
                 lightSpecs.builder.setRenderTarget(RenderHandler.LATE_DELAYED_RENDER).setLifetime(lifeTime)
                     .setScaleData(GenericParticleData.create(scale, 0.0f).setEasing(Easing.SINE_IN_OUT).build())
                     .setTransparencyData(GenericParticleData.create(0.3f, 0.6f, 0.0f).build())
@@ -52,7 +54,8 @@ class SpiritStabilizerBlockEntity(pos: BlockPos, blockState: BlockState) : Block
             if (level!!.gameTime % 4L == 0L) {
 
                 val random = level!!.random
-                val colorData = ColorParticleData.create(firstColor, secondColor).setCoefficient(1.5f).setEasing(Easing.BOUNCE_IN_OUT).build()
+                val colorData = ColorParticleData.create(firstColor, secondColor).setCoefficient(1.5f)
+                    .setEasing(Easing.BOUNCE_IN_OUT).build()
 
                 var lifeTime = RandomHelper.randomBetween(random, 10, 15)
                 var scale = RandomHelper.randomBetween(random, 0.02f, 0.03f)
@@ -60,8 +63,13 @@ class SpiritStabilizerBlockEntity(pos: BlockPos, blockState: BlockState) : Block
                 WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
                     .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
                     .setScaleData(GenericParticleData.create(scale, 0.0f).setEasing(Easing.SINE_IN).build())
-                    .setTransparencyData(GenericParticleData.create(0.4f, 0.8f, 0.2f).setEasing(Easing.QUAD_OUT).build())
-                    .setColorData(colorData).setSpinData(SpinParticleData.create(0.2f, 0.4f).setSpinOffset(level!!.gameTime.toFloat() * 0.2f % 6.28f).setEasing(Easing.QUARTIC_IN).build())
+                    .setTransparencyData(
+                        GenericParticleData.create(0.4f, 0.8f, 0.2f).setEasing(Easing.QUAD_OUT).build()
+                    )
+                    .setColorData(colorData).setSpinData(
+                        SpinParticleData.create(0.2f, 0.4f).setSpinOffset(level!!.gameTime.toFloat() * 0.2f % 6.28f)
+                            .setEasing(Easing.QUARTIC_IN).build()
+                    )
                     .setLifetime(lifeTime)
                     .addMotion(0.0, -(scale * 1.5f).toDouble(), 0.0)
                     .enableNoClip()
@@ -74,7 +82,10 @@ class SpiritStabilizerBlockEntity(pos: BlockPos, blockState: BlockState) : Block
                     .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
                     .setScaleData(GenericParticleData.create(scale, 0.0f).build())
                     .setTransparencyData(GenericParticleData.create(0.2f, 0.8f).build())
-                    .setColorData(ColorParticleData.create(firstColor, secondColor).setEasing(Easing.SINE_IN).setCoefficient(0.5f).build())
+                    .setColorData(
+                        ColorParticleData.create(firstColor, secondColor).setEasing(Easing.SINE_IN).setCoefficient(0.5f)
+                            .build()
+                    )
                     .setSpinData(SpinParticleData.create(0.0f, 0.4f).setEasing(Easing.QUARTIC_IN).build())
                     .setLifetime(lifeTime)
                     .enableNoClip()

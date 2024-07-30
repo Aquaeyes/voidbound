@@ -62,7 +62,9 @@ import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor
 
 
-open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(), level), SmartBrainOwner<SoulSteelGolemEntity> {
+open class SoulSteelGolemEntity(level: Level) :
+    PathfinderMob(VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(), level),
+    SmartBrainOwner<SoulSteelGolemEntity> {
 
     private var attackAnimationTick = 0
     val inventory = SimpleContainer(8)
@@ -124,7 +126,9 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
     }
 
     override fun wantsToPickUp(stack: ItemStack): Boolean {
-        return level().gameRules.getBoolean(GameRules.RULE_MOBGRIEFING) && this.canPickUpLoot() && getGolemCore() == GolemCore.GATHER && canAddToInventory(stack)
+        return level().gameRules.getBoolean(GameRules.RULE_MOBGRIEFING) && this.canPickUpLoot() && getGolemCore() == GolemCore.GATHER && canAddToInventory(
+            stack
+        )
     }
 
     private fun canAddToInventory(stack: ItemStack): Boolean {
@@ -161,11 +165,11 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
         }
     }
 
-    fun setGolemCore(core: GolemCore){
+    fun setGolemCore(core: GolemCore) {
         entityData.set(coreEntityData, core.name)
     }
 
-    fun getGolemCore() : GolemCore {
+    fun getGolemCore(): GolemCore {
         return GolemCore.valueOf(entityData.get(coreEntityData))
     }
 
@@ -215,7 +219,8 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
 
     companion object {
 
-        private var coreEntityData = SynchedEntityData.defineId(SoulSteelGolemEntity::class.java, EntityDataSerializers.STRING)
+        private var coreEntityData =
+            SynchedEntityData.defineId(SoulSteelGolemEntity::class.java, EntityDataSerializers.STRING)
 
         fun createGolemAttributes(): AttributeSupplier.Builder {
             return LivingEntity.createLivingAttributes()

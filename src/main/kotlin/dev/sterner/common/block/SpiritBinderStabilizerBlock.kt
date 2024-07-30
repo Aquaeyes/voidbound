@@ -1,6 +1,5 @@
 package dev.sterner.common.block
 
-import dev.sterner.common.blockentity.SpiritBinderBlockEntity
 import dev.sterner.common.blockentity.SpiritStabilizerBlockEntity
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
@@ -48,8 +47,12 @@ class SpiritBinderStabilizerBlock(properties: Properties) : BaseEntityBlock(
     companion object {
         fun makeShape(): VoxelShape {
             var shape = Shapes.empty()
-            shape = Shapes.join(shape, Shapes.box(0.0, 11.0/16, 0.0, 16 / 16.0, 16 / 16.0, 16 / 16.0), BooleanOp.OR)
-            shape = Shapes.join(shape, Shapes.box(3 / 16.0, 8.0/16, 3 / 16.0, 13 / 16.0, 16 / 16.0, 13 / 16.0), BooleanOp.OR)
+            shape = Shapes.join(shape, Shapes.box(0.0, 11.0 / 16, 0.0, 16 / 16.0, 16 / 16.0, 16 / 16.0), BooleanOp.OR)
+            shape = Shapes.join(
+                shape,
+                Shapes.box(3 / 16.0, 8.0 / 16, 3 / 16.0, 13 / 16.0, 16 / 16.0, 13 / 16.0),
+                BooleanOp.OR
+            )
 
             return shape
         }

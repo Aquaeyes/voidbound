@@ -18,8 +18,8 @@ import net.tslat.smartbrainlib.util.EntityRetrievalUtil
 import java.util.function.BiPredicate
 
 class GolemGatherSensor : PredicateSensor<ItemEntity, SoulSteelGolemEntity>(
-    BiPredicate{
-        itemEntity: ItemEntity, entity: SoulSteelGolemEntity -> entity.getGolemCore() == GolemCore.GATHER &&entity.hasLineOfSight(itemEntity)
+    BiPredicate { itemEntity: ItemEntity, entity: SoulSteelGolemEntity ->
+        entity.getGolemCore() == GolemCore.GATHER && entity.hasLineOfSight(itemEntity)
     }
 ) {
 
@@ -49,7 +49,10 @@ class GolemGatherSensor : PredicateSensor<ItemEntity, SoulSteelGolemEntity>(
                 obj is ItemEntity && predicate().test(obj as ItemEntity, entity)
             }
         )
-        for (pos in BlockPos.betweenClosed(entity.blockPosition().subtract(this.radius.toVec3i()), entity.blockPosition().offset(this.radius.toVec3i()))) {
+        for (pos in BlockPos.betweenClosed(
+            entity.blockPosition().subtract(this.radius.toVec3i()),
+            entity.blockPosition().offset(this.radius.toVec3i())
+        )) {
             if (level.getBlockState(pos).block is ChestBlock) {
                 BrainUtils.setMemory(
                     entity,

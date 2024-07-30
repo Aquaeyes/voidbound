@@ -1,6 +1,5 @@
 package dev.sterner.registry
 
-import com.sammy.malum.registry.common.PacketRegistry.MALUM_CHANNEL
 import dev.sterner.VoidBound
 import dev.sterner.networking.SpiritBinderParticlePacket
 import io.github.fabricators_of_create.porting_lib.util.EnvExecutor

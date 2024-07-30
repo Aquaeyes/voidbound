@@ -6,13 +6,9 @@ import dev.sterner.registry.VoidBoundMemoryTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.entity.ai.behavior.BehaviorUtils
 import net.minecraft.world.entity.ai.behavior.BlockPosTracker
-import net.minecraft.world.entity.ai.behavior.EntityTracker
-import net.minecraft.world.entity.ai.behavior.PositionTracker
 import net.minecraft.world.entity.ai.memory.MemoryModuleType
 import net.minecraft.world.entity.ai.memory.MemoryStatus
-import net.minecraft.world.entity.npc.Villager
 import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour

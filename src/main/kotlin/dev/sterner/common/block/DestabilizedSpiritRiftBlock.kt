@@ -14,7 +14,8 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class DestabilizedSpiritRiftBlock(properties: Properties) : BaseEntityBlock(properties.noOcclusion().noCollission().lightLevel { 10 }) {
+class DestabilizedSpiritRiftBlock(properties: Properties) :
+    BaseEntityBlock(properties.noOcclusion().noCollission().lightLevel { 10 }) {
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
         return VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get().create(pos, state)

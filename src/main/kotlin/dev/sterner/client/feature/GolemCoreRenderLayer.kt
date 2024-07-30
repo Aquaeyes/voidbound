@@ -39,7 +39,16 @@ class GolemCoreRenderLayer(
             poseStack.pushPose()
             poseStack.scale(0.75f, 0.75f, 1f)
             poseStack.translate(0.0f, 0.3f, 0f);
-            model.renderToBuffer(poseStack, buffer.getBuffer(RenderType.eyes(texture)), packedLight, OverlayTexture.NO_OVERLAY, 1f,1f,1f,1f)
+            model.renderToBuffer(
+                poseStack,
+                buffer.getBuffer(RenderType.eyes(texture)),
+                packedLight,
+                OverlayTexture.NO_OVERLAY,
+                1f,
+                1f,
+                1f,
+                1f
+            )
             poseStack.popPose()
         }
     }
