@@ -6,6 +6,7 @@ import dev.sterner.VoidBound
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import net.minecraft.client.model.ArmedModel
 import net.minecraft.client.model.HierarchicalModel
+import net.minecraft.client.model.IronGolemModel
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.PartPose
@@ -59,6 +60,8 @@ class SoulSteelGolemEntityModel(root: ModelPart) : HierarchicalModel<SoulSteelGo
         this.rightLeg.yRot = 0.0f
         this.leftLeg.yRot = 0.0f
     }
+
+
 
     override fun prepareMobModel(entity: SoulSteelGolemEntity, limbSwing: Float, limbSwingAmount: Float, partialTick: Float) {
         val i: Int = entity.getAttackAnimationTick()
@@ -141,6 +144,7 @@ class SoulSteelGolemEntityModel(root: ModelPart) : HierarchicalModel<SoulSteelGo
         this.torso.translateAndRotate(poseStack)
         modelPart.translateAndRotate(poseStack)
         //poseStack.scale(0.55f, 0.55f, 0.55f)
+        poseStack.translate(-0.6f,-0.3f,0f)
         this.offsetStackPosition(poseStack, bl)
     }
 

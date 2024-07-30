@@ -1,14 +1,12 @@
 package dev.sterner.common.entity
 
 import com.sammy.malum.registry.common.item.ItemRegistry
-import dev.sterner.VoidBound
 import dev.sterner.api.GolemCore
 import dev.sterner.api.ItemUtils
 import dev.sterner.common.entity.ai.*
 import dev.sterner.common.item.GolemCoreItem
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import dev.sterner.registry.VoidBoundItemRegistry
-import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
@@ -17,30 +15,21 @@ import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.ItemTags
-import net.minecraft.world.*
+import net.minecraft.world.Containers
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.SimpleContainer
 import net.minecraft.world.damagesource.DamageSource
-import net.minecraft.world.entity.Interaction
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.PathfinderMob
 import net.minecraft.world.entity.ai.Brain
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
-import net.minecraft.world.entity.ai.attributes.RangedAttribute
-import net.minecraft.world.entity.ai.behavior.BehaviorUtils
 import net.minecraft.world.entity.ai.behavior.LookAtTargetSink
-import net.minecraft.world.entity.ai.behavior.MeleeAttack
-import net.minecraft.world.entity.ai.behavior.SetClosestHomeAsWalkTarget
-import net.minecraft.world.entity.ai.behavior.StrollAroundPoi
-import net.minecraft.world.entity.ai.sensing.NearestVisibleLivingEntitySensor
-import net.minecraft.world.entity.ai.util.LandRandomPos
-import net.minecraft.world.entity.animal.IronGolem
 import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.world.entity.monster.Zombie
-import net.minecraft.world.entity.npc.Villager
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.AxeItem
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.level.GameRules
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
@@ -53,10 +42,8 @@ import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.MoveToWalkTarget
-import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget
-import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetAttackTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetPlayerLookTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetRandomLookTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetRetaliateTarget
@@ -174,8 +161,15 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
         return GolemCore.valueOf(entityData.get(coreEntityData))
     }
 
+    override fun doHurtTarget(target: Entity): Boolean {
+        this.attackAnimationTick = 10
+        level().broadcastEntityEvent(this, 4.toByte())
+        return super.doHurtTarget(target)
+    }
+
     override fun aiStep() {
         super.aiStep()
+        this.updateSwingTime()
         if (this.attackAnimationTick > 0) {
             attackAnimationTick--
         }
@@ -282,8 +276,16 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
 
     override fun getFightTasks(): BrainActivityGroup<out SoulSteelGolemEntity> {
         return BrainActivityGroup.fightTasks(
+            //Golem Guard
             InvalidateAttackTarget<SoulSteelGolemEntity>(),
-            AnimatableMeleeAttack<SoulSteelGolemEntity>(0).startCondition { it.getGolemCore() == GolemCore.GUARD }.whenStarting { it.isAggressive = true }.whenStarting { it.isAggressive = false }
+            AnimatableMeleeAttack<SoulSteelGolemEntity>(0).startCondition { it.getGolemCore() == GolemCore.GUARD }
+                .whenStarting {
+                    it.isAggressive = true
+                    this.attackAnimationTick = 10
+                }
+                .whenStarting {
+                    it.isAggressive = false
+                }
         )
     }
 }
