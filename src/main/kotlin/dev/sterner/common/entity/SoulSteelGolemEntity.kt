@@ -29,11 +29,14 @@ import net.minecraft.world.entity.ai.attributes.RangedAttribute
 import net.minecraft.world.entity.ai.behavior.BehaviorUtils
 import net.minecraft.world.entity.ai.behavior.LookAtTargetSink
 import net.minecraft.world.entity.ai.behavior.MeleeAttack
+import net.minecraft.world.entity.ai.behavior.SetClosestHomeAsWalkTarget
+import net.minecraft.world.entity.ai.behavior.StrollAroundPoi
 import net.minecraft.world.entity.ai.sensing.NearestVisibleLivingEntitySensor
 import net.minecraft.world.entity.ai.util.LandRandomPos
 import net.minecraft.world.entity.animal.IronGolem
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.monster.Zombie
+import net.minecraft.world.entity.npc.Villager
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.AxeItem
 import net.minecraft.world.item.ItemStack
@@ -50,6 +53,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.MoveToWalkTarget
+import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetAttackTarget
@@ -264,12 +268,12 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
 
     override fun getIdleTasks(): BrainActivityGroup<out SoulSteelGolemEntity> {
         return BrainActivityGroup.idleTasks(
-
             FirstApplicableBehaviour(
                 SetRandomLookTarget(),
                 SetPlayerLookTarget<SoulSteelGolemEntity?>().predicate { it.distanceToSqr(this.position()) < 6 }
             ),
             OneRandomBehaviour(
+                SetHomeWalkTarget(), //TODO add home on spawn
                 SetRandomLookTarget(),
                 Idle<SoulSteelGolemEntity>().runFor { it.random.nextInt(30, 60) }
             )
