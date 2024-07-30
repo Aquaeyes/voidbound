@@ -31,6 +31,12 @@ object VoidBound : ModInitializer, ClientModInitializer {
         BookWidgetStyle.WidgetDesignType.GILDED
     )
 
+    val MOD_GILDED: BookWidgetStyle = BookWidgetStyle(
+        BookWidgetStyle.WidgetStylePreset(modid, "void_frame"),
+        BookWidgetStyle.WidgetStylePreset("paper_filling"),
+        BookWidgetStyle.WidgetDesignType.GILDED
+    )
+
     override fun onInitialize() {
 
         VoidBoundTags.init()
@@ -59,6 +65,30 @@ object VoidBound : ModInitializer, ClientModInitializer {
             builder.configureWidget {
                 it.setIcon(VoidBoundItemRegistry.CALL_OF_THE_VOID.get()).setStyle(VOID_GILDED)
             }.addPage(HeadlineTextPage("call_of_the_void", "call_of_the_void.1"))
+        }
+
+        screen?.addEntry("soul_steel_golem", 2, -2) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.SOUL_STEEL_GOLEM.get()).setStyle(MOD_GILDED)
+            }.addPage(HeadlineTextPage("soul_steel_golem", "soul_steel_golem.1"))
+        }
+
+        screen?.addEntry("gather_core", 2, -3) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.GOLEM_CORE_GATHER.get()).setStyle(MOD_GILDED)
+            }.addPage(HeadlineTextPage("gather_core", "gather_core.1"))
+        }
+
+        screen?.addEntry("guard_core", 3, -2) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.GOLEM_CORE_GUARD.get()).setStyle(MOD_GILDED)
+            }.addPage(HeadlineTextPage("guard_core", "guard_core.1"))
+        }
+
+        screen?.addEntry("harvest_core", 2, -4) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.GOLEM_CORE_HARVEST.get()).setStyle(MOD_GILDED)
+            }.addPage(HeadlineTextPage("harvest_core", "harvest_core.1"))
         }
     }
 

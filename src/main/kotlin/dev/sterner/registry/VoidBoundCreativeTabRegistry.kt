@@ -31,7 +31,7 @@ object VoidBoundCreativeTabRegistry {
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_FILL.get())
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_EMPTY.get())
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_LUMBER.get())
-                entries.accept(VoidBoundItemRegistry.DESTABILIZED_SPIRIT_RIFT.get())
+                //entries.accept(VoidBoundItemRegistry.DESTABILIZED_SPIRIT_RIFT.get())
 
             }.build()
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ResourceLocation(VoidBound.modid, "main"), GROUP!!)

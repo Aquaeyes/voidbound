@@ -26,5 +26,15 @@
   "block.voidbound.spirit_stabilizer": "Spirit Stabilizer",
   "itemGroup.voidbound": "Void Bound",
   "malum.gui.book.entry.call_of_the_void": "Call of the Void",
-  "malum.gui.book.entry.call_of_the_void.description": "Endless darkness in a lost void"
+  "malum.gui.book.entry.call_of_the_void.description": "Endless darkness in a lost void",
+
+
+  "malum.gui.book.entry.soul_steel_golem": "Soul Steel Golem",
+  "malum.gui.book.entry.soul_steel_golem.description": "Santa's little helpers",
+  "malum.gui.book.entry.gather_core": "Gather Core",
+  "malum.gui.book.entry.gather_core.description": "I like Items",
+  "malum.gui.book.entry.guard_core": "Guard Core",
+  "malum.gui.book.entry.guard_core.description": "I don't like Undead",
+  "malum.gui.book.entry.harvest_core": "Harvest Core",
+  "malum.gui.book.entry.harvest_core.description": "I like Crops"
 }
