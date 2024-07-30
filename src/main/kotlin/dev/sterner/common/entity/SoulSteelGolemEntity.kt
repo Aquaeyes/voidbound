@@ -137,10 +137,10 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
         ItemUtils.pickUpItem(this, itemEntity)
     }
 
-    override fun kill() {
+    override fun dropAllDeathLoot(damageSource: DamageSource) {
         dropCore(level(), position())
         Containers.dropContents(level(), this, inventory)
-        super.kill()
+        super.dropAllDeathLoot(damageSource)
     }
 
     override fun defineSynchedData() {
