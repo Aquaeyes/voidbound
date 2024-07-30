@@ -3,12 +3,13 @@ package dev.sterner.common.entity
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.api.GolemCore
 import dev.sterner.api.ItemUtils
+import dev.sterner.common.entity.ai.behaviour.InsertItemsToStorage
 import dev.sterner.common.entity.ai.behaviour.SetHomeWalkTarget
-import dev.sterner.common.entity.ai.behaviour.guard.SetTargetNearestHostile
-import dev.sterner.common.entity.ai.behaviour.harvest.SetCropWalkTarget
 import dev.sterner.common.entity.ai.behaviour.gather.SetWalkTargetToItem
+import dev.sterner.common.entity.ai.behaviour.gather.SetWalkTargetToStorage
+import dev.sterner.common.entity.ai.behaviour.guard.SetTargetNearestHostile
 import dev.sterner.common.entity.ai.behaviour.harvest.HarvestCrop
-import dev.sterner.common.entity.ai.behaviour.harvest.PlantCrop
+import dev.sterner.common.entity.ai.behaviour.harvest.SetCropWalkTarget
 import dev.sterner.common.entity.ai.sensor.GolemGatherSensor
 import dev.sterner.common.entity.ai.sensor.GolemHarvestSensor
 import dev.sterner.common.item.GolemCoreItem
@@ -123,11 +124,11 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
     }
 
     override fun wantsToPickUp(stack: ItemStack): Boolean {
-        return level().gameRules.getBoolean(GameRules.RULE_MOBGRIEFING) && this.canPickUpLoot() && getGolemCore() == GolemCore.GATHER
+        return level().gameRules.getBoolean(GameRules.RULE_MOBGRIEFING) && this.canPickUpLoot() && getGolemCore() == GolemCore.GATHER && canAddToInventory(stack)
     }
 
-    private fun canPickupItem(): Boolean {
-        return true //TODO
+    private fun canAddToInventory(stack: ItemStack?): Boolean {
+        return inventory.canAddItem(stack)
     }
 
     override fun pickUpItem(itemEntity: ItemEntity) {
@@ -207,6 +208,11 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
         this.playSound(SoundEvents.IRON_GOLEM_STEP, 0.5f, 1.25f)
     }
 
+    override fun swing(hand: InteractionHand) {
+        this.attackAnimationTick = 10
+        super.swing(hand)
+    }
+
     companion object {
 
         private var coreEntityData = SynchedEntityData.defineId(SoulSteelGolemEntity::class.java, EntityDataSerializers.STRING)
@@ -257,10 +263,11 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
             //Golem Harvester
             SetCropWalkTarget().startCondition { it.getGolemCore() == GolemCore.HARVEST },
             HarvestCrop().startCondition { it.getGolemCore() == GolemCore.HARVEST },
-            PlantCrop().startCondition { it.getGolemCore() == GolemCore.HARVEST },
 
             //Golem Gatherer
-            SetWalkTargetToItem().startCondition { it.getGolemCore() == GolemCore.GATHER && it.canPickupItem()},
+            SetWalkTargetToItem().startCondition { it.getGolemCore() == GolemCore.GATHER },
+            SetWalkTargetToStorage().startCondition { it.getGolemCore() == GolemCore.GATHER },
+            InsertItemsToStorage().startCondition { it.getGolemCore() == GolemCore.GATHER },
 
             //Golem Guard
             SetWalkTargetToAttackTarget<SoulSteelGolemEntity>().startCondition { it.getGolemCore() == GolemCore.GUARD },
@@ -268,8 +275,6 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
             SetTargetNearestHostile().startCondition { it.getGolemCore() == GolemCore.GUARD }
         )
     }
-
-
 
     override fun getIdleTasks(): BrainActivityGroup<out SoulSteelGolemEntity> {
         return BrainActivityGroup.idleTasks(

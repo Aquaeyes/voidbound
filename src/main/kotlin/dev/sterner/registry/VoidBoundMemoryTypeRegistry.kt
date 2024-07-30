@@ -25,4 +25,8 @@ object VoidBoundMemoryTypeRegistry {
     var NEARBY_CROPS = MEMORY_TYPES.register("nearby_crops") {
         MemoryModuleType<List<com.mojang.datafixers.util.Pair<BlockPos, BlockState>>>(Optional.empty())
     }
+
+    var STORAGE_LOCATION = MEMORY_TYPES.register("storage_location") {
+        MemoryModuleType<BlockPos>(Optional.empty())
+    }
 }
