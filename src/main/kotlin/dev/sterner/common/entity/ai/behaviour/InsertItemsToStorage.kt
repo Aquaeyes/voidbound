@@ -5,7 +5,6 @@ import dev.sterner.api.ItemUtils
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundMemoryTypeRegistry
 import net.minecraft.core.Direction
-import net.minecraft.world.Container
 import net.minecraft.world.WorldlyContainer
 import net.minecraft.world.entity.ai.memory.MemoryModuleType
 import net.minecraft.world.entity.ai.memory.MemoryStatus
@@ -37,14 +36,17 @@ class InsertItemsToStorage : ExtendedBehaviour<SoulSteelGolemEntity>() {
                     val container = be as WorldlyContainer
 
                     var insert: ItemStack? = null
+                    var index = 0
                     for (item in entity.inventory.items) {
+                        index++
                         if (!item.isEmpty) {
                             insert = item
                             break
                         }
                     }
                     if (insert != null) {
-                        ItemUtils.addItem(container, insert, Direction.DOWN)
+                        val remainder = ItemUtils.addItem(container, insert, Direction.DOWN)
+                        entity.inventory.setItem(index, remainder)
                         insertCooldown = 20
                     }
                 }
