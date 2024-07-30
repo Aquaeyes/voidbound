@@ -3,6 +3,7 @@ package dev.sterner.api
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import net.minecraft.core.Direction
 import net.minecraft.world.Container
+import net.minecraft.world.Containers
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.WorldlyContainer
 import net.minecraft.world.entity.ai.behavior.BehaviorUtils
@@ -16,8 +17,6 @@ object ItemUtils {
 
     fun throwItemsTowardPos(golem: SoulSteelGolemEntity, stacks: List<ItemStack>, pos: Vec3) {
         if (stacks.isNotEmpty()) {
-            golem.swing(InteractionHand.OFF_HAND)
-
             for (itemStack in stacks) {
                 BehaviorUtils.throwItem(golem, itemStack, pos.add(0.0, 1.0, 0.0))
             }
@@ -38,19 +37,11 @@ object ItemUtils {
 
     fun pickUpItem(golem: SoulSteelGolemEntity, itemEntity: ItemEntity) {
         val itemStack: ItemStack
-        if (itemEntity.item.`is`(Items.IRON_AXE) && golem.mainHandItem.isEmpty) {
-            itemStack = itemEntity.item
-            golem.equipItemIfPossible(itemStack)
-            itemEntity.discard()
-        } else {
-            golem.take(itemEntity, 1)
-            itemStack = ItemUtils.removeOneItemFromItemEntity(itemEntity)
-        }
+        golem.take(itemEntity, 64)
+        itemStack = removeOneItemFromItemEntity(itemEntity)
 
-        val bl = golem.equipItemIfPossible(itemStack) != ItemStack.EMPTY
-        if (!bl) {
-            putInInventory(golem, itemStack)
-        }
+        putInInventory(golem, itemStack)
+
     }
 
     private fun throwItemsTowardRandomPos(golem: SoulSteelGolemEntity, stacks: List<ItemStack>) {
@@ -63,25 +54,14 @@ object ItemUtils {
     }
 
 
-    fun addItem(destination: Container, stack: ItemStack, direction: Direction?): ItemStack {
+    fun addItem(destination: Container, stack: ItemStack): ItemStack {
         var stack = stack
-        if (destination is WorldlyContainer && direction != null) {
-            val `is`: IntArray = destination.getSlotsForFace(direction)
-
-            var i = 0
-            while (i < `is`.size && !stack.isEmpty) {
-                stack = tryMoveInItem(destination, stack, `is`[i], direction)
-                i++
-            }
-
-            return stack
-        }
 
         val j = destination.containerSize
 
         var i = 0
         while (i < j && !stack.isEmpty) {
-            stack = tryMoveInItem(destination, stack, i, direction)
+            stack = tryMoveInItem(destination, stack, i)
             i++
         }
 
@@ -91,12 +71,11 @@ object ItemUtils {
     private fun tryMoveInItem(
         destination: Container,
         stack: ItemStack,
-        slot: Int,
-        direction: Direction?
+        slot: Int
     ): ItemStack {
         var stack = stack
         val itemStack = destination.getItem(slot)
-        if (canPlaceItemInContainer(destination, stack, slot, direction)) {
+        if (canPlaceItemInContainer(destination, stack, slot)) {
             var bl = false
             if (itemStack.isEmpty) {
                 destination.setItem(slot, stack)
@@ -125,13 +104,8 @@ object ItemUtils {
     private fun canPlaceItemInContainer(
         container: Container,
         stack: ItemStack,
-        slot: Int,
-        direction: Direction?
+        slot: Int
     ): Boolean {
-        return if (!container.canPlaceItem(slot, stack)) {
-            false
-        } else {
-            !(container is WorldlyContainer && !container.canPlaceItemThroughFace(slot, stack, direction))
-        }
+        return container.canPlaceItem(slot, stack)
     }
 }

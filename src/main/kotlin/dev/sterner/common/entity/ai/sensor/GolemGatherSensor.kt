@@ -4,10 +4,12 @@ import dev.sterner.api.GolemCore
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundMemoryTypeRegistry
 import dev.sterner.registry.VoidBoundSensorTypeRegistry
+import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.ai.memory.MemoryModuleType
 import net.minecraft.world.entity.ai.sensing.SensorType
 import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.level.block.ChestBlock
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor
 import net.tslat.smartbrainlib.api.core.sensor.PredicateSensor
 import net.tslat.smartbrainlib.`object`.SquareRadius
@@ -47,5 +49,15 @@ class GolemGatherSensor : PredicateSensor<ItemEntity, SoulSteelGolemEntity>(
                 obj is ItemEntity && predicate().test(obj as ItemEntity, entity)
             }
         )
+        for (pos in BlockPos.betweenClosed(entity.blockPosition().subtract(this.radius.toVec3i()), entity.blockPosition().offset(this.radius.toVec3i()))) {
+            if (level.getBlockState(pos).block is ChestBlock) {
+                BrainUtils.setMemory(
+                    entity,
+                    VoidBoundMemoryTypeRegistry.STORAGE_LOCATION.get(),
+                    pos
+                )
+                break
+            }
+        }
     }
 }

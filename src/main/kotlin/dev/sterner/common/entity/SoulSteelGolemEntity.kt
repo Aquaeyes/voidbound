@@ -127,12 +127,12 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
         return level().gameRules.getBoolean(GameRules.RULE_MOBGRIEFING) && this.canPickUpLoot() && getGolemCore() == GolemCore.GATHER && canAddToInventory(stack)
     }
 
-    private fun canAddToInventory(stack: ItemStack?): Boolean {
+    private fun canAddToInventory(stack: ItemStack): Boolean {
         return inventory.canAddItem(stack)
     }
 
     override fun pickUpItem(itemEntity: ItemEntity) {
-        this.onItemPickup(itemEntity)
+        //this.onItemPickup(itemEntity)
         ItemUtils.pickUpItem(this, itemEntity)
     }
 
@@ -266,8 +266,8 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
 
             //Golem Gatherer
             SetWalkTargetToItem().startCondition { it.getGolemCore() == GolemCore.GATHER },
-            SetWalkTargetToStorage().startCondition { it.getGolemCore() == GolemCore.GATHER },
-            InsertItemsToStorage().startCondition { it.getGolemCore() == GolemCore.GATHER },
+            SetWalkTargetToStorage().startCondition { it.getGolemCore() == GolemCore.GATHER && !it.inventory.isEmpty },
+            InsertItemsToStorage().startCondition { it.getGolemCore() == GolemCore.GATHER && !it.inventory.isEmpty },
 
             //Golem Guard
             SetWalkTargetToAttackTarget<SoulSteelGolemEntity>().startCondition { it.getGolemCore() == GolemCore.GUARD },
