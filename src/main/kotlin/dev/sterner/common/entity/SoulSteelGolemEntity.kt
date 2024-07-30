@@ -4,7 +4,7 @@ import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.api.GolemCore
 import dev.sterner.api.ItemUtils
 import dev.sterner.common.entity.ai.behaviour.InsertItemsToStorage
-import dev.sterner.common.entity.ai.behaviour.SetHomeWalkTarget
+import dev.sterner.common.entity.ai.behaviour.ReturnHomeFromMemory
 import dev.sterner.common.entity.ai.behaviour.gather.SetWalkTargetToItem
 import dev.sterner.common.entity.ai.behaviour.gather.SetWalkTargetToStorage
 import dev.sterner.common.entity.ai.behaviour.guard.SetTargetNearestHostile
@@ -295,7 +295,7 @@ open class SoulSteelGolemEntity(level: Level) :
                 SetPlayerLookTarget<SoulSteelGolemEntity?>().predicate { it.distanceToSqr(this.position()) < 6 }
             ),
             OneRandomBehaviour(
-                SetHomeWalkTarget(), //TODO add home on spawn
+                ReturnHomeFromMemory(1f, 2, 150, 1200), //TODO add home on spawn
                 SetRandomLookTarget(),
                 Idle<SoulSteelGolemEntity>().runFor { it.random.nextInt(30, 60) }
             )
