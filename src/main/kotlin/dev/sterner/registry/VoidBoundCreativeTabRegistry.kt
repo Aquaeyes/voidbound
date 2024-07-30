@@ -23,6 +23,7 @@ object VoidBoundCreativeTabRegistry {
                 entries.accept(VoidBoundItemRegistry.SPIRIT_STABILIZER.get())
                 entries.accept(VoidBoundItemRegistry.CALL_OF_THE_VOID.get())
                 entries.accept(VoidBoundItemRegistry.SOUL_STEEL_GOLEM.get())
+                entries.accept(VoidBoundItemRegistry.CORE_EMPTY.get())
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_GATHER.get())
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_GUARD.get())
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_HARVEST.get())

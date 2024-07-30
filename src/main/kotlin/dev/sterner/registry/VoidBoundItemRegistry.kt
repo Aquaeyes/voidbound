@@ -45,6 +45,10 @@ object VoidBoundItemRegistry {
         GolemEntityItem()
     }
 
+    val CORE_EMPTY = ITEMS.register("core_empty") {
+        Item(Item.Properties())
+    }
+
     val GOLEM_CORE_GATHER = ITEMS.register("golem_core_gather") {
         GolemCoreItem(GolemCore.GATHER, Item.Properties())
     }

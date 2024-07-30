@@ -38,14 +38,14 @@ class GolemCoreModel(root: ModelPart) : Model(Function { location: ResourceLocat
         val LAYER_LOCATION: ModelLayerLocation = ModelLayerLocation(VoidBound.id("golem_core"), "main")
 
         fun createBodyLayer(): LayerDefinition {
-            val meshDefinition: MeshDefinition = MeshDefinition()
+            val meshDefinition = MeshDefinition()
             val root: PartDefinition = meshDefinition.root
 
             val golemCore: PartDefinition = root.addOrReplaceChild(
                 "golemCore",
-                CubeListBuilder.create().texOffs(1, 1)
-                    .addBox(-3.0f, -3.0f, -0.5f, 6.0f, 6.0f, 1.0f, CubeDeformation(0.0f)),
-                PartPose.offset(0.0f, 14.5f, -2.6f)
+                CubeListBuilder.create().texOffs(0, 0)
+                    .addBox(-4.0F, -13.3F, -3.3F, 8.0f, 8.0f, 0.0f, CubeDeformation(0.0f)),
+                PartPose.offset(0.0F, 24.0F, 0.0F)
             )
 
             return LayerDefinition.create(meshDefinition, 16, 16)
