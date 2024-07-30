@@ -10,7 +10,7 @@ import net.minecraft.world.entity.ai.memory.MemoryStatus
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour
 import net.tslat.smartbrainlib.util.BrainUtils
 
-class InsertItemsToStorage : ExtendedBehaviour<SoulSteelGolemEntity>() {
+class ExtractItemFromStorage : ExtendedBehaviour<SoulSteelGolemEntity>() {
 
     override fun getMemoryRequirements(): MutableList<Pair<MemoryModuleType<*>, MemoryStatus>> {
         return mutableListOf(
@@ -19,13 +19,13 @@ class InsertItemsToStorage : ExtendedBehaviour<SoulSteelGolemEntity>() {
     }
 
     override fun shouldKeepRunning(entity: SoulSteelGolemEntity): Boolean {
-        return !entity.inventory.isEmpty
+        return entity.inventory.isEmpty
     }
 
     override fun tick(entity: SoulSteelGolemEntity) {
         super.tick(entity)
 
-        if (!entity.inventory.isEmpty) {
+        if (entity.inventory.isEmpty) {
             val memory = BrainUtils.getMemory(entity, VoidBoundMemoryTypeRegistry.STORAGE_LOCATION.get())
 
             if (memory != null && memory.distToCenterSqr(entity.position()) < 2) {
@@ -35,8 +35,8 @@ class InsertItemsToStorage : ExtendedBehaviour<SoulSteelGolemEntity>() {
                     val container = be as Container
 
                     for (i in 0 until entity.inventory.containerSize) {
-                        if (!entity.inventory.getItem(i).isEmpty) {
-                            val itemStack2 = ItemUtils.addItem(container, entity.inventory.removeItem(i, 1))
+                        if (!container.getItem(i).isEmpty) {
+                            val itemStack2 = ItemUtils.addItem(entity.inventory, container.removeItem(i, 1))
 
                             if (itemStack2.isEmpty) {
                                 container.setChanged()
