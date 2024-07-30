@@ -1,36 +1,37 @@
-package dev.sterner.common.entity.ai
+package dev.sterner.common.entity.ai.behaviour.harvest
 
 import com.mojang.datafixers.util.Pair
 import dev.sterner.api.GolemCore
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundMemoryTypeRegistry
+import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.ai.memory.MemoryModuleType
 import net.minecraft.world.entity.ai.memory.MemoryStatus
 import net.minecraft.world.entity.ai.memory.WalkTarget
-import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.level.block.state.BlockState
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour
 import net.tslat.smartbrainlib.util.BrainUtils
-import java.lang.management.MemoryType
 
-class SetWalkTargetToItem : ExtendedBehaviour<SoulSteelGolemEntity>() {
+
+class SetCropWalkTarget : ExtendedBehaviour<SoulSteelGolemEntity>() {
 
     override fun getMemoryRequirements(): MutableList<Pair<MemoryModuleType<*>, MemoryStatus>> {
-        return mutableListOf(Pair.of(VoidBoundMemoryTypeRegistry.NEARBY_ITEMS.get(), MemoryStatus.VALUE_PRESENT))
+        return mutableListOf(Pair.of(VoidBoundMemoryTypeRegistry.NEARBY_CROPS.get(), MemoryStatus.VALUE_PRESENT))
     }
 
     override fun start(level: ServerLevel, entity: SoulSteelGolemEntity, gameTime: Long) {
         super.start(level, entity, gameTime)
-        if (entity.getGolemCore() != GolemCore.GATHER) {
-            BrainUtils.clearMemory(entity, VoidBoundMemoryTypeRegistry.NEARBY_ITEMS.get())
+        if (entity.getGolemCore() != GolemCore.HARVEST) {
+            BrainUtils.clearMemory(entity, VoidBoundMemoryTypeRegistry.NEARBY_CROPS.get())
         } else {
 
-            val items: List<ItemEntity>? = BrainUtils.getMemory(entity, VoidBoundMemoryTypeRegistry.NEARBY_ITEMS.get())?.filter { true } //TODO filter to inventory space
+            val crops: List<Pair<BlockPos, BlockState>>? = BrainUtils.getMemory(entity, VoidBoundMemoryTypeRegistry.NEARBY_CROPS.get())
 
-            val closest: ItemEntity? = items?.minByOrNull { it.distanceToSqr(entity) }!!
+            val closestCrop = crops?.minByOrNull { it.first.distSqr(entity.blockPosition()) }
 
-            if (closest != null) {
-                val walkTarget = WalkTarget(closest.position(), 1f, 1)
+            if (closestCrop != null) {
+                val walkTarget = WalkTarget(closestCrop.first, 1f, 1)
                 BrainUtils.setMemory(entity, MemoryModuleType.WALK_TARGET, walkTarget)
             }
         }

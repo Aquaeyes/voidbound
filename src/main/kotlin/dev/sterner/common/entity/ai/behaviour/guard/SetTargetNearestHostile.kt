@@ -1,4 +1,4 @@
-package dev.sterner.common.entity.ai
+package dev.sterner.common.entity.ai.behaviour.guard
 
 import com.mojang.datafixers.util.Pair
 import dev.sterner.common.entity.SoulSteelGolemEntity
@@ -8,7 +8,6 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType
 import net.minecraft.world.entity.ai.memory.MemoryStatus
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour
 import net.tslat.smartbrainlib.util.BrainUtils
-import java.util.function.Function
 
 class SetTargetNearestHostile : ExtendedBehaviour<SoulSteelGolemEntity>() {
 

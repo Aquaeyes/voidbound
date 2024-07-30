@@ -3,7 +3,14 @@ package dev.sterner.common.entity
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.api.GolemCore
 import dev.sterner.api.ItemUtils
-import dev.sterner.common.entity.ai.*
+import dev.sterner.common.entity.ai.behaviour.SetHomeWalkTarget
+import dev.sterner.common.entity.ai.behaviour.guard.SetTargetNearestHostile
+import dev.sterner.common.entity.ai.behaviour.harvest.SetCropWalkTarget
+import dev.sterner.common.entity.ai.behaviour.gather.SetWalkTargetToItem
+import dev.sterner.common.entity.ai.behaviour.harvest.HarvestCrop
+import dev.sterner.common.entity.ai.behaviour.harvest.PlantCrop
+import dev.sterner.common.entity.ai.sensor.GolemGatherSensor
+import dev.sterner.common.entity.ai.sensor.GolemHarvestSensor
 import dev.sterner.common.item.GolemCoreItem
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import dev.sterner.registry.VoidBoundItemRegistry
@@ -229,17 +236,16 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
 
     override fun getSensors(): MutableList<out ExtendedSensor<out SoulSteelGolemEntity>> {
         return ObjectArrayList.of(
-            GolemSpecificSensor(),
             NearbyPlayersSensor(),
-            NearbyLivingEntitySensor(),
+            NearbyLivingEntitySensor<SoulSteelGolemEntity>().setRadius(24.0, 16.0),
 
             //Golem Harvester
             GolemHarvestSensor(),
             //Golem Gatherer
             GolemGatherSensor(),
             //Golem Guard
-            NearbyHostileSensor<SoulSteelGolemEntity>().setPredicate { t, u -> u.getGolemCore() == GolemCore.GUARD },
-            HurtBySensor<SoulSteelGolemEntity>().setPredicate { t, u -> u.getGolemCore() == GolemCore.GUARD },
+            NearbyHostileSensor<SoulSteelGolemEntity>().setPredicate { _, u -> u.getGolemCore() == GolemCore.GUARD },
+            HurtBySensor<SoulSteelGolemEntity>().setPredicate { _, u -> u.getGolemCore() == GolemCore.GUARD },
         )
     }
 
@@ -247,6 +253,11 @@ open class SoulSteelGolemEntity(level: Level) : PathfinderMob(VoidBoundEntityTyp
         return BrainActivityGroup.coreTasks(
             LookAtTargetSink(40, 300),
             MoveToWalkTarget<SoulSteelGolemEntity>(),
+
+            //Golem Harvester
+            SetCropWalkTarget().startCondition { it.getGolemCore() == GolemCore.HARVEST },
+            HarvestCrop().startCondition { it.getGolemCore() == GolemCore.HARVEST },
+            PlantCrop().startCondition { it.getGolemCore() == GolemCore.HARVEST },
 
             //Golem Gatherer
             SetWalkTargetToItem().startCondition { it.getGolemCore() == GolemCore.GATHER && it.canPickupItem()},

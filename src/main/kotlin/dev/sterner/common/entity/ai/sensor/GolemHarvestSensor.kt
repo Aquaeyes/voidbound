@@ -1,4 +1,4 @@
-package dev.sterner.common.entity.ai
+package dev.sterner.common.entity.ai.sensor
 
 import com.mojang.datafixers.util.Pair
 import dev.sterner.api.GolemCore
@@ -13,11 +13,9 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType
 import net.minecraft.world.entity.ai.sensing.SensorType
 import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor
 import net.tslat.smartbrainlib.api.core.sensor.PredicateSensor
 import net.tslat.smartbrainlib.`object`.SquareRadius
-import net.tslat.smartbrainlib.registry.SBLMemoryTypes
 import net.tslat.smartbrainlib.util.BrainUtils
 import java.util.function.BiPredicate
 
@@ -27,7 +25,7 @@ class GolemHarvestSensor : PredicateSensor<BlockState, SoulSteelGolemEntity>(
     }
 ) {
 
-    private var radius: SquareRadius = SquareRadius(1.0, 1.0)
+    private var radius: SquareRadius = SquareRadius(24.0, 8.0)
 
     override fun memoriesUsed(): MutableList<MemoryModuleType<*>> {
         return mutableListOf(VoidBoundMemoryTypeRegistry.NEARBY_CROPS.get())

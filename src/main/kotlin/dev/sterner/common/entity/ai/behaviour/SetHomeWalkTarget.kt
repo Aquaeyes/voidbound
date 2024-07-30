@@ -1,17 +1,12 @@
-package dev.sterner.common.entity.ai
+package dev.sterner.common.entity.ai.behaviour
 
 import com.mojang.datafixers.util.Pair
 import dev.sterner.api.PosUtils
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import net.minecraft.core.BlockPos
-import net.minecraft.util.RandomSource
-import net.minecraft.world.entity.PathfinderMob
 import net.minecraft.world.entity.ai.memory.MemoryModuleType
 import net.minecraft.world.entity.ai.memory.MemoryStatus
 import net.minecraft.world.entity.ai.memory.WalkTarget
-import net.minecraft.world.entity.ai.util.GoalUtils
-import net.minecraft.world.entity.ai.util.RandomPos
 import net.minecraft.world.phys.Vec3
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour
 import net.tslat.smartbrainlib.util.BrainUtils
