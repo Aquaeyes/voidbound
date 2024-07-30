@@ -25,7 +25,7 @@ class SetWalkTargetToItem : ExtendedBehaviour<SoulSteelGolemEntity>() {
             BrainUtils.clearMemory(entity, VoidBoundMemoryTypeRegistry.NEARBY_ITEMS.get())
         } else {
 
-            val items: List<ItemEntity>? = BrainUtils.getMemory(entity, VoidBoundMemoryTypeRegistry.NEARBY_ITEMS.get())
+            val items: List<ItemEntity>? = BrainUtils.getMemory(entity, VoidBoundMemoryTypeRegistry.NEARBY_ITEMS.get())?.filter { true } //TODO filter to inventory space
 
             val closest: ItemEntity? = items?.minByOrNull { it.distanceToSqr(entity) }!!
 

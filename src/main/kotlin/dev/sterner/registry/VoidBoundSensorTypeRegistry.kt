@@ -3,6 +3,7 @@ package dev.sterner.registry
 import dev.sterner.VoidBound
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.common.entity.ai.GolemGatherSensor
+import dev.sterner.common.entity.ai.GolemGuardSensor
 import dev.sterner.common.entity.ai.GolemHarvestSensor
 import dev.sterner.common.entity.ai.GolemSpecificSensor
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
@@ -25,5 +26,9 @@ object VoidBoundSensorTypeRegistry {
 
     var GOLEM_HARVEST_SENSOR = SENSOR_TYPES.register("golem_harvest") {
         SensorType( ::GolemHarvestSensor )
+    }
+
+    var GOLEM_GUARD_SENSOR = SENSOR_TYPES.register("golem_guard") {
+        SensorType( ::GolemGuardSensor )
     }
 }
