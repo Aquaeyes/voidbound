@@ -12,6 +12,8 @@ import net.minecraft.world.entity.ai.behavior.EntityTracker
 import net.minecraft.world.entity.ai.behavior.PositionTracker
 import net.minecraft.world.entity.ai.memory.MemoryModuleType
 import net.minecraft.world.entity.ai.memory.MemoryStatus
+import net.minecraft.world.entity.npc.Villager
+import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour
 import net.tslat.smartbrainlib.util.BrainUtils
@@ -39,6 +41,11 @@ class HarvestCrop : ExtendedBehaviour<SoulSteelGolemEntity>() {
             entity.swing(InteractionHand.MAIN_HAND)
             entity.brain.setMemory(MemoryModuleType.LOOK_TARGET, BlockPosTracker(this.crop!!.first))
             entity.level().destroyBlock(crop!!.first, true)
+            if (crop!!.second.block is CropBlock) {
+                val c = crop!!.second.block as CropBlock
+                entity.level().setBlockAndUpdate(crop!!.first, c.getStateForAge(0))
+                BrainUtils.clearMemory(entity, VoidBoundMemoryTypeRegistry.NEARBY_CROPS.get())
+            }
             crop = null
         }
     }
