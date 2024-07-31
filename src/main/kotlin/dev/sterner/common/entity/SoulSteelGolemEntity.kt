@@ -202,8 +202,8 @@ open class SoulSteelGolemEntity(level: Level) :
             SetTargetNearestHostile().startCondition { it.getGolemCore() == GolemCore.GUARD },
 
             //Fill Golem
-            InsertItemsToStorage().fill().startCondition { it.getGolemCore() == GolemCore.FILL && !it.inventory.isEmpty },
-            ExtractItemFromStorage().fill().startCondition { it.getGolemCore() == GolemCore.FILL && it.inventory.isEmpty },
+            //InsertItemsToStorage().fill().startCondition { it.getGolemCore() == GolemCore.FILL && !it.inventory.isEmpty },
+            //ExtractItemFromStorage().fill().startCondition { it.getGolemCore() == GolemCore.FILL && it.inventory.isEmpty },
         )
     }
 
