@@ -7,7 +7,7 @@ import dev.sterner.client.model.SoulSteelGolemEntityModel
 import dev.sterner.client.renderer.*
 import dev.sterner.common.components.VoidBoundPlayerComponent
 import dev.sterner.common.entity.AbstractGolemEntity
-import dev.sterner.common.event.MalumCodexEvent
+import dev.sterner.client.event.MalumCodexEvent
 import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
@@ -27,17 +27,6 @@ object VoidBound : ModInitializer, ClientModInitializer {
     private val logger = LoggerFactory.getLogger(modid)
 
 
-    val VOID_GILDED: BookWidgetStyle = BookWidgetStyle(
-        BookWidgetStyle.WidgetStylePreset(modid, "void_frame"),
-        BookWidgetStyle.WidgetStylePreset("dark_filling"),
-        BookWidgetStyle.WidgetDesignType.GILDED
-    )
-
-    val MOD_GILDED: BookWidgetStyle = BookWidgetStyle(
-        BookWidgetStyle.WidgetStylePreset(modid, "void_frame"),
-        BookWidgetStyle.WidgetStylePreset("paper_filling"),
-        BookWidgetStyle.WidgetDesignType.GILDED
-    )
 
     override fun onInitialize() {
 
