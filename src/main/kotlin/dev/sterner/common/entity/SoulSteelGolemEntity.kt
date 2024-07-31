@@ -25,6 +25,7 @@ import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.Container
 import net.minecraft.world.Containers
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -73,11 +74,7 @@ open class SoulSteelGolemEntity(level: Level) :
 
     val inventory = SimpleContainer(8)
 
-    fun handleTuningFork(player: Player, blockPos: BlockPos?) {
-        if (getOwner().isPresent && getOwner().get() == player.uuid) {
-            //TODO do thing
-        }
-    }
+
 
     override fun mobInteract(player: Player, hand: InteractionHand): InteractionResult {
         val stack = player.getItemInHand(hand)
@@ -153,12 +150,19 @@ open class SoulSteelGolemEntity(level: Level) :
 
     override fun aiStep() {
         super.aiStep()
-        if (!BrainUtils.hasMemory(this, MemoryModuleType.HOME)) {
-            BrainUtils.setMemory(this, MemoryModuleType.HOME, GlobalPos.of(level().dimension(), onPos))
-        }
     }
 
     //BRAINNNNZZZ
+
+    fun handleTuningFork(player: Player, blockPos: BlockPos) {
+        if (getOwner().isPresent && getOwner().get() == player.uuid) {
+            if (player.level().getBlockEntity(blockPos) is Container) {
+                BrainUtils.setMemory(this, VoidBoundMemoryTypeRegistry.STORAGE_LOCATION.get(), blockPos)
+            } else {
+                BrainUtils.setMemory(this, MemoryModuleType.HOME, GlobalPos.of(level().dimension(), onPos))
+            }
+        }
+    }
 
     override fun customServerAiStep() {
         tickBrain(this)

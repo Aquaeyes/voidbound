@@ -49,6 +49,7 @@ class GolemGatherSensor : PredicateSensor<ItemEntity, SoulSteelGolemEntity>(
                 obj is ItemEntity && predicate().test(obj as ItemEntity, entity)
             }
         )
+        /* Moved
         for (pos in BlockPos.betweenClosed(
             entity.blockPosition().subtract(this.radius.toVec3i()),
             entity.blockPosition().offset(this.radius.toVec3i())
@@ -62,5 +63,7 @@ class GolemGatherSensor : PredicateSensor<ItemEntity, SoulSteelGolemEntity>(
                 break
             }
         }
+
+         */
     }
 }
