@@ -76,8 +76,6 @@ open class SoulSteelGolemEntity(level: Level) :
 
     val inventory = SimpleContainer(8)
 
-
-
     override fun mobInteract(player: Player, hand: InteractionHand): InteractionResult {
         val stack = player.getItemInHand(hand)
         if (stack.item is GolemCoreItem) {
@@ -212,16 +210,19 @@ open class SoulSteelGolemEntity(level: Level) :
 
     override fun getIdleTasks(): BrainActivityGroup<out SoulSteelGolemEntity> {
         return BrainActivityGroup.idleTasks(
-            ReturnHomeFromMemory(1f, 2, 150, 1200).startCondition { it.getGolemCore() == GolemCore.GUARD },
-
-            OneRandomBehaviour(
-                SetRandomWalkTarget<SoulSteelGolemEntity>().startCondition { it.getGolemCore() == GolemCore.GUARD },
-                Idle<SoulSteelGolemEntity>().runFor { it.random.nextInt(30, 60) }
-            ),
             FirstApplicableBehaviour(
                 SetRandomLookTarget(),
                 SetPlayerLookTarget<SoulSteelGolemEntity?>().predicate { it.distanceToSqr(this.position()) < 6 }
-            )
+            ),
+
+            //Guard Golem
+            ReturnHomeFromMemory(1f, 2, 150, 1200).startCondition { it.getGolemCore() == GolemCore.GUARD },
+            OneRandomBehaviour(
+                SetRandomWalkTarget(),
+                Idle<SoulSteelGolemEntity>().runFor { it.random.nextInt(30, 60) }
+            ).startCondition { it.getGolemCore() == GolemCore.GUARD },
+
+
         )
     }
 
