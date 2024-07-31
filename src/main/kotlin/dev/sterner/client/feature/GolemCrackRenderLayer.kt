@@ -20,7 +20,7 @@ class GolemCrackRenderLayer(
     soulSteelGolemEntityRenderer
 ) {
 
-    val resourceLocations: List<ResourceLocation> = ImmutableList.of(
+    private val resourceLocations: List<ResourceLocation> = ImmutableList.of(
         VoidBound.id("textures/entity/soul_steel_golem_crack_low.png"),
         VoidBound.id("textures/entity/soul_steel_golem_crack_medium.png"),
         VoidBound.id("textures/entity/soul_steel_golem_crack_high.png")
@@ -41,8 +41,8 @@ class GolemCrackRenderLayer(
         if (!livingEntity.isInvisible) {
             val healthPercentage = livingEntity.health / livingEntity.maxHealth * 100
             val texture = when {
-                healthPercentage <= 40 -> resourceLocations[2]
-                healthPercentage <= 65 -> resourceLocations[1]
+                healthPercentage <= 30 -> resourceLocations[2]
+                healthPercentage <= 60 -> resourceLocations[1]
                 healthPercentage <= 90 -> resourceLocations[0]
                 else -> null
             }
