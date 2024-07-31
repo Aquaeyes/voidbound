@@ -46,7 +46,8 @@
   "custom": {
     "cardinal-components": [
       "voidbound:world",
-      "voidbound:entity"
+      "voidbound:entity",
+      "voidbound:player"
     ]
   }
 }

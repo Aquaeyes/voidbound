@@ -10,12 +10,18 @@ import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.client.model.GolemCoreModel
 import dev.sterner.client.model.SoulSteelGolemEntityModel
 import dev.sterner.client.renderer.*
+import dev.sterner.common.components.VoidBoundPlayerComponent
 import dev.sterner.common.entity.SoulSteelGolemEntity
+import dev.sterner.common.event.MalumCodexEvent
 import dev.sterner.registry.*
+import io.github.fabricators_of_create.porting_lib.event.client.InteractEvents
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
+import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers
 import net.minecraft.client.renderer.item.ItemProperties
@@ -59,71 +65,11 @@ object VoidBound : ModInitializer, ClientModInitializer {
             SoulSteelGolemEntity.createGolemAttributes()
         )
 
-        MalumCodexEvents.EVENT.register(this::addVoidBoundEntries)
+        MalumCodexEvents.EVENT.register(MalumCodexEvent::addVoidBoundEntries)
+        UseBlockCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useBlock)
     }
 
-    private fun addVoidBoundEntries(screen: ArcanaProgressionScreen?, entries: MutableList<PlacedBookEntry>) {
-        screen?.addEntry("call_of_the_void", 0, 12) { builder ->
-            builder.configureWidget {
-                it.setIcon(VoidBoundItemRegistry.CALL_OF_THE_VOID.get()).setStyle(VOID_GILDED)
-            }.addPage(HeadlineTextPage("call_of_the_void", "call_of_the_void.1"))
-        }
 
-        screen?.addEntry("soul_steel_golem", 2, -1) { builder ->
-            builder.configureWidget {
-                it.setIcon(VoidBoundItemRegistry.SOUL_STEEL_GOLEM.get()).setStyle(MOD_GILDED)
-            }
-                .addPage(
-                    HeadlineTextPage(
-                        "soul_steel_golem",
-                        "soul_steel_golem.1"
-                    )
-                )
-                .addPage(
-                    SpiritInfusionPage.fromOutput(
-                        VoidBoundItemRegistry.SOUL_STEEL_GOLEM.get()
-                    )
-                )
-                .addPage(
-                    SpiritInfusionPage.fromOutput(
-                        VoidBoundItemRegistry.CORE_EMPTY.get()
-                    )
-                )
-        }
-
-        screen?.addEntry("gather_core", 2, -2) { builder ->
-            builder.configureWidget {
-                it.setIcon(VoidBoundItemRegistry.GOLEM_CORE_GATHER.get()).setStyle(MOD_GILDED)
-            }.addPage(HeadlineTextPage("gather_core", "gather_core.1"))
-                .addPage(
-                    SpiritInfusionPage.fromOutput(
-                        VoidBoundItemRegistry.GOLEM_CORE_GATHER.get()
-                    )
-                )
-        }
-
-        screen?.addEntry("guard_core", 3, -1) { builder ->
-            builder.configureWidget {
-                it.setIcon(VoidBoundItemRegistry.GOLEM_CORE_GUARD.get()).setStyle(MOD_GILDED)
-            }.addPage(HeadlineTextPage("guard_core", "guard_core.1"))
-                .addPage(
-                    SpiritInfusionPage.fromOutput(
-                        VoidBoundItemRegistry.GOLEM_CORE_GUARD.get()
-                    )
-                )
-        }
-
-        screen?.addEntry("harvest_core", 2, -3) { builder ->
-            builder.configureWidget {
-                it.setIcon(VoidBoundItemRegistry.GOLEM_CORE_HARVEST.get()).setStyle(MOD_GILDED)
-            }.addPage(HeadlineTextPage("harvest_core", "harvest_core.1"))
-                .addPage(
-                    SpiritInfusionPage.fromOutput(
-                        VoidBoundItemRegistry.GOLEM_CORE_HARVEST.get()
-                    )
-                )
-        }
-    }
 
     override fun onInitializeClient() {
 
@@ -163,6 +109,8 @@ object VoidBound : ModInitializer, ClientModInitializer {
                 if (itemStack.tag != null && itemStack.tag!!.contains("Glowing") && itemStack.tag!!.getBoolean("Glowing")) 1f else 0f
             return@register v
         }
+
+        WorldRenderEvents.AFTER_TRANSLUCENT.register(VoidBoundPlayerComponent.Companion::renderCubeAtPos)
     }
 
     fun id(name: String): ResourceLocation {

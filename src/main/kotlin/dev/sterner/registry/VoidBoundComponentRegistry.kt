@@ -1,5 +1,7 @@
 package dev.sterner.registry
 
+import dev.emi.trinkets.api.LivingEntityTrinketComponent
+import dev.emi.trinkets.api.TrinketsApi
 import dev.onyxstudios.cca.api.v3.component.ComponentKey
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry
@@ -9,8 +11,10 @@ import dev.onyxstudios.cca.api.v3.world.WorldComponentFactoryRegistry
 import dev.onyxstudios.cca.api.v3.world.WorldComponentInitializer
 import dev.sterner.VoidBound
 import dev.sterner.common.components.VoidBoundEntityComponent
+import dev.sterner.common.components.VoidBoundPlayerComponent
 import dev.sterner.common.components.VoidBoundWorldComponent
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
 
 class VoidBoundComponentRegistry : WorldComponentInitializer, EntityComponentInitializer {
 
@@ -25,6 +29,14 @@ class VoidBoundComponentRegistry : WorldComponentInitializer, EntityComponentIni
                     livingEntity
                 )
             }
+
+        registry.registerForPlayers(VOID_BOUND_PLAYER_COMPONENT,
+            { entity: Player ->
+                VoidBoundPlayerComponent(
+                    entity
+                )
+            }, RespawnCopyStrategy.ALWAYS_COPY
+        )
     }
 
     companion object {
@@ -36,6 +48,11 @@ class VoidBoundComponentRegistry : WorldComponentInitializer, EntityComponentIni
         val VOID_BOUND_ENTITY_COMPONENT: ComponentKey<VoidBoundEntityComponent> = ComponentRegistry.getOrCreate(
             VoidBound.id("entity"),
             VoidBoundEntityComponent::class.java
+        )
+
+        val VOID_BOUND_PLAYER_COMPONENT: ComponentKey<VoidBoundPlayerComponent> = ComponentRegistry.getOrCreate(
+            VoidBound.id("player"),
+            VoidBoundPlayerComponent::class.java
         )
     }
 }
