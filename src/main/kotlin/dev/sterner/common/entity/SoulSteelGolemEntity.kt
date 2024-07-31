@@ -2,7 +2,8 @@ package dev.sterner.common.entity
 
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.api.GolemCore
-import dev.sterner.api.ItemUtils
+import dev.sterner.api.utils.ItemUtils
+import dev.sterner.common.entity.ai.behaviour.ExtractItemFromStorage
 import dev.sterner.common.entity.ai.behaviour.InsertItemsToStorage
 import dev.sterner.common.entity.ai.behaviour.ReturnHomeFromMemory
 import dev.sterner.common.entity.ai.behaviour.gather.SetWalkTargetToItem
@@ -19,6 +20,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.chat.Component
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.*
 import net.minecraft.world.damagesource.DamageSource
@@ -140,8 +142,15 @@ open class SoulSteelGolemEntity(level: Level) :
     fun handleTuningFork(player: Player, blockPos: BlockPos) {
         if (getOwner().isPresent && getOwner().get() == player.uuid) {
             if (player.level().getBlockEntity(blockPos) is Container) {
-                BrainUtils.setMemory(this, VoidBoundMemoryTypeRegistry.STORAGE_LOCATION.get(), blockPos)
+                if (player.isShiftKeyDown) {
+                    player.sendSystemMessage(Component.translatable("output_storage_selected"))
+                    BrainUtils.setMemory(this, VoidBoundMemoryTypeRegistry.OUTPUT_STORAGE_LOCATION.get(), blockPos)
+                } else {
+                    player.sendSystemMessage(Component.translatable("input_storage_selected"))
+                    BrainUtils.setMemory(this, VoidBoundMemoryTypeRegistry.INPUT_STORAGE_LOCATION.get(), blockPos)
+                }
             } else {
+                player.sendSystemMessage(Component.translatable("home_selected"))
                 BrainUtils.setMemory(this, MemoryModuleType.HOME, GlobalPos.of(level().dimension(), blockPos))
             }
         }
@@ -187,7 +196,11 @@ open class SoulSteelGolemEntity(level: Level) :
             //Golem Guard
             SetWalkTargetToAttackTarget<SoulSteelGolemEntity>().startCondition { it.getGolemCore() == GolemCore.GUARD },
             SetRetaliateTarget<SoulSteelGolemEntity>().startCondition { it.getGolemCore() == GolemCore.GUARD },
-            SetTargetNearestHostile().startCondition { it.getGolemCore() == GolemCore.GUARD }
+            SetTargetNearestHostile().startCondition { it.getGolemCore() == GolemCore.GUARD },
+
+            //Fill Golem
+            InsertItemsToStorage().fill().startCondition { it.getGolemCore() == GolemCore.FILL && !it.inventory.isEmpty },
+            ExtractItemFromStorage().fill().startCondition { it.getGolemCore() == GolemCore.FILL && it.inventory.isEmpty },
         )
     }
 
@@ -203,10 +216,8 @@ open class SoulSteelGolemEntity(level: Level) :
             OneRandomBehaviour(
                 SetRandomWalkTarget(),
                 Idle<SoulSteelGolemEntity>().runFor { it.random.nextInt(30, 60) }
-            ).startCondition { it.getGolemCore() == GolemCore.GUARD },
-
-
-            )
+            ).startCondition { it.getGolemCore() == GolemCore.GUARD }
+        )
     }
 
     override fun getFightTasks(): BrainActivityGroup<out SoulSteelGolemEntity> {

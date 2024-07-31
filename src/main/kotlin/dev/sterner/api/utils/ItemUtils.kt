@@ -1,6 +1,6 @@
 @file:Suppress("NAME_SHADOWING")
 
-package dev.sterner.api
+package dev.sterner.api.utils
 
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import net.minecraft.world.Container

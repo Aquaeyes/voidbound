@@ -26,7 +26,19 @@ object VoidBoundMemoryTypeRegistry {
         MemoryModuleType<List<com.mojang.datafixers.util.Pair<BlockPos, BlockState>>>(Optional.empty())
     }
 
-    var STORAGE_LOCATION = MEMORY_TYPES.register("storage_location") {
+    var INPUT_STORAGE_LOCATION = MEMORY_TYPES.register("input_storage_location") {
         MemoryModuleType<BlockPos>(Optional.empty())
+    }
+
+    var INPUT_STORAGE_LOCATIONS = MEMORY_TYPES.register("input_storage_locations") {
+        MemoryModuleType<MutableList<BlockPos>>(Optional.empty())
+    }
+
+    var OUTPUT_STORAGE_LOCATION = MEMORY_TYPES.register("output_storage_location") {
+        MemoryModuleType<BlockPos>(Optional.empty())
+    }
+
+    var OUTPUT_STORAGE_LOCATIONS = MEMORY_TYPES.register("output_storage_locations") {
+        MemoryModuleType<MutableList<BlockPos>>(Optional.empty())
     }
 }
