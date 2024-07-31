@@ -13,6 +13,7 @@ import dev.sterner.common.entity.ai.behaviour.harvest.HarvestCrop
 import dev.sterner.common.entity.ai.behaviour.harvest.SetCropWalkTarget
 import dev.sterner.common.entity.ai.sensor.GolemGatherSensor
 import dev.sterner.common.entity.ai.sensor.GolemHarvestSensor
+import dev.sterner.common.entity.ai.sensor.GolemStorageSensor
 import dev.sterner.common.item.GolemCoreItem
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import dev.sterner.registry.VoidBoundMemoryTypeRegistry
@@ -176,6 +177,8 @@ open class SoulSteelGolemEntity(level: Level) :
             //Golem Guard
             NearbyHostileSensor<SoulSteelGolemEntity>().setPredicate { _, u -> u.getGolemCore() == GolemCore.GUARD },
             HurtBySensor<SoulSteelGolemEntity>().setPredicate { _, u -> u.getGolemCore() == GolemCore.GUARD },
+            //Golem Fill/Empty
+            GolemStorageSensor().setPredicate{ _, u -> u.getGolemCore() == GolemCore.FILL || u.getGolemCore() == GolemCore.EMPTY}
         )
     }
 

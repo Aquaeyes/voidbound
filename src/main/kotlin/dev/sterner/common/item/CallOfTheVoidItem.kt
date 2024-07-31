@@ -40,7 +40,6 @@ class CallOfTheVoidItem : Item(Properties()) {
         if (tag == null) {
             tag = CompoundTag()
             tag.putBoolean("Active", true)
-            tag.putS
         }
         if (tag.contains("Active") && tag.getBoolean("Active")) {
             tag.putBoolean("Active", false)
