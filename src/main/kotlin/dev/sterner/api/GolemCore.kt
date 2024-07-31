@@ -39,7 +39,10 @@ enum class GolemCore(val implemented: Boolean) : StringRepresentable {
         }
 
         fun readNbt(tag: CompoundTag): GolemCore {
-            return valueOf(tag.getString("name"))
+            if (tag.contains("name")) {
+                return valueOf(tag.getString("name"))
+            }
+            return NONE
         }
     }
 

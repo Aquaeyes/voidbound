@@ -101,11 +101,6 @@ abstract class AbstractGolemEntity(entityType: EntityType<out PathfinderMob>, le
         }
     }
 
-    fun getAttackAnimationTick(): Int {
-        return this.attackAnimationTick
-    }
-
-
     override fun swing(hand: InteractionHand) {
         this.attackAnimationTick = 10
         super.swing(hand)

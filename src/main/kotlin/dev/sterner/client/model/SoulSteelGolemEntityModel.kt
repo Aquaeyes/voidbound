@@ -68,7 +68,7 @@ class SoulSteelGolemEntityModel(root: ModelPart) : HierarchicalModel<SoulSteelGo
         limbSwingAmount: Float,
         partialTick: Float
     ) {
-        val i: Int = entity.getAttackAnimationTick()
+        val i: Int = entity.attackAnimationTick
         if (i > 0) {
             rightArm.xRot = -2.0f + 1.5f * Mth.triangleWave(i.toFloat() - partialTick, 10.0f)
             leftArm.xRot = -2.0f + 1.5f * Mth.triangleWave(i.toFloat() - partialTick, 10.0f)

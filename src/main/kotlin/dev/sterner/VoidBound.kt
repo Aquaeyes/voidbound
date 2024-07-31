@@ -11,6 +11,7 @@ import dev.sterner.client.model.GolemCoreModel
 import dev.sterner.client.model.SoulSteelGolemEntityModel
 import dev.sterner.client.renderer.*
 import dev.sterner.common.components.VoidBoundPlayerComponent
+import dev.sterner.common.entity.AbstractGolemEntity
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.common.event.MalumCodexEvent
 import dev.sterner.registry.*
@@ -63,7 +64,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
         FabricDefaultAttributeRegistry.register(
             VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(),
-            SoulSteelGolemEntity.createGolemAttributes()
+            AbstractGolemEntity.createGolemAttributes()
         )
 
         MalumCodexEvents.EVENT.register(MalumCodexEvent::addVoidBoundEntries)

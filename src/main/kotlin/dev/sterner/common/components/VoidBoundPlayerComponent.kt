@@ -8,6 +8,7 @@ import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent
 import dev.sterner.VoidBound
+import dev.sterner.common.entity.AbstractGolemEntity
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundComponentRegistry
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
@@ -147,11 +148,15 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
 
         fun useEntity(player: Player, level: Level?, interactionHand: InteractionHand, entity: Entity?, entityHitResult: EntityHitResult?): InteractionResult {
             if (player.getItemInHand(interactionHand).`is`(ItemRegistry.TUNING_FORK.get())) {
-                if (entityHitResult != null && entityHitResult.entity.type == VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get()) {
-                    val nbt = player.getItemInHand(interactionHand).orCreateTag
-                    nbt.putInt("GolemId",entityHitResult.entity.id)
-                    player.getItemInHand(interactionHand).tag = nbt
-                    return InteractionResult.SUCCESS
+                if (entityHitResult != null && entityHitResult.entity is AbstractGolemEntity) {
+                    val golem = entityHitResult.entity as AbstractGolemEntity
+                    if (golem.getOwner().isPresent && golem.getOwner().get() == player.uuid) {
+                        val nbt = player.getItemInHand(interactionHand).orCreateTag
+                        nbt.putInt("GolemId",entityHitResult.entity.id)
+                        player.getItemInHand(interactionHand).tag = nbt
+                        return InteractionResult.SUCCESS
+                    }
+
                 }
             }
             return InteractionResult.PASS
