@@ -24,7 +24,7 @@ object PosUtils {
         }
     }
 
-    fun generateRandomDirection(
+    private fun generateRandomDirection(
         pos: BlockPos,
         random: RandomSource,
         horizontalDistance: Int,

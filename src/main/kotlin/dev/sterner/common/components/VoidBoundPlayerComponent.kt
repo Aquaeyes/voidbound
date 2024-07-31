@@ -1,22 +1,17 @@
 package dev.sterner.common.components
 
 import com.mojang.blaze3d.vertex.PoseStack
-import com.sammy.malum.MalumMod
 import com.sammy.malum.client.RenderUtils
-import com.sammy.malum.client.renderer.block.MoteOfManaRenderer
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent
-import dev.sterner.VoidBound
 import dev.sterner.client.Tokens
 import dev.sterner.common.entity.AbstractGolemEntity
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundComponentRegistry
-import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
 import net.minecraft.client.Camera
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.components.toasts.Toast
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
@@ -93,7 +88,6 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
     companion object {
 
 
-
         fun renderCubeAtPos(ctx: WorldRenderContext) {
             val camera = ctx.camera()
             val poseStack = ctx.matrixStack()
@@ -106,7 +100,13 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
             }
         }
 
-        private fun renderCubeAtPos(camera: Camera, poseStack: PoseStack, blockPos: BlockPos, renderTypeToken: RenderTypeToken, ticksRemaining: Int) {
+        private fun renderCubeAtPos(
+            camera: Camera,
+            poseStack: PoseStack,
+            blockPos: BlockPos,
+            renderTypeToken: RenderTypeToken,
+            ticksRemaining: Int
+        ) {
             val targetPosition = Vec3(blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble())
             val transformedPosition: Vec3 = targetPosition.subtract(camera.position)
 
@@ -118,7 +118,8 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
             val totalTicks = 20
             val alpha = 0.5f * (ticksRemaining / totalTicks.toFloat())
 
-            val builder = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(renderTypeToken))
+            val builder = VFXBuilders.createWorld()
+                .setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(renderTypeToken))
             val cubeVertexData = RenderUtils.makeCubePositions(1f)
 
             RenderUtils.drawCube(
@@ -132,7 +133,12 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
             poseStack.popPose()
         }
 
-        fun useBlock(player: Player, level: Level?, interactionHand: InteractionHand, blockHitResult: BlockHitResult): InteractionResult {
+        fun useBlock(
+            player: Player,
+            level: Level?,
+            interactionHand: InteractionHand,
+            blockHitResult: BlockHitResult
+        ): InteractionResult {
             val stack = player.getItemInHand(interactionHand)
             if (stack.`is`(ItemRegistry.TUNING_FORK.get()) && stack.hasTag() && stack.tag!!.contains("GolemId")) {
                 VoidBoundComponentRegistry.VOID_BOUND_PLAYER_COMPONENT.get(player).addBlock(blockHitResult.blockPos)
@@ -146,13 +152,19 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
             return InteractionResult.PASS
         }
 
-        fun useEntity(player: Player, level: Level?, interactionHand: InteractionHand, entity: Entity?, entityHitResult: EntityHitResult?): InteractionResult {
+        fun useEntity(
+            player: Player,
+            level: Level?,
+            interactionHand: InteractionHand,
+            entity: Entity?,
+            entityHitResult: EntityHitResult?
+        ): InteractionResult {
             if (player.getItemInHand(interactionHand).`is`(ItemRegistry.TUNING_FORK.get())) {
                 if (entityHitResult != null && entityHitResult.entity is AbstractGolemEntity) {
                     val golem = entityHitResult.entity as AbstractGolemEntity
                     if (golem.getOwner().isPresent && golem.getOwner().get() == player.uuid) {
                         val nbt = player.getItemInHand(interactionHand).orCreateTag
-                        nbt.putInt("GolemId",entityHitResult.entity.id)
+                        nbt.putInt("GolemId", entityHitResult.entity.id)
                         player.getItemInHand(interactionHand).tag = nbt
                         return InteractionResult.SUCCESS
                     }

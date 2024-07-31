@@ -1,12 +1,12 @@
 package dev.sterner
 
 import com.sammy.malum.common.events.MalumCodexEvents
+import dev.sterner.client.event.MalumCodexEvent
 import dev.sterner.client.model.GolemCoreModel
 import dev.sterner.client.model.SoulSteelGolemEntityModel
 import dev.sterner.client.renderer.*
 import dev.sterner.common.components.VoidBoundPlayerComponent
 import dev.sterner.common.entity.AbstractGolemEntity
-import dev.sterner.client.event.MalumCodexEvent
 import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer

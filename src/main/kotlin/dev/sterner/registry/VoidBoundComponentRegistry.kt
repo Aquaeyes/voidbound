@@ -1,7 +1,5 @@
 package dev.sterner.registry
 
-import dev.emi.trinkets.api.LivingEntityTrinketComponent
-import dev.emi.trinkets.api.TrinketsApi
 import dev.onyxstudios.cca.api.v3.component.ComponentKey
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry
@@ -30,7 +28,8 @@ class VoidBoundComponentRegistry : WorldComponentInitializer, EntityComponentIni
                 )
             }
 
-        registry.registerForPlayers(VOID_BOUND_PLAYER_COMPONENT,
+        registry.registerForPlayers(
+            VOID_BOUND_PLAYER_COMPONENT,
             { entity: Player ->
                 VoidBoundPlayerComponent(
                     entity

@@ -27,43 +27,34 @@
   "itemGroup.voidbound": "Void Bound",
   "malum.gui.book.entry.call_of_the_void": "Call of the Void",
   "malum.gui.book.entry.call_of_the_void.description": "Endless darkness in a lost void",
-
-
   "malum.gui.book.entry.soul_steel_golem": "Soul Steel Golem",
   "malum.gui.book.entry.soul_steel_golem.description": "Santa's little helpers",
   "malum.gui.book.entry.page.headline.soul_steel_golem": "Soul Steel Golem",
   "malum.gui.book.entry.page.text.soul_steel_golem.1": "A lil golem init",
-
   "malum.gui.book.entry.gather_core": "Gather Core",
   "malum.gui.book.entry.gather_core.description": "I like Items",
   "malum.gui.book.entry.page.headline.gather_core": "Gather Core",
   "malum.gui.book.entry.page.text.gather_core.1": "Makes golems gather item and place in chests",
-
   "malum.gui.book.entry.guard_core": "Guard Core",
   "malum.gui.book.entry.guard_core.description": "I don't like Undead",
   "malum.gui.book.entry.page.headline.guard_core": "Guard Core",
   "malum.gui.book.entry.page.text.guard_core.1": "Makes golems kill hostile mobs",
-
   "malum.gui.book.entry.harvest_core": "Harvest Core",
   "malum.gui.book.entry.harvest_core.description": "I like Crops",
   "malum.gui.book.entry.page.headline.harvest_core": "Harvest Core",
   "malum.gui.book.entry.page.text.harvest_core.1": "Makes golems harvest and replant crops",
-
   "malum.gui.book.entry.butcher_core": "Butcher Core",
   "malum.gui.book.entry.butcher_core.description": "I like Animal slaughter",
   "malum.gui.book.entry.page.headline.butcher_core": "Butcher Core",
   "malum.gui.book.entry.page.text.butcher_core.1": "Makes golems kill adult animals",
-
   "malum.gui.book.entry.lumber_core": "Lumber Core",
   "malum.gui.book.entry.lumber_core.description": "I like Wood",
   "malum.gui.book.entry.page.headline.lumber_core": "Lumber Core",
   "malum.gui.book.entry.page.text.lumber_core.1": "Makes golems chop down trees",
-
   "malum.gui.book.entry.fill_core": "Fill Core",
   "malum.gui.book.entry.fill_core.description": "I like Storage",
   "malum.gui.book.entry.page.headline.fill_core": "Fill Core",
   "malum.gui.book.entry.page.text.fill_core.1": "Makes golems fill a chest",
-
   "malum.gui.book.entry.empty_core": "Empty Core",
   "malum.gui.book.entry.empty_core.description": "I like Storage",
   "malum.gui.book.entry.page.headline.empty_core": "Empty Core",

@@ -4,12 +4,10 @@ import dev.sterner.api.GolemCore
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundMemoryTypeRegistry
 import dev.sterner.registry.VoidBoundSensorTypeRegistry
-import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.ai.memory.MemoryModuleType
 import net.minecraft.world.entity.ai.sensing.SensorType
 import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.world.level.block.ChestBlock
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor
 import net.tslat.smartbrainlib.api.core.sensor.PredicateSensor
 import net.tslat.smartbrainlib.`object`.SquareRadius

@@ -8,7 +8,6 @@ import dev.sterner.client.feature.GolemCrackRenderLayer
 import dev.sterner.client.model.SoulSteelGolemEntityModel
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import net.minecraft.client.renderer.entity.EntityRendererProvider
-import net.minecraft.client.renderer.entity.IronGolemRenderer
 import net.minecraft.client.renderer.entity.MobRenderer
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer
 import net.minecraft.resources.ResourceLocation

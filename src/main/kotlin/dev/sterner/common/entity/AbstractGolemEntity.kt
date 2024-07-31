@@ -3,7 +3,6 @@ package dev.sterner.common.entity
 import dev.sterner.api.GolemCore
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.core.BlockPos
-import net.minecraft.core.GlobalPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
@@ -18,15 +17,14 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.PathfinderMob
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
-import net.minecraft.world.entity.ai.memory.MemoryModuleType
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.Vec3
-import net.tslat.smartbrainlib.util.BrainUtils
 import java.util.*
 
-abstract class AbstractGolemEntity(entityType: EntityType<out PathfinderMob>, level: Level) : PathfinderMob(entityType,
+abstract class AbstractGolemEntity(entityType: EntityType<out PathfinderMob>, level: Level) : PathfinderMob(
+    entityType,
     level
 ) {
 

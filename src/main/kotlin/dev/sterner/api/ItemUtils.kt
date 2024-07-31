@@ -37,7 +37,6 @@ object ItemUtils {
         val itemStack: ItemStack = removeOneItemFromItemEntity(itemEntity)
 
         putInInventory(golem, itemStack)
-
     }
 
     private fun throwItemsTowardRandomPos(golem: SoulSteelGolemEntity, stacks: List<ItemStack>) {

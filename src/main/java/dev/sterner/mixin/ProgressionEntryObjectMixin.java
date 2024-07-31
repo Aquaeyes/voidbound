@@ -10,12 +10,13 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(ProgressionEntryObject.class)
 public class ProgressionEntryObjectMixin implements ProgressionEntryObjectExtension {
 
-    @Shadow public ItemStack iconStack;
+    @Shadow
+    public ItemStack iconStack;
 
     @NotNull
     @Override
     public ProgressionEntryObject setIcon(@NotNull ItemStack itemStack) {
         iconStack = itemStack;
-        return (ProgressionEntryObject)(Object)this;
+        return (ProgressionEntryObject) (Object) this;
     }
 }

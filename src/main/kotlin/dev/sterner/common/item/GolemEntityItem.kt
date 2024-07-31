@@ -2,7 +2,6 @@ package dev.sterner.common.item
 
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
-import dev.sterner.registry.VoidBoundMemoryTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -13,7 +12,6 @@ import net.minecraft.world.entity.MobSpawnType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.gameevent.GameEvent
-import net.tslat.smartbrainlib.util.BrainUtils
 
 class GolemEntityItem : Item(Properties().stacksTo(1)) {
 
