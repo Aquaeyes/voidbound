@@ -38,7 +38,7 @@ class ReturnHomeFromMemory(
             return false
         }
 
-        return sqrt(entity.distanceToSqr(pos.pos().x.toDouble(), pos.pos().y.toDouble(), pos.pos().z.toDouble())) >= 32 || level.isNight
+        return sqrt(entity.distanceToSqr(pos.pos().x.toDouble(), pos.pos().y.toDouble(), pos.pos().z.toDouble())) >= 16
     }
 
     override fun start(pLevel: ServerLevel, pEntity: SoulSteelGolemEntity, pGameTime: Long) {

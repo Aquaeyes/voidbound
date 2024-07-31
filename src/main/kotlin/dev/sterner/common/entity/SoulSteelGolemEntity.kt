@@ -17,6 +17,7 @@ import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import dev.sterner.registry.VoidBoundItemRegistry
 import dev.sterner.registry.VoidBoundMemoryTypeRegistry
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos
 import net.minecraft.nbt.CompoundTag
@@ -54,6 +55,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.MoveToWalkTarget
+import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetPlayerLookTarget
@@ -159,7 +161,7 @@ open class SoulSteelGolemEntity(level: Level) :
             if (player.level().getBlockEntity(blockPos) is Container) {
                 BrainUtils.setMemory(this, VoidBoundMemoryTypeRegistry.STORAGE_LOCATION.get(), blockPos)
             } else {
-                BrainUtils.setMemory(this, MemoryModuleType.HOME, GlobalPos.of(level().dimension(), onPos))
+                BrainUtils.setMemory(this, MemoryModuleType.HOME, GlobalPos.of(level().dimension(), blockPos))
             }
         }
     }
@@ -210,14 +212,15 @@ open class SoulSteelGolemEntity(level: Level) :
 
     override fun getIdleTasks(): BrainActivityGroup<out SoulSteelGolemEntity> {
         return BrainActivityGroup.idleTasks(
+            ReturnHomeFromMemory(1f, 2, 150, 1200).startCondition { it.getGolemCore() == GolemCore.GUARD },
+
+            OneRandomBehaviour(
+                SetRandomWalkTarget<SoulSteelGolemEntity>().startCondition { it.getGolemCore() == GolemCore.GUARD },
+                Idle<SoulSteelGolemEntity>().runFor { it.random.nextInt(30, 60) }
+            ),
             FirstApplicableBehaviour(
                 SetRandomLookTarget(),
                 SetPlayerLookTarget<SoulSteelGolemEntity?>().predicate { it.distanceToSqr(this.position()) < 6 }
-            ),
-            OneRandomBehaviour(
-                ReturnHomeFromMemory(1f, 2, 150, 1200), //TODO add home on spawn
-                SetRandomLookTarget(),
-                Idle<SoulSteelGolemEntity>().runFor { it.random.nextInt(30, 60) }
             )
         )
     }

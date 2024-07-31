@@ -82,13 +82,9 @@ abstract class AbstractGolemEntity(entityType: EntityType<out PathfinderMob>, le
 
     override fun aiStep() {
         super.aiStep()
-        println(getOwner())
         this.updateSwingTime()
         if (this.attackAnimationTick > 0) {
             attackAnimationTick--
-        }
-        if (!BrainUtils.hasMemory(this, MemoryModuleType.HOME)) {
-            BrainUtils.setMemory(this, MemoryModuleType.HOME, GlobalPos.of(level().dimension(), onPos))
         }
     }
 
