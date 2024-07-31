@@ -47,5 +47,25 @@
   "malum.gui.book.entry.harvest_core": "Harvest Core",
   "malum.gui.book.entry.harvest_core.description": "I like Crops",
   "malum.gui.book.entry.page.headline.harvest_core": "Harvest Core",
-  "malum.gui.book.entry.page.text.harvest_core.1": "Makes golems harvest and replant crops"
+  "malum.gui.book.entry.page.text.harvest_core.1": "Makes golems harvest and replant crops",
+
+  "malum.gui.book.entry.butcher_core": "Butcher Core",
+  "malum.gui.book.entry.butcher_core.description": "I like Animal slaughter",
+  "malum.gui.book.entry.page.headline.butcher_core": "Butcher Core",
+  "malum.gui.book.entry.page.text.butcher_core.1": "Makes golems kill adult animals",
+
+  "malum.gui.book.entry.lumber_core": "Lumber Core",
+  "malum.gui.book.entry.lumber_core.description": "I like Wood",
+  "malum.gui.book.entry.page.headline.lumber_core": "Lumber Core",
+  "malum.gui.book.entry.page.text.lumber_core.1": "Makes golems chop down trees",
+
+  "malum.gui.book.entry.fill_core": "Fill Core",
+  "malum.gui.book.entry.fill_core.description": "I like Storage",
+  "malum.gui.book.entry.page.headline.fill_core": "Fill Core",
+  "malum.gui.book.entry.page.text.fill_core.1": "Makes golems fill a chest",
+
+  "malum.gui.book.entry.empty_core": "Empty Core",
+  "malum.gui.book.entry.empty_core.description": "I like Storage",
+  "malum.gui.book.entry.page.headline.empty_core": "Empty Core",
+  "malum.gui.book.entry.page.text.empty_core.1": "Makes golems empty a chest"
 }

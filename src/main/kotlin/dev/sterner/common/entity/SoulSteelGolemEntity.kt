@@ -153,7 +153,6 @@ open class SoulSteelGolemEntity(level: Level) :
 
     override fun aiStep() {
         super.aiStep()
-        println(getOwner())
         if (!BrainUtils.hasMemory(this, MemoryModuleType.HOME)) {
             BrainUtils.setMemory(this, MemoryModuleType.HOME, GlobalPos.of(level().dimension(), onPos))
         }

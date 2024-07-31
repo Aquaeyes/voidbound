@@ -11,13 +11,15 @@ import dev.sterner.registry.VoidBoundItemRegistry
 object MalumCodexEvent {
 
     fun addVoidBoundEntries(screen: ArcanaProgressionScreen?, entries: MutableList<PlacedBookEntry>) {
+
+
         screen?.addEntry("call_of_the_void", 0, 12) { builder ->
             builder.configureWidget {
                 it.setIcon(VoidBoundItemRegistry.CALL_OF_THE_VOID.get()).setStyle(VOID_GILDED)
             }.addPage(HeadlineTextPage("call_of_the_void", "call_of_the_void.1"))
         }
 
-        screen?.addEntry("soul_steel_golem", 2, -1) { builder ->
+        screen?.addEntry("soul_steel_golem", 2, -2) { builder ->
             builder.configureWidget {
                 it.setIcon(VoidBoundItemRegistry.SOUL_STEEL_GOLEM.get()).setStyle(MOD_GILDED)
             }
@@ -39,7 +41,7 @@ object MalumCodexEvent {
                 )
         }
 
-        screen?.addEntry("gather_core", 2, -2) { builder ->
+        screen?.addEntry("gather_core", 1, -3) { builder ->
             builder.configureWidget {
                 it.setIcon(VoidBoundItemRegistry.GOLEM_CORE_GATHER.get()).setStyle(MOD_GILDED)
             }.addPage(HeadlineTextPage("gather_core", "gather_core.1"))
@@ -61,13 +63,57 @@ object MalumCodexEvent {
                 )
         }
 
-        screen?.addEntry("harvest_core", 2, -3) { builder ->
+        screen?.addEntry("butcher_core", 4, -1) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.GOLEM_CORE_BUTCHER.get()).setStyle(MOD_GILDED)
+            }.addPage(HeadlineTextPage("butcher_core", "butcher_core.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.GOLEM_CORE_BUTCHER.get()
+                    )
+                )
+        }
+
+        screen?.addEntry("harvest_core", 3, -3) { builder ->
             builder.configureWidget {
                 it.setIcon(VoidBoundItemRegistry.GOLEM_CORE_HARVEST.get()).setStyle(MOD_GILDED)
             }.addPage(HeadlineTextPage("harvest_core", "harvest_core.1"))
                 .addPage(
                     SpiritInfusionPage.fromOutput(
                         VoidBoundItemRegistry.GOLEM_CORE_HARVEST.get()
+                    )
+                )
+        }
+
+        screen?.addEntry("lumber_core", 4, -4) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.GOLEM_CORE_LUMBER.get()).setStyle(MOD_GILDED)
+            }.addPage(HeadlineTextPage("lumber_core", "lumber_core.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.GOLEM_CORE_LUMBER.get()
+                    )
+                )
+        }
+
+        screen?.addEntry("fill_core", 1, -4) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.GOLEM_CORE_FILL.get()).setStyle(MOD_GILDED)
+            }.addPage(HeadlineTextPage("fill_core", "fill_core.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.GOLEM_CORE_FILL.get()
+                    )
+                )
+        }
+
+        screen?.addEntry("empty_core", 0, -3) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.GOLEM_CORE_EMPTY.get()).setStyle(MOD_GILDED)
+            }.addPage(HeadlineTextPage("empty_core", "empty_core.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.GOLEM_CORE_EMPTY.get()
                     )
                 )
         }
