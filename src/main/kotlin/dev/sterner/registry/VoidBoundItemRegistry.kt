@@ -2,10 +2,7 @@ package dev.sterner.registry
 
 import dev.sterner.VoidBound
 import dev.sterner.api.GolemCore
-import dev.sterner.common.item.CallOfTheVoidItem
-import dev.sterner.common.item.DividerItem
-import dev.sterner.common.item.GolemCoreItem
-import dev.sterner.common.item.GolemEntityItem
+import dev.sterner.common.item.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
@@ -30,11 +27,11 @@ object VoidBoundItemRegistry {
     }
 
     val SPIRIT_STABILIZER = ITEMS.register("spirit_stabilizer") {
-        BlockItem(VoidBoundBlockRegistry.SPIRIT_STABILIZER.get(), Item.Properties())
+        UnimplementedBlockItem(VoidBoundBlockRegistry.SPIRIT_STABILIZER.get(), Item.Properties())
     }
 
     val DESTABILIZED_SPIRIT_RIFT = ITEMS.register("destabilized_spirit_rift") {
-        BlockItem(VoidBoundBlockRegistry.DESTABILIZED_SPIRIT_RIFT.get(), Item.Properties())
+        UnimplementedBlockItem(VoidBoundBlockRegistry.DESTABILIZED_SPIRIT_RIFT.get(), Item.Properties())
     }
 
     val CALL_OF_THE_VOID = ITEMS.register("call_of_the_void") {

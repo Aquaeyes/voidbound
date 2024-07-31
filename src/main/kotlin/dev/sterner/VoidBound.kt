@@ -1,6 +1,5 @@
 package dev.sterner
 
-import com.sammy.malum.client.screen.codex.BookWidgetStyle
 import com.sammy.malum.common.events.MalumCodexEvents
 import dev.sterner.client.model.GolemCoreModel
 import dev.sterner.client.model.SoulSteelGolemEntityModel
@@ -23,10 +22,9 @@ import net.minecraft.resources.ResourceLocation
 import org.slf4j.LoggerFactory
 
 object VoidBound : ModInitializer, ClientModInitializer {
+
     val modid: String = "voidbound"
     private val logger = LoggerFactory.getLogger(modid)
-
-
 
     override fun onInitialize() {
 
@@ -48,12 +46,9 @@ object VoidBound : ModInitializer, ClientModInitializer {
             AbstractGolemEntity.createGolemAttributes()
         )
 
-
         UseBlockCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useBlock)
         UseEntityCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useEntity)
     }
-
-
 
     override fun onInitializeClient() {
 
