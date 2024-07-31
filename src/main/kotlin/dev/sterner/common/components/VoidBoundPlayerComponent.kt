@@ -8,11 +8,13 @@ import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent
 import dev.sterner.VoidBound
+import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundComponentRegistry
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
 import net.minecraft.client.Camera
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.components.toasts.Toast
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
@@ -130,9 +132,13 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
         }
 
         fun useBlock(player: Player, level: Level?, interactionHand: InteractionHand, blockHitResult: BlockHitResult): InteractionResult {
-            var stack = player.getItemInHand(interactionHand)
+            val stack = player.getItemInHand(interactionHand)
             if (stack.`is`(ItemRegistry.TUNING_FORK.get()) && stack.hasTag() && stack.tag!!.contains("GolemId")) {
                 VoidBoundComponentRegistry.VOID_BOUND_PLAYER_COMPONENT.get(player).addBlock(blockHitResult.blockPos)
+                val golem = level?.getEntity(stack.tag!!.getInt("GolemId"))
+                if (golem is SoulSteelGolemEntity) {
+                    golem.handleTuningFork(player, blockHitResult.blockPos)
+                }
                 stack.tag!!.remove("GolemId")
                 return InteractionResult.SUCCESS
             }

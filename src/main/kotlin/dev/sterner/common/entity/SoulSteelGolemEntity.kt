@@ -64,18 +64,19 @@ import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyHostileSensor
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor
 import net.tslat.smartbrainlib.util.BrainUtils
+import java.util.*
 
 
 open class SoulSteelGolemEntity(level: Level) :
-    PathfinderMob(VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(), level),
+    AbstractGolemEntity(VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(), level),
     SmartBrainOwner<SoulSteelGolemEntity> {
 
-    private var attackAnimationTick = 0
     val inventory = SimpleContainer(8)
 
-    init {
-        this.setMaxUpStep(1.0f)
-        this.setCanPickUpLoot(true)
+    fun handleTuningFork(player: Player, blockPos: BlockPos?) {
+        if (getOwner().isPresent && getOwner().get() == player.uuid) {
+            //TODO do thing
+        }
     }
 
     override fun mobInteract(player: Player, hand: InteractionHand): InteractionResult {
@@ -112,21 +113,10 @@ open class SoulSteelGolemEntity(level: Level) :
         return super.mobInteract(player, hand)
     }
 
-    private fun onPickUpGolem(level: Level, pos: Vec3) {
+    override fun onPickUpGolem(level: Level, pos: Vec3) {
         dropCore(level, pos)
         Containers.dropContents(level(), this, inventory)
-        Containers.dropItemStack(level, pos.x, pos.y, pos.z, mainHandItem)
-        Containers.dropItemStack(level, pos.x, pos.y, pos.z, ItemStack(VoidBoundItemRegistry.SOUL_STEEL_GOLEM.get()))
-        this.remove(RemovalReason.CHANGED_DIMENSION)
-    }
-
-    private fun dropCore(level: Level, pos: Vec3) {
-        if (getGolemCore() != GolemCore.NONE) {
-            val item = GolemCore.getItem(getGolemCore())
-            if (item != null) {
-                Containers.dropItemStack(level, pos.x, pos.y, pos.z, ItemStack(item))
-            }
-        }
+        super.onPickUpGolem(level, pos)
     }
 
     override fun wantsToPickUp(stack: ItemStack): Boolean {
@@ -140,7 +130,6 @@ open class SoulSteelGolemEntity(level: Level) :
     }
 
     override fun pickUpItem(itemEntity: ItemEntity) {
-        //this.onItemPickup(itemEntity)
         ItemUtils.pickUpItem(this, itemEntity)
     }
 
@@ -150,95 +139,23 @@ open class SoulSteelGolemEntity(level: Level) :
         super.dropAllDeathLoot(damageSource)
     }
 
-    override fun defineSynchedData() {
-        super.defineSynchedData()
-        entityData.define(coreEntityData, GolemCore.NONE.name)
-    }
-
     override fun addAdditionalSaveData(tag: CompoundTag) {
         super.addAdditionalSaveData(tag)
-        GolemCore.writeNbt(tag, getGolemCore())
         tag.put("Inventory", this.inventory.createTag())
     }
 
     override fun readAdditionalSaveData(tag: CompoundTag) {
         super.readAdditionalSaveData(tag)
-        setGolemCore(GolemCore.readNbt(tag))
         if (tag.contains("Inventory", 9)) {
             this.inventory.fromTag(tag.getList("Inventory", 10))
         }
     }
 
-    fun setGolemCore(core: GolemCore) {
-        entityData.set(coreEntityData, core.name)
-    }
-
-    fun getGolemCore(): GolemCore {
-        return GolemCore.valueOf(entityData.get(coreEntityData))
-    }
-
-    override fun doHurtTarget(target: Entity): Boolean {
-        this.attackAnimationTick = 10
-        level().broadcastEntityEvent(this, 4.toByte())
-        return super.doHurtTarget(target)
-    }
-
     override fun aiStep() {
         super.aiStep()
-        this.updateSwingTime()
-        if (this.attackAnimationTick > 0) {
-            attackAnimationTick--
-        }
+        println(getOwner())
         if (!BrainUtils.hasMemory(this, MemoryModuleType.HOME)) {
             BrainUtils.setMemory(this, MemoryModuleType.HOME, GlobalPos.of(level().dimension(), onPos))
-        }
-    }
-
-    override fun handleEntityEvent(id: Byte) {
-        if (id.toInt() == 4) {
-            this.attackAnimationTick = 10
-            this.playSound(SoundEvents.IRON_GOLEM_ATTACK, 0.75f, 1.25f)
-        } else {
-            super.handleEntityEvent(id)
-        }
-    }
-
-    fun getAttackAnimationTick(): Int {
-        return this.attackAnimationTick
-    }
-
-    override fun getHurtSound(damageSource: DamageSource): SoundEvent {
-        return SoundEvents.IRON_GOLEM_HURT
-    }
-
-    override fun getDeathSound(): SoundEvent {
-        return SoundEvents.IRON_GOLEM_DEATH
-    }
-
-    override fun playStepSound(pos: BlockPos, state: BlockState) {
-        this.playSound(SoundEvents.IRON_GOLEM_STEP, 0.5f, 1.25f)
-    }
-
-    override fun swing(hand: InteractionHand) {
-        this.attackAnimationTick = 10
-        super.swing(hand)
-    }
-
-    companion object {
-
-        private var coreEntityData =
-            SynchedEntityData.defineId(SoulSteelGolemEntity::class.java, EntityDataSerializers.STRING)
-
-        fun createGolemAttributes(): AttributeSupplier.Builder {
-            return LivingEntity.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 50.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.3)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 0.75)
-                .add(Attributes.ATTACK_DAMAGE, 5.0)
-                .add(Attributes.ARMOR)
-                .add(Attributes.ARMOR_TOUGHNESS)
-                .add(Attributes.FOLLOW_RANGE, 16.0)
-                .add(Attributes.ATTACK_KNOCKBACK)
         }
     }
 

@@ -44,9 +44,9 @@ class GolemEntityItem : Item(Properties().stacksTo(1)) {
             )
 
             if (golem is SoulSteelGolemEntity) {
-                BrainUtils.setMemory(golem, VoidBoundMemoryTypeRegistry.STORAGE_LOCATION.get(), blockPos2.below())
                 itemStack.shrink(1)
                 level.gameEvent(context.player, GameEvent.ENTITY_PLACE, blockPos)
+                golem.setOwner(context.player!!.uuid)
             }
         }
 
