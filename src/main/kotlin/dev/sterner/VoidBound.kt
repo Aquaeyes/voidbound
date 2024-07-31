@@ -1,24 +1,16 @@
 package dev.sterner
 
 import com.sammy.malum.client.screen.codex.BookWidgetStyle
-import com.sammy.malum.client.screen.codex.PlacedBookEntry
-import com.sammy.malum.client.screen.codex.pages.recipe.SpiritInfusionPage
-import com.sammy.malum.client.screen.codex.pages.text.HeadlineTextPage
-import com.sammy.malum.client.screen.codex.screens.ArcanaProgressionScreen
 import com.sammy.malum.common.events.MalumCodexEvents
-import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.client.model.GolemCoreModel
 import dev.sterner.client.model.SoulSteelGolemEntityModel
 import dev.sterner.client.renderer.*
 import dev.sterner.common.components.VoidBoundPlayerComponent
 import dev.sterner.common.entity.AbstractGolemEntity
-import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.common.event.MalumCodexEvent
 import dev.sterner.registry.*
-import io.github.fabricators_of_create.porting_lib.event.client.InteractEvents
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
@@ -67,7 +59,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
             AbstractGolemEntity.createGolemAttributes()
         )
 
-        MalumCodexEvents.EVENT.register(MalumCodexEvent::addVoidBoundEntries)
+
         UseBlockCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useBlock)
         UseEntityCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useEntity)
     }
@@ -113,6 +105,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
             return@register v
         }
 
+        MalumCodexEvents.EVENT.register(MalumCodexEvent::addVoidBoundEntries)
         WorldRenderEvents.AFTER_TRANSLUCENT.register(VoidBoundPlayerComponent.Companion::renderCubeAtPos)
     }
 

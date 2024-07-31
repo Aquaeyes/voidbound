@@ -8,6 +8,7 @@ import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent
 import dev.sterner.VoidBound
+import dev.sterner.client.Tokens
 import dev.sterner.common.entity.AbstractGolemEntity
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundComponentRegistry
@@ -91,8 +92,7 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
 
     companion object {
 
-        val WARD_BORDER: RenderTypeToken =
-            RenderTypeToken.createToken(VoidBound.id("textures/block/runeborder.png"))
+
 
         fun renderCubeAtPos(ctx: WorldRenderContext) {
             val camera = ctx.camera()
@@ -101,7 +101,7 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
             if (localPlayer != null) {
                 val playerComponent = VoidBoundComponentRegistry.VOID_BOUND_PLAYER_COMPONENT.get(localPlayer)
                 for (entry in playerComponent.highlightBlockList) {
-                    renderCubeAtPos(camera, poseStack, entry.key, WARD_BORDER, entry.value)
+                    renderCubeAtPos(camera, poseStack, entry.key, Tokens.WARD_BORDER, entry.value)
                 }
             }
         }
