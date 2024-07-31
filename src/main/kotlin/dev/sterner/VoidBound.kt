@@ -22,6 +22,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
+import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers
 import net.minecraft.client.renderer.item.ItemProperties
@@ -67,6 +68,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
         MalumCodexEvents.EVENT.register(MalumCodexEvent::addVoidBoundEntries)
         UseBlockCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useBlock)
+        UseEntityCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useEntity)
     }
 
 

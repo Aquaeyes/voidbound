@@ -9,6 +9,7 @@ import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent
 import dev.sterner.VoidBound
 import dev.sterner.registry.VoidBoundComponentRegistry
+import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
 import net.minecraft.client.Camera
 import net.minecraft.client.Minecraft
@@ -17,9 +18,11 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.Vec3
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
@@ -31,7 +34,7 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
     private var highlightBlockList = mutableMapOf<BlockPos, Int>()
 
     fun addBlock(pos: BlockPos) {
-        highlightBlockList[pos] = 40
+        highlightBlockList[pos] = 20
         VoidBoundComponentRegistry.VOID_BOUND_PLAYER_COMPONENT.sync(player)
     }
 
@@ -44,7 +47,7 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
             val entry = iterator.next()
             if (holdingTuningFork) {
                 // Reset the counter to 40 if holding the tuning fork
-                highlightBlockList[entry.key] = 40
+                highlightBlockList[entry.key] = 20
             } else {
                 val newTickCount = entry.value - 1
                 if (newTickCount <= 0) {
@@ -109,7 +112,7 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
 
             poseStack.translate(transformedPosition.x, transformedPosition.y, transformedPosition.z)
 
-            val totalTicks = 40
+            val totalTicks = 20
             val alpha = 0.5f * (ticksRemaining / totalTicks.toFloat())
 
             val builder = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(renderTypeToken))
@@ -127,9 +130,23 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
         }
 
         fun useBlock(player: Player, level: Level?, interactionHand: InteractionHand, blockHitResult: BlockHitResult): InteractionResult {
-            if (player.getItemInHand(interactionHand).`is`(ItemRegistry.TUNING_FORK.get())) {
+            var stack = player.getItemInHand(interactionHand)
+            if (stack.`is`(ItemRegistry.TUNING_FORK.get()) && stack.hasTag() && stack.tag!!.contains("GolemId")) {
                 VoidBoundComponentRegistry.VOID_BOUND_PLAYER_COMPONENT.get(player).addBlock(blockHitResult.blockPos)
+                stack.tag!!.remove("GolemId")
                 return InteractionResult.SUCCESS
+            }
+            return InteractionResult.PASS
+        }
+
+        fun useEntity(player: Player, level: Level?, interactionHand: InteractionHand, entity: Entity?, entityHitResult: EntityHitResult?): InteractionResult {
+            if (player.getItemInHand(interactionHand).`is`(ItemRegistry.TUNING_FORK.get())) {
+                if (entityHitResult != null && entityHitResult.entity.type == VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get()) {
+                    val nbt = player.getItemInHand(interactionHand).orCreateTag
+                    nbt.putInt("GolemId",entityHitResult.entity.id)
+                    player.getItemInHand(interactionHand).tag = nbt
+                    return InteractionResult.SUCCESS
+                }
             }
             return InteractionResult.PASS
         }

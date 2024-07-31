@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import dev.sterner.VoidBound
 import dev.sterner.common.entity.SoulSteelGolemEntity
+import net.minecraft.client.gui.components.toasts.Toast
 import net.minecraft.client.model.ArmedModel
 import net.minecraft.client.model.HierarchicalModel
 import net.minecraft.client.model.geom.ModelLayerLocation
@@ -144,10 +145,9 @@ class SoulSteelGolemEntityModel(root: ModelPart) : HierarchicalModel<SoulSteelGo
         val bl = side == HumanoidArm.RIGHT
         val modelPart = if (bl) this.rightArm else this.leftArm
         core.translateAndRotate(poseStack)
-        this.torso.translateAndRotate(poseStack)
         modelPart.translateAndRotate(poseStack)
-        //poseStack.scale(0.55f, 0.55f, 0.55f)
-        poseStack.translate(-0.6f, -0.3f, 0f)
+        poseStack.scale(0.75f, 0.75f, 0.75f)
+        poseStack.translate(-0.2f,0.3f,0f)
         this.offsetStackPosition(poseStack, bl)
     }
 
