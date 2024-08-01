@@ -14,6 +14,10 @@ object VoidBoundItemRegistry {
 
     val ITEMS: LazyRegistrar<Item> = LazyRegistrar.create(BuiltInRegistries.ITEM, VoidBound.modid)
 
+    val HALLOWED_GOGGLES = ITEMS.register("hallowed_goggles") {
+        HallowedGogglesItem(Item.Properties())
+    }
+
     val EMPTY_SPIRIT_SHARD = ITEMS.register("empty_spirit_shard") {
         Item(Item.Properties())
     }

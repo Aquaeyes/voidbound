@@ -15,14 +15,14 @@ import net.tslat.smartbrainlib.util.BrainUtils
 class SetWalkTargetToStorage : ExtendedBehaviour<SoulSteelGolemEntity>() {
 
     override fun getMemoryRequirements(): MutableList<Pair<MemoryModuleType<*>, MemoryStatus>> {
-        return mutableListOf(Pair.of(VoidBoundMemoryTypeRegistry.STORAGE_LOCATION.get(), MemoryStatus.VALUE_PRESENT))
+        return mutableListOf(Pair.of(VoidBoundMemoryTypeRegistry.INPUT_STORAGE_LOCATION.get(), MemoryStatus.VALUE_PRESENT))
     }
 
     override fun start(level: ServerLevel, entity: SoulSteelGolemEntity, gameTime: Long) {
         super.start(level, entity, gameTime)
 
         if (!entity.inventory.isEmpty) {
-            val memory = BrainUtils.getMemory(entity, VoidBoundMemoryTypeRegistry.STORAGE_LOCATION.get())
+            val memory = BrainUtils.getMemory(entity, VoidBoundMemoryTypeRegistry.INPUT_STORAGE_LOCATION.get())
             if (memory != null) {
                 val walkTarget = WalkTarget(memory, 1f, 1)
                 BrainUtils.setMemory(entity, MemoryModuleType.WALK_TARGET, walkTarget)

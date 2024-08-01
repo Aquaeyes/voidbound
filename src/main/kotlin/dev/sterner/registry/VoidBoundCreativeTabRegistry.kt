@@ -24,7 +24,7 @@ object VoidBoundCreativeTabRegistry {
                 item
             }
             .displayItems { _: ItemDisplayParameters?, entries: CreativeModeTab.Output ->
-
+                entries.accept(VoidBoundItemRegistry.HALLOWED_GOGGLES.get())
                 entries.accept(VoidBoundItemRegistry.CALL_OF_THE_VOID.get())
                 entries.accept(VoidBoundItemRegistry.EMPTY_SPIRIT_SHARD.get())
                 //entries.accept(VoidBoundItemRegistry.DIVIDER.get())

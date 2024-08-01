@@ -2,7 +2,9 @@ package dev.sterner
 
 import com.sammy.malum.common.events.MalumCodexEvents
 import dev.sterner.client.event.MalumCodexEvent
+import dev.sterner.client.event.SpiritAltarHudRenderEvent
 import dev.sterner.client.model.GolemCoreModel
+import dev.sterner.client.model.HallowedGogglesModel
 import dev.sterner.client.model.SoulSteelGolemEntityModel
 import dev.sterner.client.renderer.*
 import dev.sterner.common.components.VoidBoundPlayerComponent
@@ -10,16 +12,16 @@ import dev.sterner.common.entity.AbstractGolemEntity
 import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
+import net.fabricmc.fabric.api.client.rendering.v1.*
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.player.Player
 import org.slf4j.LoggerFactory
+
 
 object VoidBound : ModInitializer, ClientModInitializer {
 
@@ -79,6 +81,10 @@ object VoidBound : ModInitializer, ClientModInitializer {
             SoulSteelGolemEntityModel::createBodyLayer
         )
         EntityModelLayerRegistry.registerModelLayer(GolemCoreModel.LAYER_LOCATION, GolemCoreModel::createBodyLayer)
+        EntityModelLayerRegistry.registerModelLayer(HallowedGogglesModel.LAYER_LOCATION) { HallowedGogglesModel.createBodyLayer() }
+
+        ArmorRenderer.register(HallowedGogglesRenderer(), VoidBoundItemRegistry.HALLOWED_GOGGLES.get())
+
 
         ItemProperties.register(
             VoidBoundItemRegistry.CALL_OF_THE_VOID.get(),
@@ -91,6 +97,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
         MalumCodexEvents.EVENT.register(MalumCodexEvent::addVoidBoundEntries)
         WorldRenderEvents.AFTER_TRANSLUCENT.register(VoidBoundPlayerComponent.Companion::renderCubeAtPos)
+        HudRenderCallback.EVENT.register(SpiritAltarHudRenderEvent::spiritAltarRecipeHud)
     }
 
     fun id(name: String): ResourceLocation {
