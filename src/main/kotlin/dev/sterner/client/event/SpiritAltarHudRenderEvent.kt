@@ -12,6 +12,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.entity.ItemRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.phys.BlockHitResult
 
@@ -28,7 +29,6 @@ object SpiritAltarHudRenderEvent {
                 if (client.level!!.getBlockEntity(pos) is SpiritAltarBlockEntity) {
                     val se = client.level!!.getBlockEntity(pos) as SpiritAltarBlockEntity
                     val recipes: List<SpiritInfusionRecipe> = se.possibleRecipes
-                    //println(recipes)
                     if (recipes.isNotEmpty()) {
                         val matrixStack = guiGraphics.pose()
                         matrixStack.pushPose()
@@ -45,14 +45,23 @@ object SpiritAltarHudRenderEvent {
                         val recipe = recipes[0]
                         val spirits = recipe.spirits
                         val extras = recipe.extraItems
-                        val inventory: ItemStack = se.extrasInventory.getItem(0)
+                        val inventory = se.extrasInventory
 
                         for (extra in extras) {
-                            //println(extra)
                             val renderStack = ItemStack(extra.item, extra.getCount())
-                            val checked = extra.item === inventory.item
+
+                            fun isItemInInventory(item: Item): Boolean {
+                                for (slot in 0 until inventory.slotCount) {
+                                    if (inventory.getItem(slot).item == item) {
+                                        return true
+                                    }
+                                }
+                                return false
+                            }
+
+                            val checked = isItemInInventory(extra.item)
+
                             guiGraphics.renderItem(renderStack, 0, 0)
-                            println("$checked, ${renderStack}")
                             if (!checked) {
                                 guiGraphics.renderItemDecorations(client.font, renderStack, 0,0)
                             } else {
