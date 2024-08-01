@@ -22,7 +22,7 @@ class SpiritStabilizerBlockEntity(pos: BlockPos, blockState: BlockState) : Block
     blockState
 ) {
 
-    val firstColor = Color(100, 100, 255, 255)
+    val firstColor = Color(250, 10, 255, 255)
     val secondColor = Color(100, 100, 255, 255)
 
     val x = (worldPosition.x.toFloat() + 0.5f).toDouble()

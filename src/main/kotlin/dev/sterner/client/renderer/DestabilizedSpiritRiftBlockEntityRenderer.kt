@@ -42,19 +42,20 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
         packedOverlay: Int
     ) {
         val renderType = VoidBoundRenderTypes.GRAVITY_VORTEX.apply(TOKEN)
+        val copy = LodestoneRenderTypeRegistry.copy(renderType)
+        val copy2 = LodestoneRenderTypeRegistry.copy(renderType)
 
-        // Create the builder and bind the shader
         var builder = VFXBuilders.createWorld()
             .setRenderType(LodestoneRenderTypeRegistry.applyUniformChanges(
                 renderType
             ) { s: ShaderInstance ->
-                s.safeGetUniform("RingCount").set(20f)
+                s.safeGetUniform("RingCount").set(10f)
                 s.safeGetUniform("RingSpeed").set(30f)
                 s.safeGetUniform("CycleDuration").set(1f)
                 s.safeGetUniform("TunnelElongation").set(0.25f)
+                s.safeGetUniform("RotationSpeed").set(0f)
             })
 
-        //val builder = VFXBuilders.createWorld().setRenderType(VoidBoundRenderTypes.GRAVITY_VORTEX.applyAndCache(Tokens.NOISY))
         poseStack.pushPose()
         poseStack.translate(0.5, 0.5, 0.5)
         val cam = Minecraft.getInstance().gameRenderer.mainCamera
@@ -62,6 +63,24 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
         poseStack.mulPose(Axis.XP.rotationDegrees(180f))
 
         builder.renderQuad(poseStack, 0.5f)
+
+        builder = VFXBuilders.createWorld()
+            .setRenderType(LodestoneRenderTypeRegistry.applyUniformChanges(
+                copy
+            ) { s: ShaderInstance ->
+                s.safeGetUniform("RotationSpeed").set(1000f)
+            })
+
+        builder.renderQuad(poseStack, 0.4f)
+
+        builder = VFXBuilders.createWorld()
+            .setRenderType(LodestoneRenderTypeRegistry.applyUniformChanges(
+                copy2
+            ) { s: ShaderInstance ->
+                s.safeGetUniform("RotationSpeed").set(2000f)
+            })
+
+        builder.renderQuad(poseStack, 0.3f)
 
         poseStack.popPose()
     }
