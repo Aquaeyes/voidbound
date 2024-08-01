@@ -1,10 +1,9 @@
 package dev.sterner.common.components
 
-import com.mojang.blaze3d.vertex.PoseStack
-import com.sammy.malum.client.RenderUtils
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent
+import dev.sterner.api.utils.RenderUtils
 import dev.sterner.client.Tokens
 import dev.sterner.common.entity.AbstractGolemEntity
 import dev.sterner.common.entity.SoulSteelGolemEntity
@@ -22,11 +21,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
-import net.minecraft.world.phys.Vec3
-import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
-import team.lodestar.lodestone.systems.rendering.VFXBuilders
-import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
-import java.awt.Color
 
 class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent, CommonTickingComponent {
 
@@ -95,43 +89,12 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
             if (localPlayer != null) {
                 val playerComponent = VoidBoundComponentRegistry.VOID_BOUND_PLAYER_COMPONENT.get(localPlayer)
                 for (entry in playerComponent.highlightBlockList) {
-                    renderCubeAtPos(camera, poseStack, entry.key, Tokens.WARD_BORDER, entry.value)
+                    RenderUtils.renderCubeAtPos(camera, poseStack, entry.key, Tokens.WARD_BORDER, entry.value, 20)
                 }
             }
         }
 
-        private fun renderCubeAtPos(
-            camera: Camera,
-            poseStack: PoseStack,
-            blockPos: BlockPos,
-            renderTypeToken: RenderTypeToken,
-            ticksRemaining: Int
-        ) {
-            val targetPosition = Vec3(blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble())
-            val transformedPosition: Vec3 = targetPosition.subtract(camera.position)
 
-
-            poseStack.pushPose()
-
-            poseStack.translate(transformedPosition.x, transformedPosition.y, transformedPosition.z)
-
-            val totalTicks = 20
-            val alpha = 0.5f * (ticksRemaining / totalTicks.toFloat())
-
-            val builder = VFXBuilders.createWorld()
-                .setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(renderTypeToken))
-            val cubeVertexData = RenderUtils.makeCubePositions(1f)
-
-            RenderUtils.drawCube(
-                poseStack,
-                builder.setColor(Color(255, 200, 150), alpha),
-                1.08f,
-                cubeVertexData
-            )
-
-
-            poseStack.popPose()
-        }
 
         fun useBlock(
             player: Player,

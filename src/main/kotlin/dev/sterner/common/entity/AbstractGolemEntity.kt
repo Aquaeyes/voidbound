@@ -33,6 +33,7 @@ abstract class AbstractGolemEntity(entityType: EntityType<out PathfinderMob>, le
     init {
         this.setMaxUpStep(1.0f)
         this.setCanPickUpLoot(true)
+        this.setPersistenceRequired()
     }
 
     fun dropCore(level: Level, pos: Vec3) {
