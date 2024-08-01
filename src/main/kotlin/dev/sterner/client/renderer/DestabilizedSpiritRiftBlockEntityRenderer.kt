@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import com.sammy.malum.client.RenderUtils
 import dev.sterner.VoidBound
+import dev.sterner.api.ClientTickHandler
 import dev.sterner.client.Tokens
 import dev.sterner.client.renderer.SpiritBinderBlockEntityRenderer.Companion.TOKEN
 import dev.sterner.common.blockentity.DestabilizedSpiritRiftBlockEntity
@@ -63,6 +64,19 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
         poseStack.translate(0f,0f,-0.05f)
 
         builder.renderQuad(poseStack, 0.5f)
+        for (i in 0..3) {
+            poseStack.pushPose()
+            poseStack.mulPose(Axis.YP.rotationDegrees(120f * i + ClientTickHandler.ticksInGame))
+            builder.renderQuad(poseStack, 0.5f)
+            poseStack.popPose()
+        }
+
+        for (i in 0..3) {
+            poseStack.pushPose()
+            poseStack.mulPose(Axis.YP.rotationDegrees(120f * i - ClientTickHandler.ticksInGame))
+            builder.renderQuad(poseStack, 0.5f)
+            poseStack.popPose()
+        }
 
         builder = VFXBuilders.createWorld()
             .setRenderType(LodestoneRenderTypeRegistry.applyUniformChanges(

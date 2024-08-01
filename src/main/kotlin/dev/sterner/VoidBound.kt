@@ -1,6 +1,7 @@
 package dev.sterner
 
 import com.sammy.malum.common.events.MalumCodexEvents
+import dev.sterner.api.ClientTickHandler
 import dev.sterner.client.event.MalumCodexEvent
 import dev.sterner.client.event.SpiritAltarHudRenderEvent
 import dev.sterner.client.model.GolemCoreModel
@@ -13,6 +14,7 @@ import dev.sterner.common.entity.AbstractGolemEntity
 import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.rendering.v1.*
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
@@ -101,6 +103,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
         MalumCodexEvents.EVENT.register(MalumCodexEvent::addVoidBoundEntries)
         WorldRenderEvents.AFTER_TRANSLUCENT.register(VoidBoundPlayerComponent.Companion::renderCubeAtPos)
         HudRenderCallback.EVENT.register(SpiritAltarHudRenderEvent::spiritAltarRecipeHud)
+        ClientTickEvents.END_CLIENT_TICK.register(ClientTickHandler::clientTickEnd);
 
         BuiltinItemRendererRegistry.INSTANCE.register(VoidBoundItemRegistry.HALLOWED_GOLD_CAPPED_RUNEWOOD_WAND.get(), WandItemRenderer())
     }

@@ -86,6 +86,7 @@ void main() {
     }
 
     color = mix(color, vec3(0.0), distance(uv, center) * 1.95);
-
+    vec2 v = rotate2d(GameTime * 1000) * uv;
+    color *= vec3(v.x, v.y, 0.7-v.y*v.x);
     fragColor = vec4(color, 0.5) * (.75 - distance(center, uv));
 }
