@@ -102,7 +102,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
         WorldRenderEvents.AFTER_TRANSLUCENT.register(VoidBoundPlayerComponent.Companion::renderCubeAtPos)
         HudRenderCallback.EVENT.register(SpiritAltarHudRenderEvent::spiritAltarRecipeHud)
 
-        BuiltinItemRendererRegistry.INSTANCE.register(VoidBoundItemRegistry.RUNE_WOOD_HALLOED_GOLD_CAPPED_WAND.get(), WandItemRenderer())
+        BuiltinItemRendererRegistry.INSTANCE.register(VoidBoundItemRegistry.HALLOWED_GOLD_CAPPED_RUNEWOOD_WAND.get(), WandItemRenderer())
     }
 
     fun id(name: String): ResourceLocation {

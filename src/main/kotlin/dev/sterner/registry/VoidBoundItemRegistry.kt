@@ -18,7 +18,7 @@ object VoidBoundItemRegistry {
         HallowedGogglesItem(Item.Properties())
     }
 
-    val RUNE_WOOD_HALLOED_GOLD_CAPPED_WAND = ITEMS.register("rune_wood_hallowed_gold_capped_wand") {
+    val HALLOWED_GOLD_CAPPED_RUNEWOOD_WAND = ITEMS.register("hallowed_gold_capped_runewood_wand") {
         WandItem(Item.Properties())
     }
 

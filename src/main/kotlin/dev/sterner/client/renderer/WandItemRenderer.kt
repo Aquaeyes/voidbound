@@ -43,7 +43,7 @@ class WandItemRenderer : DynamicItemRenderer {
 
         matrices.translate(0.5, 0.65, 0.5)
         matrices.scale(1f, -1f, -1f)
-        model?.renderToBuffer(matrices, vertexConsumers.getBuffer(RenderType.entityTranslucent(VoidBound.id("textures/item/rune_wood_hallowed_gold_capped_wand.png"))), light, overlay, 1f,1f,1f,1f)
+        model?.renderToBuffer(matrices, vertexConsumers.getBuffer(RenderType.entityTranslucent(VoidBound.id("textures/item/hallowed_gold_capped_runewood_wand.png"))), light, overlay, 1f,1f,1f,1f)
 
         matrices.popPose()
     }
