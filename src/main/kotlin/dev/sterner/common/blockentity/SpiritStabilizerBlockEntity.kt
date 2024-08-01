@@ -77,13 +77,27 @@ class SpiritStabilizerBlockEntity(pos: BlockPos, blockState: BlockState) : Block
 
 
                 lifeTime = 20
-                scale = 0.25f
+                scale = 0.16f
                 WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
                     .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
                     .setScaleData(GenericParticleData.create(scale, 0.0f).build())
                     .setTransparencyData(GenericParticleData.create(0.2f, 0.8f).build())
                     .setColorData(
                         ColorParticleData.create(firstColor, secondColor).setEasing(Easing.SINE_IN).setCoefficient(0.5f)
+                            .build()
+                    )
+                    .setSpinData(SpinParticleData.create(0.0f, 0.4f).setEasing(Easing.QUARTIC_IN).build())
+                    .setLifetime(lifeTime)
+                    .enableNoClip()
+                    .spawn(this.level, x, y, z)
+
+                scale = 0.10f
+                WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
+                    .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
+                    .setScaleData(GenericParticleData.create(scale, 0.0f).build())
+                    .setTransparencyData(GenericParticleData.create(0.2f, 0.8f).build())
+                    .setColorData(
+                        ColorParticleData.create(Color(255,255,255), Color(255,255,255)).setEasing(Easing.SINE_IN).setCoefficient(0.5f)
                             .build()
                     )
                     .setSpinData(SpinParticleData.create(0.0f, 0.4f).setEasing(Easing.QUARTIC_IN).build())

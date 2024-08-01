@@ -17,21 +17,11 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
 import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
+import java.awt.Color
 
 
 class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
     BlockEntityRenderer<DestabilizedSpiritRiftBlockEntity> {
-
-    val frameCount = 32
-    val frameHeight = 64
-    val texture = VoidBound.id("textures/misc/destabilized_spirit_rift.png")
-
-    val RIFT_TYPE: RenderType = LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.apply(
-        RenderTypeToken.createCachedToken(
-            texture
-        )
-    )
-
 
     override fun render(
         blockEntity: DestabilizedSpiritRiftBlockEntity,
@@ -41,9 +31,11 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
         packedLight: Int,
         packedOverlay: Int
     ) {
+        val rt = LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.apply(TOKEN)
         val renderType = VoidBoundRenderTypes.GRAVITY_VORTEX.apply(TOKEN)
         val copy = LodestoneRenderTypeRegistry.copy(renderType)
         val copy2 = LodestoneRenderTypeRegistry.copy(renderType)
+
 
         var builder = VFXBuilders.createWorld()
             .setRenderType(LodestoneRenderTypeRegistry.applyUniformChanges(
@@ -61,6 +53,14 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
         val cam = Minecraft.getInstance().gameRenderer.mainCamera
         poseStack.mulPose(cam.rotation())
         poseStack.mulPose(Axis.XP.rotationDegrees(180f))
+        var sawBuilder = VFXBuilders.createWorld().setRenderType(rt).setColor(Color(1f, 1f, 1f)).setAlpha(0.55f)
+        poseStack.translate(0f,0f,0.05f)
+        sawBuilder.renderQuad(poseStack, 0.05f)
+        sawBuilder = VFXBuilders.createWorld().setRenderType(rt).setColor(Color(1f, 1f, 1f)).setAlpha(0.45f)
+        sawBuilder.renderQuad(poseStack, 0.1f)
+        sawBuilder = VFXBuilders.createWorld().setRenderType(rt).setColor(Color(1f, 1f, 1f)).setAlpha(0.35f)
+        sawBuilder.renderQuad(poseStack, 0.15f)
+        poseStack.translate(0f,0f,-0.05f)
 
         builder.renderQuad(poseStack, 0.5f)
 
@@ -81,6 +81,8 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
             })
 
         builder.renderQuad(poseStack, 0.3f)
+
+
 
         poseStack.popPose()
     }

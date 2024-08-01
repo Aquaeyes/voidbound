@@ -1,6 +1,7 @@
 package dev.sterner.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
+import com.sammy.malum.MalumMod
 import com.sammy.malum.client.renderer.entity.FloatingItemEntityRenderer
 import dev.sterner.VoidBound
 import dev.sterner.common.blockentity.SpiritBinderBlockEntity
@@ -12,6 +13,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
 import org.joml.Vector3f
+import team.lodestar.lodestone.LodestoneLib
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
 import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
@@ -69,7 +71,7 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
 
     companion object {
         var TOKEN = RenderTypeToken.createCachedToken(
-            ResourceLocation(VoidBound.modid, "textures/aura.png")
+            LodestoneLib.lodestonePath("textures/particle/wisp.png")
         )
     }
 }
