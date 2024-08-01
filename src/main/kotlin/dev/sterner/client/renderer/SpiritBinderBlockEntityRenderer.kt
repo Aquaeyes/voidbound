@@ -31,7 +31,7 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
     ) {
         poseStack.pushPose()
         poseStack.translate(0.5, 1.5, 0.5)
-
+/*
         val interpolatedAlpha = Mth.lerp(partialTick, blockEntity.previousAlpha!!, blockEntity.alpha!!)
 
         val rgb: Vector3f = blockEntity.color
@@ -51,7 +51,10 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
             })
 
         // Render the sphere
-        builder.renderSphere(poseStack, 0.5f, 20, 20)
+        builder.renderSphere(poseStack, 1f, 20, 20)
+
+
+ */
 
         // Render the spirit glimmer
         FloatingItemEntityRenderer.renderSpiritGlimmer(

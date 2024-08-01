@@ -47,7 +47,8 @@ class DestabilizedSpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) :
     }
 
     fun tick() {
-        if (level != null && level!!.isClientSide) {
+
+        if (false && level != null && level!!.isClientSide) {
             if (transformationTicks <= 0) {
                 if (destabilized) {
                     tickDestabilized()

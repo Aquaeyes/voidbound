@@ -38,7 +38,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
     VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER.get(), pos, blockState
 ) {
 
-    var color: Vector3f = Vector3f(0.8f, 0.8f, 1.0f)
+    var color: Vector3f = Vector3f(0.8f, 0.07f, 0.8f)
 
     var alpha: Float = 0f
     var previousAlpha: Float = 0f

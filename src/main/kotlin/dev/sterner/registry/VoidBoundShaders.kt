@@ -19,11 +19,23 @@ object VoidBoundShaders {
         "LumiTransparency", "Alpha", "SphereColor"
     )
 
+    var GRAVITY_VORTEX: ShaderHolder = ShaderHolder(
+        ResourceLocation(VoidBound.modid, "gravity_vortex"),
+        DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP,
+        "LumiTransparency"
+    )
+
     fun init() {
         LodestoneShaderRegistrationEvent.EVENT.register(LodestoneShaderRegistrationEvent.Register { provider: ResourceProvider?, shaderList1: MutableList<Pair<ShaderInstance?, Consumer<ShaderInstance?>?>?> ->
             shaderList1.add(
                 Pair.of(
                     GLOW_TEXTURE.createInstance(provider),
+                    LodestoneShaderRegistry.getConsumer()
+                )
+            )
+            shaderList1.add(
+                Pair.of(
+                    GRAVITY_VORTEX.createInstance(provider),
                     LodestoneShaderRegistry.getConsumer()
                 )
             )
