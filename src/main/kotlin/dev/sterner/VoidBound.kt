@@ -6,6 +6,7 @@ import dev.sterner.client.event.SpiritAltarHudRenderEvent
 import dev.sterner.client.model.GolemCoreModel
 import dev.sterner.client.model.HallowedGogglesModel
 import dev.sterner.client.model.SoulSteelGolemEntityModel
+import dev.sterner.client.model.WandItemModel
 import dev.sterner.client.renderer.*
 import dev.sterner.common.components.VoidBoundPlayerComponent
 import dev.sterner.common.entity.AbstractGolemEntity
@@ -13,6 +14,7 @@ import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.rendering.v1.*
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
@@ -82,6 +84,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
         )
         EntityModelLayerRegistry.registerModelLayer(GolemCoreModel.LAYER_LOCATION, GolemCoreModel::createBodyLayer)
         EntityModelLayerRegistry.registerModelLayer(HallowedGogglesModel.LAYER_LOCATION) { HallowedGogglesModel.createBodyLayer() }
+        EntityModelLayerRegistry.registerModelLayer(WandItemModel.LAYER_LOCATION) { WandItemModel.createBodyLayer() }
 
         ArmorRenderer.register(HallowedGogglesRenderer(), VoidBoundItemRegistry.HALLOWED_GOGGLES.get())
 
@@ -98,6 +101,8 @@ object VoidBound : ModInitializer, ClientModInitializer {
         MalumCodexEvents.EVENT.register(MalumCodexEvent::addVoidBoundEntries)
         WorldRenderEvents.AFTER_TRANSLUCENT.register(VoidBoundPlayerComponent.Companion::renderCubeAtPos)
         HudRenderCallback.EVENT.register(SpiritAltarHudRenderEvent::spiritAltarRecipeHud)
+
+        BuiltinItemRendererRegistry.INSTANCE.register(VoidBoundItemRegistry.RUNE_WOOD_HALLOED_GOLD_CAPPED_WAND.get(), WandItemRenderer())
     }
 
     fun id(name: String): ResourceLocation {

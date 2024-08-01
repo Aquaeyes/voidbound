@@ -33,8 +33,8 @@ object SpiritAltarHudRenderEvent {
                         val matrixStack = guiGraphics.pose()
                         matrixStack.pushPose()
                         matrixStack.translate(
-                            if (client.window.guiScaledWidth % 2 !== 0) 0.5 else 0.0,
-                            if (client.window.guiScaledHeight % 2 !== 0) 0.5 else 0.0,
+                            if (client.window.guiScaledWidth % 2 != 0) 0.5 else 0.0,
+                            if (client.window.guiScaledHeight % 2 != 0) 0.5 else 0.0,
                             0.0
                         )
                         var startX: Int = client.window.guiScaledWidth / 2
@@ -43,7 +43,6 @@ object SpiritAltarHudRenderEvent {
                         centerY += 10
                         matrixStack.translate(startX.toDouble(), centerY.toDouble(), 0.0)
                         val recipe = recipes[0]
-                        val spirits = recipe.spirits
                         val extras = recipe.extraItems
                         val inventory = se.extrasInventory
 
