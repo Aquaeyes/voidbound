@@ -73,7 +73,7 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
 
         for (i in 0..3) {
             poseStack.pushPose()
-            poseStack.mulPose(Axis.YP.rotationDegrees(120f * i - ClientTickHandler.ticksInGame))
+            poseStack.mulPose(Axis.YP.rotationDegrees(120f * i - ClientTickHandler.ticksInGame + 60))
             builder.renderQuad(poseStack, 0.5f)
             poseStack.popPose()
         }
