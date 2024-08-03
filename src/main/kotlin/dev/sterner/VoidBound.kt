@@ -44,6 +44,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
         VoidBoundParticleTypeRegistry.PARTICLES.register()
         VoidBoundMemoryTypeRegistry.MEMORY_TYPES.register()
         VoidBoundSensorTypeRegistry.SENSOR_TYPES.register()
+        VoidBoundWandFociRegistry.WAND_FOCI.register()
 
         VoidBoundCreativeTabRegistry.init()
 

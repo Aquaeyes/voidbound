@@ -2,6 +2,7 @@ package dev.sterner.common.blockentity
 
 import dev.sterner.api.SyncedBlockEntity
 import dev.sterner.common.item.WandItem
+import dev.sterner.common.item.foci.PortableHoleFoci
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundBlockRegistry
 import net.minecraft.core.BlockPos
@@ -30,6 +31,7 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
         this.direction = direction
         this.originalBlockState = oldState
         this.originalBlockEntity = oldEntity
+        notifyUpdate()
     }
 
     fun tick() {
@@ -43,9 +45,10 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
 
         if (duration == maxDuration - 1 && distance > 1) {
             val nextPos = blockPos.relative(direction)
-            WandItem.createHole(level!!, nextPos, direction, distance - 1)
+            PortableHoleFoci.createHole(level!!, nextPos, direction, distance - 1)
         }
 
+        println("$originalBlockState + ${level!!.isClientSide()}")
         if (this.duration <= 0) {
             level!!.setBlockAndUpdate(blockPos, originalBlockState!!)
             if (originalBlockEntity != null) {
@@ -84,7 +87,7 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
 
         val holderGetter = (if (this.level != null) level!!.holderLookup(Registries.BLOCK) else BuiltInRegistries.BLOCK.asLookup()) as HolderGetter<Block?>
         if (tag.contains("BlockState")) {
-            originalBlockState = NbtUtils.readBlockState(holderGetter, tag)
+            originalBlockState = NbtUtils.readBlockState(holderGetter, tag.getCompound("BlockState"))
 
             if (tag.contains("BlockEntity")) {
                 val blockEntityTag: CompoundTag = tag.get("BlockEntity") as CompoundTag
