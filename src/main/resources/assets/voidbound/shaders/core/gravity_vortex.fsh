@@ -49,7 +49,7 @@ vec3 paintCircle (vec2 uv, vec2 center, float rad, float width, float index) {
 
 vec3 paintRing(vec2 uv, vec2 center, float radius, float index){
     vec3 color = paintCircle(uv, center, radius, 0.095, index);
-    color *= vec3(0.9,0.05,0.9);
+    color *= vec3(0.9,0.9,0.9);
     color += paintCircle(uv, center, radius, 0.025, index); //White
     return color;
 }

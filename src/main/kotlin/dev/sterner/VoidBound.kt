@@ -73,6 +73,10 @@ object VoidBound : ModInitializer, ClientModInitializer {
             VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get(),
             ::DestabilizedSpiritRiftBlockEntityRenderer
         )
+        BlockEntityRenderers.register(
+            VoidBoundBlockEntityTypeRegistry.PORTABLE_HOLE.get(),
+            ::PortableHoleBlockEntityRenderer
+        )
 
         EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.PARTICLE_ENTITY.get(), ::ParticleEntityRenderer)
         EntityRendererRegistry.register(

@@ -2,23 +2,23 @@ package dev.sterner.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
-import com.sammy.malum.client.RenderUtils
-import dev.sterner.VoidBound
 import dev.sterner.api.ClientTickHandler
-import dev.sterner.client.Tokens
 import dev.sterner.client.renderer.SpiritBinderBlockEntityRenderer.Companion.TOKEN
 import dev.sterner.common.blockentity.DestabilizedSpiritRiftBlockEntity
 import dev.sterner.registry.VoidBoundRenderTypes
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
-import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
+import net.minecraft.world.phys.Vec3
+import org.joml.Vector3f
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
+import team.lodestar.lodestone.systems.rendering.LodestoneRenderType
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
-import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
 import java.awt.Color
+import kotlin.math.abs
+import kotlin.math.max
 
 
 class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
@@ -54,29 +54,9 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
         val cam = Minecraft.getInstance().gameRenderer.mainCamera
         poseStack.mulPose(cam.rotation())
         poseStack.mulPose(Axis.XP.rotationDegrees(180f))
-        var sawBuilder = VFXBuilders.createWorld().setRenderType(rt).setColor(Color(1f, 1f, 1f)).setAlpha(0.55f)
-        poseStack.translate(0f,0f,0.05f)
-        sawBuilder.renderQuad(poseStack, 0.05f)
-        sawBuilder = VFXBuilders.createWorld().setRenderType(rt).setColor(Color(1f, 1f, 1f)).setAlpha(0.45f)
-        sawBuilder.renderQuad(poseStack, 0.1f)
-        sawBuilder = VFXBuilders.createWorld().setRenderType(rt).setColor(Color(1f, 1f, 1f)).setAlpha(0.35f)
-        sawBuilder.renderQuad(poseStack, 0.15f)
-        poseStack.translate(0f,0f,-0.05f)
+        renderWisp(poseStack, rt)
 
         builder.renderQuad(poseStack, 0.5f)
-        for (i in 0..3) {
-            poseStack.pushPose()
-            poseStack.mulPose(Axis.YP.rotationDegrees(120f * i + ClientTickHandler.ticksInGame))
-            builder.renderQuad(poseStack, 0.5f)
-            poseStack.popPose()
-        }
-
-        for (i in 0..3) {
-            poseStack.pushPose()
-            poseStack.mulPose(Axis.YP.rotationDegrees(120f * i - ClientTickHandler.ticksInGame + 60))
-            builder.renderQuad(poseStack, 0.5f)
-            poseStack.popPose()
-        }
 
         builder = VFXBuilders.createWorld()
             .setRenderType(LodestoneRenderTypeRegistry.applyUniformChanges(
@@ -96,8 +76,15 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
 
         builder.renderQuad(poseStack, 0.3f)
 
-
-
         poseStack.popPose()
+    }
+
+    private fun renderWisp(poseStack: PoseStack, rt: LodestoneRenderType){
+        var sawBuilder = VFXBuilders.createWorld().setRenderType(rt).setColor(Color(1f, 1f, 1f)).setAlpha(0.55f)
+        sawBuilder.renderQuad(poseStack, 0.05f)
+        sawBuilder = VFXBuilders.createWorld().setRenderType(rt).setColor(Color(1f, 1f, 1f)).setAlpha(0.45f)
+        sawBuilder.renderQuad(poseStack, 0.1f)
+        sawBuilder = VFXBuilders.createWorld().setRenderType(rt).setColor(Color(1f, 1f, 1f)).setAlpha(0.35f)
+        sawBuilder.renderQuad(poseStack, 0.15f)
     }
 }

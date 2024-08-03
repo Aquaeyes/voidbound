@@ -2,6 +2,7 @@ package dev.sterner.registry
 
 import dev.sterner.VoidBound
 import dev.sterner.common.blockentity.DestabilizedSpiritRiftBlockEntity
+import dev.sterner.common.blockentity.PortableHoleBlockEntity
 import dev.sterner.common.blockentity.SpiritBinderBlockEntity
 import dev.sterner.common.blockentity.SpiritStabilizerBlockEntity
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
@@ -37,4 +38,12 @@ object VoidBoundBlockEntityTypeRegistry {
             .build(null)
     }
 
+
+    var PORTABLE_HOLE = BLOCK_ENTITY_TYPES.register("portable_hole") {
+        BlockEntityType.Builder.of(
+            { pos, state -> PortableHoleBlockEntity(pos, state) },
+            VoidBoundBlockRegistry.PORTABLE_HOLE.get()
+        )
+            .build(null)
+    }
 }
