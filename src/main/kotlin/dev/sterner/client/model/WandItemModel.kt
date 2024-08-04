@@ -2,7 +2,7 @@ package dev.sterner.client.model
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
-import net.minecraft.client.model.EntityModel
+import dev.sterner.VoidBound
 import net.minecraft.client.model.Model
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.model.geom.ModelPart
@@ -34,7 +34,7 @@ class WandItemModel(root: ModelPart) : Model(RenderType::entitySolid) {
     companion object {
         // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
         val LAYER_LOCATION: ModelLayerLocation =
-            ModelLayerLocation(ResourceLocation("modid", "rune_wood_hallowed_gold_capped_wand_converted"), "main")
+            ModelLayerLocation(VoidBound.id("rune_wood_hallowed_gold_capped_wand_converted"), "main")
 
         fun createBodyLayer(): LayerDefinition {
             val meshdefinition = MeshDefinition()
@@ -42,11 +42,15 @@ class WandItemModel(root: ModelPart) : Model(RenderType::entitySolid) {
 
             val bone = partdefinition.addOrReplaceChild(
                 "bone",
-                CubeListBuilder.create().texOffs(16, 0)
-                    .addBox(-9.0f, -16.0f, 7.0f, 2.0f, 16.0f, 2.0f, CubeDeformation(0.0f))
-                    .texOffs(4, 10).addBox(-9.5f, -2.0f, 6.5f, 3.0f, 3.0f, 3.0f, CubeDeformation(0.0f))
-                    .texOffs(4, 10).addBox(-9.5f, -19.0f, 6.5f, 3.0f, 3.0f, 3.0f, CubeDeformation(0.0f))
-                    .texOffs(4, 10).addBox(-9.5f, -15.0f, 6.5f, 3.0f, 1.0f, 3.0f, CubeDeformation(0.0f)),
+                CubeListBuilder.create().texOffs(0, 0)
+                    .addBox(-9.0f, -16.0f, 7.0f, 2.0f, 18.0f, 2.0f, CubeDeformation(0.0f))
+                    .texOffs(8, 13).addBox(-9.5f, 2.0f, 6.5f, 3.0f, 3.0f, 3.0f, CubeDeformation(0.0f))
+                    .texOffs(8, 0).addBox(-10.0f, -19.0f, 6.0f, 4.0f, 3.0f, 4.0f, CubeDeformation(0.0f))
+                    .texOffs(17, 10).addBox(-9.5f, -15.0f, 6.5f, 3.0f, 1.0f, 3.0f, CubeDeformation(0.0f))
+                    .texOffs(8, 2).addBox(-5.5f, -21.0f, 5.5f, 0.0f, 3.0f, 5.0f, CubeDeformation(0.0f))
+                    .texOffs(8, 2).addBox(-10.5f, -21.0f, 5.5f, 0.0f, 3.0f, 5.0f, CubeDeformation(0.0f))
+                    .texOffs(8, 7).addBox(-10.5f, -21.0f, 5.5f, 5.0f, 3.0f, 0.0f, CubeDeformation(0.0f))
+                    .texOffs(8, 7).addBox(-10.5f, -21.0f, 10.5f, 5.0f, 3.0f, 0.0f, CubeDeformation(0.0f)),
                 PartPose.offset(8.0f, 24.0f, -8.0f)
             )
 
