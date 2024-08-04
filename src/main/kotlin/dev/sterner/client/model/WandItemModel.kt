@@ -32,7 +32,6 @@ class WandItemModel(root: ModelPart) : Model(RenderType::entitySolid) {
     }
 
     companion object {
-        // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
         val LAYER_LOCATION: ModelLayerLocation =
             ModelLayerLocation(VoidBound.id("rune_wood_hallowed_gold_capped_wand_converted"), "main")
 
@@ -40,7 +39,7 @@ class WandItemModel(root: ModelPart) : Model(RenderType::entitySolid) {
             val meshdefinition = MeshDefinition()
             val partdefinition = meshdefinition.root
 
-            val bone = partdefinition.addOrReplaceChild(
+            partdefinition.addOrReplaceChild(
                 "bone",
                 CubeListBuilder.create().texOffs(0, 0)
                     .addBox(-9.0f, -16.0f, 7.0f, 2.0f, 18.0f, 2.0f, CubeDeformation(0.0f))
