@@ -2,23 +2,20 @@ package dev.sterner.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
-import dev.sterner.api.ClientTickHandler
 import dev.sterner.client.renderer.SpiritBinderBlockEntityRenderer.Companion.TOKEN
 import dev.sterner.common.blockentity.DestabilizedSpiritRiftBlockEntity
+import dev.sterner.registry.VoidBoundItemRegistry
 import dev.sterner.registry.VoidBoundRenderTypes
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
-import net.minecraft.world.phys.Vec3
-import org.joml.Vector3f
+import net.minecraft.world.entity.EquipmentSlot
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.systems.rendering.LodestoneRenderType
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
 import java.awt.Color
-import kotlin.math.abs
-import kotlin.math.max
 
 
 class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
@@ -32,11 +29,18 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
         packedLight: Int,
         packedOverlay: Int
     ) {
-        val rt = LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.apply(TOKEN)
-        val renderType = VoidBoundRenderTypes.GRAVITY_VORTEX.apply(TOKEN)
+        var rt = LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.apply(TOKEN)
+        var renderType = VoidBoundRenderTypes.GRAVITY_VORTEX.apply(TOKEN)
         val copy = LodestoneRenderTypeRegistry.copy(renderType)
         val copy2 = LodestoneRenderTypeRegistry.copy(renderType)
 
+        var alpha = 0.1f
+
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player!!.getItemBySlot(EquipmentSlot.HEAD).`is`(VoidBoundItemRegistry.HALLOWED_GOGGLES.get())) {
+            alpha = 1f
+            renderType = VoidBoundRenderTypes.GRAVITY_VORTEX_DEPTH.apply(TOKEN)
+            rt = VoidBoundRenderTypes.ADDITIVE_TEXTURE_DEPTH.apply(TOKEN)
+        }
 
         var builder = VFXBuilders.createWorld()
             .setRenderType(LodestoneRenderTypeRegistry.applyUniformChanges(
@@ -47,6 +51,7 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
                 s.safeGetUniform("CycleDuration").set(1f)
                 s.safeGetUniform("TunnelElongation").set(0.25f)
                 s.safeGetUniform("RotationSpeed").set(0f)
+                s.safeGetUniform("Alpha").set(alpha)
             })
 
         poseStack.pushPose()
@@ -63,6 +68,7 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
                 copy
             ) { s: ShaderInstance ->
                 s.safeGetUniform("RotationSpeed").set(1000f)
+                s.safeGetUniform("Alpha").set(alpha)
             })
 
         builder.renderQuad(poseStack, 0.4f)
@@ -72,6 +78,7 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
                 copy2
             ) { s: ShaderInstance ->
                 s.safeGetUniform("RotationSpeed").set(2000f)
+                s.safeGetUniform("Alpha").set(alpha)
             })
 
         builder.renderQuad(poseStack, 0.3f)
