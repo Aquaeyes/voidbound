@@ -1,4 +1,4 @@
-package dev.sterner.api
+package dev.sterner.api.entity
 
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.nbt.CompoundTag

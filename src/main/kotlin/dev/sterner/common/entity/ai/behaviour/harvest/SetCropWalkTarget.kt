@@ -1,7 +1,7 @@
 package dev.sterner.common.entity.ai.behaviour.harvest
 
 import com.mojang.datafixers.util.Pair
-import dev.sterner.api.GolemCore
+import dev.sterner.api.entity.GolemCore
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundMemoryTypeRegistry
 import net.minecraft.core.BlockPos

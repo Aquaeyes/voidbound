@@ -1,6 +1,6 @@
 package dev.sterner.common.blockentity
 
-import dev.sterner.api.SyncedBlockEntity
+import dev.sterner.api.blockentity.SyncedBlockEntity
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundParticleTypeRegistry
 import net.minecraft.core.BlockPos

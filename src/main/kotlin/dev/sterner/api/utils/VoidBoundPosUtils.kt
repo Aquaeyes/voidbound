@@ -9,7 +9,7 @@ import net.minecraft.world.entity.ai.util.LandRandomPos
 import net.minecraft.world.entity.ai.util.RandomPos
 import net.minecraft.world.phys.Vec3
 
-object PosUtils {
+object VoidBoundPosUtils {
 
     fun getRandomNearbyPos(golem: SoulSteelGolemEntity): Vec3 {
         val vec3 = LandRandomPos.getPos(golem, 4, 2)

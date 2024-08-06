@@ -7,7 +7,7 @@ import com.sammy.malum.client.screen.codex.pages.recipe.SpiritInfusionPage
 import com.sammy.malum.client.screen.codex.pages.text.HeadlineTextPage
 import com.sammy.malum.client.screen.codex.screens.ArcanaProgressionScreen
 import dev.sterner.VoidBound.modid
-import dev.sterner.api.ProgressionEntryObjectExtension
+import dev.sterner.api.book.ProgressionEntryObjectExtension
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.nbt.CompoundTag
 

@@ -1,7 +1,7 @@
 package dev.sterner.registry
 
 import dev.sterner.VoidBound
-import dev.sterner.api.GolemCore
+import dev.sterner.api.entity.GolemCore
 import dev.sterner.common.item.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject

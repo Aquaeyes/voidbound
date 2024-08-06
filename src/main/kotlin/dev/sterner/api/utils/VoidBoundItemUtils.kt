@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.phys.Vec3
 import kotlin.math.min
 
-object ItemUtils {
+object VoidBoundItemUtils {
 
     private fun throwItemsTowardPos(golem: SoulSteelGolemEntity, stacks: List<ItemStack>, pos: Vec3) {
         if (stacks.isNotEmpty()) {
@@ -40,7 +40,7 @@ object ItemUtils {
     }
 
     private fun throwItemsTowardRandomPos(golem: SoulSteelGolemEntity, stacks: List<ItemStack>) {
-        throwItemsTowardPos(golem, stacks, PosUtils.getRandomNearbyPos(golem))
+        throwItemsTowardPos(golem, stacks, VoidBoundPosUtils.getRandomNearbyPos(golem))
     }
 
     private fun putInInventory(golem: SoulSteelGolemEntity, stack: ItemStack) {

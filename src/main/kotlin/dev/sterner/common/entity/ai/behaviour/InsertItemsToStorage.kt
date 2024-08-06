@@ -1,7 +1,7 @@
 package dev.sterner.common.entity.ai.behaviour
 
 import com.mojang.datafixers.util.Pair
-import dev.sterner.api.utils.ItemUtils
+import dev.sterner.api.utils.VoidBoundItemUtils
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundMemoryTypeRegistry
 import net.minecraft.world.Container
@@ -9,7 +9,6 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType
 import net.minecraft.world.entity.ai.memory.MemoryStatus
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour
 import net.tslat.smartbrainlib.util.BrainUtils
-import java.util.function.Predicate
 
 class InsertItemsToStorage : ExtendedBehaviour<SoulSteelGolemEntity>() {
 
@@ -52,7 +51,7 @@ class InsertItemsToStorage : ExtendedBehaviour<SoulSteelGolemEntity>() {
 
                 for (i in 0 until entity.inventory.containerSize) {
                     if (!entity.inventory.getItem(i).isEmpty) {
-                        val itemStack2 = ItemUtils.addItem(container, entity.inventory.removeItem(i, 1))
+                        val itemStack2 = VoidBoundItemUtils.addItem(container, entity.inventory.removeItem(i, 1))
 
                         if (itemStack2.isEmpty) {
                             container.setChanged()

@@ -1,7 +1,7 @@
 package dev.sterner.mixin;
 
 import com.sammy.malum.client.screen.codex.objects.progression.ProgressionEntryObject;
-import dev.sterner.api.ProgressionEntryObjectExtension;
+import dev.sterner.api.book.ProgressionEntryObjectExtension;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;

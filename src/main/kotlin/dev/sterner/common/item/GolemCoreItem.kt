@@ -1,6 +1,6 @@
 package dev.sterner.common.item
 
-import dev.sterner.api.GolemCore
+import dev.sterner.api.entity.GolemCore
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style

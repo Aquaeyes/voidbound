@@ -1,7 +1,7 @@
 package dev.sterner.registry
 
 import dev.sterner.VoidBound
-import dev.sterner.api.IWandFocus
+import dev.sterner.api.wand.IWandFocus
 import dev.sterner.common.item.foci.PortableHoleFoci
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder

@@ -1,4 +1,4 @@
-package dev.sterner.api
+package dev.sterner.api.wand
 
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack

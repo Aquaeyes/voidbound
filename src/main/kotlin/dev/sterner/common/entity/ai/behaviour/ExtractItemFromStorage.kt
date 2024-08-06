@@ -1,7 +1,7 @@
 package dev.sterner.common.entity.ai.behaviour
 
 import com.mojang.datafixers.util.Pair
-import dev.sterner.api.utils.ItemUtils
+import dev.sterner.api.utils.VoidBoundItemUtils
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundMemoryTypeRegistry
 import net.minecraft.world.Container
@@ -38,7 +38,7 @@ class ExtractItemFromStorage : ExtendedBehaviour<SoulSteelGolemEntity>() {
 
                 for (i in 0 until entity.inventory.containerSize) {
                     if (!container.getItem(i).isEmpty) {
-                        val itemStack2 = ItemUtils.addItem(entity.inventory, container.removeItem(i, 1))
+                        val itemStack2 = VoidBoundItemUtils.addItem(entity.inventory, container.removeItem(i, 1))
 
                         if (itemStack2.isEmpty) {
                             container.setChanged()

@@ -1,17 +1,12 @@
 package dev.sterner.client.event
 
-import com.mojang.authlib.minecraft.client.MinecraftClient
-import com.mojang.blaze3d.vertex.PoseStack
 import com.sammy.malum.common.block.curiosities.spirit_altar.SpiritAltarBlockEntity
 import com.sammy.malum.common.recipe.SpiritInfusionRecipe
-import dev.sterner.VoidBound
-import dev.sterner.api.utils.RenderUtils
-import dev.sterner.registry.VoidBoundItemRegistry
+import dev.sterner.api.VoidBoundApi
+import dev.sterner.api.utils.VoidBoundRenderUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.client.renderer.entity.ItemRenderer
 import net.minecraft.core.BlockPos
-import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.phys.BlockHitResult
@@ -19,10 +14,10 @@ import net.minecraft.world.phys.BlockHitResult
 
 object SpiritAltarHudRenderEvent {
 
-    fun spiritAltarRecipeHud(guiGraphics: GuiGraphics, fl: Float) {
+    fun spiritAltarRecipeHud(guiGraphics: GuiGraphics, deltaTick: Float) {
         val client: Minecraft = Minecraft.getInstance()
-        if (client.player != null && client.player!!.getItemBySlot(EquipmentSlot.HEAD).`is`(VoidBoundItemRegistry.HALLOWED_GOGGLES.get())
-        ) {
+
+        if (VoidBoundApi.hasGoggles()) {
             if (client.level != null && client.hitResult is BlockHitResult) {
                 val result = client.hitResult as BlockHitResult
                 val pos: BlockPos = result.blockPos
@@ -64,7 +59,7 @@ object SpiritAltarHudRenderEvent {
                             if (!checked) {
                                 guiGraphics.renderItemDecorations(client.font, renderStack, 0,0)
                             } else {
-                                RenderUtils.drawIcon(matrixStack, RenderUtils.CHECKMARK)
+                                VoidBoundRenderUtils.drawIcon(matrixStack, VoidBoundRenderUtils.CHECKMARK)
                             }
                             matrixStack.translate(16.0, 0.0, 0.0)
                         }

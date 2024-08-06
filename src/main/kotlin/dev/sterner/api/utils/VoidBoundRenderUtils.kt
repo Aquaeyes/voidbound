@@ -20,7 +20,7 @@ import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
 import java.awt.Color
 
 
-object RenderUtils {
+object VoidBoundRenderUtils {
 
     val CHECKMARK: ResourceLocation = VoidBound.id("textures/gui/check.png")
 

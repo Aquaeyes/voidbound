@@ -1,9 +1,8 @@
 package dev.sterner.common.entity
 
 import com.sammy.malum.registry.common.item.ItemRegistry
-import dev.sterner.api.GolemCore
-import dev.sterner.api.utils.ItemUtils
-import dev.sterner.common.entity.ai.behaviour.ExtractItemFromStorage
+import dev.sterner.api.entity.GolemCore
+import dev.sterner.api.utils.VoidBoundItemUtils
 import dev.sterner.common.entity.ai.behaviour.InsertItemsToStorage
 import dev.sterner.common.entity.ai.behaviour.ReturnHomeFromMemory
 import dev.sterner.common.entity.ai.behaviour.gather.SetWalkTargetToItem
@@ -113,7 +112,7 @@ open class SoulSteelGolemEntity(level: Level) :
     }
 
     override fun pickUpItem(itemEntity: ItemEntity) {
-        ItemUtils.pickUpItem(this, itemEntity)
+        VoidBoundItemUtils.pickUpItem(this, itemEntity)
     }
 
     override fun dropAllDeathLoot(damageSource: DamageSource) {

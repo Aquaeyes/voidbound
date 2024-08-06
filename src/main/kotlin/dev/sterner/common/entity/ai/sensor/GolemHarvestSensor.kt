@@ -1,7 +1,7 @@
 package dev.sterner.common.entity.ai.sensor
 
 import com.mojang.datafixers.util.Pair
-import dev.sterner.api.GolemCore
+import dev.sterner.api.entity.GolemCore
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundMemoryTypeRegistry
 import dev.sterner.registry.VoidBoundSensorTypeRegistry

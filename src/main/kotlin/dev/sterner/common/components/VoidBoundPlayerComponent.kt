@@ -3,13 +3,12 @@ package dev.sterner.common.components
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent
-import dev.sterner.api.utils.RenderUtils
-import dev.sterner.client.Tokens
+import dev.sterner.api.utils.VoidBoundRenderUtils
+import dev.sterner.client.VoidBoundTokens
 import dev.sterner.common.entity.AbstractGolemEntity
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundComponentRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
-import net.minecraft.client.Camera
 import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
@@ -89,7 +88,7 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
             if (localPlayer != null) {
                 val playerComponent = VoidBoundComponentRegistry.VOID_BOUND_PLAYER_COMPONENT.get(localPlayer)
                 for (entry in playerComponent.highlightBlockList) {
-                    RenderUtils.renderCubeAtPos(camera, poseStack, entry.key, Tokens.WARD_BORDER, entry.value, 20)
+                    VoidBoundRenderUtils.renderCubeAtPos(camera, poseStack, entry.key, VoidBoundTokens.WARD_BORDER, entry.value, 20)
                 }
             }
         }

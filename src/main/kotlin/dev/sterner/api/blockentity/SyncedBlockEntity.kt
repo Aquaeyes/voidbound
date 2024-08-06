@@ -1,4 +1,4 @@
-package dev.sterner.api
+package dev.sterner.api.blockentity
 
 import io.github.fabricators_of_create.porting_lib.block.CustomDataPacketHandlingBlockEntity
 import io.github.fabricators_of_create.porting_lib.block.CustomUpdateTagHandlingBlockEntity

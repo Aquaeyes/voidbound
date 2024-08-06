@@ -2,7 +2,7 @@ package dev.sterner.client.feature
 
 import com.mojang.blaze3d.vertex.PoseStack
 import dev.sterner.VoidBound
-import dev.sterner.api.GolemCore
+import dev.sterner.api.entity.GolemCore
 import dev.sterner.client.model.GolemCoreModel
 import dev.sterner.client.model.SoulSteelGolemEntityModel
 import dev.sterner.client.renderer.SoulSteelGolemEntityRenderer

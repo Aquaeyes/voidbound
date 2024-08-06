@@ -1,7 +1,6 @@
 package dev.sterner.common.blockentity
 
-import dev.sterner.api.SyncedBlockEntity
-import dev.sterner.common.item.WandItem
+import dev.sterner.api.blockentity.SyncedBlockEntity
 import dev.sterner.common.item.foci.PortableHoleFoci
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundBlockRegistry

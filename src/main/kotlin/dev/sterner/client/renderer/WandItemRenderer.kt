@@ -3,7 +3,7 @@ package dev.sterner.client.renderer
 import com.mojang.blaze3d.vertex.PoseStack
 import com.sammy.malum.client.RenderUtils
 import dev.sterner.VoidBound
-import dev.sterner.client.Tokens
+import dev.sterner.client.VoidBoundTokens
 import dev.sterner.client.model.WandItemModel
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer
 import net.minecraft.client.Minecraft
@@ -31,7 +31,7 @@ class WandItemRenderer : DynamicItemRenderer {
             model = WandItemModel(Minecraft.getInstance().entityModels.bakeLayer(WandItemModel.LAYER_LOCATION))
         }
         val cubeVertexData = RenderUtils.makeCubePositions(0.25f).applyWobble(0f, 0.35f, 0.01f)
-        val builder = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(Tokens.WARD_BORDER))
+        val builder = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(VoidBoundTokens.WARD_BORDER))
         //val builder2 = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(Tokens.WARD_BORDER)).setColorRaw(0.9f,0.09f,0.9f)
 
         matrices.pushPose()

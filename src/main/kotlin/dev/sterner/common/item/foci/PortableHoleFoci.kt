@@ -1,6 +1,6 @@
 package dev.sterner.common.item.foci
 
-import dev.sterner.api.IWandFocus
+import dev.sterner.api.wand.IWandFocus
 import dev.sterner.registry.VoidBoundBlockRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

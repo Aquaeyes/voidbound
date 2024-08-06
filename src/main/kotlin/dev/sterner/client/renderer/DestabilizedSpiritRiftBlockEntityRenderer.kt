@@ -2,6 +2,7 @@ package dev.sterner.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
+import dev.sterner.api.VoidBoundApi
 import dev.sterner.client.renderer.SpiritBinderBlockEntityRenderer.Companion.TOKEN
 import dev.sterner.common.blockentity.DestabilizedSpiritRiftBlockEntity
 import dev.sterner.registry.VoidBoundItemRegistry
@@ -36,7 +37,7 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
 
         var alpha = 0.1f
 
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player!!.getItemBySlot(EquipmentSlot.HEAD).`is`(VoidBoundItemRegistry.HALLOWED_GOGGLES.get())) {
+        if (VoidBoundApi.hasGoggles()) {
             alpha = 1f
             renderType = VoidBoundRenderTypes.GRAVITY_VORTEX_DEPTH.apply(TOKEN)
             rt = VoidBoundRenderTypes.ADDITIVE_TEXTURE_DEPTH.apply(TOKEN)

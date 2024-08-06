@@ -1,20 +1,16 @@
 package dev.sterner.common.entity.ai.sensor
 
-import com.mojang.datafixers.util.Pair
-import dev.sterner.api.GolemCore
+import dev.sterner.api.entity.GolemCore
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundMemoryTypeRegistry
 import dev.sterner.registry.VoidBoundSensorTypeRegistry
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.tags.BlockTags
 import net.minecraft.world.Container
 import net.minecraft.world.entity.ai.memory.MemoryModuleType
 import net.minecraft.world.entity.ai.sensing.SensorType
-import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.entity.BlockEntity
-import net.minecraft.world.level.block.state.BlockState
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor
 import net.tslat.smartbrainlib.api.core.sensor.PredicateSensor
 import net.tslat.smartbrainlib.`object`.SquareRadius

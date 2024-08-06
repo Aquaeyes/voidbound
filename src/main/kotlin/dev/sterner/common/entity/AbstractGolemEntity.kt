@@ -1,6 +1,6 @@
 package dev.sterner.common.entity
 
-import dev.sterner.api.GolemCore
+import dev.sterner.api.entity.GolemCore
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag

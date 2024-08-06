@@ -1,4 +1,4 @@
-package dev.sterner.api
+package dev.sterner.api.blockentity
 
 import net.minecraft.util.StringRepresentable
 import java.util.*
