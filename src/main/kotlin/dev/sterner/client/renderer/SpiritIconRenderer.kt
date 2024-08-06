@@ -1,5 +1,6 @@
 package dev.sterner.client.renderer
 
+import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import dev.sterner.VoidBound
@@ -11,6 +12,8 @@ import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import org.joml.Quaternionf
+import org.lwjgl.opengl.GL11
+
 
 object SpiritIconRenderer {
 
@@ -23,39 +26,36 @@ object SpiritIconRenderer {
         }
 
         if (!VoidBoundApi.hasGoggles()) {
-            return
+            //return
         }
-        val living = entity
-        poseStack.pushPose()
-        poseStack.translate(0.0, living.bbHeight + 0.6, 0.0)
-        poseStack.pushPose()
-        val yRotation = Quaternionf().rotateY(camera.y) // Rotate only around the y-axis
-        poseStack.mulPose(Axis.YP.rotation(camera.y * 2))
 
-        poseStack.scale(-0.025f, -0.025f, 0.025f)
+        val entityHeight = entity.getBbHeight() + 0.3f
 
-        //poseStack.translate(0.0, living.bbHeight * 100.0, 0.0)
-        var iconOffset = 0f
+        poseStack.pushPose()
+        poseStack.translate(0.0, entityHeight.toDouble(), 0.0)
+        poseStack.mulPose(camera)
+        poseStack.mulPose(Axis.YP.rotationDegrees(180f))
+        poseStack.scale(0.025f, -0.025f, 0.025f)
+
+        var depthTestEnabled = GL11.glIsEnabled(GL11.GL_DEPTH_TEST)
+        RenderSystem.enableBlend()
+        RenderSystem.defaultBlendFunc()
+        RenderSystem.enableDepthTest()
 
         val spiritDataOptional = getSpiritData(entity)
         if (spiritDataOptional.isPresent) {
             for ((index, spirit) in spiritDataOptional.get().withIndex()) {
                 val id = spirit.type.identifier
-                poseStack.pushPose()
-                renderIcon(poseStack, id, iconOffset)
-                poseStack.popPose()
-                iconOffset += 9F
+                poseStack.translate(index * 8f, 0f, index * 0.01f)
+                VoidBoundRenderUtils.renderMarker(VoidBound.id("textures/spirit/$id.png"), poseStack, -8, -18, 1f)
             }
         }
-        poseStack.popPose()
-        poseStack.popPose()
-    }
 
-    fun renderIcon(poseStack: PoseStack, id: String, iconOffset: Float) {
-
-        val dx: Float = (8 - iconOffset)
-        poseStack.translate(dx, 0f, 0f)
-        VoidBoundRenderUtils.drawRawIcon(poseStack, VoidBound.id("textures/spirit/$id.png"))
-
+        if (depthTestEnabled) {
+            RenderSystem.enableDepthTest();
+        } else {
+            RenderSystem.disableDepthTest();
+        }
+            poseStack.popPose()
     }
 }

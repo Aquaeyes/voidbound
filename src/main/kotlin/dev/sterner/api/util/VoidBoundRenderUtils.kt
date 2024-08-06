@@ -1,14 +1,11 @@
 package dev.sterner.api.util
 
 import com.mojang.blaze3d.systems.RenderSystem
-import com.mojang.blaze3d.vertex.BufferBuilder
-import com.mojang.blaze3d.vertex.DefaultVertexFormat
-import com.mojang.blaze3d.vertex.PoseStack
-import com.mojang.blaze3d.vertex.Tesselator
-import com.mojang.blaze3d.vertex.VertexFormat
+import com.mojang.blaze3d.vertex.*
 import com.sammy.malum.client.RenderUtils
 import dev.sterner.VoidBound
 import net.minecraft.client.Camera
+import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GameRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
@@ -23,6 +20,48 @@ import java.awt.Color
 object VoidBoundRenderUtils {
 
     val CHECKMARK: ResourceLocation = VoidBound.id("textures/gui/check.png")
+
+    fun renderMarker(resource: ResourceLocation, poseStack: PoseStack, x: Int, y: Int, alpha: Float) {
+        val scale = 1f
+        poseStack.pushPose()
+        poseStack.scale(scale, scale, 1.0f)
+        renderIcon(resource, poseStack, x, y, alpha)
+
+        poseStack.popPose()
+    }
+
+    private fun renderIcon(icon: ResourceLocation, poseStack: PoseStack, x: Int, y: Int, alpha: Float) {
+        renderIcon(icon, poseStack, x, y, 16, 16, 0f, 1f, 0f, 1f, alpha)
+    }
+
+    private fun renderIcon(
+        icon: ResourceLocation,
+        poseStack: PoseStack,
+        x: Int,
+        y: Int,
+        w: Int,
+        h: Int,
+        u0: Float,
+        u1: Float,
+        v0: Float,
+        v1: Float,
+        alpha: Float
+    ) {
+        val matrix = poseStack.last().pose()
+
+        Minecraft.getInstance().textureManager.getTexture(icon).setFilter(false, false)
+        RenderSystem.setShaderTexture(0, icon)
+
+        RenderSystem.setShader { GameRenderer.getPositionTexColorShader() }
+        val bufferbuilder = Tesselator.getInstance().builder
+        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR)
+        bufferbuilder.vertex(matrix, x.toFloat(), (y + h).toFloat(), 0f).uv(u0, v1).color(1.0f, 1.0f, 1.0f, alpha).endVertex()
+        bufferbuilder.vertex(matrix, (x + w).toFloat(), (y + h).toFloat(), 0f).uv(u1, v1).color(1.0f, 1.0f, 1.0f, alpha).endVertex()
+        bufferbuilder.vertex(matrix, (x + w).toFloat(), y.toFloat(), 0f).uv(u1, v0).color(1.0f, 1.0f, 1.0f, alpha).endVertex()
+        bufferbuilder.vertex(matrix, x.toFloat(), y.toFloat(), 0f).uv(u0, v0).color(1.0f, 1.0f, 1.0f, alpha).endVertex()
+
+        BufferUploader.drawWithShader(bufferbuilder.end())
+    }
 
     fun drawIcon(matrixStack: PoseStack, icon: ResourceLocation) {
         matrixStack.pushPose()
