@@ -49,7 +49,6 @@ object SpiritIconRenderer {
         poseStack.pushPose()
         poseStack.translate(0.0, entityHeight.toDouble(), 0.0)
         poseStack.mulPose(camera)
-        //poseStack.mulPose(Axis.YP.rotationDegrees(180f))
         poseStack.scale(0.025f, -0.025f, 0.025f)
 
         val depthTestEnabled = GL11.glIsEnabled(GL11.GL_DEPTH_TEST)
@@ -64,11 +63,9 @@ object SpiritIconRenderer {
             for ((index, spirit) in spiritDataOptional.get().withIndex()) {
                 val id = spirit.type.identifier
                 poseStack.translate(10f, 0f, index * 0.01f)
-                VoidBoundRenderUtils.renderIcon(
+                VoidBoundRenderUtils.renderWobblyWorldIcon(
                     VoidBound.id("textures/spirit/$id.png"),
                     poseStack,
-                    -8,
-                    -18,
                     currentAlpha
                 )
             }

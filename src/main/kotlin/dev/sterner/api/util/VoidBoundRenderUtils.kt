@@ -2,12 +2,12 @@ package dev.sterner.api.util
 
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.*
+import com.mojang.math.Axis
 import com.sammy.malum.client.RenderUtils
 import com.sammy.malum.client.renderer.block.TotemPoleRenderer
 import dev.sterner.VoidBound
 import dev.sterner.api.ClientTickHandler
 import net.minecraft.client.Camera
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GameRenderer
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.BlockPos
@@ -26,18 +26,13 @@ object VoidBoundRenderUtils {
 
     val CHECKMARK: ResourceLocation = VoidBound.id("textures/gui/check.png")
 
-    fun renderIcon(icon: ResourceLocation, poseStack: PoseStack, x: Int, y: Int, alpha: Float) {
-        poseStack.pushPose()
-        //renderIcon(icon, poseStack, x, y, 16, 16, 0f, 1f, 0f, 1f, alpha)
-        wacko(icon, poseStack, alpha)
-        poseStack.popPose()
-    }
-
-    private fun wacko(
+    fun renderWobblyWorldIcon(
         icon: ResourceLocation,
         poseStack: PoseStack,
         alpha: Float
     ){
+        poseStack.pushPose()
+        poseStack.mulPose(Axis.ZP.rotationDegrees(180f))
         val renderType: RenderType =
             LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(RenderTypeToken.createCachedToken(icon))
 
@@ -57,43 +52,11 @@ object VoidBoundRenderUtils {
         VFXBuilders.createWorld()
             .setAlpha(alpha)
             .setRenderType(renderType)
-            .renderQuad(poseStack, positions, 5f)
+            .renderQuad(poseStack, positions, 8f)
+        poseStack.popPose()
     }
 
-    private fun renderIcon(
-        icon: ResourceLocation,
-        poseStack: PoseStack,
-        x: Int,
-        y: Int,
-        w: Int,
-        h: Int,
-        u0: Float,
-        u1: Float,
-        v0: Float,
-        v1: Float,
-        alpha: Float
-    ) {
-        val matrix = poseStack.last().pose()
-
-        Minecraft.getInstance().textureManager.getTexture(icon).setFilter(false, false)
-        RenderSystem.setShaderTexture(0, icon)
-
-        RenderSystem.setShader { GameRenderer.getPositionTexColorShader() }
-        val bufferbuilder = Tesselator.getInstance().builder
-        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR)
-        bufferbuilder.vertex(matrix, x.toFloat(), (y + h).toFloat(), 0f).uv(u0, v1).color(1.0f, 1.0f, 1.0f, alpha)
-            .endVertex()
-        bufferbuilder.vertex(matrix, (x + w).toFloat(), (y + h).toFloat(), 0f).uv(u1, v1).color(1.0f, 1.0f, 1.0f, alpha)
-            .endVertex()
-        bufferbuilder.vertex(matrix, (x + w).toFloat(), y.toFloat(), 0f).uv(u1, v0).color(1.0f, 1.0f, 1.0f, alpha)
-            .endVertex()
-        bufferbuilder.vertex(matrix, x.toFloat(), y.toFloat(), 0f).uv(u0, v0).color(1.0f, 1.0f, 1.0f, alpha).endVertex()
-
-        BufferUploader.drawWithShader(bufferbuilder.end())
-
-    }
-
-    fun drawIcon(matrixStack: PoseStack, icon: ResourceLocation) {
+    fun drawScreenIcon(matrixStack: PoseStack, icon: ResourceLocation) {
         matrixStack.pushPose()
         val matrix: Matrix4f = matrixStack.last().pose()
         val tessellator = Tesselator.getInstance()
