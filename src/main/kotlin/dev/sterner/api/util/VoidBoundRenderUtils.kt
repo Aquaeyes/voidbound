@@ -42,6 +42,22 @@ object VoidBoundRenderUtils {
         matrixStack.popPose()
     }
 
+    fun drawRawIcon(matrixStack: PoseStack, icon: ResourceLocation) {
+        matrixStack.pushPose()
+        val matrix: Matrix4f = matrixStack.last().pose()
+        val tessellator = Tesselator.getInstance()
+        val bufferBuilder: BufferBuilder = tessellator.builder
+        RenderSystem.setShader { GameRenderer.getPositionTexShader() }
+        RenderSystem.setShaderTexture(0, icon)
+        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX)
+        bufferBuilder.vertex(matrix, 0f, 16f, 0f).uv(0f, 1f).endVertex()
+        bufferBuilder.vertex(matrix, 16f, 16f, 0f).uv(1f, 1f).endVertex()
+        bufferBuilder.vertex(matrix, 16f, 0f, 0f).uv(1f, 0f).endVertex()
+        bufferBuilder.vertex(matrix, 0f, 0f, 0f).uv(0f, 0f).endVertex()
+        tessellator.end()
+        matrixStack.popPose()
+    }
+
     fun renderCubeAtPos(
         camera: Camera,
         poseStack: PoseStack,
