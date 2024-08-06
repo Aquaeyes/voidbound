@@ -52,7 +52,7 @@ object VoidBoundRenderUtils {
         VFXBuilders.createWorld()
             .setAlpha(alpha)
             .setRenderType(renderType)
-            .renderQuad(poseStack, positions, 8f)
+            .renderQuad(poseStack, positions, 9f)
         poseStack.popPose()
     }
 
