@@ -31,18 +31,28 @@ class WandItemRenderer : DynamicItemRenderer {
             model = WandItemModel(Minecraft.getInstance().entityModels.bakeLayer(WandItemModel.LAYER_LOCATION))
         }
         val cubeVertexData = RenderUtils.makeCubePositions(0.25f).applyWobble(0f, 0.35f, 0.01f)
-        val builder = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(VoidBoundTokens.WARD_BORDER))
+        val builder = VFXBuilders.createWorld()
+            .setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(VoidBoundTokens.WARD_BORDER))
         //val builder2 = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(Tokens.WARD_BORDER)).setColorRaw(0.9f,0.09f,0.9f)
 
         matrices.pushPose()
 
-        matrices.translate(0f,0.75f,0f)
+        matrices.translate(0f, 0.75f, 0f)
         //RenderUtils.drawCube(matrices, builder2, 1f, cubeVertexData)
         //RenderUtils.drawCube(matrices, builder, 1f, cubeVertexData)
 
         matrices.translate(0.5, 0.65, 0.5)
         matrices.scale(1f, -1f, -1f)
-        model?.renderToBuffer(matrices, vertexConsumers.getBuffer(RenderType.entityTranslucent(VoidBound.id("textures/item/hallowed_gold_capped_runewood_wand.png"))), light, overlay, 1f,1f,1f,1f)
+        model?.renderToBuffer(
+            matrices,
+            vertexConsumers.getBuffer(RenderType.entityTranslucent(VoidBound.id("textures/item/hallowed_gold_capped_runewood_wand.png"))),
+            light,
+            overlay,
+            1f,
+            1f,
+            1f,
+            1f
+        )
         matrices.translate(-0.5, -0.65, -0.5)
         //RenderUtils.drawCube(matrices, builder, 1f, cubeVertexData)
         matrices.popPose()

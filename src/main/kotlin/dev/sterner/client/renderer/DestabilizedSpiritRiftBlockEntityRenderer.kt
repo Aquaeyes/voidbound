@@ -5,14 +5,12 @@ import com.mojang.math.Axis
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.client.renderer.SpiritBinderBlockEntityRenderer.Companion.TOKEN
 import dev.sterner.common.blockentity.DestabilizedSpiritRiftBlockEntity
-import dev.sterner.registry.VoidBoundItemRegistry
 import dev.sterner.registry.VoidBoundRenderTypes
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
-import net.minecraft.world.entity.EquipmentSlot
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.systems.rendering.LodestoneRenderType
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
@@ -87,7 +85,7 @@ class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider
         poseStack.popPose()
     }
 
-    private fun renderWisp(poseStack: PoseStack, rt: LodestoneRenderType){
+    private fun renderWisp(poseStack: PoseStack, rt: LodestoneRenderType) {
         var sawBuilder = VFXBuilders.createWorld().setRenderType(rt).setColor(Color(1f, 1f, 1f)).setAlpha(0.55f)
         sawBuilder.renderQuad(poseStack, 0.05f)
         sawBuilder = VFXBuilders.createWorld().setRenderType(rt).setColor(Color(1f, 1f, 1f)).setAlpha(0.45f)

@@ -173,15 +173,15 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
     override fun saveAdditional(tag: CompoundTag) {
         simpleSpiritCharge.serializeNBT(tag)
         if (alpha != null) {
-            tag.putFloat("Alpha", alpha!!)
+            tag.putFloat("Alpha", alpha)
         }
 
         if (previousAlpha != null) {
-            tag.putFloat("PrevAlpha", previousAlpha!!)
+            tag.putFloat("PrevAlpha", previousAlpha)
         }
 
         if (targetAlpha != null) {
-            tag.putFloat("TargetAlpha", targetAlpha!!)
+            tag.putFloat("TargetAlpha", targetAlpha)
         }
 
         tag.putBoolean("Infinite", infinite)

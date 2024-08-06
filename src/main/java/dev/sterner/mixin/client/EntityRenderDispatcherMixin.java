@@ -15,7 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EntityRenderDispatcher.class)
 public abstract class EntityRenderDispatcherMixin {
 
-    @Shadow public abstract Quaternionf cameraOrientation();
+    @Shadow
+    public abstract Quaternionf cameraOrientation();
 
     @Inject(
             method = "render", at = @At(

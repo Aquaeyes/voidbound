@@ -15,7 +15,12 @@ import net.tslat.smartbrainlib.util.BrainUtils
 class SetWalkTargetToStorage : ExtendedBehaviour<SoulSteelGolemEntity>() {
 
     override fun getMemoryRequirements(): MutableList<Pair<MemoryModuleType<*>, MemoryStatus>> {
-        return mutableListOf(Pair.of(VoidBoundMemoryTypeRegistry.INPUT_STORAGE_LOCATION.get(), MemoryStatus.VALUE_PRESENT))
+        return mutableListOf(
+            Pair.of(
+                VoidBoundMemoryTypeRegistry.INPUT_STORAGE_LOCATION.get(),
+                MemoryStatus.VALUE_PRESENT
+            )
+        )
     }
 
     override fun start(level: ServerLevel, entity: SoulSteelGolemEntity, gameTime: Long) {

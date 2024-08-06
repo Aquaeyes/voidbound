@@ -8,11 +8,11 @@ import net.minecraft.world.phys.HitResult
 interface IWandFocus {
     fun onFocusRightClick(stack: ItemStack, level: Level, player: Player, hitResult: HitResult)
 
-    fun onUsingFocusTick(stack: ItemStack, level: Level, player: Player){
+    fun onUsingFocusTick(stack: ItemStack, level: Level, player: Player) {
 
     }
 
-    fun onPlayerStopUsingFocus(stack: ItemStack, level: Level, player: Player){
+    fun onPlayerStopUsingFocus(stack: ItemStack, level: Level, player: Player) {
 
     }
 

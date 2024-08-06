@@ -44,7 +44,7 @@ class GolemGatherSensor : PredicateSensor<ItemEntity, SoulSteelGolemEntity>(
                 level,
                 this.radius.inflateAABB(entity.boundingBox)
             ) { obj ->
-                obj is ItemEntity && predicate().test(obj as ItemEntity, entity)
+                obj is ItemEntity && predicate().test(obj, entity)
             }
         )
         /* Moved

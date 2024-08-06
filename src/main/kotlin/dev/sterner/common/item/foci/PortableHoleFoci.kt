@@ -66,7 +66,16 @@ class PortableHoleFoci : IWandFocus {
 
             player.swing(InteractionHand.MAIN_HAND)
             if (!level.isClientSide) {
-                level.playSound(null, hitResult.location.x + 0.5, hitResult.location.y + 0.5, hitResult.location.z + 0.5, SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 1.0f, 1.0f)
+                level.playSound(
+                    null,
+                    hitResult.location.x + 0.5,
+                    hitResult.location.y + 0.5,
+                    hitResult.location.z + 0.5,
+                    SoundEvents.ENDERMAN_TELEPORT,
+                    SoundSource.BLOCKS,
+                    1.0f,
+                    1.0f
+                )
             }
         }
     }

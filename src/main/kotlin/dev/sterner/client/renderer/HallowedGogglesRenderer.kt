@@ -1,6 +1,5 @@
 package dev.sterner.client.renderer
 
-import com.mojang.authlib.minecraft.client.MinecraftClient
 import com.mojang.blaze3d.vertex.PoseStack
 import dev.sterner.VoidBound
 import dev.sterner.client.model.HallowedGogglesModel

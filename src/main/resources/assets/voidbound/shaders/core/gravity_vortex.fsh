@@ -49,23 +49,23 @@ vec3 paintCircle (vec2 uv, vec2 center, float rad, float width, float index) {
 
 vec3 paintRing(vec2 uv, vec2 center, float radius, float index){
     vec3 color = paintCircle(uv, center, radius, 0.095, index);
-    color *= vec3(0.9,0.9,0.9);
-    color += paintCircle(uv, center, radius, 0.025, index); //White
+    color *= vec3(0.9, 0.9, 0.9);
+    color += paintCircle(uv, center, radius, 0.025, index);//White
     return color;
 }
 
 mat2 rotate2d(float angle){
-    return mat2(cos(angle),-sin(angle),
-    sin(angle),cos(angle));
+    return mat2(cos(angle), -sin(angle),
+    sin(angle), cos(angle));
 }
 
 void main() {
     vec2 uv = texCoord0;
 
-    float rotationAngle = GameTime * RotationSpeed; // Adjust speed of rotation as needed
-    uv -= 0.5; // Translate to origin
+    float rotationAngle = GameTime * RotationSpeed;// Adjust speed of rotation as needed
+    uv -= 0.5;// Translate to origin
     uv = rotate2d(rotationAngle) * uv;
-    uv += 0.5; // Translate back
+    uv += 0.5;// Translate back
 
     vec2 center = vec2(0.5);
     float spacing = 1.0 / RingCount;
@@ -80,8 +80,8 @@ void main() {
     uv.x = floor(uv.x* Width)/ Width;
     uv.y = floor(uv.y* Height)/ Height;
 
-    for(float i = 0.0; i < RingCount; i++){
-        color += paintRing(uv, center, TunnelElongation*log(mod(radius + i * spacing, CycleDuration)), i );
+    for (float i = 0.0; i < RingCount; i++){
+        color += paintRing(uv, center, TunnelElongation*log(mod(radius + i * spacing, CycleDuration)), i);
         color += paintRing(uv, center, log(mod(radius + i * spacing, CycleDuration)), i);
     }
 
@@ -90,7 +90,7 @@ void main() {
     color = mix(color, vec3(0.0), distance(uv, center) * 1.95);
 
     float distToCenter = distance(uv, center);
-    float fadeFactor = 1.0 - smoothstep(0.45, 0.5, distToCenter); // Adjusted fading range
+    float fadeFactor = 1.0 - smoothstep(0.45, 0.5, distToCenter);// Adjusted fading range
     color *= fadeFactor;
 
     color *= Alpha;

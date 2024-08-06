@@ -16,7 +16,7 @@ import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 
-class WandItem(properties: Properties) : Item (
+class WandItem(properties: Properties) : Item(
     properties
         .stacksTo(1)
         .rarity(Rarity.RARE)
@@ -37,7 +37,8 @@ class WandItem(properties: Properties) : Item (
         val focus = VoidBoundWandFociRegistry.WAND_FOCUS.getOptional(focusName?.let { ResourceLocation.tryParse(it) })
 
         if (focus.isPresent && player != null) {
-            val blockHit = BlockHitResult(context.clickLocation, context.clickedFace.opposite, context.clickedPos, false)
+            val blockHit =
+                BlockHitResult(context.clickLocation, context.clickedFace.opposite, context.clickedPos, false)
             focus.get().onFocusRightClick(stack, level, player, blockHit)
         }
 

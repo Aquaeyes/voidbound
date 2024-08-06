@@ -12,7 +12,8 @@ import net.minecraft.core.Direction
 import net.minecraft.world.level.block.state.BlockState
 import org.joml.Matrix4f
 
-class PortableHoleBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntityRenderer<PortableHoleBlockEntity>{
+class PortableHoleBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
+    BlockEntityRenderer<PortableHoleBlockEntity> {
 
 
     override fun render(
@@ -31,9 +32,9 @@ class PortableHoleBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
     }
 
 
-
     private fun shouldDrawSide(direction: Direction, entity: PortableHoleBlockEntity): Boolean {
-        val state: BlockState = Minecraft.getInstance().level!!.getBlockState(entity.blockPos.relative(direction.opposite))
+        val state: BlockState =
+            Minecraft.getInstance().level!!.getBlockState(entity.blockPos.relative(direction.opposite))
         return !state.isAir && state.isSolid
     }
 

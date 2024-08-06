@@ -97,7 +97,8 @@ class SpiritStabilizerBlockEntity(pos: BlockPos, blockState: BlockState) : Block
                     .setScaleData(GenericParticleData.create(scale, 0.0f).build())
                     .setTransparencyData(GenericParticleData.create(0.2f, 0.8f).build())
                     .setColorData(
-                        ColorParticleData.create(Color(255,255,255), Color(255,255,255)).setEasing(Easing.SINE_IN).setCoefficient(0.5f)
+                        ColorParticleData.create(Color(255, 255, 255), Color(255, 255, 255)).setEasing(Easing.SINE_IN)
+                            .setCoefficient(0.5f)
                             .build()
                     )
                     .setSpinData(SpinParticleData.create(0.0f, 0.4f).setEasing(Easing.QUARTIC_IN).build())

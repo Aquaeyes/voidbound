@@ -9,7 +9,6 @@ import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
@@ -36,11 +35,13 @@ object VoidBoundBlockRegistry {
     }
 
     var PORTABLE_HOLE = BLOCKS.register("portable_hole") {
-        PortableHoleBlock(FabricBlockSettings.create()
-            .luminance(5)
-            .noCollission()
-            .strength(-1.0F, 3600000.0F)
-            .noLootTable()
-            .pushReaction(PushReaction.BLOCK))
+        PortableHoleBlock(
+            FabricBlockSettings.create()
+                .luminance(5)
+                .noCollission()
+                .strength(-1.0F, 3600000.0F)
+                .noLootTable()
+                .pushReaction(PushReaction.BLOCK)
+        )
     }
 }

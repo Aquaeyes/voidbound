@@ -40,7 +40,7 @@ class GolemGuardSensor : PredicateSensor<LivingEntity, SoulSteelGolemEntity>(
             level,
             this.radius.inflateAABB(entity.boundingBox)
         ) { obj ->
-            obj is LivingEntity && predicate().test(obj as LivingEntity, entity)
+            obj is LivingEntity && predicate().test(obj, entity)
         }
 
         BrainUtils.setMemory(

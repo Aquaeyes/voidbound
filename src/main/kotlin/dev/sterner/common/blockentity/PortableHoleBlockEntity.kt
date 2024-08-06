@@ -15,7 +15,8 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 
-class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEntity(VoidBoundBlockEntityTypeRegistry.PORTABLE_HOLE.get(), pos,
+class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEntity(
+    VoidBoundBlockEntityTypeRegistry.PORTABLE_HOLE.get(), pos,
     state
 ) {
     private var originalBlockState: BlockState? = null
@@ -25,7 +26,13 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
     private var distance = 0
     private var direction = Direction.DOWN
 
-    constructor(pos: BlockPos, oldState: BlockState, oldEntity: BlockEntity?, direction: Direction, distance: Int) : this(pos, VoidBoundBlockRegistry.PORTABLE_HOLE.get().defaultBlockState()) {
+    constructor(
+        pos: BlockPos,
+        oldState: BlockState,
+        oldEntity: BlockEntity?,
+        direction: Direction,
+        distance: Int
+    ) : this(pos, VoidBoundBlockRegistry.PORTABLE_HOLE.get().defaultBlockState()) {
         this.distance = distance
         this.direction = direction
         this.originalBlockState = oldState
@@ -72,7 +79,6 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
     }
 
 
-
     override fun load(tag: CompoundTag) {
         if (tag.contains("Duration")) {
             duration = tag.getInt("Duration")
@@ -84,7 +90,8 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
             direction = Direction.entries.toTypedArray()[tag.getInt("Direction")]
         }
 
-        val holderGetter = (if (this.level != null) level!!.holderLookup(Registries.BLOCK) else BuiltInRegistries.BLOCK.asLookup()) as HolderGetter<Block?>
+        val holderGetter =
+            (if (this.level != null) level!!.holderLookup(Registries.BLOCK) else BuiltInRegistries.BLOCK.asLookup()) as HolderGetter<Block?>
         if (tag.contains("BlockState")) {
             originalBlockState = NbtUtils.readBlockState(holderGetter, tag.getCompound("BlockState"))
 

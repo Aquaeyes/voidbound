@@ -88,11 +88,17 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
             if (localPlayer != null) {
                 val playerComponent = VoidBoundComponentRegistry.VOID_BOUND_PLAYER_COMPONENT.get(localPlayer)
                 for (entry in playerComponent.highlightBlockList) {
-                    VoidBoundRenderUtils.renderCubeAtPos(camera, poseStack, entry.key, VoidBoundTokens.WARD_BORDER, entry.value, 20)
+                    VoidBoundRenderUtils.renderCubeAtPos(
+                        camera,
+                        poseStack,
+                        entry.key,
+                        VoidBoundTokens.WARD_BORDER,
+                        entry.value,
+                        20
+                    )
                 }
             }
         }
-
 
 
         fun useBlock(

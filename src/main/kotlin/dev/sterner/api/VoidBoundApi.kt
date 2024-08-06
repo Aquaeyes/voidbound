@@ -8,12 +8,13 @@ import net.minecraft.world.entity.player.Player
 object VoidBoundApi {
 
     fun hasGoggles(): Boolean {
-        return Minecraft.getInstance().player != null && Minecraft.getInstance().player!!.getItemBySlot(EquipmentSlot.HEAD).`is`(
-            VoidBoundItemRegistry.HALLOWED_GOGGLES.get()
-        )
+        return Minecraft.getInstance().player != null && Minecraft.getInstance().player!!.getItemBySlot(EquipmentSlot.HEAD)
+            .`is`(
+                VoidBoundItemRegistry.HALLOWED_GOGGLES.get()
+            )
     }
 
-    fun hasGoggles(player: Player) : Boolean {
+    fun hasGoggles(player: Player): Boolean {
         return player.getItemBySlot(EquipmentSlot.HEAD).`is`(
             VoidBoundItemRegistry.HALLOWED_GOGGLES.get()
         )

@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import dev.sterner.VoidBound
-import dev.sterner.api.ClientTickHandler
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.util.VoidBoundRenderUtils
 import dev.sterner.common.blockentity.SpiritBinderBlockEntity.Companion.getSpiritData
@@ -42,7 +41,8 @@ object SpiritIconRenderer {
             return
         }
         val startFade: Double = ((1.0 - (25.0 / 100.0)) * maxDistance)
-        val currentAlpha = Mth.clamp(1.0 - ((sqrt(squareDistance) - startFade) / (maxDistance - startFade)), 0.0, 1.0).toFloat()
+        val currentAlpha =
+            Mth.clamp(1.0 - ((sqrt(squareDistance) - startFade) / (maxDistance - startFade)), 0.0, 1.0).toFloat()
 
 
         val entityHeight = entity.getBbHeight() + 0.3f
@@ -65,14 +65,20 @@ object SpiritIconRenderer {
             for ((index, spirit) in spiritDataOptional.get().withIndex()) {
                 val id = spirit.type.identifier
                 poseStack.translate(10f, 0f, index * 0.01f)
-                VoidBoundRenderUtils.renderIcon(VoidBound.id("textures/spirit/$id.png"), poseStack, -8, -18, currentAlpha)
+                VoidBoundRenderUtils.renderIcon(
+                    VoidBound.id("textures/spirit/$id.png"),
+                    poseStack,
+                    -8,
+                    -18,
+                    currentAlpha
+                )
             }
         }
 
         if (depthTestEnabled) {
-            RenderSystem.enableDepthTest();
+            RenderSystem.enableDepthTest()
         } else {
-            RenderSystem.disableDepthTest();
+            RenderSystem.disableDepthTest()
         }
 
         poseStack.popPose()

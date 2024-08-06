@@ -57,7 +57,7 @@ object SpiritAltarHudRenderEvent {
 
                             guiGraphics.renderItem(renderStack, 0, 0)
                             if (!checked) {
-                                guiGraphics.renderItemDecorations(client.font, renderStack, 0,0)
+                                guiGraphics.renderItemDecorations(client.font, renderStack, 0, 0)
                             } else {
                                 VoidBoundRenderUtils.drawIcon(matrixStack, VoidBoundRenderUtils.CHECKMARK)
                             }

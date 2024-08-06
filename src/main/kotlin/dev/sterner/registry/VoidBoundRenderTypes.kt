@@ -66,7 +66,6 @@ object VoidBoundRenderTypes {
     }
 
 
-
     val GRAVITY_VORTEX_DEPTH: RenderTypeProvider = RenderTypeProvider { token: RenderTypeToken ->
         LodestoneRenderTypeRegistry.createGenericRenderType(
             "gravity_vortex",

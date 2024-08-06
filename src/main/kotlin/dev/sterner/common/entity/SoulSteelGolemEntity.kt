@@ -133,10 +133,6 @@ open class SoulSteelGolemEntity(level: Level) :
         }
     }
 
-    override fun aiStep() {
-        super.aiStep()
-    }
-
     //BRAINNNNZZZ
 
     fun handleTuningFork(player: Player, blockPos: BlockPos) {
@@ -177,7 +173,7 @@ open class SoulSteelGolemEntity(level: Level) :
             NearbyHostileSensor<SoulSteelGolemEntity>().setPredicate { _, u -> u.getGolemCore() == GolemCore.GUARD },
             HurtBySensor<SoulSteelGolemEntity>().setPredicate { _, u -> u.getGolemCore() == GolemCore.GUARD },
             //Golem Fill/Empty
-            GolemStorageSensor().setPredicate{ _, u -> u.getGolemCore() == GolemCore.FILL || u.getGolemCore() == GolemCore.EMPTY}
+            GolemStorageSensor().setPredicate { _, u -> u.getGolemCore() == GolemCore.FILL || u.getGolemCore() == GolemCore.EMPTY }
         )
     }
 

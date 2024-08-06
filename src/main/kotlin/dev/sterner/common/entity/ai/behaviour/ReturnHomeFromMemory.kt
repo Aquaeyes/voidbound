@@ -89,7 +89,7 @@ class ReturnHomeFromMemory(
     }
 
     private fun tiredOfTryingToFindTarget(pLevel: ServerLevel, pVillager: SoulSteelGolemEntity): Boolean {
-        val optional: Optional<Long> = pVillager.getBrain().getMemory(MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE)
+        val optional: Optional<Long> = pVillager.brain.getMemory(MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE)
         return optional.filter { aLong -> pLevel.gameTime - aLong > tooLongUnreachableDuration.toLong() }
             .isPresent
     }
