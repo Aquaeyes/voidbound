@@ -40,17 +40,16 @@ object SpiritIconRenderer {
         if (squareDistance > maxDistance * maxDistance) {
             return
         }
-        val startFade: Double = ((1.0 - (25.0 / 100.0)) * maxDistance)
-        val currentAlpha =
-            Mth.clamp(1.0 - ((sqrt(squareDistance) - startFade) / (maxDistance - startFade)), 0.0, 1.0).toFloat()
 
+        val startFade: Double = ((1.0 - (25.0 / 100.0)) * maxDistance)
+        val currentAlpha = Mth.clamp(1.0 - ((sqrt(squareDistance) - startFade) / (maxDistance - startFade)), 0.0, 0.85).toFloat()
 
         val entityHeight = entity.getBbHeight() + 0.3f
 
         poseStack.pushPose()
         poseStack.translate(0.0, entityHeight.toDouble(), 0.0)
         poseStack.mulPose(camera)
-        poseStack.mulPose(Axis.YP.rotationDegrees(180f))
+        //poseStack.mulPose(Axis.YP.rotationDegrees(180f))
         poseStack.scale(0.025f, -0.025f, 0.025f)
 
         val depthTestEnabled = GL11.glIsEnabled(GL11.GL_DEPTH_TEST)

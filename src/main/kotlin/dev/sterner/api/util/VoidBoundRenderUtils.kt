@@ -3,15 +3,20 @@ package dev.sterner.api.util
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.*
 import com.sammy.malum.client.RenderUtils
+import com.sammy.malum.client.renderer.block.TotemPoleRenderer
 import dev.sterner.VoidBound
+import dev.sterner.api.ClientTickHandler
 import net.minecraft.client.Camera
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GameRenderer
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.phys.Vec3
 import org.joml.Matrix4f
+import org.joml.Vector3f
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
+import team.lodestar.lodestone.systems.easing.Easing
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
 import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
 import java.awt.Color
@@ -23,8 +28,36 @@ object VoidBoundRenderUtils {
 
     fun renderIcon(icon: ResourceLocation, poseStack: PoseStack, x: Int, y: Int, alpha: Float) {
         poseStack.pushPose()
-        renderIcon(icon, poseStack, x, y, 16, 16, 0f, 1f, 0f, 1f, alpha)
+        //renderIcon(icon, poseStack, x, y, 16, 16, 0f, 1f, 0f, 1f, alpha)
+        wacko(icon, poseStack, alpha)
         poseStack.popPose()
+    }
+
+    private fun wacko(
+        icon: ResourceLocation,
+        poseStack: PoseStack,
+        alpha: Float
+    ){
+        val renderType: RenderType =
+            LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(RenderTypeToken.createCachedToken(icon))
+
+        val pct: Float = ClientTickHandler.ticksInGame / 20f
+        val ease = Easing.SINE_OUT.ease(pct, 0f, 1f, 1f)
+        val wobbleStrength: Float = 0.1f - ease * 0.075f
+
+        val positions = arrayOf(
+            Vector3f(-0.025f, -0.025f, 1.01f),
+            Vector3f(1.025f, -0.025f, 1.01f),
+            Vector3f(1.025f, 1.025f, 1.01f),
+            Vector3f(-0.025f, 1.025f, 1.01f)
+        )
+
+        TotemPoleRenderer.applyWobble(positions, wobbleStrength)
+
+        VFXBuilders.createWorld()
+            .setAlpha(alpha)
+            .setRenderType(renderType)
+            .renderQuad(poseStack, positions, 5f)
     }
 
     private fun renderIcon(
