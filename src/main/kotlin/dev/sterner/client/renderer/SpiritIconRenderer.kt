@@ -4,15 +4,18 @@ import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import dev.sterner.VoidBound
+import dev.sterner.api.ClientTickHandler
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.util.VoidBoundRenderUtils
 import dev.sterner.common.blockentity.SpiritBinderBlockEntity.Companion.getSpiritData
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.util.Mth
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import org.joml.Quaternionf
 import org.lwjgl.opengl.GL11
+import kotlin.math.sqrt
 
 
 object SpiritIconRenderer {
@@ -21,13 +24,26 @@ object SpiritIconRenderer {
     fun render(entity: Entity, poseStack: PoseStack, buffers: MultiBufferSource, camera: Quaternionf) {
         val minecraft = Minecraft.getInstance()
 
+        if (minecraft.player == null) {
+            return
+        }
+
         if (entity !is LivingEntity) {
             return
         }
 
         if (!VoidBoundApi.hasGoggles()) {
-            //return
+            return
         }
+
+        val squareDistance: Double = minecraft.player!!.distanceToSqr(entity)
+        val maxDistance = 12.0
+        if (squareDistance > maxDistance * maxDistance) {
+            return
+        }
+        val startFade: Double = ((1.0 - (25.0 / 100.0)) * maxDistance)
+        val currentAlpha = Mth.clamp(1.0 - ((sqrt(squareDistance) - startFade) / (maxDistance - startFade)), 0.0, 1.0).toFloat()
+
 
         val entityHeight = entity.getBbHeight() + 0.3f
 
@@ -37,17 +53,19 @@ object SpiritIconRenderer {
         poseStack.mulPose(Axis.YP.rotationDegrees(180f))
         poseStack.scale(0.025f, -0.025f, 0.025f)
 
-        var depthTestEnabled = GL11.glIsEnabled(GL11.GL_DEPTH_TEST)
+        val depthTestEnabled = GL11.glIsEnabled(GL11.GL_DEPTH_TEST)
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.enableDepthTest()
 
         val spiritDataOptional = getSpiritData(entity)
         if (spiritDataOptional.isPresent) {
+            val o = spiritDataOptional.get().size
+            poseStack.translate(0f - o * 6, 0f, 0f)
             for ((index, spirit) in spiritDataOptional.get().withIndex()) {
                 val id = spirit.type.identifier
-                poseStack.translate(index * 8f, 0f, index * 0.01f)
-                VoidBoundRenderUtils.renderMarker(VoidBound.id("textures/spirit/$id.png"), poseStack, -8, -18, 1f)
+                poseStack.translate(10f, 0f, index * 0.01f)
+                VoidBoundRenderUtils.renderIcon(VoidBound.id("textures/spirit/$id.png"), poseStack, -8, -18, currentAlpha)
             }
         }
 
@@ -56,6 +74,7 @@ object SpiritIconRenderer {
         } else {
             RenderSystem.disableDepthTest();
         }
-            poseStack.popPose()
+
+        poseStack.popPose()
     }
 }

@@ -4,16 +4,20 @@ import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.*
 import com.sammy.malum.client.RenderUtils
 import dev.sterner.VoidBound
+import dev.sterner.registry.VoidBoundRenderTypes
 import net.minecraft.client.Camera
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GameRenderer
+import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.phys.Vec3
 import org.joml.Matrix4f
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
+import team.lodestar.lodestone.registry.client.LodestoneShaderRegistry
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
 import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
+import team.lodestar.lodestone.systems.rendering.shader.ExtendedShaderInstance
 import java.awt.Color
 
 
@@ -21,17 +25,10 @@ object VoidBoundRenderUtils {
 
     val CHECKMARK: ResourceLocation = VoidBound.id("textures/gui/check.png")
 
-    fun renderMarker(resource: ResourceLocation, poseStack: PoseStack, x: Int, y: Int, alpha: Float) {
-        val scale = 1f
+    fun renderIcon(icon: ResourceLocation, poseStack: PoseStack, x: Int, y: Int, alpha: Float) {
         poseStack.pushPose()
-        poseStack.scale(scale, scale, 1.0f)
-        renderIcon(resource, poseStack, x, y, alpha)
-
-        poseStack.popPose()
-    }
-
-    private fun renderIcon(icon: ResourceLocation, poseStack: PoseStack, x: Int, y: Int, alpha: Float) {
         renderIcon(icon, poseStack, x, y, 16, 16, 0f, 1f, 0f, 1f, alpha)
+        poseStack.popPose()
     }
 
     private fun renderIcon(
@@ -61,6 +58,7 @@ object VoidBoundRenderUtils {
         bufferbuilder.vertex(matrix, x.toFloat(), y.toFloat(), 0f).uv(u0, v0).color(1.0f, 1.0f, 1.0f, alpha).endVertex()
 
         BufferUploader.drawWithShader(bufferbuilder.end())
+
     }
 
     fun drawIcon(matrixStack: PoseStack, icon: ResourceLocation) {
@@ -77,22 +75,6 @@ object VoidBoundRenderUtils {
         bufferBuilder.vertex(matrix, 6f, 6f, 0f).uv(1f, 1f).endVertex()
         bufferBuilder.vertex(matrix, 6f, -2f, 0f).uv(1f, 0f).endVertex()
         bufferBuilder.vertex(matrix, -2f, -2f, 0f).uv(0f, 0f).endVertex()
-        tessellator.end()
-        matrixStack.popPose()
-    }
-
-    fun drawRawIcon(matrixStack: PoseStack, icon: ResourceLocation) {
-        matrixStack.pushPose()
-        val matrix: Matrix4f = matrixStack.last().pose()
-        val tessellator = Tesselator.getInstance()
-        val bufferBuilder: BufferBuilder = tessellator.builder
-        RenderSystem.setShader { GameRenderer.getPositionTexShader() }
-        RenderSystem.setShaderTexture(0, icon)
-        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX)
-        bufferBuilder.vertex(matrix, 0f, 16f, 0f).uv(0f, 1f).endVertex()
-        bufferBuilder.vertex(matrix, 16f, 16f, 0f).uv(1f, 1f).endVertex()
-        bufferBuilder.vertex(matrix, 16f, 0f, 0f).uv(1f, 0f).endVertex()
-        bufferBuilder.vertex(matrix, 0f, 0f, 0f).uv(0f, 0f).endVertex()
         tessellator.end()
         matrixStack.popPose()
     }

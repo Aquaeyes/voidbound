@@ -10,17 +10,29 @@ import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
 
 object VoidBoundRenderTypes {
 
-    val TRANSPARENT_GLOW_TEXTURE: RenderTypeProvider = RenderTypeProvider { token: RenderTypeToken ->
+    val DISTORTED_TEXTURE: RenderTypeProvider = RenderTypeProvider { token: RenderTypeToken ->
         LodestoneRenderTypeRegistry.createGenericRenderType(
-            "transparent_glow_texture",
-            DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP,
-            VertexFormat.Mode.TRIANGLES,
+            "distorted_texture",
+            DefaultVertexFormat.POSITION_COLOR_TEX,
+            VertexFormat.Mode.QUADS,
             LodestoneRenderTypeRegistry.builder()
-                .setShaderState(VoidBoundShaders.GLOW_TEXTURE)
+                .setShaderState(LodestoneShaderRegistry.DISTORTED_TEXTURE)
+                .setTransparencyState(LodestoneRenderTypeRegistry.TRANSLUCENT_TRANSPARENCY)
+                .setCullState(LodestoneRenderTypeRegistry.CULL)
+                .setTextureState(token.get())
+        )
+    }
+
+    val ADDITIVE_TEXTURE: RenderTypeProvider = RenderTypeProvider { token: RenderTypeToken ->
+        LodestoneRenderTypeRegistry.createGenericRenderType(
+            "additive_texture",
+            DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP,
+            VertexFormat.Mode.QUADS,
+            LodestoneRenderTypeRegistry.builder()
+                .setShaderState(LodestoneShaderRegistry.LODESTONE_TEXTURE)
                 .setTransparencyState(StateShards.ADDITIVE_TRANSPARENCY)
                 .setLightmapState(LodestoneRenderTypeRegistry.LIGHTMAP)
                 .setCullState(LodestoneRenderTypeRegistry.CULL)
-
                 .setTextureState(token.get())
         )
     }
