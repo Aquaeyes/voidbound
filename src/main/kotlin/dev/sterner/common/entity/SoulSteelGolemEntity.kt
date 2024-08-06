@@ -2,7 +2,7 @@ package dev.sterner.common.entity
 
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.api.entity.GolemCore
-import dev.sterner.api.utils.VoidBoundItemUtils
+import dev.sterner.api.util.VoidBoundItemUtils
 import dev.sterner.common.entity.ai.behaviour.InsertItemsToStorage
 import dev.sterner.common.entity.ai.behaviour.ReturnHomeFromMemory
 import dev.sterner.common.entity.ai.behaviour.gather.SetWalkTargetToItem

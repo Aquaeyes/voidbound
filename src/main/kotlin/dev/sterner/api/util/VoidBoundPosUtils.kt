@@ -1,4 +1,4 @@
-package dev.sterner.api.utils
+package dev.sterner.api.util
 
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import net.minecraft.core.BlockPos

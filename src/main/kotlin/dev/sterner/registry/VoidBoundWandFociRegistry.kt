@@ -16,7 +16,7 @@ object VoidBoundWandFociRegistry {
 
     val WAND_FOCI = LazyRegistrar.create(WAND_FOCUS, VoidBound.modid)
 
-    val PORTABLE_HOLE = WAND_FOCI.register("portable_wood") {
+    val PORTABLE_HOLE = WAND_FOCI.register("portable_hole") {
         PortableHoleFoci()
     }
 

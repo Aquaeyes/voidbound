@@ -1,7 +1,7 @@
 package dev.sterner.common.entity.ai.behaviour
 
 import com.mojang.datafixers.util.Pair
-import dev.sterner.api.utils.VoidBoundItemUtils
+import dev.sterner.api.util.VoidBoundItemUtils
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundMemoryTypeRegistry
 import net.minecraft.world.Container

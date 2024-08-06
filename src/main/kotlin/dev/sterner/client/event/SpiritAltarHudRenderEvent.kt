@@ -3,7 +3,7 @@ package dev.sterner.client.event
 import com.sammy.malum.common.block.curiosities.spirit_altar.SpiritAltarBlockEntity
 import com.sammy.malum.common.recipe.SpiritInfusionRecipe
 import dev.sterner.api.VoidBoundApi
-import dev.sterner.api.utils.VoidBoundRenderUtils
+import dev.sterner.api.util.VoidBoundRenderUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.core.BlockPos

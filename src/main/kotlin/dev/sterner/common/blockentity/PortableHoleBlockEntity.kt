@@ -47,13 +47,13 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
             PortableHoleFoci.createHole(level!!, nextPos, direction, distance - 1)
         }
 
-        println("$originalBlockState + ${level!!.isClientSide()}")
         if (this.duration <= 0) {
             level!!.setBlockAndUpdate(blockPos, originalBlockState!!)
             if (originalBlockEntity != null) {
                 originalBlockEntity!!.clearRemoved()
                 level!!.setBlockEntity(originalBlockEntity!!)
             }
+            this.level!!.scheduleTick(blockPos, originalBlockState!!.block, 2)
         }
     }
 
