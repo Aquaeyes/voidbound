@@ -5,6 +5,9 @@ import dev.sterner.api.RiftType
 import dev.sterner.api.SimpleSpiritCharge
 import dev.sterner.api.blockentity.SyncedBlockEntity
 import dev.sterner.api.util.VoidBoundUtils
+import dev.sterner.common.rift.DestabilizedRiftType
+import dev.sterner.common.rift.EldritchRiftType
+import dev.sterner.common.rift.NormalRiftType
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundRiftTypeRegistry
 import net.minecraft.client.Minecraft
@@ -48,13 +51,13 @@ class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) :
 
     fun onUse(player: Player, hand: InteractionHand, hit: BlockHitResult) {
         if (hand == InteractionHand.MAIN_HAND) {
-            if (riftType is RiftType.NormalRiftType) {
+            if (riftType is NormalRiftType) {
                 riftType = VoidBoundRiftTypeRegistry.ELDRITCH.get()
                 player.sendSystemMessage(Component.translatable("Eldritch"))
-            } else if (riftType is RiftType.EldritchRiftType) {
+            } else if (riftType is EldritchRiftType) {
                 riftType = VoidBoundRiftTypeRegistry.DESTABILIZED.get()
                 player.sendSystemMessage(Component.translatable("Destabilized"))
-            } else if (riftType is RiftType.DestabilizedRiftType) {
+            } else if (riftType is DestabilizedRiftType) {
                 riftType = VoidBoundRiftTypeRegistry.NORMAL.get()
                 player.sendSystemMessage(Component.translatable("Normal"))
             }

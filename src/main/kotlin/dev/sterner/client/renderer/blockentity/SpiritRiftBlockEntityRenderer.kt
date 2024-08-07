@@ -58,7 +58,6 @@ class SpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
         val cam = Minecraft.getInstance().gameRenderer.mainCamera
         poseStack.mulPose(cam.rotation())
         poseStack.mulPose(Axis.XP.rotationDegrees(180f))
-        renderWisp(poseStack, rt)
 
         builder.renderQuad(poseStack, 0.5f)
 
@@ -83,14 +82,5 @@ class SpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
         builder.renderQuad(poseStack, 0.3f)
 
         poseStack.popPose()
-    }
-
-    private fun renderWisp(poseStack: PoseStack, rt: LodestoneRenderType) {
-        var sawBuilder = VFXBuilders.createWorld().setRenderType(rt).setColor(Color(1f, 1f, 1f)).setAlpha(0.55f)
-        sawBuilder.renderQuad(poseStack, 0.05f)
-        sawBuilder = VFXBuilders.createWorld().setRenderType(rt).setColor(Color(1f, 1f, 1f)).setAlpha(0.45f)
-        sawBuilder.renderQuad(poseStack, 0.1f)
-        sawBuilder = VFXBuilders.createWorld().setRenderType(rt).setColor(Color(1f, 1f, 1f)).setAlpha(0.35f)
-        sawBuilder.renderQuad(poseStack, 0.15f)
     }
 }
