@@ -1,6 +1,5 @@
 package dev.sterner.common.blockentity
 
-import com.sammy.malum.client.SpiritBasedParticleBuilder
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import dev.sterner.api.RiftType
 import dev.sterner.api.SimpleSpiritCharge
@@ -8,12 +7,17 @@ import dev.sterner.api.blockentity.SyncedBlockEntity
 import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundRiftTypeRegistry
+import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.PathfinderMob
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.BlockHitResult
 
 class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) :
     SyncedBlockEntity(VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get(), pos, state) {
@@ -41,6 +45,63 @@ class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) :
                 notifyUpdate()
             }
         }
+
+    fun onUse(player: Player, hand: InteractionHand, hit: BlockHitResult) {
+        if (hand == InteractionHand.MAIN_HAND) {
+            if (riftType is RiftType.NormalRiftType) {
+                riftType = VoidBoundRiftTypeRegistry.ELDRITCH.get()
+                player.sendSystemMessage(Component.translatable("Eldritch"))
+            } else if (riftType is RiftType.EldritchRiftType) {
+                riftType = VoidBoundRiftTypeRegistry.DESTABILIZED.get()
+                player.sendSystemMessage(Component.translatable("Destabilized"))
+            } else if (riftType is RiftType.DestabilizedRiftType) {
+                riftType = VoidBoundRiftTypeRegistry.NORMAL.get()
+                player.sendSystemMessage(Component.translatable("Normal"))
+            }
+            notifyUpdate()
+        }
+    }
+
+
+    fun tick() {
+
+        if (level != null) {
+
+            if (infinite) {
+                rechargeCounter++
+                if (rechargeCounter == 20 * 2) {
+                    rechargeCounter = 0
+                    simpleSpiritCharge.rechargeInfiniteCount()
+                    notifyUpdate()
+                }
+            }
+
+            riftType.tick(level!!, blockPos, this)
+
+            // Update previousAlpha before changing alpha
+            previousAlpha = alpha
+
+            // Interpolate alpha towards targetAlpha
+            alpha = Mth.lerp(0.05f, alpha, targetAlpha)
+        }
+    }
+
+    fun removeSpiritFromCharge(type: MalumSpiritType, count: Int): Boolean {
+        val bl = simpleSpiritCharge.removeFromCharge(type, count)
+        notifyUpdate()
+        return bl
+    }
+
+    fun addSpiritToCharge(entity: PathfinderMob) {
+        val list = VoidBoundUtils.getSpiritData(entity)
+        if (list.isPresent) {
+            for (spirit in list.get()) {
+                simpleSpiritCharge.addToCharge(spirit.type, spirit.count)
+            }
+            infinite = simpleSpiritCharge.shouldBeInfinite()
+            notifyUpdate()
+        }
+    }
 
     override fun saveAdditional(tag: CompoundTag) {
         simpleSpiritCharge.serializeNBT(tag)
@@ -81,43 +142,4 @@ class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) :
         super.load(tag)
     }
 
-    fun tick() {
-
-        if (level != null && level!!.isClientSide) {
-
-            if (infinite) {
-                rechargeCounter++
-                if (rechargeCounter == 20 * 2) {
-                    rechargeCounter = 0
-                    simpleSpiritCharge.rechargeInfiniteCount()
-                    notifyUpdate()
-                }
-            }
-
-            riftType.tick(level!!, blockPos, this)
-
-            // Update previousAlpha before changing alpha
-            previousAlpha = alpha
-
-            // Interpolate alpha towards targetAlpha
-            alpha = Mth.lerp(0.05f, alpha, targetAlpha)
-        }
-    }
-
-    fun removeSpiritFromCharge(type: MalumSpiritType, count: Int): Boolean {
-        val bl = simpleSpiritCharge.removeFromCharge(type, count)
-        notifyUpdate()
-        return bl
-    }
-
-    fun addSpiritToCharge(entity: PathfinderMob) {
-        val list = VoidBoundUtils.getSpiritData(entity)
-        if (list.isPresent) {
-            for (spirit in list.get()) {
-                simpleSpiritCharge.addToCharge(spirit.type, spirit.count)
-            }
-            infinite = simpleSpiritCharge.shouldBeInfinite()
-            notifyUpdate()
-        }
-    }
 }

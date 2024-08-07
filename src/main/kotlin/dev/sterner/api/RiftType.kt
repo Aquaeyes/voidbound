@@ -33,43 +33,49 @@ import kotlin.math.sin
 
 abstract class RiftType {
 
-    open fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity){
+    val firstColor = Color(100, 100, 255, 255)
+    val secondColor = Color(100, 100, 255, 255)
 
+
+    open fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity){
+        if (level.gameTime % 2L == 0L) {
+            WorldParticleBuilder.create(LodestoneParticleRegistry.TWINKLE_PARTICLE)
+                .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
+                .setScaleData(GenericParticleData.create(0.2f, 0f).build())
+                .setTransparencyData(GenericParticleData.create(0.2f, 0.8f).build())
+                .setColorData(
+                    ColorParticleData.create(firstColor, secondColor).setEasing(Easing.SINE_IN).setCoefficient(0.5f)
+                        .build()
+                )
+                .setSpinData(SpinParticleData.create(0f, 0.4f).setEasing(Easing.QUARTIC_IN).build())
+                .setLifetime(20)
+                .enableNoClip()
+                .spawn(level, blockPos.x + 0.5, blockPos.y + 0.5, blockPos.z + 0.5)
+        }
     }
 
     class NormalRiftType : RiftType() {
 
-        val firstColor = Color(100, 100, 255, 255)
-        val secondColor = Color(100, 100, 255, 255)
 
         override fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity) {
-            if (level.gameTime % 2L == 0L) {
-                WorldParticleBuilder.create(LodestoneParticleRegistry.TWINKLE_PARTICLE)
-                    .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
-                    .setScaleData(GenericParticleData.create(0.2f, 0f).build())
-                    .setTransparencyData(GenericParticleData.create(0.2f, 0.8f).build())
-                    .setColorData(
-                        ColorParticleData.create(firstColor, secondColor).setEasing(Easing.SINE_IN).setCoefficient(0.5f)
-                            .build()
-                    )
-                    .setSpinData(SpinParticleData.create(0f, 0.4f).setEasing(Easing.QUARTIC_IN).build())
-                    .setLifetime(20)
-                    .enableNoClip()
-                    .spawn(level, blockPos.x + 0.5, blockPos.y + 0.5, blockPos.z + 0.5)
-            }
+            super.tick(level, blockPos, blockEntity)
         }
     }
 
     class DestabilizedRiftType : RiftType() {
 
         override fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity){
-            genParticleOrbit(level, blockPos,8,  Blocks.GRASS_BLOCK.defaultBlockState(), 1)
-            genParticleOrbit(level, blockPos,8,  Blocks.GRASS_BLOCK.defaultBlockState(), 2)
-            genParticleOrbit(level, blockPos,8,  Blocks.GRASS_BLOCK.defaultBlockState(), 3)
-            genParticleOrbit(level, blockPos,8,  Blocks.GRASS_BLOCK.defaultBlockState(), 4)
+            super.tick(level, blockPos, blockEntity)
+            for (i in 1 .. 4) {
+                genParticleOrbit(level, blockPos,8,  Blocks.GRASS_BLOCK.defaultBlockState(), i)
+            }
         }
 
+        /**
+         * Precondition, direction assumes a value of [1 to 4]
+         */
         private fun genParticleOrbit(level: Level, blockPos: BlockPos, range: Int, state: BlockState, direction: Int) {
+            val clampedDir = Mth.clamp(direction, 1, 4)
             val discRad = (range * (1 / 3f) + level.getRandom().nextGaussian() / 5f)
             val yRand = (level.getRandom().nextGaussian() - 0.5) / 4
 
@@ -91,7 +97,7 @@ abstract class RiftType {
                     val speed = 0.1f
                     val time: Float = it.age / 6f
 
-                    val (newX, newZ) = when (direction) {
+                    val (newX, newZ) = when (clampedDir) {
                         1 -> Pair(cos(time) * discRad, sin(time) * discRad)
                         2 -> Pair(cos(time) * discRad, -sin(time) * discRad)
                         3 -> Pair(-cos(time) * discRad, sin(time) * discRad)
@@ -113,6 +119,7 @@ abstract class RiftType {
     class EldritchRiftType : RiftType() {
 
         override fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity) {
+            super.tick(level, blockPos, blockEntity)
             if (blockEntity.entity == null) {
                 val list = level.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0))
                     .filter {

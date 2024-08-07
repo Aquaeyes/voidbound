@@ -6,7 +6,7 @@ import com.mojang.math.Axis
 import dev.sterner.VoidBound
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.util.VoidBoundRenderUtils
-import dev.sterner.common.blockentity.SpiritBinderBlockEntity.Companion.getSpiritData
+import dev.sterner.api.util.VoidBoundUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.util.Mth
@@ -56,7 +56,7 @@ object SpiritIconRenderer {
         RenderSystem.defaultBlendFunc()
         RenderSystem.enableDepthTest()
 
-        val spiritDataOptional = getSpiritData(entity)
+        val spiritDataOptional = VoidBoundUtils.getSpiritData(entity)
         if (spiritDataOptional.isPresent) {
             val o = spiritDataOptional.get().size
             poseStack.translate(0f - o * 6, 0f, 0f)

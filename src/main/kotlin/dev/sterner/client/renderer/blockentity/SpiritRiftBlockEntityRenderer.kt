@@ -17,7 +17,7 @@ import team.lodestar.lodestone.systems.rendering.VFXBuilders
 import java.awt.Color
 
 
-class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
+class SpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
     BlockEntityRenderer<SpiritRiftBlockEntity> {
 
     override fun render(

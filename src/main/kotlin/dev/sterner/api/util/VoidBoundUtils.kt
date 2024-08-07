@@ -53,11 +53,11 @@ object VoidBoundUtils {
                     val targetPos =
                         Vec3(
                             blockPos.x + 0.5,
-                            blockPos.y + 1.5,
+                            blockPos.y + 0.5,
                             blockPos.z + 0.5
-                        ) // Target is the center of the block
+                        )
                     val direction = targetPos.subtract(particlePos).normalize()
-                    p.particleSpeed = direction.scale(0.05) //
+                    p.particleSpeed = direction.scale(0.05)
                 }
             }
         val rand = level.random
@@ -68,10 +68,9 @@ object VoidBoundUtils {
         val startPos = Vec3(xRand, yRand, zRand)
 
         val distance = startPos.distanceTo(Vec3(blockPos.x + 0.5, blockPos.y + 1.5, blockPos.z + 0.5))
-        val baseLifetime = 10 // Base lifetime in ticks
-        val speed = 0.05 // Speed of the particle
-        val adjustedLifetime =
-            (distance / speed).toInt().coerceAtLeast(baseLifetime) - 20 // Adjusted lifetime based on distance
+        val baseLifetime = 10
+        val speed = 0.05
+        val adjustedLifetime = (distance / speed).toInt().coerceAtLeast(baseLifetime) - 20
 
         val lightSpecs: ParticleEffectSpawner =
             SpiritLightSpecs.spiritLightSpecs(level, Vec3(xRand, yRand, zRand), type)

@@ -9,7 +9,7 @@ import dev.sterner.client.model.GolemCoreModel
 import dev.sterner.client.model.SoulSteelGolemEntityModel
 import dev.sterner.client.model.WandItemModel
 import dev.sterner.client.renderer.*
-import dev.sterner.client.renderer.blockentity.DestabilizedSpiritRiftBlockEntityRenderer
+import dev.sterner.client.renderer.blockentity.SpiritRiftBlockEntityRenderer
 import dev.sterner.client.renderer.blockentity.PortableHoleBlockEntityRenderer
 import dev.sterner.client.renderer.blockentity.SpiritBinderBlockEntityRenderer
 import dev.sterner.client.renderer.blockentity.SpiritStabilizerBlockEntityRenderer
@@ -77,7 +77,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
         )
         BlockEntityRenderers.register(
             VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get(),
-            ::DestabilizedSpiritRiftBlockEntityRenderer
+            ::SpiritRiftBlockEntityRenderer
         )
         BlockEntityRenderers.register(
             VoidBoundBlockEntityTypeRegistry.PORTABLE_HOLE.get(),

@@ -1,7 +1,7 @@
 package dev.sterner.networking
 
 import com.sammy.malum.core.handlers.SpiritHarvestHandler
-import dev.sterner.common.blockentity.SpiritBinderBlockEntity.Companion.spawnSpiritParticle
+import dev.sterner.api.util.VoidBoundUtils
 import me.pepperbell.simplenetworking.SimpleChannel
 import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.minecraft.client.Minecraft
@@ -26,7 +26,7 @@ class SpiritBinderParticlePacket(var entityId: Int, val pos: BlockPos, val spiri
         if (spirit != null && client.level != null) {
             val entity = client.level!!.getEntity(entityId)
             if (entity is LivingEntity) {
-                spawnSpiritParticle(client.level!!, pos, entity, spirit)
+                VoidBoundUtils.spawnSpiritParticle(client.level!!, pos, entity, spirit)
             }
         }
     }

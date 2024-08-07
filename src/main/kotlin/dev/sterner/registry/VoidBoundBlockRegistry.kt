@@ -1,7 +1,7 @@
 package dev.sterner.registry
 
 import dev.sterner.VoidBound
-import dev.sterner.common.block.DestabilizedSpiritRiftBlock
+import dev.sterner.common.block.SpiritRiftBlock
 import dev.sterner.common.block.PortableHoleBlock
 import dev.sterner.common.block.SpiritBinderBlock
 import dev.sterner.common.block.SpiritBinderStabilizerBlock
@@ -31,7 +31,7 @@ object VoidBoundBlockRegistry {
     }
 
     var DESTABILIZED_SPIRIT_RIFT = BLOCKS.register("destabilized_spirit_rift") {
-        DestabilizedSpiritRiftBlock(Properties.of())
+        SpiritRiftBlock(Properties.of())
     }
 
     var PORTABLE_HOLE = BLOCKS.register("portable_hole") {

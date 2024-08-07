@@ -3,7 +3,9 @@ package dev.sterner.common.block
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.api.blockentity.Modifier
 import dev.sterner.common.blockentity.SpiritBinderBlockEntity
+import dev.sterner.common.blockentity.SpiritRiftBlockEntity
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
+import dev.sterner.registry.VoidBoundBlockRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.world.Containers
 import net.minecraft.world.InteractionHand
@@ -33,6 +35,32 @@ class SpiritBinderBlock(properties: Properties) : BaseEntityBlock(
 
     init {
         registerDefaultState(defaultBlockState().setValue(MODIFIER, Modifier.NONE))
+    }
+
+    override fun onPlace(state: BlockState, level: Level, pos: BlockPos, oldState: BlockState, movedByPiston: Boolean) {
+        checkRift(level, pos)
+        super.onPlace(state, level, pos, oldState, movedByPiston)
+    }
+
+    override fun neighborChanged(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        neighborBlock: Block,
+        neighborPos: BlockPos,
+        movedByPiston: Boolean
+    ) {
+        checkRift(level, pos)
+        super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
+    }
+
+    fun checkRift(level: Level, pos: BlockPos) {
+        if (level.getBlockState(pos.above()).`is`(VoidBoundBlockRegistry.DESTABILIZED_SPIRIT_RIFT.get())) {
+            if (level.getBlockEntity(pos) is SpiritBinderBlockEntity) {
+                val be = level.getBlockEntity(pos) as SpiritBinderBlockEntity
+                be.rift = level.getBlockEntity(pos.above()) as SpiritRiftBlockEntity
+            }
+        }
     }
 
     override fun use(

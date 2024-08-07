@@ -3,6 +3,9 @@ package dev.sterner.common.block
 import dev.sterner.common.blockentity.SpiritRiftBlockEntity
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
@@ -10,11 +13,12 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class DestabilizedSpiritRiftBlock(properties: Properties) :
+class SpiritRiftBlock(properties: Properties) :
     BaseEntityBlock(properties.noOcclusion().noCollission().lightLevel { 10 }) {
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
@@ -35,5 +39,20 @@ class DestabilizedSpiritRiftBlock(properties: Properties) :
                 (blockEntity as SpiritRiftBlockEntity).tick()
             }
         }
+    }
+
+    override fun use(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hand: InteractionHand,
+        hit: BlockHitResult
+    ): InteractionResult {
+        if (level.getBlockEntity(pos) is SpiritRiftBlockEntity) {
+            val be = level.getBlockEntity(pos) as SpiritRiftBlockEntity
+            be.onUse(player, hand, hit)
+        }
+        return super.use(state, level, pos, player, hand, hit)
     }
 }
