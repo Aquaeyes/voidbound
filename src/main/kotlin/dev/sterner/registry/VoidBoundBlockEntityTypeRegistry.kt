@@ -33,7 +33,7 @@ object VoidBoundBlockEntityTypeRegistry {
     var DESTABILIZED_SPIRIT_RIFT = BLOCK_ENTITY_TYPES.register("destabilized_spirit_rift") {
         BlockEntityType.Builder.of(
             { pos, state -> SpiritRiftBlockEntity(pos, state) },
-            VoidBoundBlockRegistry.DESTABILIZED_SPIRIT_RIFT.get()
+            VoidBoundBlockRegistry.SPIRIT_RIFT.get()
         )
             .build(null)
     }

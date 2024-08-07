@@ -30,7 +30,7 @@ object VoidBoundBlockRegistry {
         SpiritBinderStabilizerBlock(Properties.of())
     }
 
-    var DESTABILIZED_SPIRIT_RIFT = BLOCKS.register("destabilized_spirit_rift") {
+    var SPIRIT_RIFT = BLOCKS.register("spirit_rift") {
         SpiritRiftBlock(Properties.of())
     }
 

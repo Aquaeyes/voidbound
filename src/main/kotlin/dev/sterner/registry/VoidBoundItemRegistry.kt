@@ -42,8 +42,8 @@ object VoidBoundItemRegistry {
         UnimplementedBlockItem(VoidBoundBlockRegistry.SPIRIT_STABILIZER.get(), Item.Properties())
     }
 
-    val DESTABILIZED_SPIRIT_RIFT = ITEMS.register("destabilized_spirit_rift") {
-        UnimplementedBlockItem(VoidBoundBlockRegistry.DESTABILIZED_SPIRIT_RIFT.get(), Item.Properties())
+    val SPIRIT_RIFT = ITEMS.register("spirit_rift") {
+        UnimplementedBlockItem(VoidBoundBlockRegistry.SPIRIT_RIFT.get(), Item.Properties())
     }
 
     val CALL_OF_THE_VOID = ITEMS.register("call_of_the_void") {

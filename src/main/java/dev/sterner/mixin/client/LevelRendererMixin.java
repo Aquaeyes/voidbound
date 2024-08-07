@@ -22,6 +22,6 @@ public class LevelRendererMixin {
             )
     )
     private boolean voidbound$hideRiftBlockLines(LevelRenderer instance, PoseStack poseStack, VertexConsumer consumer, Entity entity, double camX, double camY, double camZ, BlockPos pos, BlockState state) {
-        return !state.is(VoidBoundBlockRegistry.INSTANCE.getDESTABILIZED_SPIRIT_RIFT().get());
+        return !state.is(VoidBoundBlockRegistry.INSTANCE.getSPIRIT_RIFT().get());
     }
 }
