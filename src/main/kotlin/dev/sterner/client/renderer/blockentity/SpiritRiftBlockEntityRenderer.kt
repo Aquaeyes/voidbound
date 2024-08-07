@@ -28,7 +28,6 @@ class SpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
         packedLight: Int,
         packedOverlay: Int
     ) {
-        var rt = LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.apply(TOKEN)
         var renderType = VoidBoundRenderTypes.GRAVITY_VORTEX.apply(TOKEN)
         val copy = LodestoneRenderTypeRegistry.copy(renderType)
         val copy2 = LodestoneRenderTypeRegistry.copy(renderType)
@@ -38,7 +37,6 @@ class SpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
         if (VoidBoundApi.hasGoggles()) {
             alpha = 1f
             renderType = VoidBoundRenderTypes.GRAVITY_VORTEX_DEPTH.apply(TOKEN)
-            rt = VoidBoundRenderTypes.ADDITIVE_TEXTURE_DEPTH.apply(TOKEN)
         }
 
         var builder = VFXBuilders.createWorld()

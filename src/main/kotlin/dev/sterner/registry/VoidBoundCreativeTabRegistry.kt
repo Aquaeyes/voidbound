@@ -42,6 +42,7 @@ object VoidBoundCreativeTabRegistry {
                 entries.accept(VoidBoundItemRegistry.SPIRIT_BINDER.get())
                 entries.accept(VoidBoundItemRegistry.SPIRIT_STABILIZER.get())
                 //entries.accept(VoidBoundItemRegistry.DESTABILIZED_SPIRIT_RIFT.get())
+                entries.accept(VoidBoundItemRegistry.CRIMSON_KNIGHT_SWORD.get())
 
             }.build()
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ResourceLocation(VoidBound.modid, "main"), GROUP!!)

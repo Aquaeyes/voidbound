@@ -5,6 +5,7 @@ import dev.emi.trinkets.api.client.TrinketRendererRegistry
 import dev.sterner.api.ClientTickHandler
 import dev.sterner.client.event.MalumCodexEvent
 import dev.sterner.client.event.SpiritAltarHudRenderEvent
+import dev.sterner.client.model.CrimsonKnightModel
 import dev.sterner.client.model.GolemCoreModel
 import dev.sterner.client.model.SoulSteelGolemEntityModel
 import dev.sterner.client.model.WandItemModel
@@ -13,6 +14,7 @@ import dev.sterner.client.renderer.blockentity.SpiritRiftBlockEntityRenderer
 import dev.sterner.client.renderer.blockentity.PortableHoleBlockEntityRenderer
 import dev.sterner.client.renderer.blockentity.SpiritBinderBlockEntityRenderer
 import dev.sterner.client.renderer.blockentity.SpiritStabilizerBlockEntityRenderer
+import dev.sterner.client.renderer.entity.CrimsonKnightEntityRenderer
 import dev.sterner.client.renderer.entity.ParticleEntityRenderer
 import dev.sterner.client.renderer.entity.SoulSteelGolemEntityRenderer
 import dev.sterner.common.components.VoidBoundPlayerComponent
@@ -85,18 +87,25 @@ object VoidBound : ModInitializer, ClientModInitializer {
         )
 
         EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.PARTICLE_ENTITY.get(), ::ParticleEntityRenderer)
+
         EntityRendererRegistry.register(
             VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(),
             ::SoulSteelGolemEntityRenderer
+        )
+
+        EntityRendererRegistry.register(
+            VoidBoundEntityTypeRegistry.CRIMSON_KNIGHT_ENTITY.get(),
+            ::CrimsonKnightEntityRenderer
         )
 
         EntityModelLayerRegistry.registerModelLayer(
             SoulSteelGolemEntityModel.LAYER_LOCATION,
             SoulSteelGolemEntityModel::createBodyLayer
         )
+
         EntityModelLayerRegistry.registerModelLayer(GolemCoreModel.LAYER_LOCATION, GolemCoreModel::createBodyLayer)
-        //EntityModelLayerRegistry.registerModelLayer(HallowedGogglesModel.LAYER_LOCATION) { HallowedGogglesModel.createBodyLayer() }
         EntityModelLayerRegistry.registerModelLayer(WandItemModel.LAYER_LOCATION) { WandItemModel.createBodyLayer() }
+        EntityModelLayerRegistry.registerModelLayer(CrimsonKnightModel.LAYER_LOCATION) { CrimsonKnightModel.createBodyLayer() }
 
         //ArmorRenderer.register(HallowedGogglesRenderer(), VoidBoundItemRegistry.HALLOWED_GOGGLES.get())
         TrinketRendererRegistry.registerRenderer(VoidBoundItemRegistry.HALLOWED_MONOCLE.get(), HallowedMonocleRenderer())

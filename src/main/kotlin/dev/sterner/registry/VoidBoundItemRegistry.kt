@@ -9,6 +9,9 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.SwordItem
+import net.minecraft.world.item.Tier
+import net.minecraft.world.item.Tiers
 
 object VoidBoundItemRegistry {
 
@@ -84,5 +87,9 @@ object VoidBoundItemRegistry {
 
     val GOLEM_CORE_FILL = ITEMS.register("golem_core_fill") {
         GolemCoreItem(GolemCore.FILL, Item.Properties())
+    }
+
+    val CRIMSON_KNIGHT_SWORD = ITEMS.register("crimson_knight_sword") {
+        SwordItem(Tiers.IRON, 3, -2.4f, Item.Properties())
     }
 }

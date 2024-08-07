@@ -44,7 +44,7 @@ object SpiritIconRenderer {
         val startFade: Double = ((1.0 - (25.0 / 100.0)) * maxDistance)
         val currentAlpha = Mth.clamp(1.0 - ((sqrt(squareDistance) - startFade) / (maxDistance - startFade)), 0.0, 0.85).toFloat()
 
-        val entityHeight = entity.nameTagOffsetY - 0.4f
+        val entityHeight = entity.nameTagOffsetY - 0.2f
 
         poseStack.pushPose()
         poseStack.translate(0.0, entityHeight.toDouble(), 0.0)
