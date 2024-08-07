@@ -1,14 +1,20 @@
 package dev.sterner
 
 import com.sammy.malum.common.events.MalumCodexEvents
+import dev.emi.trinkets.api.client.TrinketRendererRegistry
 import dev.sterner.api.ClientTickHandler
 import dev.sterner.client.event.MalumCodexEvent
 import dev.sterner.client.event.SpiritAltarHudRenderEvent
 import dev.sterner.client.model.GolemCoreModel
-import dev.sterner.client.model.HallowedGogglesModel
 import dev.sterner.client.model.SoulSteelGolemEntityModel
 import dev.sterner.client.model.WandItemModel
 import dev.sterner.client.renderer.*
+import dev.sterner.client.renderer.blockentity.DestabilizedSpiritRiftBlockEntityRenderer
+import dev.sterner.client.renderer.blockentity.PortableHoleBlockEntityRenderer
+import dev.sterner.client.renderer.blockentity.SpiritBinderBlockEntityRenderer
+import dev.sterner.client.renderer.blockentity.SpiritStabilizerBlockEntityRenderer
+import dev.sterner.client.renderer.entity.ParticleEntityRenderer
+import dev.sterner.client.renderer.entity.SoulSteelGolemEntityRenderer
 import dev.sterner.common.components.VoidBoundPlayerComponent
 import dev.sterner.common.entity.AbstractGolemEntity
 import dev.sterner.registry.*
@@ -88,11 +94,11 @@ object VoidBound : ModInitializer, ClientModInitializer {
             SoulSteelGolemEntityModel::createBodyLayer
         )
         EntityModelLayerRegistry.registerModelLayer(GolemCoreModel.LAYER_LOCATION, GolemCoreModel::createBodyLayer)
-        EntityModelLayerRegistry.registerModelLayer(HallowedGogglesModel.LAYER_LOCATION) { HallowedGogglesModel.createBodyLayer() }
+        //EntityModelLayerRegistry.registerModelLayer(HallowedGogglesModel.LAYER_LOCATION) { HallowedGogglesModel.createBodyLayer() }
         EntityModelLayerRegistry.registerModelLayer(WandItemModel.LAYER_LOCATION) { WandItemModel.createBodyLayer() }
 
-        ArmorRenderer.register(HallowedGogglesRenderer(), VoidBoundItemRegistry.HALLOWED_GOGGLES.get())
-
+        //ArmorRenderer.register(HallowedGogglesRenderer(), VoidBoundItemRegistry.HALLOWED_GOGGLES.get())
+        TrinketRendererRegistry.registerRenderer(VoidBoundItemRegistry.HALLOWED_MONOCLE.get(), HallowedMonocleRenderer())
 
         ItemProperties.register(
             VoidBoundItemRegistry.CALL_OF_THE_VOID.get(),

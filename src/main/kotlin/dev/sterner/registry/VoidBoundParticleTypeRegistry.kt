@@ -6,7 +6,11 @@ import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject
 import net.fabricmc.fabric.api.client.particle.v1.FabricSpriteProvider
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
+import net.minecraft.core.particles.BlockParticleOption
+import net.minecraft.core.particles.ParticleType
+import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.registries.BuiltInRegistries
+import java.util.function.Function
 
 object VoidBoundParticleTypeRegistry {
     val PARTICLES = LazyRegistrar.create(BuiltInRegistries.PARTICLE_TYPE, VoidBound.modid)

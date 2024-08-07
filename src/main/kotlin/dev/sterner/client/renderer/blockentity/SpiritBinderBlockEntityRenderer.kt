@@ -1,4 +1,4 @@
-package dev.sterner.client.renderer
+package dev.sterner.client.renderer.blockentity
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.sammy.malum.client.renderer.entity.FloatingItemEntityRenderer

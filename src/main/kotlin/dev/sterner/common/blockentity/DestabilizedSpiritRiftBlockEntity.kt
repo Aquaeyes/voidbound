@@ -1,12 +1,17 @@
 package dev.sterner.common.blockentity
 
+import com.sammy.malum.client.SpiritBasedParticleBuilder
 import dev.sterner.api.blockentity.SyncedBlockEntity
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundParticleTypeRegistry
 import net.minecraft.core.BlockPos
+import net.minecraft.core.particles.BlockParticleOption
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.util.Mth
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import team.lodestar.lodestone.handlers.RenderHandler
+import team.lodestar.lodestone.helpers.RandomHelper
 import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry
 import team.lodestar.lodestone.systems.easing.Easing
 import team.lodestar.lodestone.systems.particle.SimpleParticleOptions
@@ -14,7 +19,13 @@ import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
 import team.lodestar.lodestone.systems.particle.data.GenericParticleData
 import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData
 import team.lodestar.lodestone.systems.particle.data.spin.SpinParticleData
+import team.lodestar.lodestone.systems.particle.render_types.LodestoneWorldParticleRenderType
+import team.lodestar.lodestone.systems.particle.world.LodestoneWorldParticle
+import team.lodestar.lodestone.systems.particle.world.options.LodestoneTerrainParticleOptions
 import java.awt.Color
+import java.util.function.Consumer
+import kotlin.math.cos
+import kotlin.math.sin
 
 class DestabilizedSpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) :
     SyncedBlockEntity(VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get(), pos, state) {
@@ -48,7 +59,7 @@ class DestabilizedSpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) :
 
     fun tick() {
 
-        if (false && level != null && level!!.isClientSide) {
+        if (level != null && level!!.isClientSide) {
             if (transformationTicks <= 0) {
                 if (destabilized) {
                     tickDestabilized()
@@ -126,5 +137,50 @@ class DestabilizedSpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) :
                 .enableNoClip()
                 .spawn(level, x, y, z)
         }
+        // check all blocks in range
+        val range = 8
+
+        val discRad = (range * (1 / 3f) + level!!.getRandom().nextGaussian() / 5f)
+        val builder = SpiritBasedParticleBuilder.createSpirit(
+            LodestoneTerrainParticleOptions(
+                LodestoneParticleRegistry.TERRAIN_PARTICLE,
+                Blocks.GRASS_BLOCK.defaultBlockState(),
+                blockPos
+            )
+        )
+            .setRenderType(LodestoneWorldParticleRenderType.TERRAIN_SHEET)
+            .setGravityStrength(0f)
+            .setFrictionStrength(0.98f)
+            .addTickActor {
+                val speed = it.particleSpeed
+                val time: Float = it.age / 6f
+
+                it.setParticleSpeed(
+                    cos(time) * speed.x,
+                    speed.y,
+                    sin(time) *speed.z
+                )
+            }
+            .setScaleData(GenericParticleData.create(0.0625f).build())
+
+
+        builder
+            .setMotion(discRad / 6f, 0.0, discRad / 6f)
+            .addTickActor {
+                val speed = 0.1f // Adjust speed as necessary
+                val time: Float = it.age / 6f
+
+                // Update the particle's position to create an orbiting effect
+                val newX = cos(time) * discRad
+                val newZ = sin(time) * discRad
+
+                it.setParticleSpeed(
+                    newX * speed,
+                    it.particleSpeed.y,
+                    newZ * speed
+                )
+            }
+            .setLifetime(RandomHelper.randomBetween(level!!.random, 40, 80))
+            .spawn(level, blockPos.x + 0.5, blockPos.y + 0.5, blockPos.z + 0.5 - (discRad / 2))
     }
 }

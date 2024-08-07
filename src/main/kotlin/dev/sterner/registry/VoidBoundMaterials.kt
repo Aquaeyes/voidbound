@@ -21,7 +21,7 @@ enum class VoidBoundMaterials(
 ) :
     ArmorMaterial {
     HALLOWED(
-        "malum:hallowed",
+        "voidbound:hallowed",
         16,
         intArrayOf(1, 3, 4, 2),
         25,

@@ -34,7 +34,7 @@ object VoidBoundRenderUtils {
         poseStack.pushPose()
         poseStack.mulPose(Axis.ZP.rotationDegrees(180f))
         val renderType: RenderType =
-            LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(RenderTypeToken.createCachedToken(icon))
+            LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(RenderTypeToken.createCachedToken(icon))
 
         val pct: Float = ClientTickHandler.ticksInGame / 20f
         val ease = Easing.SINE_OUT.ease(pct, 0f, 1f, 1f)

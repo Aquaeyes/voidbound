@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList
 import com.mojang.blaze3d.vertex.PoseStack
 import dev.sterner.VoidBound
 import dev.sterner.client.model.SoulSteelGolemEntityModel
-import dev.sterner.client.renderer.SoulSteelGolemEntityRenderer
+import dev.sterner.client.renderer.entity.SoulSteelGolemEntityRenderer
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType

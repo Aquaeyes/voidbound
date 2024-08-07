@@ -1,4 +1,4 @@
-package dev.sterner.client.renderer
+package dev.sterner.client.renderer.entity
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis

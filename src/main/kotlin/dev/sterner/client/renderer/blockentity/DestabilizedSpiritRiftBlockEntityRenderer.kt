@@ -1,9 +1,9 @@
-package dev.sterner.client.renderer
+package dev.sterner.client.renderer.blockentity
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import dev.sterner.api.VoidBoundApi
-import dev.sterner.client.renderer.SpiritBinderBlockEntityRenderer.Companion.TOKEN
+import dev.sterner.client.renderer.blockentity.SpiritBinderBlockEntityRenderer.Companion.TOKEN
 import dev.sterner.common.blockentity.DestabilizedSpiritRiftBlockEntity
 import dev.sterner.registry.VoidBoundRenderTypes
 import net.minecraft.client.Minecraft
