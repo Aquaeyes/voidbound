@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.client.renderer.blockentity.SpiritBinderBlockEntityRenderer.Companion.TOKEN
-import dev.sterner.common.blockentity.DestabilizedSpiritRiftBlockEntity
+import dev.sterner.common.blockentity.SpiritRiftBlockEntity
 import dev.sterner.registry.VoidBoundRenderTypes
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
@@ -18,10 +18,10 @@ import java.awt.Color
 
 
 class DestabilizedSpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
-    BlockEntityRenderer<DestabilizedSpiritRiftBlockEntity> {
+    BlockEntityRenderer<SpiritRiftBlockEntity> {
 
     override fun render(
-        blockEntity: DestabilizedSpiritRiftBlockEntity,
+        blockEntity: SpiritRiftBlockEntity,
         partialTick: Float,
         poseStack: PoseStack,
         buffer: MultiBufferSource,

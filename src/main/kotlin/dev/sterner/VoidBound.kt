@@ -49,6 +49,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
         VoidBoundMemoryTypeRegistry.MEMORY_TYPES.register()
         VoidBoundSensorTypeRegistry.SENSOR_TYPES.register()
         VoidBoundWandFociRegistry.WAND_FOCI.register()
+        VoidBoundRiftTypeRegistry.RIFT_TYPES.register()
 
         VoidBoundCreativeTabRegistry.init()
 

@@ -1,7 +1,7 @@
 package dev.sterner.registry
 
 import dev.sterner.VoidBound
-import dev.sterner.common.blockentity.DestabilizedSpiritRiftBlockEntity
+import dev.sterner.common.blockentity.SpiritRiftBlockEntity
 import dev.sterner.common.blockentity.PortableHoleBlockEntity
 import dev.sterner.common.blockentity.SpiritBinderBlockEntity
 import dev.sterner.common.blockentity.SpiritStabilizerBlockEntity
@@ -32,7 +32,7 @@ object VoidBoundBlockEntityTypeRegistry {
 
     var DESTABILIZED_SPIRIT_RIFT = BLOCK_ENTITY_TYPES.register("destabilized_spirit_rift") {
         BlockEntityType.Builder.of(
-            { pos, state -> DestabilizedSpiritRiftBlockEntity(pos, state) },
+            { pos, state -> SpiritRiftBlockEntity(pos, state) },
             VoidBoundBlockRegistry.DESTABILIZED_SPIRIT_RIFT.get()
         )
             .build(null)

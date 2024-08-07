@@ -1,6 +1,6 @@
 package dev.sterner.common.block
 
-import dev.sterner.common.blockentity.DestabilizedSpiritRiftBlockEntity
+import dev.sterner.common.blockentity.SpiritRiftBlockEntity
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.BlockGetter
@@ -31,8 +31,8 @@ class DestabilizedSpiritRiftBlock(properties: Properties) :
         blockEntityType: BlockEntityType<T>
     ): BlockEntityTicker<T> {
         return BlockEntityTicker { _, _, _, blockEntity ->
-            if (blockEntity is DestabilizedSpiritRiftBlockEntity) {
-                (blockEntity as DestabilizedSpiritRiftBlockEntity).tick()
+            if (blockEntity is SpiritRiftBlockEntity) {
+                (blockEntity as SpiritRiftBlockEntity).tick()
             }
         }
     }
