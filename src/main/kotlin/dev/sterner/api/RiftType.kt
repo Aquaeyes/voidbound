@@ -3,11 +3,20 @@ package dev.sterner.api
 import com.google.common.collect.BiMap
 import com.google.common.collect.HashBiMap
 import com.sammy.malum.client.SpiritBasedParticleBuilder
+import dev.sterner.api.util.VoidBoundUtils
+import dev.sterner.common.blockentity.SpiritRiftBlockEntity
+import dev.sterner.networking.SpiritBinderParticlePacket
+import dev.sterner.registry.VoidBoundComponentRegistry
+import dev.sterner.registry.VoidBoundPacketRegistry
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.util.Mth
+import net.minecraft.world.entity.PathfinderMob
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.AABB
 import team.lodestar.lodestone.handlers.RenderHandler
 import team.lodestar.lodestone.helpers.RandomHelper
 import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry
@@ -24,7 +33,7 @@ import kotlin.math.sin
 
 abstract class RiftType {
 
-    open fun tick(level: Level, blockPos: BlockPos){
+    open fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity){
 
     }
 
@@ -33,7 +42,7 @@ abstract class RiftType {
         val firstColor = Color(100, 100, 255, 255)
         val secondColor = Color(100, 100, 255, 255)
 
-        override fun tick(level: Level, blockPos: BlockPos) {
+        override fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity) {
             if (level.gameTime % 2L == 0L) {
                 WorldParticleBuilder.create(LodestoneParticleRegistry.TWINKLE_PARTICLE)
                     .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
@@ -53,7 +62,7 @@ abstract class RiftType {
 
     class DestabilizedRiftType : RiftType() {
 
-        override fun tick(level: Level, blockPos: BlockPos){
+        override fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity){
             genParticleOrbit(level, blockPos,8,  Blocks.GRASS_BLOCK.defaultBlockState(), 1)
             genParticleOrbit(level, blockPos,8,  Blocks.GRASS_BLOCK.defaultBlockState(), 2)
             genParticleOrbit(level, blockPos,8,  Blocks.GRASS_BLOCK.defaultBlockState(), 3)
@@ -101,5 +110,48 @@ abstract class RiftType {
         }
     }
 
-    class EldritchRiftType : RiftType() {}
+    class EldritchRiftType : RiftType() {
+
+        override fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity) {
+            if (blockEntity.entity == null) {
+                val list = level.getEntitiesOfClass(PathfinderMob::class.java, AABB(blockPos).inflate(5.0))
+                    .filter {
+                        it.health / it.maxHealth <= 0.25 && it.isAlive && VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(
+                            it
+                        ).spiritBinderPos == null
+                    }
+                if (list.isNotEmpty()) {
+                    blockEntity.entity = list.first()
+                    VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(blockEntity.entity!!).spiritBinderPos = blockPos
+                    VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.sync(blockEntity.entity!!)
+                }
+                blockEntity.counter = 0
+            } else if (VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(blockEntity.entity!!).spiritBinderPos != null) {
+                val spiritDataOptional = VoidBoundUtils.getSpiritData(blockEntity.entity!!)
+                if (spiritDataOptional.isPresent) {
+                    blockEntity.counter++
+                    for (spirit in spiritDataOptional.get()) {
+                        for (player in PlayerLookup.tracking(blockEntity)) {
+                            VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClient(
+                                SpiritBinderParticlePacket(
+                                    blockEntity.entity!!.id,
+                                    blockPos,
+                                    spirit.type.identifier
+                                ), player
+                            )
+                        }
+                    }
+
+                    if (blockEntity.counter > 20 * 5) {
+                        blockEntity.counter = 0
+                        blockEntity.addSpiritToCharge(blockEntity.entity!!)
+                        blockEntity.targetAlpha = Mth.clamp(blockEntity.simpleSpiritCharge.getTotalCharge() / 20f, 0f, 1f)
+                        blockEntity.entity!!.hurt(level.damageSources().magic(), blockEntity.entity!!.health * 2)
+                        blockEntity.entity = null
+                        blockEntity.notifyUpdate()
+                    }
+                }
+            }
+        }
+    }
 }
