@@ -1,8 +1,10 @@
 package dev.sterner.registry
 
+import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
 import dev.sterner.common.item.*
+import dev.sterner.common.item.tool.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
@@ -91,5 +93,25 @@ object VoidBoundItemRegistry {
 
     val CRIMSON_KNIGHT_SWORD = ITEMS.register("crimson_knight_sword") {
         SwordItem(Tiers.IRON, 3, -2.4f, Item.Properties())
+    }
+
+    val PICKAXE_OF_THE_CORE = ITEMS.register("pickaxe_of_the_core") {
+        PickaxeOfTheCoreItem(Tiers.IRON, -2, 0f, 2f, Item.Properties())
+    }
+
+    val HOE_OF_GROWTH = ITEMS.register("hoe_of_growth") {
+        HoeOfGrowthItem(Tiers.IRON, 0, -1.5f, 1f, Item.Properties())
+    }
+
+    val AXE_OF_THE_STREAM = ITEMS.register("axe_of_the_stream") {
+        AxeOfTheStreamItem(Tiers.IRON, -3f, 0f, 4f, Item.Properties())
+    }
+
+    val SHOVEL_OF_THE_EARTHMOVER = ITEMS.register("shovel_of_the_earthmover") {
+        ShovelOfEarthmoverItem(Tiers.IRON, 2, 0f, 2f, Item.Properties())
+    }
+
+    val SWORD_OF_THE_ZEPHYR = ITEMS.register("sword_of_the_zephyr") {
+        SwordOfTheZephyrItem(Tiers.IRON, -3, 0f, 3f, Item.Properties())
     }
 }
