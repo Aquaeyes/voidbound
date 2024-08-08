@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import dev.sterner.VoidBound
 import dev.sterner.common.entity.CrimsonJesterEntity
+import dev.sterner.common.entity.CrimsonKnightEntity
 import net.minecraft.client.model.EntityModel
 import net.minecraft.client.model.HumanoidModel
 import net.minecraft.client.model.geom.ModelLayerLocation
@@ -14,6 +15,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder
 import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.model.geom.builders.MeshDefinition
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.HumanoidArm
 
 
 class CrimsonJesterModel(root: ModelPart) : HumanoidModel<CrimsonJesterEntity>(root) {
@@ -22,6 +24,7 @@ class CrimsonJesterModel(root: ModelPart) : HumanoidModel<CrimsonJesterEntity>(r
     private val head: ModelPart = root.getChild("head")
     private val left_leg: ModelPart = root.getChild("left_leg")
     private val right_leg: ModelPart = root.getChild("right_leg")
+    private val hat: ModelPart = root.getChild("hat")
     private val body: ModelPart = root.getChild("body")
 
     override fun setupAnim(
@@ -32,6 +35,21 @@ class CrimsonJesterModel(root: ModelPart) : HumanoidModel<CrimsonJesterEntity>(r
         netHeadYaw: Float,
         headPitch: Float
     ) {
+        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch)
+    }
+
+    override fun translateToHand(side: HumanoidArm, poseStack: PoseStack?) {
+        val f = if (side == HumanoidArm.RIGHT) 1.0f else -1.0f
+        val modelPart = this.getArm(side)
+        modelPart.x += f
+        modelPart.translateAndRotate(poseStack)
+        modelPart.x -= f
+    }
+
+    override fun prepareMobModel(entity: CrimsonJesterEntity, limbSwing: Float, limbSwingAmount: Float, partialTick: Float) {
+        this.rightArmPose = ArmPose.EMPTY
+        this.leftArmPose = ArmPose.EMPTY
+        super.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTick)
     }
 
     override fun renderToBuffer(
@@ -152,8 +170,8 @@ class CrimsonJesterModel(root: ModelPart) : HumanoidModel<CrimsonJesterEntity>(r
                 PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, 0.2731f, 0.0f, 0.0f)
             )
 
-            val Hood = head.addOrReplaceChild(
-                "Hood",
+            val hat = partdefinition.addOrReplaceChild(
+                "hat",
                 CubeListBuilder.create().texOffs(56, 0)
                     .addBox(-4.5f, -8.5f, -4.5f, 9.0f, 9.0f, 9.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)

@@ -1,11 +1,12 @@
 package dev.sterner.common.entity
 
+import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.level.Level
 
-class CrimsonHeavyKnightEntity(level: Level) : AbstractCultistEntity(level) {
+class CrimsonHeavyKnightEntity(level: Level) : AbstractCultistEntity(VoidBoundEntityTypeRegistry.CRIMSON_HEAVY_KNIGHT_ENTITY.get(), level) {
 
     companion object {
         fun createCrimsonAttributes(): AttributeSupplier.Builder? {

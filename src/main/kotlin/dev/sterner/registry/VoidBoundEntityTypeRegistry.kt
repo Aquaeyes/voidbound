@@ -86,7 +86,7 @@ object VoidBoundEntityTypeRegistry {
             .build()
     }
 
-    var CRIMSON_PALADIN_ENTITY = ENTITY_TYPES.register("crimson_jester") {
+    var CRIMSON_PALADIN_ENTITY = ENTITY_TYPES.register("crimson_paladin") {
         FabricEntityTypeBuilder.Mob.createMob<CrimsonPaladinEntity>()
             .entityFactory { _, w -> CrimsonPaladinEntity(w) }
             .dimensions(EntityDimensions(0.7f, 2.15f, true))

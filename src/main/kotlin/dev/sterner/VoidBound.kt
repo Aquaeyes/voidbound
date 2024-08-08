@@ -13,9 +13,7 @@ import dev.sterner.client.renderer.blockentity.SpiritBinderBlockEntityRenderer
 import dev.sterner.client.renderer.blockentity.SpiritStabilizerBlockEntityRenderer
 import dev.sterner.client.renderer.entity.*
 import dev.sterner.common.components.VoidBoundPlayerComponent
-import dev.sterner.common.entity.AbstractGolemEntity
-import dev.sterner.common.entity.CrimsonClericEntity
-import dev.sterner.common.entity.CrimsonPaladinEntity
+import dev.sterner.common.entity.*
 import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
@@ -52,11 +50,6 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
         VoidBoundCreativeTabRegistry.init()
 
-        FabricDefaultAttributeRegistry.register(
-            VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(),
-            AbstractGolemEntity.createGolemAttributes()
-        )
-
         UseBlockCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useBlock)
         UseEntityCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useEntity)
     }
@@ -85,45 +78,15 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
         EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.PARTICLE_ENTITY.get(), ::ParticleEntityRenderer)
 
-        EntityRendererRegistry.register(
-            VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(),
-            ::SoulSteelGolemEntityRenderer
-        )
+        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(), ::SoulSteelGolemEntityRenderer)
 
-        EntityRendererRegistry.register(
-            VoidBoundEntityTypeRegistry.CRIMSON_KNIGHT_ENTITY.get(),
-            ::CrimsonKnightEntityRenderer
-        )
-
-        EntityRendererRegistry.register(
-            VoidBoundEntityTypeRegistry.CRIMSON_ARCHER_ENTITY.get(),
-            ::CrimsonArcherEntityRenderer
-        )
-
-        EntityRendererRegistry.register(
-            VoidBoundEntityTypeRegistry.CRIMSON_CLERIC_ENTITY.get(),
-            ::CrimsonClericEntityRenderer
-        )
-
-        EntityRendererRegistry.register(
-            VoidBoundEntityTypeRegistry.CRIMSON_NECROMANCER_ENTITY.get(),
-            ::CrimsonNecromancerEntityRenderer
-        )
-
-        EntityRendererRegistry.register(
-            VoidBoundEntityTypeRegistry.CRIMSON_JESTER_ENTITY.get(),
-            ::CrimsonJesterEntityRenderer
-        )
-
-        EntityRendererRegistry.register(
-            VoidBoundEntityTypeRegistry.CRIMSON_HEAVY_KNIGHT_ENTITY.get(),
-            ::CrimsonHeavyKnightEntityRenderer
-        )
-
-        EntityRendererRegistry.register(
-            VoidBoundEntityTypeRegistry.CRIMSON_PALADIN_ENTITY.get(),
-            ::CrimsonPaladinEntityRenderer
-        )
+        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_KNIGHT_ENTITY.get(), ::CrimsonKnightEntityRenderer)
+        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_ARCHER_ENTITY.get(), ::CrimsonArcherEntityRenderer)
+        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_CLERIC_ENTITY.get(), ::CrimsonClericEntityRenderer)
+        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_NECROMANCER_ENTITY.get(), ::CrimsonNecromancerEntityRenderer)
+        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_JESTER_ENTITY.get(), ::CrimsonJesterEntityRenderer)
+        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_HEAVY_KNIGHT_ENTITY.get(), ::CrimsonHeavyKnightEntityRenderer)
+        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_PALADIN_ENTITY.get(), ::CrimsonPaladinEntityRenderer)
 
         EntityModelLayerRegistry.registerModelLayer(
             SoulSteelGolemEntityModel.LAYER_LOCATION,

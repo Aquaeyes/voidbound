@@ -1,6 +1,7 @@
 package dev.sterner.common.entity
 
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.Mob
 import net.minecraft.world.entity.ai.goal.*
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal
@@ -11,7 +12,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.raid.Raider
 import net.minecraft.world.level.Level
 
-abstract class AbstractCultistEntity(level: Level) : Monster(VoidBoundEntityTypeRegistry.CRIMSON_KNIGHT_ENTITY.get(), level) {
+abstract class AbstractCultistEntity(entityType: EntityType<out Monster>, level: Level) : Monster(entityType, level) {
 
     override fun createNavigation(level: Level): PathNavigation {
         return super.createNavigation(level)

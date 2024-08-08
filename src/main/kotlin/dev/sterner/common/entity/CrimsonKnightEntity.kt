@@ -1,5 +1,6 @@
 package dev.sterner.common.entity
 
+import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import net.minecraft.util.RandomSource
 import net.minecraft.world.DifficultyInstance
 import net.minecraft.world.entity.EquipmentSlot
@@ -11,7 +12,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 
-class CrimsonKnightEntity(level: Level) : AbstractCultistEntity(level) {
+class CrimsonKnightEntity(level: Level) : AbstractCultistEntity(VoidBoundEntityTypeRegistry.CRIMSON_KNIGHT_ENTITY.get(), level) {
 
     override fun registerGoals() {
         super.registerGoals()
