@@ -1,5 +1,8 @@
 package dev.sterner.common.entity
 
+import net.minecraft.network.syncher.EntityDataAccessor
+import net.minecraft.network.syncher.EntityDataSerializers
+import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.damagesource.DamageSource
@@ -9,13 +12,25 @@ import net.minecraft.world.entity.ai.goal.*
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal
 import net.minecraft.world.entity.ai.navigation.PathNavigation
+import net.minecraft.world.entity.monster.AbstractIllager.IllagerArmPose
+import net.minecraft.world.entity.monster.CrossbowAttackMob
 import net.minecraft.world.entity.monster.Monster
+import net.minecraft.world.entity.monster.Pillager
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 
 abstract class AbstractCultistEntity(entityType: EntityType<out Monster>, level: Level) : Monster(entityType, level) {
 
-    abstract val armPose: Any
+    open fun getArmPose(): CrimsonArmPose {
+        if (this.isHolding(Items.CROSSBOW)) {
+            return CrimsonArmPose.CROSSBOW_HOLD
+        }
+        if (this.isAggressive) {
+            return CrimsonArmPose.ATTACKING
+        }
+        return CrimsonArmPose.NEUTRAL
+    }
 
     override fun createNavigation(level: Level): PathNavigation {
         return super.createNavigation(level)

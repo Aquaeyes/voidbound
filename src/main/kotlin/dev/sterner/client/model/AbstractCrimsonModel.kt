@@ -21,7 +21,7 @@ abstract class AbstractCrimsonModel<T : AbstractCultistEntity>(root: ModelPart) 
     ) {
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch)
 
-        val armPose = (entity as AbstractCultistEntity).armPose
+        val armPose = (entity as AbstractCultistEntity).getArmPose()
 
         if (armPose == AbstractCultistEntity.CrimsonArmPose.ATTACKING) {
             if ((entity as LivingEntity).mainHandItem.isEmpty) {

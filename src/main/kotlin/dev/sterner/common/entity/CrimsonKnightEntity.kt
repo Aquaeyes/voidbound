@@ -26,8 +26,8 @@ class CrimsonKnightEntity(level: Level) : AbstractCultistEntity(VoidBoundEntityT
 
     override fun finalizeSpawn(
         level: ServerLevelAccessor,
-        difficulty: DifficultyInstance?,
-        reason: MobSpawnType?,
+        difficulty: DifficultyInstance,
+        reason: MobSpawnType,
         spawnData: SpawnGroupData?,
         dataTag: CompoundTag?
     ): SpawnGroupData? {
