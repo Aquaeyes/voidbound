@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation
 
 class CrimsonHeavyKnightEntityRenderer(context: EntityRendererProvider.Context) :
     MobRenderer<CrimsonHeavyKnightEntity, CrimsonHeavyKnightModel>(
-        context, CrimsonHeavyKnightModel(context.bakeLayer(CrimsonHeavyKnightModel.LAYER_LOCATION)), 0.2f
+        context, CrimsonHeavyKnightModel(context.bakeLayer(CrimsonHeavyKnightModel.LAYER_LOCATION)), 0.5f
     ) {
 
     override fun getTextureLocation(entity: CrimsonHeavyKnightEntity): ResourceLocation {

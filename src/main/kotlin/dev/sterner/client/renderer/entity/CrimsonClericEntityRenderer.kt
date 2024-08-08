@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation
 
 class CrimsonClericEntityRenderer(context: EntityRendererProvider.Context) :
     MobRenderer<CrimsonClericEntity, CrimsonClericModel>(
-        context, CrimsonClericModel(context.bakeLayer(CrimsonClericModel.LAYER_LOCATION)), 0.2f
+        context, CrimsonClericModel(context.bakeLayer(CrimsonClericModel.LAYER_LOCATION)), 0.5f
     ) {
 
     override fun getTextureLocation(entity: CrimsonClericEntity): ResourceLocation {

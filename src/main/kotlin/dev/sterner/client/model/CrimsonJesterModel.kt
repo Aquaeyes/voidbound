@@ -18,7 +18,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.HumanoidArm
 
 
-class CrimsonJesterModel(root: ModelPart) : HumanoidModel<CrimsonJesterEntity>(root) {
+class CrimsonJesterModel(root: ModelPart) : AbstractCrimsonModel<CrimsonJesterEntity>(root) {
     private val left_arm: ModelPart = root.getChild("left_arm")
     private val right_arm: ModelPart = root.getChild("right_arm")
     private val head: ModelPart = root.getChild("head")

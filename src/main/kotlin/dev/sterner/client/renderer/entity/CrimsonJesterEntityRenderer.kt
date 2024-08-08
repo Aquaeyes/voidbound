@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation
 
 class CrimsonJesterEntityRenderer(context: EntityRendererProvider.Context) :
     MobRenderer<CrimsonJesterEntity, CrimsonJesterModel>(
-        context, CrimsonJesterModel(context.bakeLayer(CrimsonJesterModel.LAYER_LOCATION)), 0.2f
+        context, CrimsonJesterModel(context.bakeLayer(CrimsonJesterModel.LAYER_LOCATION)), 0.5f
     ) {
 
     override fun getTextureLocation(entity: CrimsonJesterEntity): ResourceLocation {

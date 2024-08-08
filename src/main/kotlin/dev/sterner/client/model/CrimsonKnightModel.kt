@@ -20,7 +20,7 @@ import net.minecraft.world.entity.monster.piglin.AbstractPiglin
 import net.minecraft.world.entity.monster.piglin.PiglinArmPose
 
 
-class CrimsonKnightModel(root: ModelPart) : HumanoidModel<CrimsonKnightEntity>(root) {
+class CrimsonKnightModel(root: ModelPart) : AbstractCrimsonModel<CrimsonKnightEntity>(root) {
     private val rightArm: ModelPart = root.getChild("right_arm")
     private val rightLeg: ModelPart = root.getChild("right_leg")
     private val hat: ModelPart = root.getChild("hat")
@@ -60,7 +60,7 @@ class CrimsonKnightModel(root: ModelPart) : HumanoidModel<CrimsonKnightEntity>(r
     }
 
     override fun translateToHand(side: HumanoidArm, poseStack: PoseStack?) {
-        val f = if (side == HumanoidArm.RIGHT) 1.0f else -1.0f
+        val f = if (side == HumanoidArm.RIGHT) 0.5f else -0.5f
         val modelPart = this.getArm(side)
         modelPart.x += f
         modelPart.translateAndRotate(poseStack)

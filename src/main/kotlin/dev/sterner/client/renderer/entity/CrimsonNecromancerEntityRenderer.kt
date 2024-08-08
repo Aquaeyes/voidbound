@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation
 
 class CrimsonNecromancerEntityRenderer(context: EntityRendererProvider.Context) :
     MobRenderer<CrimsonNecromancerEntity, CrimsonNecromancerModel>(
-        context, CrimsonNecromancerModel(context.bakeLayer(CrimsonNecromancerModel.LAYER_LOCATION)), 0.2f
+        context, CrimsonNecromancerModel(context.bakeLayer(CrimsonNecromancerModel.LAYER_LOCATION)), 0.5f
     ) {
 
     override fun getTextureLocation(entity: CrimsonNecromancerEntity): ResourceLocation {

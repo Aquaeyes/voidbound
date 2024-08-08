@@ -18,7 +18,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.HumanoidArm
 
 
-class CrimsonClericModel(root: ModelPart) : HumanoidModel<CrimsonClericEntity>(root) {
+class CrimsonClericModel(root: ModelPart) : AbstractCrimsonModel<CrimsonClericEntity>(root) {
     private val left_leg: ModelPart = root.getChild("left_leg")
     private val right_leg: ModelPart = root.getChild("right_leg")
     private val body: ModelPart = root.getChild("body")
