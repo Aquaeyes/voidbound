@@ -92,30 +92,30 @@ object VoidBoundItemRegistry {
     }
 
     val CRIMSON_KNIGHT_SWORD = ITEMS.register("crimson_knight_sword") {
-        SwordItem(VoidBoundTiers.ELEMENTAL, 3, -2.4f, Item.Properties())
+        SwordItem(VoidBoundTiers.ELEMENTAL, 3, -2.4f, Item.Properties().stacksTo(1))
     }
 
     val PICKAXE_OF_THE_CORE = ITEMS.register("pickaxe_of_the_core") {
-        PickaxeOfTheCoreItem(VoidBoundTiers.ELEMENTAL, -2, 0f, 2f, Item.Properties())
+        PickaxeOfTheCoreItem(VoidBoundTiers.ELEMENTAL, -2, 0f, 2f, Item.Properties().stacksTo(1))
     }
 
     val HOE_OF_GROWTH = ITEMS.register("hoe_of_growth") {
-        HoeOfGrowthItem(VoidBoundTiers.ELEMENTAL, 0, -1.5f, 1f, Item.Properties())
+        HoeOfGrowthItem(VoidBoundTiers.ELEMENTAL, 0, -1.5f, 1f, Item.Properties().stacksTo(1))
     }
 
     val AXE_OF_THE_STREAM = ITEMS.register("axe_of_the_stream") {
-        AxeOfTheStreamItem(VoidBoundTiers.ELEMENTAL, -3f, 0f, 4f, Item.Properties())
+        AxeOfTheStreamItem(VoidBoundTiers.ELEMENTAL, -3f, 0f, 4f, Item.Properties().stacksTo(1))
     }
 
     val SHOVEL_OF_THE_EARTHMOVER = ITEMS.register("shovel_of_the_earthmover") {
-        ShovelOfEarthmoverItem(VoidBoundTiers.ELEMENTAL, 2, 0f, 2f, Item.Properties())
+        ShovelOfEarthmoverItem(VoidBoundTiers.ELEMENTAL, 2, 0f, 2f, Item.Properties().stacksTo(1))
     }
 
     val SWORD_OF_THE_ZEPHYR = ITEMS.register("sword_of_the_zephyr") {
-        SwordOfTheZephyrItem(VoidBoundTiers.ELEMENTAL, -3, 0f, 3f, Item.Properties())
+        SwordOfTheZephyrItem(VoidBoundTiers.ELEMENTAL, -3, 0f, 3f, Item.Properties().stacksTo(1))
     }
 
     val CRIMSON_RITES = ITEMS.register("crimson_rites") {
-        CrimsonBookItem(Item.Properties())
+        CrimsonBookItem(Item.Properties().stacksTo(1))
     }
 }
