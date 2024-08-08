@@ -13,9 +13,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Tier
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
-import org.joml.Vector3d
 import team.lodestar.lodestone.systems.item.tools.magic.MagicSwordItem
-import java.util.function.Consumer
 
 class SwordOfTheZephyrItem(material: Tier?, attackDamage: Int, attackSpeed: Float, magicDamage: Float,
                            properties: Properties?
@@ -36,7 +34,6 @@ class SwordOfTheZephyrItem(material: Tier?, attackDamage: Int, attackSpeed: Floa
     override fun onUseTick(level: Level, player: LivingEntity, stack: ItemStack, remainingUseDuration: Int) {
 
         val ticks: Int = this.getUseDuration(stack) - remainingUseDuration
-        // Initialize new motion values based on current motion
         var newMotionY = player.deltaMovement.y
 
         if (newMotionY < 0.0) {
@@ -63,10 +60,10 @@ class SwordOfTheZephyrItem(material: Tier?, attackDamage: Int, attackSpeed: Floa
             while (miny < targets.size) {
                 val entity: Entity = targets[miny] as Entity
                 if (entity !is Player && entity is LivingEntity && !entity.isDeadOrDying && (player.passengers == null || player.passengers !== entity)) {
-                    val p: Vec3 = Vec3(player.x, player.y, player.z)
-                    val t: Vec3 = Vec3(entity.x, entity.y, entity.z)
+                    val p = Vec3(player.x, player.y, player.z)
+                    val t = Vec3(entity.x, entity.y, entity.z)
                     val distance: Double = p.distanceTo(t) + 0.1
-                    val r: Vec3 = Vec3(t.x - p.x, t.y - p.y, t.z - p.z)
+                    val r = Vec3(t.x - p.x, t.y - p.y, t.z - p.z)
 
                     val prevDeltaMovement = entity.deltaMovement
                     entity.deltaMovement = Vec3(
@@ -81,25 +78,6 @@ class SwordOfTheZephyrItem(material: Tier?, attackDamage: Int, attackSpeed: Floa
         }
 
         if (player.level().isClientSide) {
-            miny = (player.boundingBox.minY - 2).toInt()
-            if (player.onGround()) {
-                miny = Mth.floor(player.boundingBox.minY)
-            }
-
-            for (a in 0..4) {
-                /*
-                FXDispatcher.INSTANCE.smokeSpiral(
-                    player.posX,
-                    player.getEntityBoundingBox().minY + (player.height / 2.0f) as Double,
-                    player.posZ,
-                    1.5f,
-                    player.world.rand.nextInt(360),
-                    miny,
-                    14540253
-                )
-
-                 */
-            }
 
             if (player.onGround()) {
                 val r1: Float = player.level().random.nextFloat() * 360.0f

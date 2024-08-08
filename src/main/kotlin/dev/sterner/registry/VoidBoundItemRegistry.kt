@@ -92,26 +92,26 @@ object VoidBoundItemRegistry {
     }
 
     val CRIMSON_KNIGHT_SWORD = ITEMS.register("crimson_knight_sword") {
-        SwordItem(Tiers.IRON, 3, -2.4f, Item.Properties())
+        SwordItem(VoidBoundTiers.ELEMENTAL, 3, -2.4f, Item.Properties())
     }
 
     val PICKAXE_OF_THE_CORE = ITEMS.register("pickaxe_of_the_core") {
-        PickaxeOfTheCoreItem(Tiers.IRON, -2, 0f, 2f, Item.Properties())
+        PickaxeOfTheCoreItem(VoidBoundTiers.ELEMENTAL, -2, 0f, 2f, Item.Properties())
     }
 
     val HOE_OF_GROWTH = ITEMS.register("hoe_of_growth") {
-        HoeOfGrowthItem(Tiers.IRON, 0, -1.5f, 1f, Item.Properties())
+        HoeOfGrowthItem(VoidBoundTiers.ELEMENTAL, 0, -1.5f, 1f, Item.Properties())
     }
 
     val AXE_OF_THE_STREAM = ITEMS.register("axe_of_the_stream") {
-        AxeOfTheStreamItem(Tiers.IRON, -3f, 0f, 4f, Item.Properties())
+        AxeOfTheStreamItem(VoidBoundTiers.ELEMENTAL, -3f, 0f, 4f, Item.Properties())
     }
 
     val SHOVEL_OF_THE_EARTHMOVER = ITEMS.register("shovel_of_the_earthmover") {
-        ShovelOfEarthmoverItem(Tiers.IRON, 2, 0f, 2f, Item.Properties())
+        ShovelOfEarthmoverItem(VoidBoundTiers.ELEMENTAL, 2, 0f, 2f, Item.Properties())
     }
 
     val SWORD_OF_THE_ZEPHYR = ITEMS.register("sword_of_the_zephyr") {
-        SwordOfTheZephyrItem(Tiers.IRON, -3, 0f, 3f, Item.Properties())
+        SwordOfTheZephyrItem(VoidBoundTiers.ELEMENTAL, -3, 0f, 3f, Item.Properties())
     }
 }
