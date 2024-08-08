@@ -1,7 +1,7 @@
 package dev.sterner.registry
 
 import dev.sterner.VoidBound
-import dev.sterner.api.RiftType
+import dev.sterner.api.rift.RiftType
 import dev.sterner.common.rift.DestabilizedRiftType
 import dev.sterner.common.rift.EldritchRiftType
 import dev.sterner.common.rift.NormalRiftType

@@ -1,4 +1,4 @@
-package dev.sterner.api
+package dev.sterner.api.rift
 
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.registry.common.SpiritTypeRegistry

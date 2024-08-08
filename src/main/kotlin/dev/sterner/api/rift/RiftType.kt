@@ -1,5 +1,6 @@
-package dev.sterner.api
+package dev.sterner.api.rift
 
+import dev.sterner.api.VoidBoundApi
 import dev.sterner.common.blockentity.SpiritRiftBlockEntity
 import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos

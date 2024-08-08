@@ -1,7 +1,6 @@
 package dev.sterner.mixin;
 
-import dev.sterner.api.HammerLikeItem;
-import dev.sterner.common.item.tool.PickaxeOfTheCoreItem;
+import dev.sterner.api.item.HammerLikeItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

@@ -1,8 +1,8 @@
 package dev.sterner.common.blockentity
 
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
-import dev.sterner.api.RiftType
-import dev.sterner.api.SimpleSpiritCharge
+import dev.sterner.api.rift.RiftType
+import dev.sterner.api.rift.SimpleSpiritCharge
 import dev.sterner.api.blockentity.SyncedBlockEntity
 import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.common.rift.DestabilizedRiftType

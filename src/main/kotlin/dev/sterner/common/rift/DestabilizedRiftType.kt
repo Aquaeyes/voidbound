@@ -1,7 +1,7 @@
 package dev.sterner.common.rift
 
 import com.sammy.malum.client.SpiritBasedParticleBuilder
-import dev.sterner.api.RiftType
+import dev.sterner.api.rift.RiftType
 import dev.sterner.common.blockentity.SpiritRiftBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.util.Mth

@@ -1,4 +1,4 @@
-package dev.sterner.api
+package dev.sterner.api.item
 
 import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents.BreakEvent
 import net.minecraft.core.BlockPos
@@ -32,8 +32,6 @@ interface HammerLikeItem {
         itemStack: ItemStack,
         player: ServerPlayer
     ) {
-        if (player !is ServerPlayer) return
-
         if (level.isClientSide || blockState.getDestroySpeed(level, blockPos) == 0.0f) {
             return
         }
@@ -80,7 +78,6 @@ interface HammerLikeItem {
         val direction: Direction = pick.direction
         val boundingBox = getAreaOfEffect(blockPos, direction, getRadius(), getDepth())
 
-        // If the hammer is about to break, Stop. We don't want to break the hammer
         if (!livingEntity.isCreative && (hammerStack.damageValue >= hammerStack.maxDamage - 1)) {
             return
         }
@@ -101,14 +98,11 @@ interface HammerLikeItem {
                 continue
             }
 
-            // Skips any blocks that require a higher tier hammer
             if (!actualIsCorrectToolForDrops(targetState)) {
                 continue
             }
 
-            // Throw event out there and let mods block us breaking this block
             BreakEvent.BLOCK_BREAK.invoker().onBlockBreak(BreakEvent(level, pos, targetState, livingEntity))
-
 
             removedPos.add(pos)
             level.destroyBlock(pos, false, livingEntity)
@@ -124,7 +118,7 @@ interface HammerLikeItem {
                         livingEntity,
                         hammerStack
                     )
-                    drops.forEach(Consumer { e: ItemStack? ->
+                    drops.forEach(Consumer { e: ItemStack ->
                         Block.popResourceFromFace(
                             level,
                             pos,

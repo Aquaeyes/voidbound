@@ -1,6 +1,6 @@
 package dev.sterner.common.item.tool
 
-import dev.sterner.api.HammerLikeItem
+import dev.sterner.api.item.HammerLikeItem
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Tier

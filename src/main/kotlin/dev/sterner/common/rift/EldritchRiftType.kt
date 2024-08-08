@@ -1,6 +1,6 @@
 package dev.sterner.common.rift
 
-import dev.sterner.api.RiftType
+import dev.sterner.api.rift.RiftType
 import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.common.blockentity.SpiritRiftBlockEntity
 import dev.sterner.networking.SpiritBinderParticlePacket
