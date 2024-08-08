@@ -2,7 +2,6 @@ package dev.sterner.common.item
 
 import net.minecraft.client.Minecraft
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
@@ -38,7 +37,8 @@ class CrimsonBookItem(properties: Properties) : Item(properties) {
 
     companion object {
         fun isOpen(): Boolean {
-            val v: Boolean? = Minecraft.getInstance().player?.getItemInHand(InteractionHand.MAIN_HAND)?.tag?.getBoolean("open")
+            val v: Boolean? =
+                Minecraft.getInstance().player?.getItemInHand(InteractionHand.MAIN_HAND)?.tag?.getBoolean("open")
             return v == true
         }
     }

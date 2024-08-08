@@ -152,8 +152,6 @@ object MalumCodexEvent {
         }
 
 
-
-
         //-9, 5
 
         screen?.addEntry("pickaxe_of_the_core", -10, 3) { builder ->

@@ -12,9 +12,7 @@ import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
-import team.lodestar.lodestone.systems.rendering.LodestoneRenderType
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
-import java.awt.Color
 
 
 class SpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :

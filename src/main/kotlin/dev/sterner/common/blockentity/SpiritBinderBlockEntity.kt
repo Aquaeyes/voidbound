@@ -40,7 +40,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         }
     }
 
-    fun init(){
+    fun init() {
         val riftBe = level?.getBlockEntity(blockPos.above())
         if (rift != null) {
             rift = riftBe as SpiritRiftBlockEntity

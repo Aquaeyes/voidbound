@@ -30,7 +30,7 @@ object VoidBoundRenderUtils {
         icon: ResourceLocation,
         poseStack: PoseStack,
         alpha: Float
-    ){
+    ) {
         poseStack.pushPose()
         poseStack.mulPose(Axis.ZP.rotationDegrees(180f))
         val renderType: RenderType =

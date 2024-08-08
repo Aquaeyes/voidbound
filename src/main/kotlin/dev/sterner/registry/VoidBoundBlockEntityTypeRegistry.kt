@@ -1,9 +1,9 @@
 package dev.sterner.registry
 
 import dev.sterner.VoidBound
-import dev.sterner.common.blockentity.SpiritRiftBlockEntity
 import dev.sterner.common.blockentity.PortableHoleBlockEntity
 import dev.sterner.common.blockentity.SpiritBinderBlockEntity
+import dev.sterner.common.blockentity.SpiritRiftBlockEntity
 import dev.sterner.common.blockentity.SpiritStabilizerBlockEntity
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import net.minecraft.core.registries.BuiltInRegistries

@@ -4,8 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import dev.sterner.VoidBound
 import dev.sterner.common.entity.CrimsonKnightEntity
-import net.minecraft.client.model.AnimationUtils
-import net.minecraft.client.model.HumanoidModel
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.PartPose
@@ -13,11 +11,7 @@ import net.minecraft.client.model.geom.builders.CubeDeformation
 import net.minecraft.client.model.geom.builders.CubeListBuilder
 import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.model.geom.builders.MeshDefinition
-import net.minecraft.util.Mth
 import net.minecraft.world.entity.HumanoidArm
-import net.minecraft.world.entity.Mob
-import net.minecraft.world.entity.monster.piglin.AbstractPiglin
-import net.minecraft.world.entity.monster.piglin.PiglinArmPose
 
 
 class CrimsonKnightModel(root: ModelPart) : AbstractCrimsonModel<CrimsonKnightEntity>(root) {
@@ -48,17 +42,6 @@ class CrimsonKnightModel(root: ModelPart) : AbstractCrimsonModel<CrimsonKnightEn
         body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha)
     }
 
-    override fun setupAnim(
-        entity: CrimsonKnightEntity,
-        limbSwing: Float,
-        limbSwingAmount: Float,
-        ageInTicks: Float,
-        netHeadYaw: Float,
-        headPitch: Float
-    ) {
-        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch)
-    }
-
     override fun translateToHand(side: HumanoidArm, poseStack: PoseStack?) {
         val f = if (side == HumanoidArm.RIGHT) 0.5f else -0.5f
         val modelPart = this.getArm(side)
@@ -67,7 +50,12 @@ class CrimsonKnightModel(root: ModelPart) : AbstractCrimsonModel<CrimsonKnightEn
         modelPart.x -= f
     }
 
-    override fun prepareMobModel(entity: CrimsonKnightEntity, limbSwing: Float, limbSwingAmount: Float, partialTick: Float) {
+    override fun prepareMobModel(
+        entity: CrimsonKnightEntity,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        partialTick: Float
+    ) {
         this.rightArmPose = ArmPose.EMPTY
         this.leftArmPose = ArmPose.EMPTY
         super.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTick)

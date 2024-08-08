@@ -20,12 +20,18 @@ import java.util.function.Consumer
 
 interface HammerLikeItem {
 
-    fun getRadius() : Int
-    fun getDepth() : Int
+    fun getRadius(): Int
+    fun getDepth(): Int
     fun getTier(): Tier
     fun getBlockTags(): TagKey<Block>
 
-    fun causeAoe(level: ServerLevel, blockPos: BlockPos, blockState: BlockState, itemStack: ItemStack, player: ServerPlayer) {
+    fun causeAoe(
+        level: ServerLevel,
+        blockPos: BlockPos,
+        blockState: BlockState,
+        itemStack: ItemStack,
+        player: ServerPlayer
+    ) {
         if (player !is ServerPlayer) return
 
         if (level.isClientSide || blockState.getDestroySpeed(level, blockPos) == 0.0f) {
@@ -52,7 +58,6 @@ interface HammerLikeItem {
             (i >= 1 || !state.`is`(BlockTags.NEEDS_STONE_TOOL)) && state.`is`(getBlockTags())
         }
     }
-
 
 
     private fun canDestroy(targetState: BlockState, level: Level, pos: BlockPos): Boolean {
@@ -113,7 +118,7 @@ interface HammerLikeItem {
                     targetState.spawnAfterBreak(level as ServerLevel, pos, hammerStack, true)
                     val drops = Block.getDrops(
                         targetState,
-                        level as ServerLevel,
+                        level,
                         pos,
                         level.getBlockEntity(pos),
                         livingEntity,
@@ -123,7 +128,7 @@ interface HammerLikeItem {
                         Block.popResourceFromFace(
                             level,
                             pos,
-                            (pick as BlockHitResult).direction,
+                            pick.direction,
                             e
                         )
                     })

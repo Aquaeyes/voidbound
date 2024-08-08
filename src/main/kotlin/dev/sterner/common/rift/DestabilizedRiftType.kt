@@ -18,10 +18,10 @@ import kotlin.math.sin
 
 class DestabilizedRiftType : RiftType() {
 
-    override fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity){
+    override fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity) {
         super.tick(level, blockPos, blockEntity)
-        for (i in 1 .. 4) {
-            genParticleOrbit(level, blockPos,8,  Blocks.GRASS_BLOCK.defaultBlockState(), i)
+        for (i in 1..4) {
+            genParticleOrbit(level, blockPos, 8, Blocks.GRASS_BLOCK.defaultBlockState(), i)
         }
     }
 
@@ -66,6 +66,11 @@ class DestabilizedRiftType : RiftType() {
                 )
             }
             .setLifetime(RandomHelper.randomBetween(level.random, 40, 80))
-            .spawn(level, blockPos.x + 0.5, blockPos.y + 0.5 + yRand, blockPos.z + 0.5 + if (direction % 2 == 0) discRad / 2 else -discRad / 2)
+            .spawn(
+                level,
+                blockPos.x + 0.5,
+                blockPos.y + 0.5 + yRand,
+                blockPos.z + 0.5 + if (direction % 2 == 0) discRad / 2 else -discRad / 2
+            )
     }
 }

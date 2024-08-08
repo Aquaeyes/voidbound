@@ -17,11 +17,12 @@ import net.minecraft.util.Mth
 import java.util.function.Function
 
 
-class CrimsonBookModel(modelPart: ModelPart) : Model(Function<ResourceLocation, RenderType> { location: ResourceLocation ->
-    RenderType.entitySolid(
-        location
-    )
-}) {
+class CrimsonBookModel(modelPart: ModelPart) :
+    Model(Function<ResourceLocation, RenderType> { location: ResourceLocation ->
+        RenderType.entitySolid(
+            location
+        )
+    }) {
     private val root: ModelPart = modelPart.getChild("root")
     private val flipPage2: ModelPart = root.getChild("flipPage2")
     private val rightPages: ModelPart = root.getChild("rightPages")
@@ -37,7 +38,7 @@ class CrimsonBookModel(modelPart: ModelPart) : Model(Function<ResourceLocation, 
         leftPages.zRot = -f
         rightPages.zRot = f
         flipPage1.zRot = f - 0.2f
-        flipPage2.zRot = - f + 0.2f
+        flipPage2.zRot = -f + 0.2f
         leftPages.x = Mth.sin(f)
         rightPages.x = Mth.sin(f)
         flipPage1.x = Mth.sin(f)

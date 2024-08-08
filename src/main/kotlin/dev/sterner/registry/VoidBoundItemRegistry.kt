@@ -1,6 +1,5 @@
 package dev.sterner.registry
 
-import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
 import dev.sterner.common.item.*
@@ -12,8 +11,6 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.SwordItem
-import net.minecraft.world.item.Tier
-import net.minecraft.world.item.Tiers
 
 object VoidBoundItemRegistry {
 

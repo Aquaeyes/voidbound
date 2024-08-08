@@ -3,10 +3,7 @@ package dev.sterner.client.model
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import dev.sterner.VoidBound
-import dev.sterner.common.entity.CrimsonKnightEntity
 import dev.sterner.common.entity.CrimsonNecromancerEntity
-import net.minecraft.client.model.EntityModel
-import net.minecraft.client.model.HumanoidModel
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.PartPose
@@ -14,7 +11,6 @@ import net.minecraft.client.model.geom.builders.CubeDeformation
 import net.minecraft.client.model.geom.builders.CubeListBuilder
 import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.model.geom.builders.MeshDefinition
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.HumanoidArm
 
 
@@ -27,17 +23,6 @@ class CrimsonNecromancerModel(root: ModelPart) : AbstractCrimsonModel<CrimsonNec
     private val hat: ModelPart = root.getChild("hat")
     private val body: ModelPart = root.getChild("body")
 
-    override fun setupAnim(
-        entity: CrimsonNecromancerEntity,
-        limbSwing: Float,
-        limbSwingAmount: Float,
-        ageInTicks: Float,
-        netHeadYaw: Float,
-        headPitch: Float
-    ) {
-        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch)
-    }
-
     override fun translateToHand(side: HumanoidArm, poseStack: PoseStack?) {
         val f = if (side == HumanoidArm.RIGHT) 1.0f else -1.0f
         val modelPart = this.getArm(side)
@@ -46,7 +31,12 @@ class CrimsonNecromancerModel(root: ModelPart) : AbstractCrimsonModel<CrimsonNec
         modelPart.x -= f
     }
 
-    override fun prepareMobModel(entity: CrimsonNecromancerEntity, limbSwing: Float, limbSwingAmount: Float, partialTick: Float) {
+    override fun prepareMobModel(
+        entity: CrimsonNecromancerEntity,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        partialTick: Float
+    ) {
         this.rightArmPose = ArmPose.EMPTY
         this.leftArmPose = ArmPose.EMPTY
         super.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTick)

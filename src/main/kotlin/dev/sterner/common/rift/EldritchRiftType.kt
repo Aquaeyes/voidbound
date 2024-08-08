@@ -26,7 +26,8 @@ class EldritchRiftType : RiftType() {
                 }
             if (list.isNotEmpty()) {
                 blockEntity.entity = list.first()
-                VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(blockEntity.entity!!).spiritBinderPos = blockPos
+                VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(blockEntity.entity!!).spiritBinderPos =
+                    blockPos
                 VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.sync(blockEntity.entity!!)
             }
             blockEntity.counter = 0

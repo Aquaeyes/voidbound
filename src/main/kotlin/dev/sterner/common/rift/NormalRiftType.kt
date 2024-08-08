@@ -8,7 +8,4 @@ import net.minecraft.world.level.Level
 class NormalRiftType : RiftType() {
 
 
-    override fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity) {
-        super.tick(level, blockPos, blockEntity)
-    }
 }

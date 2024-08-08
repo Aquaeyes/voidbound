@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState
 import kotlin.math.max
 
 object VoidBoundBlockUtils {
-    
+
     var lastPos: BlockPos? = null
     var lastdistance: Double = 0.0
 
@@ -62,17 +62,17 @@ object VoidBoundBlockUtils {
         skipEvent: Boolean
     ): Boolean {
         if (p is ServerPlayer) {
-            val player = p as ServerPlayer
-            
-            
+            val player = p
+
+
             if (false) {
                 return false
             } else {
                 val iblockstate = world.getBlockState(pos)
                 val tileentity = world.getBlockEntity(pos)
-                val block: Block = iblockstate.getBlock()
+                val block: Block = iblockstate.block
                 if (false) {
-                    
+
                 } else {
                     //world.blockEvent(null, 2001, pos, Block.getStateId(iblockstate))
                     var flag1 = false
@@ -82,7 +82,7 @@ object VoidBoundBlockUtils {
                     } else {
                         val itemstack1: ItemStack = player.mainHandItem
                         val flag = alwaysDrop || iblockstate.canEntityDestroy(world, pos, player)
-                        flag1 = removeBlock(player, pos!!, flag)
+                        flag1 = removeBlock(player, pos, flag)
                         if (flag1 && flag) {
                             var fakeStack: ItemStack = itemstack1.copy()
                             if (silkOverride || fortuneOverride > EnchantmentHelper.getEnchantmentLevel(
@@ -99,7 +99,7 @@ object VoidBoundBlockUtils {
 
                                 val fort = max(
                                     fortuneOverride.toDouble(),
-                                    (if (enchMap[Enchantments.BLOCK_FORTUNE] != null) enchMap[Enchantments.BLOCK_FORTUNE] as Int? else 0)!!.toDouble()
+                                    (if (enchMap[Enchantments.BLOCK_FORTUNE] != null) enchMap[Enchantments.BLOCK_FORTUNE] else 0)!!.toDouble()
                                 ).toInt()
 
                                 if (fort > 0) {
@@ -130,41 +130,42 @@ object VoidBoundBlockUtils {
     private fun removeBlock(player: Player, pos: BlockPos, canHarvest: Boolean): Boolean {
         val iblockstate = player.level().getBlockState(pos)
 
-        val flag: Boolean = iblockstate.onDestroyedByPlayer(player.level(), pos, player, canHarvest, iblockstate.fluidState)
+        val flag: Boolean =
+            iblockstate.onDestroyedByPlayer(player.level(), pos, player, canHarvest, iblockstate.fluidState)
         if (flag) {
             try {
-                iblockstate.getBlock().destroy(player.level(), pos, iblockstate)
+                iblockstate.block.destroy(player.level(), pos, iblockstate)
             } catch (var6: Exception) {
             }
         }
 
         return flag
     }
-    
+
     fun findBlocks(world: Level, pos: BlockPos, block: BlockState, reach: Int) {
         for (xx in -reach..reach) {
             for (yy in reach downTo -reach) {
                 for (zz in -reach..reach) {
-                    if (Math.abs(lastPos!!.getX() + xx - pos.x) > 24) {
+                    if (Math.abs(lastPos!!.x + xx - pos.x) > 24) {
                         return
                     }
 
-                    if (Math.abs(lastPos!!.getY() + yy - pos.y) > 48) {
+                    if (Math.abs(lastPos!!.y + yy - pos.y) > 48) {
                         return
                     }
 
-                    if (Math.abs(lastPos!!.getZ() + zz - pos.z) > 24) {
+                    if (Math.abs(lastPos!!.z + zz - pos.z) > 24) {
                         return
                     }
 
                     val bs: BlockState = world.getBlockState(lastPos!!.offset(xx, yy, zz))
                     val same = bs.block == block.block
-                    
+
                     if (same && bs.block.properties.destroyTime >= 0.0f
                     ) {
-                        val xd = (lastPos!!.getX() + xx - pos.x)
-                        val yd = (lastPos!!.getY() + yy - pos.y)
-                        val zd = (lastPos!!.getZ() + zz - pos.z)
+                        val xd = (lastPos!!.x + xx - pos.x)
+                        val yd = (lastPos!!.y + yy - pos.y)
+                        val zd = (lastPos!!.z + zz - pos.z)
                         val d = xd * xd + yd * yd + zd * zd
                         if (d > lastdistance) {
                             lastdistance = d.toDouble()

@@ -2,7 +2,6 @@ package dev.sterner.client.renderer
 
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
-import com.mojang.math.Axis
 import dev.sterner.VoidBound
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.util.VoidBoundRenderUtils
@@ -42,7 +41,8 @@ object SpiritIconRenderer {
         }
 
         val startFade: Double = ((1.0 - (25.0 / 100.0)) * maxDistance)
-        val currentAlpha = Mth.clamp(1.0 - ((sqrt(squareDistance) - startFade) / (maxDistance - startFade)), 0.0, 0.85).toFloat()
+        val currentAlpha =
+            Mth.clamp(1.0 - ((sqrt(squareDistance) - startFade) / (maxDistance - startFade)), 0.0, 0.85).toFloat()
 
         val entityHeight = entity.nameTagOffsetY - 0.2f
 

@@ -7,10 +7,12 @@ import net.minecraft.world.item.Tier
 import net.minecraft.world.level.block.Block
 import team.lodestar.lodestone.systems.item.tools.magic.MagicShovelItem
 
-class ShovelOfEarthmoverItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) : MagicShovelItem(material, damage, speed,
-    magicDamage,
-    properties
-), HammerLikeItem {
+class ShovelOfEarthmoverItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) :
+    MagicShovelItem(
+        material, damage, speed,
+        magicDamage,
+        properties
+    ), HammerLikeItem {
     override fun getRadius(): Int {
         return 3
     }

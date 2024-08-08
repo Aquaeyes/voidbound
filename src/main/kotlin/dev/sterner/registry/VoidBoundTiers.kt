@@ -1,9 +1,7 @@
 package dev.sterner.registry
 
 import com.sammy.malum.registry.common.item.ItemRegistry
-import net.minecraft.tags.ItemTags
 import net.minecraft.util.LazyLoadedValue
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.Tier
 import net.minecraft.world.item.crafting.Ingredient
 import java.util.function.Supplier

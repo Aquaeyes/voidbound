@@ -6,7 +6,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.level.Level
 
-class CrimsonJesterEntity(level: Level) : AbstractCultistEntity(VoidBoundEntityTypeRegistry.CRIMSON_JESTER_ENTITY.get(), level) {
+class CrimsonJesterEntity(level: Level) :
+    AbstractCultistEntity(VoidBoundEntityTypeRegistry.CRIMSON_JESTER_ENTITY.get(), level) {
 
     companion object {
         fun createCrimsonAttributes(): AttributeSupplier.Builder? {

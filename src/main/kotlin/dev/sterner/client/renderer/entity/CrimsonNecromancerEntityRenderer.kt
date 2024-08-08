@@ -1,11 +1,7 @@
 package dev.sterner.client.renderer.entity
 
 import dev.sterner.VoidBound
-import dev.sterner.client.model.CrimsonHeavyKnightModel
-import dev.sterner.client.model.CrimsonKnightModel
 import dev.sterner.client.model.CrimsonNecromancerModel
-import dev.sterner.common.entity.CrimsonHeavyKnightEntity
-import dev.sterner.common.entity.CrimsonKnightEntity
 import dev.sterner.common.entity.CrimsonNecromancerEntity
 import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.entity.MobRenderer

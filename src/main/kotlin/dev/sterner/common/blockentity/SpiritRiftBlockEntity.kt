@@ -10,7 +10,6 @@ import dev.sterner.common.rift.EldritchRiftType
 import dev.sterner.common.rift.NormalRiftType
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundRiftTypeRegistry
-import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component

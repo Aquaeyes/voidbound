@@ -6,14 +6,14 @@ import dev.sterner.api.ClientTickHandler
 import dev.sterner.client.event.MalumCodexEvent
 import dev.sterner.client.event.SpiritAltarHudRenderEvent
 import dev.sterner.client.model.*
-import dev.sterner.client.renderer.*
-import dev.sterner.client.renderer.blockentity.SpiritRiftBlockEntityRenderer
+import dev.sterner.client.renderer.HallowedMonocleRenderer
+import dev.sterner.client.renderer.WandItemRenderer
 import dev.sterner.client.renderer.blockentity.PortableHoleBlockEntityRenderer
 import dev.sterner.client.renderer.blockentity.SpiritBinderBlockEntityRenderer
+import dev.sterner.client.renderer.blockentity.SpiritRiftBlockEntityRenderer
 import dev.sterner.client.renderer.blockentity.SpiritStabilizerBlockEntityRenderer
 import dev.sterner.client.renderer.entity.*
 import dev.sterner.common.components.VoidBoundPlayerComponent
-import dev.sterner.common.entity.*
 import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
@@ -21,7 +21,6 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.rendering.v1.*
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
-import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
@@ -78,14 +77,35 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
         EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.PARTICLE_ENTITY.get(), ::ParticleEntityRenderer)
 
-        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(), ::SoulSteelGolemEntityRenderer)
+        EntityRendererRegistry.register(
+            VoidBoundEntityTypeRegistry.SOUL_STEEL_GOLEM_ENTITY.get(),
+            ::SoulSteelGolemEntityRenderer
+        )
 
-        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_KNIGHT_ENTITY.get(), ::CrimsonKnightEntityRenderer)
-        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_ARCHER_ENTITY.get(), ::CrimsonArcherEntityRenderer)
-        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_CLERIC_ENTITY.get(), ::CrimsonClericEntityRenderer)
-        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_NECROMANCER_ENTITY.get(), ::CrimsonNecromancerEntityRenderer)
-        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_JESTER_ENTITY.get(), ::CrimsonJesterEntityRenderer)
-        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_HEAVY_KNIGHT_ENTITY.get(), ::CrimsonHeavyKnightEntityRenderer)
+        EntityRendererRegistry.register(
+            VoidBoundEntityTypeRegistry.CRIMSON_KNIGHT_ENTITY.get(),
+            ::CrimsonKnightEntityRenderer
+        )
+        EntityRendererRegistry.register(
+            VoidBoundEntityTypeRegistry.CRIMSON_ARCHER_ENTITY.get(),
+            ::CrimsonArcherEntityRenderer
+        )
+        EntityRendererRegistry.register(
+            VoidBoundEntityTypeRegistry.CRIMSON_CLERIC_ENTITY.get(),
+            ::CrimsonClericEntityRenderer
+        )
+        EntityRendererRegistry.register(
+            VoidBoundEntityTypeRegistry.CRIMSON_NECROMANCER_ENTITY.get(),
+            ::CrimsonNecromancerEntityRenderer
+        )
+        EntityRendererRegistry.register(
+            VoidBoundEntityTypeRegistry.CRIMSON_JESTER_ENTITY.get(),
+            ::CrimsonJesterEntityRenderer
+        )
+        EntityRendererRegistry.register(
+            VoidBoundEntityTypeRegistry.CRIMSON_HEAVY_KNIGHT_ENTITY.get(),
+            ::CrimsonHeavyKnightEntityRenderer
+        )
 
         EntityModelLayerRegistry.registerModelLayer(
             SoulSteelGolemEntityModel.LAYER_LOCATION,
@@ -104,7 +124,10 @@ object VoidBound : ModInitializer, ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(CrimsonBookModel.LAYER_LOCATION) { CrimsonBookModel.createBodyLayer() }
 
         //ArmorRenderer.register(HallowedGogglesRenderer(), VoidBoundItemRegistry.HALLOWED_GOGGLES.get())
-        TrinketRendererRegistry.registerRenderer(VoidBoundItemRegistry.HALLOWED_MONOCLE.get(), HallowedMonocleRenderer())
+        TrinketRendererRegistry.registerRenderer(
+            VoidBoundItemRegistry.HALLOWED_MONOCLE.get(),
+            HallowedMonocleRenderer()
+        )
 
         ItemProperties.register(
             VoidBoundItemRegistry.CALL_OF_THE_VOID.get(),

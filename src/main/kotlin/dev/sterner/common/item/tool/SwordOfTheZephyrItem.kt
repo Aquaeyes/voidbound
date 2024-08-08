@@ -15,9 +15,11 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
 import team.lodestar.lodestone.systems.item.tools.magic.MagicSwordItem
 
-class SwordOfTheZephyrItem(material: Tier?, attackDamage: Int, attackSpeed: Float, magicDamage: Float,
-                           properties: Properties?
-) : MagicSwordItem(material, attackDamage,
+class SwordOfTheZephyrItem(
+    material: Tier?, attackDamage: Int, attackSpeed: Float, magicDamage: Float,
+    properties: Properties?
+) : MagicSwordItem(
+    material, attackDamage,
     attackSpeed,
     magicDamage, properties
 ) {
@@ -98,7 +100,8 @@ class SwordOfTheZephyrItem(material: Tier?, attackDamage: Int, attackSpeed: Floa
 
         if (ticks % 20 == 0) {
 
-            stack.hurtAndBreak(1, player
+            stack.hurtAndBreak(
+                1, player
             ) { player: LivingEntity ->
                 player.broadcastBreakEvent(
                     player.usedItemHand

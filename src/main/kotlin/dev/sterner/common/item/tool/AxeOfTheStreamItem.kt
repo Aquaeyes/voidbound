@@ -13,13 +13,14 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Tier
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
-import org.joml.Vector3d
 import team.lodestar.lodestone.systems.item.tools.magic.MagicAxeItem
 
-class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDamage: Float, properties: Properties?) : MagicAxeItem(material, damage, speed,
-    magicDamage,
-    properties
-) {
+class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDamage: Float, properties: Properties?) :
+    MagicAxeItem(
+        material, damage, speed,
+        magicDamage,
+        properties
+    ) {
 
     override fun getUseDuration(stack: ItemStack): Int {
         return 72000
@@ -41,7 +42,8 @@ class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDama
                     var d6: Double = e.x - livingEntity.x
                     var d8: Double = e.y - livingEntity.y + (livingEntity.bbHeight / 2.0f)
                     var d10: Double = e.z - livingEntity.z
-                    val d11 = Mth.sqrt(d6.toFloat() * d6.toFloat() + d8.toFloat() * d8.toFloat() + d10.toFloat() * d10.toFloat())
+                    val d11 =
+                        Mth.sqrt(d6.toFloat() * d6.toFloat() + d8.toFloat() * d8.toFloat() + d10.toFloat() * d10.toFloat())
                     d6 /= d11
                     d8 /= d11
                     d10 /= d11

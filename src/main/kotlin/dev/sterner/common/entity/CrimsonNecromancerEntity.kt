@@ -6,7 +6,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.level.Level
 
-class CrimsonNecromancerEntity(level: Level) : AbstractCultistEntity(VoidBoundEntityTypeRegistry.CRIMSON_NECROMANCER_ENTITY.get(), level) {
+class CrimsonNecromancerEntity(level: Level) :
+    AbstractCultistEntity(VoidBoundEntityTypeRegistry.CRIMSON_NECROMANCER_ENTITY.get(), level) {
 
     companion object {
         fun createCrimsonAttributes(): AttributeSupplier.Builder? {

@@ -6,8 +6,6 @@ import net.minecraft.client.model.HumanoidModel
 import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.monster.AbstractIllager
-import net.minecraft.world.entity.monster.AbstractIllager.IllagerArmPose
 
 abstract class AbstractCrimsonModel<T : AbstractCultistEntity>(root: ModelPart) : HumanoidModel<T>(root) {
 
@@ -25,9 +23,9 @@ abstract class AbstractCrimsonModel<T : AbstractCultistEntity>(root: ModelPart) 
 
         if (armPose == AbstractCultistEntity.CrimsonArmPose.ATTACKING) {
             if ((entity as LivingEntity).mainHandItem.isEmpty) {
-                AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.attackTime, ageInTicks)
+                //AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.attackTime, ageInTicks)
             } else {
-                AnimationUtils.swingWeaponDown<T>(this.rightArm, this.leftArm, entity, this.attackTime, ageInTicks)
+                //AnimationUtils.swingWeaponDown<T>(this.rightArm, this.leftArm, entity, this.attackTime, ageInTicks)
             }
         } else if (armPose == AbstractCultistEntity.CrimsonArmPose.SPELLCASTING) {
             rightArm.z = 0.0f

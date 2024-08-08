@@ -22,14 +22,18 @@ abstract class RiftType {
     val firstColorAlpha = Color(100, 100, 255, 25)
     val secondColorAlpha = Color(200, 100, 255, 25)
 
-    open fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity){
+    open fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity) {
 
         var transparency = GenericParticleData.create(0.05f, 0.1f).build()
-        var color = ColorParticleData.create(firstColorAlpha, secondColorAlpha).setEasing(Easing.SINE_IN).setCoefficient(0.75f).build()
+        var color =
+            ColorParticleData.create(firstColorAlpha, secondColorAlpha).setEasing(Easing.SINE_IN).setCoefficient(0.75f)
+                .build()
         if (Minecraft.getInstance().player != null) {
             if (VoidBoundApi.hasGoggles()) {
                 transparency = GenericParticleData.create(0.2f, 0.8f).build()
-                color = ColorParticleData.create(firstColor, secondColor).setEasing(Easing.SINE_IN).setCoefficient(0.75f).build()
+                color =
+                    ColorParticleData.create(firstColor, secondColor).setEasing(Easing.SINE_IN).setCoefficient(0.75f)
+                        .build()
             }
         }
 

@@ -1,14 +1,12 @@
 package dev.sterner.client.renderer.blockentity
 
 import com.mojang.blaze3d.vertex.PoseStack
-import com.sammy.malum.client.renderer.entity.FloatingItemEntityRenderer
 import dev.sterner.common.blockentity.SpiritBinderBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import team.lodestar.lodestone.LodestoneLib
 import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
-import java.awt.Color
 
 
 class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :

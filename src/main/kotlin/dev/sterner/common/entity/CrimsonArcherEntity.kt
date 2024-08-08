@@ -11,8 +11,6 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.ai.goal.RangedCrossbowAttackGoal
-import net.minecraft.world.entity.monster.AbstractIllager
-import net.minecraft.world.entity.monster.AbstractIllager.IllagerArmPose
 import net.minecraft.world.entity.monster.CrossbowAttackMob
 import net.minecraft.world.entity.projectile.Projectile
 import net.minecraft.world.item.ItemStack
@@ -20,11 +18,8 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.ProjectileWeaponItem
 import net.minecraft.world.level.Level
 
-class CrimsonArcherEntity(level: Level) : AbstractCultistEntity(VoidBoundEntityTypeRegistry.CRIMSON_ARCHER_ENTITY.get(), level), CrossbowAttackMob {
-
-    val IS_CHARGING_CROSSBOW: EntityDataAccessor<Boolean> = SynchedEntityData.defineId(
-        AbstractCultistEntity::class.java, EntityDataSerializers.BOOLEAN
-    )
+class CrimsonArcherEntity(level: Level) :
+    AbstractCultistEntity(VoidBoundEntityTypeRegistry.CRIMSON_ARCHER_ENTITY.get(), level), CrossbowAttackMob {
 
     override fun defineSynchedData() {
         super.defineSynchedData()
@@ -48,7 +43,7 @@ class CrimsonArcherEntity(level: Level) : AbstractCultistEntity(VoidBoundEntityT
 
     override fun registerGoals() {
         super.registerGoals()
-        goalSelector.addGoal(3, RangedCrossbowAttackGoal<CrimsonArcherEntity>(this, 1.0, 8.0f))
+        goalSelector.addGoal(3, RangedCrossbowAttackGoal(this, 1.0, 8.0f))
     }
 
     override fun populateDefaultEquipmentSlots(random: RandomSource?, difficulty: DifficultyInstance?) {
@@ -59,15 +54,19 @@ class CrimsonArcherEntity(level: Level) : AbstractCultistEntity(VoidBoundEntityT
     companion object {
         fun createCrimsonAttributes(): AttributeSupplier.Builder? {
             return LivingEntity.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 30.0)
+                .add(Attributes.MAX_HEALTH, 20.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 0.75)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.05)
                 .add(Attributes.ATTACK_DAMAGE, 5.0)
                 .add(Attributes.ARMOR)
                 .add(Attributes.ARMOR_TOUGHNESS)
                 .add(Attributes.FOLLOW_RANGE, 16.0)
                 .add(Attributes.ATTACK_KNOCKBACK)
         }
+
+        val IS_CHARGING_CROSSBOW: EntityDataAccessor<Boolean> = SynchedEntityData.defineId(
+            AbstractCultistEntity::class.java, EntityDataSerializers.BOOLEAN
+        )
     }
 
     override fun canFireProjectileWeapon(projectileWeapon: ProjectileWeaponItem): Boolean {

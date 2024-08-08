@@ -4,9 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import dev.emi.trinkets.api.SlotReference
 import dev.emi.trinkets.api.client.TrinketRenderer
 import dev.sterner.VoidBound
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer
 import net.minecraft.client.model.EntityModel
-import net.minecraft.client.model.HumanoidModel
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
