@@ -150,5 +150,65 @@ object MalumCodexEvent {
                     )
                 )
         }
+
+
+
+
+        //-9, 5
+
+        screen?.addEntry("pickaxe_of_the_core", -10, 3) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.PICKAXE_OF_THE_CORE.get()).setStyle(VOID)
+            }.addPage(HeadlineTextPage("pickaxe_of_the_core", "pickaxe_of_the_core.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.PICKAXE_OF_THE_CORE.get()
+                    )
+                )
+        }
+
+        screen?.addEntry("axe_of_the_stream", -11, 3) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.AXE_OF_THE_STREAM.get()).setStyle(VOID)
+            }.addPage(HeadlineTextPage("axe_of_the_stream", "axe_of_the_stream.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.AXE_OF_THE_STREAM.get()
+                    )
+                )
+        }
+
+        screen?.addEntry("shovel_of_the_earthmover", -9, 3) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.SHOVEL_OF_THE_EARTHMOVER.get()).setStyle(VOID)
+            }.addPage(HeadlineTextPage("shovel_of_the_earthmover", "shovel_of_the_earthmover.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.SHOVEL_OF_THE_EARTHMOVER.get()
+                    )
+                )
+        }
+
+        screen?.addEntry("sword_of_the_zephyr", -10, 2) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.SWORD_OF_THE_ZEPHYR.get()).setStyle(VOID)
+            }.addPage(HeadlineTextPage("sword_of_the_zephyr", "sword_of_the_zephyr.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.SWORD_OF_THE_ZEPHYR.get()
+                    )
+                )
+        }
+
+        screen?.addEntry("hoe_of_growth", -11, 2) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.HOE_OF_GROWTH.get()).setStyle(VOID)
+            }.addPage(HeadlineTextPage("hoe_of_growth", "hoe_of_growth.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.HOE_OF_GROWTH.get()
+                    )
+                )
+        }
     }
 }

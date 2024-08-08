@@ -68,5 +68,30 @@
   "malum.gui.book.entry.empty_core": "Empty Core",
   "malum.gui.book.entry.empty_core.description": "I like Storage",
   "malum.gui.book.entry.page.headline.empty_core": "Empty Core",
-  "malum.gui.book.entry.page.text.empty_core.1": "Makes golems empty a chest"
+  "malum.gui.book.entry.page.text.empty_core.1": "Makes golems empty a chest",
+
+  "malum.gui.book.entry.axe_of_the_stream": "Axe of the Stream",
+  "malum.gui.book.entry.axe_of_the_stream.description": "Thaum is that you?",
+  "malum.gui.book.entry.page.headline.axe_of_the_stream": "Axe of the Stream",
+  "malum.gui.book.entry.page.text.axe_of_the_stream.1": "Hazzaaa",
+
+  "malum.gui.book.entry.pickaxe_of_the_core": "Pickaxe of the Core",
+  "malum.gui.book.entry.pickaxe_of_the_core.description": "Thaum is that you?",
+  "malum.gui.book.entry.page.headline.pickaxe_of_the_core": "Pickaxe of the Core",
+  "malum.gui.book.entry.page.text.pickaxe_of_the_core.1": "Hazzaaa",
+
+  "malum.gui.book.entry.shovel_of_the_earthmover": "Shovel of the Earthmover",
+  "malum.gui.book.entry.shovel_of_the_earthmover.description": "Thaum is that you?",
+  "malum.gui.book.entry.page.headline.shovel_of_the_earthmover": "Shovel of the Earthmover",
+  "malum.gui.book.entry.page.text.shovel_of_the_earthmover.1": "Hazzaaa",
+
+  "malum.gui.book.entry.hoe_of_growth": "Hoe of Growth",
+  "malum.gui.book.entry.hoe_of_growth.description": "Thaum is that you?",
+  "malum.gui.book.entry.page.headline.hoe_of_growth": "Hoe of Growth",
+  "malum.gui.book.entry.page.text.hoe_of_growth.1": "Hazzaaa",
+
+  "malum.gui.book.entry.sword_of_the_zephyr": "Sword of the Zephyr",
+  "malum.gui.book.entry.sword_of_the_zephyr.description": "Thaum is that you?",
+  "malum.gui.book.entry.page.headline.sword_of_the_zephyr": "Sword of the Zephyr",
+  "malum.gui.book.entry.page.text.sword_of_the_zephyr.1": "Hazzaaa"
 }
