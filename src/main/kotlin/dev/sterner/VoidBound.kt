@@ -101,6 +101,8 @@ object VoidBound : ModInitializer, ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(CrimsonHeavyKnightModel.LAYER_LOCATION) { CrimsonHeavyKnightModel.createBodyLayer() }
         EntityModelLayerRegistry.registerModelLayer(CrimsonNecromancerModel.LAYER_LOCATION) { CrimsonNecromancerModel.createBodyLayer() }
 
+        EntityModelLayerRegistry.registerModelLayer(CrimsonBookModel.LAYER_LOCATION) { CrimsonBookModel.createBodyLayer() }
+
         //ArmorRenderer.register(HallowedGogglesRenderer(), VoidBoundItemRegistry.HALLOWED_GOGGLES.get())
         TrinketRendererRegistry.registerRenderer(VoidBoundItemRegistry.HALLOWED_MONOCLE.get(), HallowedMonocleRenderer())
 

@@ -42,6 +42,7 @@ object VoidBoundCreativeTabRegistry {
                 entries.accept(VoidBoundItemRegistry.SPIRIT_BINDER.get())
                 entries.accept(VoidBoundItemRegistry.SPIRIT_STABILIZER.get())
                 //entries.accept(VoidBoundItemRegistry.DESTABILIZED_SPIRIT_RIFT.get())
+                entries.accept(VoidBoundItemRegistry.CRIMSON_RITES.get())
                 entries.accept(VoidBoundItemRegistry.CRIMSON_KNIGHT_SWORD.get())
                 entries.accept(VoidBoundItemRegistry.PICKAXE_OF_THE_CORE.get())
                 entries.accept(VoidBoundItemRegistry.SWORD_OF_THE_ZEPHYR.get())

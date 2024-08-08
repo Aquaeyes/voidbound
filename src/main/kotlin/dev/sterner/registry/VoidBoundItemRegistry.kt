@@ -114,4 +114,8 @@ object VoidBoundItemRegistry {
     val SWORD_OF_THE_ZEPHYR = ITEMS.register("sword_of_the_zephyr") {
         SwordOfTheZephyrItem(VoidBoundTiers.ELEMENTAL, -3, 0f, 3f, Item.Properties())
     }
+
+    val CRIMSON_RITES = ITEMS.register("crimson_rites") {
+        CrimsonBookItem(Item.Properties())
+    }
 }

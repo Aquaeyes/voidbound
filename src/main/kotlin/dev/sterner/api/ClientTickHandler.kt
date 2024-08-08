@@ -1,9 +1,12 @@
 package dev.sterner.api
 
+import dev.sterner.common.item.CrimsonBookItem
 import net.minecraft.client.Minecraft
 
 
 object ClientTickHandler {
+
+    var ticksWithCrimsonOpen: Int = 0
     var ticksInGame: Int = 0
     var partialTicks: Float = 0f
 
@@ -19,6 +22,23 @@ object ClientTickHandler {
         if (!mc.isPaused) {
             ticksInGame++
             partialTicks = 0f
+        }
+
+        val ticksToOpen = 10
+        if (CrimsonBookItem.isOpen()) {
+            if (ticksWithCrimsonOpen < 0) {
+                ticksWithCrimsonOpen = 0
+            }
+            if (ticksWithCrimsonOpen < ticksToOpen) {
+                ticksWithCrimsonOpen++
+            }
+        } else {
+            if (ticksWithCrimsonOpen > 0) {
+                if (ticksWithCrimsonOpen > ticksToOpen) {
+                    ticksWithCrimsonOpen = ticksToOpen
+                }
+                ticksWithCrimsonOpen--
+            }
         }
     }
 }

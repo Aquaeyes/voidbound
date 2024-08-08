@@ -12,6 +12,7 @@
   },
   "client": [
     "client.EntityRenderDispatcherMixin",
+    "client.ItemInHandRendererMixin",
     "client.LevelRendererMixin",
     "client.MinecraftMixin"
   ]
