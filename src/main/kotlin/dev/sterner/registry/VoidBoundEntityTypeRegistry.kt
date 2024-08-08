@@ -35,7 +35,7 @@ object VoidBoundEntityTypeRegistry {
     var CRIMSON_KNIGHT_ENTITY = ENTITY_TYPES.register("crimson_knight") {
         FabricEntityTypeBuilder.Mob.createMob<CrimsonKnightEntity>()
             .entityFactory { _, w -> CrimsonKnightEntity(w) }
-            .dimensions(EntityDimensions(0.5f, 1.85f, true))
+            .dimensions(EntityDimensions(0.6f, 1.8f, true))
             .spawnGroup(MobCategory.MONSTER)
             .defaultAttributes { CrimsonKnightEntity.createCrimsonAttributes() }
             .build()
@@ -44,7 +44,7 @@ object VoidBoundEntityTypeRegistry {
     var CRIMSON_ARCHER_ENTITY = ENTITY_TYPES.register("crimson_archer") {
         FabricEntityTypeBuilder.Mob.createMob<CrimsonArcherEntity>()
             .entityFactory { _, w -> CrimsonArcherEntity(w) }
-            .dimensions(EntityDimensions(0.5f, 1.85f, true))
+            .dimensions(EntityDimensions(0.6f, 1.8f, true))
             .spawnGroup(MobCategory.MONSTER)
             .defaultAttributes { CrimsonArcherEntity.createCrimsonAttributes() }
             .build()
@@ -53,7 +53,7 @@ object VoidBoundEntityTypeRegistry {
     var CRIMSON_CLERIC_ENTITY = ENTITY_TYPES.register("crimson_cleric") {
         FabricEntityTypeBuilder.Mob.createMob<CrimsonClericEntity>()
             .entityFactory { _, w -> CrimsonClericEntity(w) }
-            .dimensions(EntityDimensions(0.5f, 1.85f, true))
+            .dimensions(EntityDimensions(0.6f, 1.8f, true))
             .spawnGroup(MobCategory.MONSTER)
             .defaultAttributes { CrimsonClericEntity.createCrimsonAttributes() }
             .build()
@@ -62,7 +62,7 @@ object VoidBoundEntityTypeRegistry {
     var CRIMSON_NECROMANCER_ENTITY = ENTITY_TYPES.register("crimson_necromancer") {
         FabricEntityTypeBuilder.Mob.createMob<CrimsonNecromancerEntity>()
             .entityFactory { _, w -> CrimsonNecromancerEntity(w) }
-            .dimensions(EntityDimensions(0.5f, 1.85f, true))
+            .dimensions(EntityDimensions(0.6f, 1.8f, true))
             .spawnGroup(MobCategory.MONSTER)
             .defaultAttributes { CrimsonNecromancerEntity.createCrimsonAttributes() }
             .build()
@@ -71,7 +71,7 @@ object VoidBoundEntityTypeRegistry {
     var CRIMSON_HEAVY_KNIGHT_ENTITY = ENTITY_TYPES.register("crimson_heavy_knight") {
         FabricEntityTypeBuilder.Mob.createMob<CrimsonHeavyKnightEntity>()
             .entityFactory { _, w -> CrimsonHeavyKnightEntity(w) }
-            .dimensions(EntityDimensions(0.5f, 1.85f, true))
+            .dimensions(EntityDimensions(0.6f, 1.8f, true))
             .spawnGroup(MobCategory.MONSTER)
             .defaultAttributes { CrimsonHeavyKnightEntity.createCrimsonAttributes() }
             .build()
@@ -80,18 +80,9 @@ object VoidBoundEntityTypeRegistry {
     var CRIMSON_JESTER_ENTITY = ENTITY_TYPES.register("crimson_jester") {
         FabricEntityTypeBuilder.Mob.createMob<CrimsonJesterEntity>()
             .entityFactory { _, w -> CrimsonJesterEntity(w) }
-            .dimensions(EntityDimensions(0.5f, 1.85f, true))
+            .dimensions(EntityDimensions(0.6f, 1.9f, true))
             .spawnGroup(MobCategory.MONSTER)
             .defaultAttributes { CrimsonJesterEntity.createCrimsonAttributes() }
-            .build()
-    }
-
-    var CRIMSON_PALADIN_ENTITY = ENTITY_TYPES.register("crimson_paladin") {
-        FabricEntityTypeBuilder.Mob.createMob<CrimsonPaladinEntity>()
-            .entityFactory { _, w -> CrimsonPaladinEntity(w) }
-            .dimensions(EntityDimensions(0.7f, 2.15f, true))
-            .spawnGroup(MobCategory.MONSTER)
-            .defaultAttributes { CrimsonPaladinEntity.createCrimsonAttributes() }
             .build()
     }
 }

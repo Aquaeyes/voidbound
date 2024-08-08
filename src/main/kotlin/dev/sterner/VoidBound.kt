@@ -86,7 +86,6 @@ object VoidBound : ModInitializer, ClientModInitializer {
         EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_NECROMANCER_ENTITY.get(), ::CrimsonNecromancerEntityRenderer)
         EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_JESTER_ENTITY.get(), ::CrimsonJesterEntityRenderer)
         EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_HEAVY_KNIGHT_ENTITY.get(), ::CrimsonHeavyKnightEntityRenderer)
-        EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.CRIMSON_PALADIN_ENTITY.get(), ::CrimsonPaladinEntityRenderer)
 
         EntityModelLayerRegistry.registerModelLayer(
             SoulSteelGolemEntityModel.LAYER_LOCATION,
@@ -98,7 +97,6 @@ object VoidBound : ModInitializer, ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(CrimsonKnightModel.LAYER_LOCATION) { CrimsonKnightModel.createBodyLayer() }
         EntityModelLayerRegistry.registerModelLayer(CrimsonArcherModel.LAYER_LOCATION) { CrimsonArcherModel.createBodyLayer() }
         EntityModelLayerRegistry.registerModelLayer(CrimsonClericModel.LAYER_LOCATION) { CrimsonClericModel.createBodyLayer() }
-        EntityModelLayerRegistry.registerModelLayer(CrimsonPaladinModel.LAYER_LOCATION) { CrimsonPaladinModel.createBodyLayer() }
         EntityModelLayerRegistry.registerModelLayer(CrimsonJesterModel.LAYER_LOCATION) { CrimsonJesterModel.createBodyLayer() }
         EntityModelLayerRegistry.registerModelLayer(CrimsonHeavyKnightModel.LAYER_LOCATION) { CrimsonHeavyKnightModel.createBodyLayer() }
         EntityModelLayerRegistry.registerModelLayer(CrimsonNecromancerModel.LAYER_LOCATION) { CrimsonNecromancerModel.createBodyLayer() }
