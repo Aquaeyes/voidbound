@@ -3,6 +3,7 @@ package dev.sterner.common.entity
 import dev.sterner.common.entity.CrimsonHeavyKnightEntity.Companion.IS_SHIELD_BLOCKING
 import dev.sterner.common.entity.ai.goal.HealAllyGoal
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
@@ -13,6 +14,26 @@ import net.minecraft.world.level.Level
 
 class CrimsonClericEntity(level: Level) :
     AbstractCultistEntity(VoidBoundEntityTypeRegistry.CRIMSON_CLERIC_ENTITY.get(), level) {
+
+    var healCooldown = 0
+
+    override fun addAdditionalSaveData(compound: CompoundTag) {
+        compound.putInt("HealCooldown", this.healCooldown);
+        super.addAdditionalSaveData(compound)
+    }
+
+    override fun readAdditionalSaveData(compound: CompoundTag) {
+        this.healCooldown = compound.getInt("HealCooldown")
+        super.readAdditionalSaveData(compound)
+    }
+
+    override fun baseTick() {
+        if (this.healCooldown > 0) {
+            --this.healCooldown
+        }
+
+        super.baseTick()
+    }
 
     override fun registerGoals() {
         super.registerGoals()
@@ -49,10 +70,10 @@ class CrimsonClericEntity(level: Level) :
 
         fun createCrimsonAttributes(): AttributeSupplier.Builder? {
             return LivingEntity.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 30.0)
+                .add(Attributes.MAX_HEALTH, 20.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 0.75)
-                .add(Attributes.ATTACK_DAMAGE, 5.0)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.25)
+                .add(Attributes.ATTACK_DAMAGE, 2.0)
                 .add(Attributes.ARMOR)
                 .add(Attributes.ARMOR_TOUGHNESS)
                 .add(Attributes.FOLLOW_RANGE, 16.0)

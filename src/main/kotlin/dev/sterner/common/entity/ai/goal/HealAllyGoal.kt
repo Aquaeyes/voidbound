@@ -52,6 +52,7 @@ class HealAllyGoal(val cultist : CrimsonClericEntity) : Goal() {
             cultist.getNavigation().moveTo(targetHeal!!, 0.5)
             if (cultist.distanceTo(targetHeal!!) <= 2.0) {
                 targetHeal?.heal(15.0f)
+                cultist.healCooldown = 20 * 5
             }
         }
     }
