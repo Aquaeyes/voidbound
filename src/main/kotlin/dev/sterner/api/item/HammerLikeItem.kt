@@ -88,7 +88,6 @@ interface HammerLikeItem {
         while (iterator.hasNext()) {
             val pos = iterator.next()
 
-            // Prevent the hammer from breaking if the damage is too high
             if (!livingEntity.isCreative && (hammerStack.damageValue + (damage + 1)) >= hammerStack.maxDamage - 1) {
                 break
             }
