@@ -8,8 +8,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ProjectileWeaponItem
 
 
-class RaiseShieldGoal(val cultist: CrimsonHeavyKnightEntity) : Goal() {
-
+class RaiseShieldGoal(private val cultist: CrimsonHeavyKnightEntity) : Goal() {
 
     override fun canContinueToUse(): Boolean {
         return this.canUse()
@@ -30,7 +29,7 @@ class RaiseShieldGoal(val cultist: CrimsonHeavyKnightEntity) : Goal() {
         cultist.shieldCoolDown = 20
     }
 
-    protected fun raiseShield(): Boolean {
+    private fun raiseShield(): Boolean {
         val target: LivingEntity? = cultist.target
         if (target != null && cultist.shieldCoolDown == 0) {
             if (target is Player) {
