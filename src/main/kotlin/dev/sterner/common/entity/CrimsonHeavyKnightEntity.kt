@@ -2,6 +2,7 @@ package dev.sterner.common.entity
 
 import dev.sterner.common.entity.ai.goal.RaiseShieldGoal
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
+import net.minecraft.client.model.HumanoidModel.ArmPose
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.LivingEntity
@@ -9,6 +10,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal
 import net.minecraft.world.item.AxeItem
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.level.Level
 
@@ -16,6 +18,7 @@ import net.minecraft.world.level.Level
 class CrimsonHeavyKnightEntity(level: Level) :
     AbstractCultistEntity(VoidBoundEntityTypeRegistry.CRIMSON_HEAVY_KNIGHT_ENTITY.get(), level) {
 
+    var isUsingShield: Boolean = false
     var shieldCoolDown: Int = 0
 
     override fun registerGoals() {
@@ -36,6 +39,14 @@ class CrimsonHeavyKnightEntity(level: Level) :
                 }
             }
         })
+    }
+
+    override fun getArmPose(): CrimsonArmPose {
+        if (this.isUsingShield) {
+            return CrimsonArmPose.BLOCK
+        }
+
+        return super.getArmPose()
     }
 
     override fun addAdditionalSaveData(compound: CompoundTag) {

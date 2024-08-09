@@ -21,10 +21,12 @@ class RaiseShieldGoal(val cultist: CrimsonHeavyKnightEntity) : Goal() {
 
     override fun start() {
         cultist.startUsingItem(InteractionHand.OFF_HAND)
+        cultist.isUsingShield = true
     }
 
     override fun stop() {
         cultist.stopUsingItem()
+        cultist.isUsingShield = false
     }
 
     protected fun raiseShield(): Boolean {

@@ -48,6 +48,9 @@ abstract class AbstractCrimsonModel<T : AbstractCultistEntity>(root: ModelPart) 
             AnimationUtils.animateCrossbowHold(this.rightArm, this.leftArm, this.head, true)
         } else if (armPose == AbstractCultistEntity.CrimsonArmPose.CROSSBOW_CHARGE) {
             AnimationUtils.animateCrossbowCharge(this.rightArm, this.leftArm, entity, true)
+        } else if (armPose == AbstractCultistEntity.CrimsonArmPose.BLOCK) {
+            this.leftArm.xRot = this.leftArm.xRot * 0.5f - 0.9424779f;
+            this.leftArm.yRot = 0.5235988f;
         }
     }
 }

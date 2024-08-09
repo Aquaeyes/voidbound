@@ -92,6 +92,7 @@ abstract class AbstractCultistEntity(entityType: EntityType<out Monster>, level:
         BOW_AND_ARROW,
         CROSSBOW_HOLD,
         CROSSBOW_CHARGE,
-        NEUTRAL
+        NEUTRAL,
+        BLOCK
     }
 }
