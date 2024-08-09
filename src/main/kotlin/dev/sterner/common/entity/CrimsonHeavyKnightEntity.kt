@@ -55,7 +55,7 @@ class CrimsonHeavyKnightEntity(level: Level) :
     }
 
     override fun readAdditionalSaveData(compound: CompoundTag) {
-        this.shieldCoolDown = compound.getInt("ShieldCoolDown")
+        this.shieldCoolDown = compound.getInt("ShieldCooldown")
         super.readAdditionalSaveData(compound)
     }
 
