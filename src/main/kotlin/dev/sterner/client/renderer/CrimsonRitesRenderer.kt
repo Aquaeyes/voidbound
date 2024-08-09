@@ -16,6 +16,7 @@ import net.minecraft.util.Mth
 import net.minecraft.world.inventory.InventoryMenu
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
+import org.joml.Quaternionf
 import team.lodestar.lodestone.systems.client.ClientTickCounter
 
 
@@ -47,6 +48,10 @@ object CrimsonRitesRenderer {
         return model as CrimsonBookModel
     }
 
+    fun toRadians(degrees: Float): Float {
+        return (degrees / 180f * Math.PI).toFloat()
+    }
+
     private fun doRender(leftHanded: Boolean, poseStack: PoseStack, buffers: MultiBufferSource, light: Int) {
         poseStack.pushPose()
 
@@ -60,9 +65,11 @@ object CrimsonRitesRenderer {
         }
 
         if (!leftHanded) {
-            poseStack.translate(0.1f, 0.125f + 0.01f * ticks - 1.4f, -0.2f - 0.025f * ticks + 0.2f)
+            poseStack.translate(0.1f, 0.125f - 0.02f * ticks - 1.4f, -0.2f - 0.025f * ticks + 0.2f)
+            poseStack.mulPose(Quaternionf().rotateX(toRadians(-ticks * 1.5f)))
         } else {
-            poseStack.translate(-0.1f, 0.125f + 0.01f * ticks - 1.4f, -0.2f - 0.025f * ticks + 0.2f)
+            poseStack.translate(-0.1f, 0.125f - 0.02f * ticks - 1.4f, -0.2f - 0.025f * ticks + 0.2f)
+            poseStack.mulPose(Quaternionf().rotateX(toRadians(-ticks * 1.5f)))
         }
         val opening = Mth.clamp(ticks / 12f, 0f, 1f)
 
