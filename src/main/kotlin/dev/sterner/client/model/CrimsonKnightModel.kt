@@ -125,18 +125,18 @@ class CrimsonKnightModel(root: ModelPart) : AbstractCrimsonModel<CrimsonKnightEn
                     .addBox(-1.5f, 5.2f, -2.4f, 3.0f, 3.0f, 1.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             )
+            val hat = partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.offset(0.0f, 0.0f, 0.0f))
 
-            val hat = partdefinition.addOrReplaceChild(
-                "hat",
-                CubeListBuilder.create().texOffs(64, 0)
-                    .addBox(-4.5f, -8.5f, -4.5f, 9.0f, 9.0f, 9.0f, CubeDeformation(0.0f)),
-                PartPose.offset(0.0f, 0.0f, 0.0f)
-            )
 
             val head = partdefinition.addOrReplaceChild(
                 "head",
                 CubeListBuilder.create().texOffs(32, 0)
                     .addBox(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, CubeDeformation(0.0f)),
+                PartPose.offset(0.0f, 0.0f, 0.0f)
+            ).addOrReplaceChild(
+                "helm",
+                CubeListBuilder.create().texOffs(64, 0)
+                    .addBox(-4.5f, -8.5f, -4.5f, 9.0f, 9.0f, 9.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 

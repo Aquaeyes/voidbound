@@ -50,25 +50,6 @@ class CrimsonArcherEntity(level: Level) :
         this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack(Items.CROSSBOW))
     }
 
-
-    companion object {
-        fun createCrimsonAttributes(): AttributeSupplier.Builder? {
-            return LivingEntity.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 20.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.3)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 0.05)
-                .add(Attributes.ATTACK_DAMAGE, 5.0)
-                .add(Attributes.ARMOR)
-                .add(Attributes.ARMOR_TOUGHNESS)
-                .add(Attributes.FOLLOW_RANGE, 16.0)
-                .add(Attributes.ATTACK_KNOCKBACK)
-        }
-
-        val IS_CHARGING_CROSSBOW: EntityDataAccessor<Boolean> = SynchedEntityData.defineId(
-            AbstractCultistEntity::class.java, EntityDataSerializers.BOOLEAN
-        )
-    }
-
     override fun canFireProjectileWeapon(projectileWeapon: ProjectileWeaponItem): Boolean {
         return projectileWeapon === Items.CROSSBOW
     }
@@ -88,5 +69,23 @@ class CrimsonArcherEntity(level: Level) :
 
     override fun onCrossbowAttackPerformed() {
         this.noActionTime = 0
+    }
+
+    companion object {
+        fun createCrimsonAttributes(): AttributeSupplier.Builder? {
+            return LivingEntity.createLivingAttributes()
+                .add(Attributes.MAX_HEALTH, 20.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.3)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.05)
+                .add(Attributes.ATTACK_DAMAGE, 5.0)
+                .add(Attributes.ARMOR)
+                .add(Attributes.ARMOR_TOUGHNESS)
+                .add(Attributes.FOLLOW_RANGE, 16.0)
+                .add(Attributes.ATTACK_KNOCKBACK)
+        }
+
+        val IS_CHARGING_CROSSBOW: EntityDataAccessor<Boolean> = SynchedEntityData.defineId(
+            AbstractCultistEntity::class.java, EntityDataSerializers.BOOLEAN
+        )
     }
 }

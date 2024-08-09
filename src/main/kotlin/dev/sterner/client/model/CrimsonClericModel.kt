@@ -262,19 +262,19 @@ class CrimsonClericModel(root: ModelPart) : AbstractCrimsonModel<CrimsonClericEn
                     .addBox(-2.0f, -7.1f, -6.1f, 4.0f, 3.0f, 2.0f, CubeDeformation(0.0f)),
                 PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, -0.0524f, 0.0f, 0.0f)
             )
+            val hat = partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.offset(0.0f, 0.0f, 0.0f))
 
-            val hat = partdefinition.addOrReplaceChild(
-                "hat",
-                CubeListBuilder.create().texOffs(64, 0)
-                    .addBox(-4.5f, -8.5f, -3.7f, 9.0f, 9.0f, 8.0f, CubeDeformation(0.0f)),
-                PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, -0.0524f, 0.0f, 0.0f)
-            )
 
             val Hair = head.addOrReplaceChild(
                 "Hair",
                 CubeListBuilder.create().texOffs(32, 80)
                     .addBox(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
+            ).addOrReplaceChild(
+                "hood",
+                CubeListBuilder.create().texOffs(64, 0)
+                    .addBox(-4.5f, -8.5f, -3.7f, 9.0f, 9.0f, 8.0f, CubeDeformation(0.0f)),
+                PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, -0.0524f, 0.0f, 0.0f)
             )
 
             val HoodBack = head.addOrReplaceChild(

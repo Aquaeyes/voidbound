@@ -21,13 +21,7 @@ abstract class AbstractCrimsonModel<T : AbstractCultistEntity>(root: ModelPart) 
 
         val armPose = (entity as AbstractCultistEntity).getArmPose()
 
-        if (armPose == AbstractCultistEntity.CrimsonArmPose.ATTACKING) {
-            if ((entity as LivingEntity).mainHandItem.isEmpty) {
-                //AnimationUtils.animateZombieArms(this.leftArm, this.rightArm, true, this.attackTime, ageInTicks)
-            } else {
-                //AnimationUtils.swingWeaponDown<T>(this.rightArm, this.leftArm, entity, this.attackTime, ageInTicks)
-            }
-        } else if (armPose == AbstractCultistEntity.CrimsonArmPose.SPELLCASTING) {
+        if (armPose == AbstractCultistEntity.CrimsonArmPose.SPELLCASTING) {
             rightArm.z = 0.0f
             rightArm.x = -5.0f
             leftArm.z = 0.0f
@@ -49,8 +43,8 @@ abstract class AbstractCrimsonModel<T : AbstractCultistEntity>(root: ModelPart) 
         } else if (armPose == AbstractCultistEntity.CrimsonArmPose.CROSSBOW_CHARGE) {
             AnimationUtils.animateCrossbowCharge(this.rightArm, this.leftArm, entity, true)
         } else if (armPose == AbstractCultistEntity.CrimsonArmPose.BLOCK) {
-            this.leftArm.xRot = this.leftArm.xRot * 0.5f - 0.9424779f;
-            this.leftArm.yRot = 0.5235988f;
+            this.rightArm.xRot = this.rightArm.xRot * 0.5f - 0.9424779f
+            this.rightArm.yRot = -0.5235988f
         }
     }
 }

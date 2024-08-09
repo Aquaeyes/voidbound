@@ -1,16 +1,21 @@
 package dev.sterner.common.entity
 
+import dev.sterner.common.entity.CrimsonArcherEntity.Companion.IS_CHARGING_CROSSBOW
 import dev.sterner.common.entity.ai.goal.RaiseShieldGoal
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
-import net.minecraft.client.model.HumanoidModel.ArmPose
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.syncher.EntityDataAccessor
+import net.minecraft.network.syncher.EntityDataSerializers
+import net.minecraft.network.syncher.SynchedEntityData
+import net.minecraft.tags.DamageTypeTags
 import net.minecraft.world.InteractionHand
+import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal
 import net.minecraft.world.item.AxeItem
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.level.Level
 
@@ -18,8 +23,21 @@ import net.minecraft.world.level.Level
 class CrimsonHeavyKnightEntity(level: Level) :
     AbstractCultistEntity(VoidBoundEntityTypeRegistry.CRIMSON_HEAVY_KNIGHT_ENTITY.get(), level) {
 
-    var isUsingShield: Boolean = false
     var shieldCoolDown: Int = 0
+
+    fun setShieldBlocking(isShieldBlocking: Boolean) {
+        entityData.set(IS_SHIELD_BLOCKING, isShieldBlocking)
+    }
+
+    private fun isShieldBlocking(): Boolean {
+        return entityData.get(IS_SHIELD_BLOCKING)
+    }
+
+    override fun defineSynchedData() {
+        super.defineSynchedData()
+        entityData.define(IS_SHIELD_BLOCKING, false)
+    }
+
 
     override fun registerGoals() {
         super.registerGoals()
@@ -42,7 +60,7 @@ class CrimsonHeavyKnightEntity(level: Level) :
     }
 
     override fun getArmPose(): CrimsonArmPose {
-        if (this.isUsingShield) {
+        if (this.isShieldBlocking()) {
             return CrimsonArmPose.BLOCK
         }
 
@@ -72,6 +90,28 @@ class CrimsonHeavyKnightEntity(level: Level) :
         if (attacker.mainHandItem.getItem() is AxeItem) this.disableShield(true)
     }
 
+    override fun isBlocking(): Boolean {
+        if (isShieldBlocking()) {
+            return true
+        }
+
+        return super.isBlocking()
+    }
+
+    override fun hurt(source: DamageSource, amount: Float): Boolean {
+
+        if (amount > 0.0f && this.isDamageSourceBlocked(source)) {
+            this.hurtCurrentlyUsedShield(amount)
+
+            val directEntity = source.directEntity
+            if (!source.`is`(DamageTypeTags.IS_PROJECTILE) && directEntity is LivingEntity) {
+                val livingEntity = directEntity
+                this.blockUsingShield(livingEntity)
+            }
+        }
+
+        return super.hurt(source, amount)
+    }
 
     fun disableShield(increase: Boolean) {
         var chance = 0.25f + EnchantmentHelper.getBlockEfficiency(this).toFloat() * 0.05f
@@ -84,7 +124,14 @@ class CrimsonHeavyKnightEntity(level: Level) :
     }
 
 
+
     companion object {
+
+
+        val IS_SHIELD_BLOCKING: EntityDataAccessor<Boolean> = SynchedEntityData.defineId(
+            AbstractCultistEntity::class.java, EntityDataSerializers.BOOLEAN
+        )
+
         fun createCrimsonAttributes(): AttributeSupplier.Builder? {
             return LivingEntity.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 30.0)

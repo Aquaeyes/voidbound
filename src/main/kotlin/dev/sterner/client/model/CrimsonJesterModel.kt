@@ -116,6 +116,11 @@ class CrimsonJesterModel(root: ModelPart) : AbstractCrimsonModel<CrimsonJesterEn
                 CubeListBuilder.create().texOffs(0, 0)
                     .addBox(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
+            ).addOrReplaceChild(
+                "hood",
+                CubeListBuilder.create().texOffs(56, 0)
+                    .addBox(-4.5f, -8.5f, -4.5f, 9.0f, 9.0f, 9.0f, CubeDeformation(0.0f)),
+                PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 
             val MaskBottom = head.addOrReplaceChild(
@@ -159,13 +164,8 @@ class CrimsonJesterModel(root: ModelPart) : AbstractCrimsonModel<CrimsonJesterEn
                     .addBox(-4.0f, -0.1f, -4.0f, 8.0f, 1.0f, 2.0f, CubeDeformation(0.0f)),
                 PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, 0.2731f, 0.0f, 0.0f)
             )
+            val hat = partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.offset(0.0f, 0.0f, 0.0f))
 
-            val hat = partdefinition.addOrReplaceChild(
-                "hat",
-                CubeListBuilder.create().texOffs(56, 0)
-                    .addBox(-4.5f, -8.5f, -4.5f, 9.0f, 9.0f, 9.0f, CubeDeformation(0.0f)),
-                PartPose.offset(0.0f, 0.0f, 0.0f)
-            )
 
             val HatRingBuckle = head.addOrReplaceChild(
                 "HatRingBuckle",
