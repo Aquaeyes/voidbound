@@ -177,69 +177,69 @@ class CrimsonClericModel(root: ModelPart) : AbstractCrimsonModel<CrimsonClericEn
             val left_arm = partdefinition.addOrReplaceChild(
                 "left_arm",
                 CubeListBuilder.create(),
-                PartPose.offset(0.0f, 24.0f, 0.0f)
+                PartPose.offset(5.0f, 3.0f, 0.0f)
             )
 
             val LeftArm = left_arm.addOrReplaceChild(
                 "LeftArm",
                 CubeListBuilder.create().texOffs(32, 48)
                     .addBox(-1.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f, CubeDeformation(0.0f)),
-                PartPose.offset(5.0f, -22.0f, 0.0f)
+                PartPose.offset(0.0f, -1.0f, 0.0f)
             )
 
             val ShoulderLBottom = left_arm.addOrReplaceChild(
                 "ShoulderLBottom",
                 CubeListBuilder.create().texOffs(18, 40).mirror()
                     .addBox(5.5f, 2.5f, -2.2f, 3.0f, 2.0f, 3.0f, CubeDeformation(0.0f)).mirror(false),
-                PartPose.offsetAndRotation(0.0f, -24.0f, 0.0f, 0.0f, 0.0f, -0.1396f)
+                PartPose.offsetAndRotation(-5.0f, -3.0f, 0.0f, 0.0f, 0.0f, -0.1396f)
             )
 
             val ShoulderLBottomBack = left_arm.addOrReplaceChild(
                 "ShoulderLBottomBack",
                 CubeListBuilder.create().texOffs(18, 40).mirror()
                     .addBox(5.5f, 2.5f, -0.2f, 3.0f, 2.0f, 3.0f, CubeDeformation(0.0f)).mirror(false),
-                PartPose.offsetAndRotation(0.0f, -24.0f, 0.0f, 0.0f, 0.0f, -0.1396f)
+                PartPose.offsetAndRotation(-5.0f, -3.0f, 0.0f, 0.0f, 0.0f, -0.1396f)
             )
 
             val ShoulderL = left_arm.addOrReplaceChild(
                 "ShoulderL",
                 CubeListBuilder.create().texOffs(0, 32)
                     .addBox(0.0f, 0.0f, -2.5f, 9.0f, 3.0f, 5.0f, CubeDeformation(0.0f)),
-                PartPose.offsetAndRotation(0.0f, -24.0f, 0.0f, 0.0f, 0.0f, -0.1396f)
+                PartPose.offsetAndRotation(-5.0f, -3.0f, 0.0f, 0.0f, 0.0f, -0.1396f)
             )
 
             val right_arm = partdefinition.addOrReplaceChild(
                 "right_arm",
                 CubeListBuilder.create(),
-                PartPose.offset(0.0f, 24.0f, 0.0f)
+                PartPose.offset(-5.0f, 3.0f, 0.0f)
             )
 
             val ShoulderRBottomBack = right_arm.addOrReplaceChild(
                 "ShoulderRBottomBack",
                 CubeListBuilder.create().texOffs(18, 41)
                     .addBox(-8.3f, 2.5f, 0.2f, 3.0f, 2.0f, 2.0f, CubeDeformation(0.0f)),
-                PartPose.offsetAndRotation(0.0f, -24.0f, 0.0f, 0.0f, 0.0f, 0.1396f)
+                PartPose.offsetAndRotation(5.0f, -3.0f, 0.0f, 0.0f, 0.0f, 0.1396f)
             )
 
             val RightArm = right_arm.addOrReplaceChild(
                 "RightArm",
                 CubeListBuilder.create().texOffs(40, 16)
                     .addBox(-3.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f, CubeDeformation(0.0f)),
-                PartPose.offset(-5.0f, -22.0f, 0.0f)
+                PartPose.offset(0.0f, -1.0f, 0.0f)
             )
 
             val ShoulderR = right_arm.addOrReplaceChild(
                 "ShoulderR",
                 CubeListBuilder.create().texOffs(0, 32).mirror()
                     .addBox(-9.0f, 0.0f, -2.5f, 9.0f, 3.0f, 5.0f, CubeDeformation(0.0f)).mirror(false),
-                PartPose.offsetAndRotation(0.0f, -24.0f, 0.0f, 0.0f, 0.0f, 0.1396f)
+                PartPose.offsetAndRotation(5.0f, -3.0f, 0.0f, 0.0f, 0.0f, 0.1396f)
             )
 
             val ShoulderRBottom = right_arm.addOrReplaceChild(
                 "ShoulderRBottom",
                 CubeListBuilder.create().texOffs(18, 40)
                     .addBox(-8.3f, 2.5f, -2.2f, 3.0f, 2.0f, 3.0f, CubeDeformation(0.0f)),
-                PartPose.offsetAndRotation(0.0f, -24.0f, 0.0f, 0.0f, 0.0f, 0.1396f)
+                PartPose.offsetAndRotation(5.0f, -3.0f, 0.0f, 0.0f, 0.0f, 0.1396f)
             )
 
             val head = partdefinition.addOrReplaceChild(
@@ -262,19 +262,19 @@ class CrimsonClericModel(root: ModelPart) : AbstractCrimsonModel<CrimsonClericEn
                     .addBox(-2.0f, -7.1f, -6.1f, 4.0f, 3.0f, 2.0f, CubeDeformation(0.0f)),
                 PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, -0.0524f, 0.0f, 0.0f)
             )
-            val hat = partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.offset(0.0f, 0.0f, 0.0f))
 
+            val HoodMain = head.addOrReplaceChild(
+                "HoodMain",
+                CubeListBuilder.create().texOffs(64, 0)
+                    .addBox(-4.5f, -8.5f, -3.7f, 9.0f, 9.0f, 8.0f, CubeDeformation(0.0f)),
+                PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, -0.0524f, 0.0f, 0.0f)
+            )
 
             val Hair = head.addOrReplaceChild(
                 "Hair",
                 CubeListBuilder.create().texOffs(32, 80)
                     .addBox(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
-            ).addOrReplaceChild(
-                "hood",
-                CubeListBuilder.create().texOffs(64, 0)
-                    .addBox(-4.5f, -8.5f, -3.7f, 9.0f, 9.0f, 8.0f, CubeDeformation(0.0f)),
-                PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, -0.0524f, 0.0f, 0.0f)
             )
 
             val HoodBack = head.addOrReplaceChild(
@@ -297,6 +297,9 @@ class CrimsonClericModel(root: ModelPart) : AbstractCrimsonModel<CrimsonClericEn
                     .addBox(-4.5f, -8.5f, -4.4f, 9.0f, 3.0f, 2.0f, CubeDeformation(0.0f)),
                 PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, 0.096f, 0.0f, 0.0f)
             )
+
+            val hat =
+                partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.offset(4.0f, 3.0f, 0.0f))
 
             return LayerDefinition.create(meshdefinition, 128, 128)
         }
