@@ -37,7 +37,7 @@ class HeartParticlePacket(val vector3f: Vector3f) : LodestoneClientPacket() {
                 .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
                 .setTransparencyData(GenericParticleData.create(0.9f, 0.05f, 0f).setEasing(Easing.CUBIC_OUT, Easing.EXPO_IN).build())
                 .setScaleData(scaleData)
-                .setLifetime(50)
+                .setLifetime(20)
                 .setLifeDelay(2)
                 .enableNoClip()
                 .enableForcedSpawn()

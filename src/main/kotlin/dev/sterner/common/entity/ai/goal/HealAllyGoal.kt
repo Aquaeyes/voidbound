@@ -106,19 +106,17 @@ class HealAllyGoal(
         mob.heal(15f)
 
         for (player in PlayerLookup.tracking(mob)) {
-            for (i in 0 .. 30) {
+            for (i in 0 .. 20) {
                 VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClient(HeartParticlePacket(
                     Vector3f(
-                        mob.x.toFloat() + mob.random.nextFloat() - 0.5f,
-                        mob.y.toFloat() + mob.random.nextFloat() - 0.5f + 1,
-                        mob.z.toFloat() + mob.random.nextFloat() - 0.5f
+                        mob.position().x.toFloat() + mob.random.nextFloat() - 0.5f,
+                        mob.position().y.toFloat() + ((mob.random.nextFloat() - 0.5f) / 2) + 1,
+                        mob.position().z.toFloat() + mob.random.nextFloat() - 0.5f
                     )
                 ),
                     player
                 )
             }
-
         }
     }
-
 }
