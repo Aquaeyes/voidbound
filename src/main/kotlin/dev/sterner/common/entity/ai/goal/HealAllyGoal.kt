@@ -10,12 +10,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.ai.behavior.BehaviorUtils
 import net.minecraft.world.entity.ai.goal.Goal
-import net.minecraft.world.entity.ai.memory.MemoryModuleType
-import net.minecraft.world.entity.npc.VillagerProfession
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.alchemy.Potions
 import org.joml.Vector3f
 import java.util.*
 import kotlin.math.sqrt
@@ -72,17 +67,15 @@ class HealAllyGoal(
 
     override fun tick() {
         if (mob == null) return
-        val d0: Double = healer.distanceToSqr(
-            mob!!.x,
-            mob!!.y, mob!!.z
-        )
+        val d0: Double = healer.distanceToSqr(mob!!)
+
         healer.setIsHealing(true)
 
-        healer.lookAt(mob, 360f, 360f)
+        healer.lookControl.setLookAt(mob!!)
         if (!(d0 > maxAttackDistance.toDouble())) {
             healer.getNavigation().stop()
         } else {
-            healer.getNavigation().moveTo(this.healer, this.entityMoveSpeed)
+            healer.getNavigation().moveTo(this.mob!!, this.entityMoveSpeed)
         }
         if (mob!!.distanceTo(healer) <= 3.0) {
             healer.getMoveControl().strafe(-0.5f, 0f)
@@ -90,8 +83,7 @@ class HealAllyGoal(
         if (--this.rangedAttackTime == 0) {
             val f = this.attackRadius
             this.healAlly(mob!!)
-            this.rangedAttackTime =
-                Mth.floor(f * (this.maxRangedAttackTime - this.attackIntervalMin).toFloat() + attackIntervalMin.toFloat())
+            this.rangedAttackTime = Mth.floor(f * (this.maxRangedAttackTime - this.attackIntervalMin).toFloat() + attackIntervalMin.toFloat())
         } else if (this.rangedAttackTime < 0) {
             this.rangedAttackTime = Mth.floor(
                 Mth.lerp(
@@ -105,15 +97,12 @@ class HealAllyGoal(
 
     private fun healAlly(mob: LivingEntity) {
         mob.heal(15f)
-
-        mob.level().playSound(null, BlockPos.containing(mob.position()), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.HOSTILE)
+        mob.level().playSound(null, mob, SoundEvents.EVOKER_CAST_SPELL, SoundSource.NEUTRAL, 1.0f, 1.0f)
         for (player in PlayerLookup.tracking(mob)) {
             for (i in 0 .. 20) {
                 VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClient(HeartParticlePacket(
                     Vector3f(
-                        mob.position().x.toFloat() + mob.random.nextFloat() - 0.5f,
-                        mob.position().y.toFloat() + ((mob.random.nextFloat() - 0.5f) / 2) + 1,
-                        mob.position().z.toFloat() + mob.random.nextFloat() - 0.5f
+                        mob.getRandomX(0.5).toFloat(), mob.getRandomY().toFloat(), mob.getRandomZ(0.5).toFloat()
                     )
                 ),
                     player

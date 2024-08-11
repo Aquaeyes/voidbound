@@ -7,8 +7,12 @@ import me.pepperbell.simplenetworking.SimpleChannel
 import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientPacketListener
+import net.minecraft.core.BlockPos
 import net.minecraft.network.FriendlyByteBuf
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.phys.Vec3
 import org.joml.Vector3f
 import team.lodestar.lodestone.handlers.RenderHandler
 import team.lodestar.lodestone.helpers.RandomHelper
