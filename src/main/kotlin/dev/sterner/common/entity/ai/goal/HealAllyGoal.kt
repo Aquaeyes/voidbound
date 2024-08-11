@@ -5,7 +5,9 @@ import dev.sterner.common.entity.CrimsonClericEntity
 import dev.sterner.networking.HeartParticlePacket
 import dev.sterner.registry.VoidBoundPacketRegistry
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
+import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.behavior.BehaviorUtils
@@ -105,6 +107,7 @@ class HealAllyGoal(
     private fun healAlly(mob: LivingEntity, distanceFactor: Float) {
         mob.heal(15f)
 
+        mob.level().playSound(null, BlockPos.containing(mob.position()), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.HOSTILE)
         for (player in PlayerLookup.tracking(mob)) {
             for (i in 0 .. 20) {
                 VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClient(HeartParticlePacket(
