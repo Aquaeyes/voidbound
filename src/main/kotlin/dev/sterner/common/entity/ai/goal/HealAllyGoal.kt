@@ -89,8 +89,7 @@ class HealAllyGoal(
         }
         if (--this.rangedAttackTime == 0) {
             val f = this.attackRadius
-            val distanceFactor: Float = Mth.clamp(f, 0.10f, 0.10f)
-            this.healAlly(mob!!, distanceFactor)
+            this.healAlly(mob!!)
             this.rangedAttackTime =
                 Mth.floor(f * (this.maxRangedAttackTime - this.attackIntervalMin).toFloat() + attackIntervalMin.toFloat())
         } else if (this.rangedAttackTime < 0) {
@@ -104,7 +103,7 @@ class HealAllyGoal(
         }
     }
 
-    private fun healAlly(mob: LivingEntity, distanceFactor: Float) {
+    private fun healAlly(mob: LivingEntity) {
         mob.heal(15f)
 
         mob.level().playSound(null, BlockPos.containing(mob.position()), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.HOSTILE)
