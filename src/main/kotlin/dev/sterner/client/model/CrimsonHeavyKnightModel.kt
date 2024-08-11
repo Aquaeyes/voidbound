@@ -3,6 +3,7 @@ package dev.sterner.client.model
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import dev.sterner.VoidBound
+import dev.sterner.common.entity.AbstractCultistEntity
 import dev.sterner.common.entity.CrimsonHeavyKnightEntity
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.model.geom.ModelPart
@@ -22,6 +23,24 @@ class CrimsonHeavyKnightModel(root: ModelPart) : AbstractCrimsonModel<CrimsonHea
     private val hat: ModelPart = root.getChild("hat")
     private val head: ModelPart = root.getChild("head")
     private val body: ModelPart = root.getChild("body")
+
+    override fun setupAnim(
+        entity: CrimsonHeavyKnightEntity,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float
+    ) {
+        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch)
+
+        val armPose = (entity as AbstractCultistEntity).getArmPose()
+
+        if (armPose == AbstractCultistEntity.CrimsonArmPose.BLOCK) {
+            this.rightArm.xRot = this.rightArm.xRot * 0.5f - 0.9424779f
+            this.rightArm.yRot = -0.5235988f
+        }
+    }
 
     override fun translateToHand(side: HumanoidArm, poseStack: PoseStack?) {
         val f = if (side == HumanoidArm.RIGHT) 1.0f else -1.0f

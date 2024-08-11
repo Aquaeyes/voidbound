@@ -37,7 +37,7 @@ class CrimsonClericEntity(level: Level) :
 
     override fun registerGoals() {
         super.registerGoals()
-        this.goalSelector.addGoal(2, HealAllyGoal(this))
+        this.goalSelector.addGoal(2, HealAllyGoal(this, 1.0, 100, 0, 10.0F))
     }
 
     override fun getArmPose(): CrimsonArmPose {

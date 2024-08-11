@@ -2,32 +2,55 @@ package dev.sterner.common.entity.ai.goal
 
 import dev.sterner.common.entity.AbstractCultistEntity
 import dev.sterner.common.entity.CrimsonClericEntity
-import net.minecraft.core.particles.ParticleTypes
+import dev.sterner.networking.HeartParticlePacket
+import dev.sterner.registry.VoidBoundPacketRegistry
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.util.Mth
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.ai.behavior.BehaviorUtils
 import net.minecraft.world.entity.ai.goal.Goal
+import net.minecraft.world.entity.ai.memory.MemoryModuleType
+import net.minecraft.world.entity.npc.VillagerProfession
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.alchemy.Potions
+import org.joml.Vector3f
+import java.util.*
+import kotlin.math.sqrt
 
 
-class HealAllyGoal(val cultist : CrimsonClericEntity) : Goal() {
+class HealAllyGoal(
+    val healer: CrimsonClericEntity, movespeed: Double,
+    private val attackIntervalMin: Int, maxAttackTime: Int, maxAttackDistanceIn: Float
+) :
+    Goal() {
+    private var mob: LivingEntity? = null
+    private var rangedAttackTime = -1
+    private val entityMoveSpeed = movespeed
+    private var seeTime = 0
+    private val maxRangedAttackTime = maxAttackTime
+    private val attackRadius = maxAttackDistanceIn
+    private val maxAttackDistance = maxAttackDistanceIn * maxAttackDistanceIn
 
-    var targetHeal: AbstractCultistEntity? = null
-    var healProgress = 0
+    init {
+        this.flags = (EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK))
+    }
 
     override fun canUse(): Boolean {
 
-        if (cultist.healCooldown > 0) {
-            return false
-        }
-
-        val list: List<AbstractCultistEntity> = cultist.level().getEntitiesOfClass(
-            AbstractCultistEntity::class.java, cultist.getBoundingBox().inflate(10.0)
+        val list: List<AbstractCultistEntity> = healer.level().getEntitiesOfClass(
+            AbstractCultistEntity::class.java, healer.boundingBox.inflate(10.0, 3.0, 10.0)
         )
-
         if (list.isNotEmpty()) {
-            for (ally in list) {
-                if (!ally.isInvisible && ally.isAlive) {
-                    if (ally.health <= ally.maxHealth) {
-                        targetHeal = ally
-                        return true
-                    }
+            for (mob in list) {
+                if ((mob.isAlive &&
+                            mob.health < mob.maxHealth &&
+                            mob != healer &&
+                            mob.isAlive
+                        )
+                ) {
+                    this.mob = mob
+                    return true
                 }
             }
         }
@@ -35,41 +58,67 @@ class HealAllyGoal(val cultist : CrimsonClericEntity) : Goal() {
     }
 
     override fun canContinueToUse(): Boolean {
-        if (targetHeal != null) {
-            if (targetHeal!!.health == targetHeal!!.maxHealth) {
-                return false
-            }
-        } else {
-            return false
-        }
-        return super.canContinueToUse()
+        return this.canUse() && (mob != null) && (mob!!.health < mob!!.maxHealth)
     }
 
     override fun stop() {
-        cultist.setIsHealing(false)
-        super.stop()
-    }
-
-    override fun start() {
-        this.healAlly()
-        cultist.setIsHealing(true)
+        this.mob = null
+        this.seeTime = 0
+        this.rangedAttackTime = 0
+        healer.setIsHealing(false)
     }
 
     override fun tick() {
-        if (targetHeal != null && targetHeal!!.health < targetHeal!!.maxHealth) {
-            healProgress++
-            if (healProgress > 20 * 2) {
-                this.healAlly()
-                healProgress = 0
-            }
+        if (mob == null) return
+        val d0: Double = healer.distanceToSqr(
+            mob!!.x,
+            mob!!.y, mob!!.z
+        )
+        healer.setIsHealing(true)
+
+        healer.lookAt(mob, 360f, 360f)
+        if (!(d0 > maxAttackDistance.toDouble())) {
+            healer.getNavigation().stop()
+        } else {
+            healer.getNavigation().moveTo(this.healer, this.entityMoveSpeed)
+        }
+        if (mob!!.distanceTo(healer) <= 3.0) {
+            healer.getMoveControl().strafe(-0.5f, 0f)
+        }
+        if (--this.rangedAttackTime == 0) {
+            val f = this.attackRadius
+            val distanceFactor: Float = Mth.clamp(f, 0.10f, 0.10f)
+            this.healAlly(mob!!, distanceFactor)
+            this.rangedAttackTime =
+                Mth.floor(f * (this.maxRangedAttackTime - this.attackIntervalMin).toFloat() + attackIntervalMin.toFloat())
+        } else if (this.rangedAttackTime < 0) {
+            this.rangedAttackTime = Mth.floor(
+                Mth.lerp(
+                    sqrt(d0) / attackRadius.toDouble(),
+                    this.attackIntervalMin.toDouble(),
+                    this.maxAttackDistance.toDouble()
+                )
+            )
         }
     }
 
-    fun healAlly() {
-        if (targetHeal != null) {
-            cultist.getNavigation().moveTo(targetHeal!!, 0.75)
-            targetHeal?.heal(15.0f)
-            cultist.healCooldown = 20 * 5
+    private fun healAlly(mob: LivingEntity, distanceFactor: Float) {
+        mob.heal(15f)
+
+        for (player in PlayerLookup.tracking(mob)) {
+            for (i in 0 .. 30) {
+                VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClient(HeartParticlePacket(
+                    Vector3f(
+                        mob.x.toFloat() + mob.random.nextFloat() - 0.5f,
+                        mob.y.toFloat() + mob.random.nextFloat() - 0.5f + 1,
+                        mob.z.toFloat() + mob.random.nextFloat() - 0.5f
+                    )
+                ),
+                    player
+                )
+            }
+
         }
     }
+
 }

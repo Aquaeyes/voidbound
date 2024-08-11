@@ -1,6 +1,7 @@
 package dev.sterner.registry
 
 import dev.sterner.VoidBound
+import dev.sterner.networking.HeartParticlePacket
 import dev.sterner.networking.SpiritBinderParticlePacket
 import io.github.fabricators_of_create.porting_lib.util.EnvExecutor
 import me.pepperbell.simplenetworking.SimpleChannel
@@ -25,6 +26,10 @@ object VoidBoundPacketRegistry {
         var index = 0
         VOIDBOUND_CHANNEL.registerS2CPacket(
             SpiritBinderParticlePacket::class.java, index++
+        )
+
+        VOIDBOUND_CHANNEL.registerS2CPacket(
+            HeartParticlePacket::class.java, index++
         )
     }
 

@@ -3,6 +3,7 @@ package dev.sterner.client.model
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import dev.sterner.VoidBound
+import dev.sterner.common.entity.AbstractCultistEntity
 import dev.sterner.common.entity.CrimsonClericEntity
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.model.geom.ModelPart
@@ -11,6 +12,7 @@ import net.minecraft.client.model.geom.builders.CubeDeformation
 import net.minecraft.client.model.geom.builders.CubeListBuilder
 import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.model.geom.builders.MeshDefinition
+import net.minecraft.util.Mth
 import net.minecraft.world.entity.HumanoidArm
 
 
@@ -22,6 +24,63 @@ class CrimsonClericModel(root: ModelPart) : AbstractCrimsonModel<CrimsonClericEn
     private val left_arm: ModelPart = root.getChild("left_arm")
     private val right_arm: ModelPart = root.getChild("right_arm")
     private val head: ModelPart = root.getChild("head")
+
+    private val LeftArm = left_arm.getChild("LeftArm")
+    private val ShoulderLBottom = left_arm.getChild("ShoulderLBottom")
+    private val ShoulderLBottomBack = left_arm.getChild("ShoulderLBottomBack")
+    private val ShoulderL = left_arm.getChild("ShoulderL")
+
+    private val RightArm = right_arm.getChild("RightArm")
+    private val ShoulderRBottom = right_arm.getChild("ShoulderRBottom")
+    private val ShoulderRBottomBack = right_arm.getChild("ShoulderRBottomBack")
+    private val ShoulderR = right_arm.getChild("ShoulderR")
+
+
+    override fun setupAnim(
+        entity: CrimsonClericEntity,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float
+    ) {
+        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch)
+
+        val armPose = (entity as AbstractCultistEntity).getArmPose()
+        if (armPose == AbstractCultistEntity.CrimsonArmPose.SPELLCASTING) {
+            rightArm.z = 0.0f
+            rightArm.x = -5.0f
+            leftArm.z = 0.0f
+            leftArm.x = 5.0f
+            rightArm.xRot = Mth.cos(ageInTicks * 0.6662f) * 0.25f
+            leftArm.xRot = Mth.cos(ageInTicks * 0.6662f) * 0.25f
+
+            RightArm.zRot = 2.3561945f
+            ShoulderRBottom.visible = false
+            ShoulderRBottomBack.visible = false
+            ShoulderR.visible = false
+
+            LeftArm.zRot = -2.3561945f
+            ShoulderLBottom.visible = false
+            ShoulderLBottomBack.visible = false
+            ShoulderL.visible = false
+
+            rightArm.yRot = 0.0f
+            leftArm.yRot = 0.0f
+        } else {
+
+            ShoulderRBottom.visible = true
+            ShoulderRBottomBack.visible = true
+            ShoulderR.visible = true
+
+            ShoulderLBottom.visible = true
+            ShoulderLBottomBack.visible = true
+            ShoulderL.visible = true
+
+            RightArm.zRot = 0f
+            LeftArm.zRot = 0f
+        }
+    }
 
     override fun translateToHand(side: HumanoidArm, poseStack: PoseStack?) {
         val f = if (side == HumanoidArm.RIGHT) 1.0f else -1.0f

@@ -3,7 +3,9 @@ package dev.sterner.client.model
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import dev.sterner.VoidBound
+import dev.sterner.common.entity.AbstractCultistEntity
 import dev.sterner.common.entity.CrimsonArcherEntity
+import net.minecraft.client.model.AnimationUtils
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.PartPose
@@ -22,6 +24,31 @@ class CrimsonArcherModel(root: ModelPart) : AbstractCrimsonModel<CrimsonArcherEn
     private val hat: ModelPart = root.getChild("hat")
     private val right_leg: ModelPart = root.getChild("right_leg")
     private val left_leg: ModelPart = root.getChild("left_leg")
+
+    override fun setupAnim(
+        entity: CrimsonArcherEntity,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float
+    ) {
+        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch)
+
+        val armPose = (entity as AbstractCultistEntity).getArmPose()
+
+        if (armPose == AbstractCultistEntity.CrimsonArmPose.BOW_AND_ARROW) {
+            rightArm.yRot = -0.1f + head.yRot
+            rightArm.xRot = -1.5707964f + head.xRot
+            leftArm.xRot = -0.9424779f + head.xRot
+            leftArm.yRot = head.yRot - 0.4f
+            leftArm.zRot = 1.5707964f
+        } else if (armPose == AbstractCultistEntity.CrimsonArmPose.CROSSBOW_HOLD) {
+            AnimationUtils.animateCrossbowHold(this.rightArm, this.leftArm, this.head, true)
+        } else if (armPose == AbstractCultistEntity.CrimsonArmPose.CROSSBOW_CHARGE) {
+            AnimationUtils.animateCrossbowCharge(this.rightArm, this.leftArm, entity, true)
+        }
+    }
 
     override fun translateToHand(side: HumanoidArm, poseStack: PoseStack?) {
         val f = if (side == HumanoidArm.RIGHT) 1.0f else -1.0f
