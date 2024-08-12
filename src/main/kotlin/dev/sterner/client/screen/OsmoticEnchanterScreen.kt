@@ -18,13 +18,12 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
 ) : AbstractContainerScreen<OsmoticEnchanterMenu>(menu, playerInventory, title) {
 
     private var blockEntity: OsmoticEnchanterBlockEntity? = null
-    var tooltip: MutableList<String> = mutableListOf()
+    var selectedEnchants: MutableSet<Int> = mutableSetOf()
 
     init {
         imageWidth = 232
         imageHeight = 222
         blockEntity = getBlockEntity(playerInventory, menu.pos)
-
     }
 
     override fun init() {
@@ -34,19 +33,33 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
 
     override fun containerTick() {
         if (menu.shouldRefresh) {
+            selectedEnchants.clear()
             refreshEnchants()
             menu.shouldRefresh = false
         }
         super.containerTick()
     }
 
-    private fun refreshEnchants(){
+    fun refreshEnchants(){
         clearWidgets()
         val xInMenu = (this.width - this.imageWidth) / 2
         val yInMenu = (this.height - this.imageHeight) / 2
 
-        for ((index, enchant) in blockEntity!!.cachedEnchantments.withIndex()) {
-            val widget = EnchantmentWidget(this, xInMenu + index * 18, yInMenu)
+        val filteredList = blockEntity!!.cachedEnchantments.filter { enchantId -> enchantId !in selectedEnchants }
+
+        for ((index, enchant) in filteredList.withIndex()) {
+            val widget = if (index < 8) {
+                EnchantmentWidget(this, xInMenu + index * 18 + 24 + 24 + 8, yInMenu + 15)
+            } else {
+                EnchantmentWidget(this, xInMenu + (index - 8) * 18 + 24 + 24 + 8, yInMenu + 15 + 16)
+            }
+            widget.enchantment = (Enchantment.byId(enchant))
+
+            this.addRenderableWidget(widget)
+        }
+
+        for ((index, enchant) in selectedEnchants.withIndex()) {
+            val widget = EnchantmentWidget(this, xInMenu + 128 + 32 + 32 + 18, yInMenu + index * 18 + 18)
             widget.enchantment = (Enchantment.byId(enchant))
 
             this.addRenderableWidget(widget)

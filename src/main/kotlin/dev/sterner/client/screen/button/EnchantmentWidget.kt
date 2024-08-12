@@ -6,11 +6,12 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.client.gui.narration.NarrationElementOutput
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.enchantment.Enchantment
 
 
-class EnchantmentWidget(val screen: OsmoticEnchanterScreen, x: Int, y: Int) : AbstractWidget(x, y, 16, 16,
+open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : AbstractWidget(x, y, 16, 16,
     Component.empty()
 ) {
 
@@ -18,13 +19,26 @@ class EnchantmentWidget(val screen: OsmoticEnchanterScreen, x: Int, y: Int) : Ab
 
     var level: Int = 1
 
+    override fun onClick(mouseX: Double, mouseY: Double) {
+        val id = BuiltInRegistries.ENCHANTMENT.getId(enchantment)
+        if (screen.selectedEnchants.contains(id)) {
+            screen.selectedEnchants.remove(id)
+        } else {
+            screen.selectedEnchants.add(BuiltInRegistries.ENCHANTMENT.getId(enchantment))
+        }
+
+        screen.refreshEnchants()
+        super.onClick(mouseX, mouseY)
+    }
+
     private fun dontRender(): Boolean {
         return enchantment == null || !visible
     }
 
     override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-        if (dontRender())
+        if (dontRender()) {
             return
+        }
 
         val icon = VoidBoundUtils.getEnchantmentIcon(enchantment!!)
 
