@@ -14,6 +14,6 @@ object VoidBoundMenuTypeRegistry {
         .register(
             "osmotic_enchanter"
         ) {
-            ExtendedScreenHandlerType { id, inv, _ -> OsmoticEnchanterMenu(id, inv) }
+            ExtendedScreenHandlerType { id, inv, buf -> OsmoticEnchanterMenu(id, inv, buf) }
         }
 }

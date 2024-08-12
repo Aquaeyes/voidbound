@@ -1,6 +1,8 @@
 package dev.sterner.common.menu
 
 import dev.sterner.registry.VoidBoundMenuTypeRegistry
+import net.minecraft.core.BlockPos
+import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.Container
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.player.Inventory
@@ -9,11 +11,17 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 
-class OsmoticEnchanterMenu @JvmOverloads constructor(
-    i: Int,
-    inventory: Inventory,
-    var container: Container = SimpleContainer(1)
+class OsmoticEnchanterMenu(
+    i: Int, inventory: Inventory, val pos: BlockPos,
 ) : AbstractContainerMenu(VoidBoundMenuTypeRegistry.OSMOTIC_ENCHANTER.get(), i) {
+
+    constructor(i: Int, inventory: Inventory, buf: FriendlyByteBuf) : this(
+        i, inventory, buf.readBlockPos(),
+    )
+
+    var container: Container = SimpleContainer(1)
+
+
 
     init {
         checkContainerSize(container, 1)

@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
+import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
@@ -35,20 +36,30 @@ class OsmoticEnchanterBlock(properties: Properties?) : BaseEntityBlock(propertie
         hit: BlockHitResult
     ): InteractionResult {
 
-        player.openMenu(object : ExtendedScreenHandlerFactory {
-            override fun writeScreenOpeningData(player: ServerPlayer, buf: FriendlyByteBuf) {
-                buf.writeBlockPos(pos)
-            }
+        if (level.getBlockEntity(pos) is OsmoticEnchanterBlockEntity) {
+            val osmoticEnchanter = level.getBlockEntity(pos) as OsmoticEnchanterBlockEntity
 
-            override fun getDisplayName(): Component {
-                return Component.translatable("osmotic_enchanter")
-            }
+            player.openMenu(object : ExtendedScreenHandlerFactory {
+                override fun writeScreenOpeningData(player: ServerPlayer, buf: FriendlyByteBuf) {
+                    buf.writeBlockPos(pos)
+                }
 
-            override fun createMenu(i: Int, inventory: Inventory, player: Player): AbstractContainerMenu {
-                return OsmoticEnchanterMenu(i, inventory)
-            }
-        })
+                override fun getDisplayName(): Component {
+                    return Component.translatable("osmotic_enchanter")
+                }
+
+                override fun createMenu(i: Int, inventory: Inventory, player: Player): AbstractContainerMenu {
+                    return OsmoticEnchanterMenu(i, inventory, pos)
+                }
+            })
+        }
+
+
 
         return super.use(state, level, pos, player, hand, hit)
+    }
+
+    override fun getRenderShape(state: BlockState): RenderShape {
+        return RenderShape.MODEL
     }
 }

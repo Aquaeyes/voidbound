@@ -4,11 +4,14 @@ import com.sammy.malum.core.listeners.SpiritDataReloadListener
 import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.visual_effects.SpiritLightSpecs
+import dev.sterner.VoidBound
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.MobCategory
+import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.phys.Vec3
 import team.lodestar.lodestone.systems.particle.ParticleEffectSpawner
 import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
@@ -110,5 +113,9 @@ object VoidBoundUtils {
         }
 
         lightSpecs.spawnParticles()
+    }
+
+    fun getEnchantmentIcon(enchantment: Enchantment): ResourceLocation {
+        return VoidBound.id("textures/gui/enchantment/${BuiltInRegistries.ENCHANTMENT.getKey(enchantment)?.path}.png")
     }
 }
