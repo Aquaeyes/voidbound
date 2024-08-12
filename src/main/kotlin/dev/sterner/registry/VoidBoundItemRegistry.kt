@@ -43,6 +43,10 @@ object VoidBoundItemRegistry {
         BlockItem(VoidBoundBlockRegistry.SPIRIT_BINDER.get(), Item.Properties())
     }
 
+    val OSMOTIC_ENCHANTER = ITEMS.register("osmotic_enchanter") {
+        BlockItem(VoidBoundBlockRegistry.OSMOTIC_ENCHANTER.get(), Item.Properties())
+    }
+
     val SPIRIT_STABILIZER = ITEMS.register("spirit_stabilizer") {
         UnimplementedBlockItem(VoidBoundBlockRegistry.SPIRIT_STABILIZER.get(), Item.Properties())
     }

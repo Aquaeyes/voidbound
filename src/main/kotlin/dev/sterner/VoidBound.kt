@@ -13,14 +13,17 @@ import dev.sterner.client.renderer.blockentity.SpiritBinderBlockEntityRenderer
 import dev.sterner.client.renderer.blockentity.SpiritRiftBlockEntityRenderer
 import dev.sterner.client.renderer.blockentity.SpiritStabilizerBlockEntityRenderer
 import dev.sterner.client.renderer.entity.*
+import dev.sterner.client.screen.OsmoticEnchanterScreen
 import dev.sterner.common.components.VoidBoundPlayerComponent
 import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.rendering.v1.*
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
+import net.minecraft.client.gui.screens.MenuScreens
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
@@ -46,6 +49,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
         VoidBoundSensorTypeRegistry.SENSOR_TYPES.register()
         VoidBoundWandFociRegistry.WAND_FOCI.register()
         VoidBoundRiftTypeRegistry.RIFT_TYPES.register()
+        VoidBoundMenuTypeRegistry.MENU_TYPES.register()
 
         VoidBoundCreativeTabRegistry.init()
 
@@ -147,6 +151,8 @@ object VoidBound : ModInitializer, ClientModInitializer {
             VoidBoundItemRegistry.HALLOWED_GOLD_CAPPED_RUNEWOOD_WAND.get(),
             WandItemRenderer()
         )
+
+        MenuScreens.register(VoidBoundMenuTypeRegistry.OSMOTIC_ENCHANTER.get(), ::OsmoticEnchanterScreen)
     }
 
     fun id(name: String): ResourceLocation {

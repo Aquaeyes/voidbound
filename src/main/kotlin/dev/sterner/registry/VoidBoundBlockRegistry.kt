@@ -1,10 +1,7 @@
 package dev.sterner.registry
 
 import dev.sterner.VoidBound
-import dev.sterner.common.block.PortableHoleBlock
-import dev.sterner.common.block.SpiritBinderBlock
-import dev.sterner.common.block.SpiritBinderStabilizerBlock
-import dev.sterner.common.block.SpiritRiftBlock
+import dev.sterner.common.block.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.core.registries.BuiltInRegistries
@@ -43,5 +40,9 @@ object VoidBoundBlockRegistry {
                 .noLootTable()
                 .pushReaction(PushReaction.BLOCK)
         )
+    }
+
+    var OSMOTIC_ENCHANTER = BLOCKS.register("osmotic_enchanter") {
+        OsmoticEnchanterBlock(FabricBlockSettings.create())
     }
 }

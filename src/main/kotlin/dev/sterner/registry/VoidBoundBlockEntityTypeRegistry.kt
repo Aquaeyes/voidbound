@@ -1,10 +1,7 @@
 package dev.sterner.registry
 
 import dev.sterner.VoidBound
-import dev.sterner.common.blockentity.PortableHoleBlockEntity
-import dev.sterner.common.blockentity.SpiritBinderBlockEntity
-import dev.sterner.common.blockentity.SpiritRiftBlockEntity
-import dev.sterner.common.blockentity.SpiritStabilizerBlockEntity
+import dev.sterner.common.blockentity.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -43,6 +40,14 @@ object VoidBoundBlockEntityTypeRegistry {
         BlockEntityType.Builder.of(
             { pos, state -> PortableHoleBlockEntity(pos, state) },
             VoidBoundBlockRegistry.PORTABLE_HOLE.get()
+        )
+            .build(null)
+    }
+
+    var OSMOTIC_ENCHANTER = BLOCK_ENTITY_TYPES.register("osmotic_enchanter") {
+        BlockEntityType.Builder.of(
+            {pos, state -> OsmoticEnchanterBlockEntity(pos, state)},
+            VoidBoundBlockRegistry.OSMOTIC_ENCHANTER.get()
         )
             .build(null)
     }

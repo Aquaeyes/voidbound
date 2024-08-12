@@ -41,6 +41,7 @@ object VoidBoundCreativeTabRegistry {
                 entries.accept(VoidBoundItemRegistry.SOUL_STEEL_GOLEM.get())
                 entries.accept(VoidBoundItemRegistry.SPIRIT_BINDER.get())
                 entries.accept(VoidBoundItemRegistry.SPIRIT_STABILIZER.get())
+                entries.accept(VoidBoundItemRegistry.OSMOTIC_ENCHANTER.get())
                 //entries.accept(VoidBoundItemRegistry.DESTABILIZED_SPIRIT_RIFT.get())
                 entries.accept(VoidBoundItemRegistry.CRIMSON_RITES.get())
                 entries.accept(VoidBoundItemRegistry.CRIMSON_KNIGHT_SWORD.get())
