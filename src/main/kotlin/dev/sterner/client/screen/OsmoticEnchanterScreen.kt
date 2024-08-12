@@ -2,6 +2,7 @@ package dev.sterner.client.screen
 
 import dev.sterner.VoidBound
 import dev.sterner.client.screen.button.EnchantmentWidget
+import dev.sterner.client.screen.button.SelectedEnchantmentWidget
 import dev.sterner.common.blockentity.OsmoticEnchanterBlockEntity
 import dev.sterner.common.menu.OsmoticEnchanterMenu
 import net.minecraft.client.gui.GuiGraphics
@@ -49,9 +50,9 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
 
         for ((index, enchant) in filteredList.withIndex()) {
             val widget = if (index < 8) {
-                EnchantmentWidget(this, xInMenu + index * 18 + 24 + 24 + 8, yInMenu + 15)
+                EnchantmentWidget(this, xInMenu + index * 18 + 24 + 24 + 8, yInMenu + 15,16, 16)
             } else {
-                EnchantmentWidget(this, xInMenu + (index - 8) * 18 + 24 + 24 + 8, yInMenu + 15 + 16)
+                EnchantmentWidget(this, xInMenu + (index - 8) * 18 + 24 + 24 + 8, yInMenu + 15 + 16, 16, 16)
             }
             widget.enchantment = (Enchantment.byId(enchant))
 
@@ -59,9 +60,8 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
         }
 
         for ((index, enchant) in selectedEnchants.withIndex()) {
-            val widget = EnchantmentWidget(this, xInMenu + 128 + 32 + 32 + 18, yInMenu + index * 18 + 18)
+            val widget = SelectedEnchantmentWidget(this, xInMenu + 128 + 32 + 32 + 18 + 7, yInMenu + index * 22 + 18)
             widget.enchantment = (Enchantment.byId(enchant))
-
             this.addRenderableWidget(widget)
         }
     }

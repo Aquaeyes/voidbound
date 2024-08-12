@@ -1,5 +1,6 @@
 package dev.sterner.client.screen.button
 
+import dev.sterner.VoidBound
 import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.client.screen.OsmoticEnchanterScreen
 import net.minecraft.client.gui.GuiGraphics
@@ -11,7 +12,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.enchantment.Enchantment
 
 
-open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : AbstractWidget(x, y, 16, 16,
+open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int, width: Int, height: Int) : AbstractWidget(x, y, width, height,
     Component.empty()
 ) {
 
@@ -31,7 +32,7 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int)
         super.onClick(mouseX, mouseY)
     }
 
-    private fun dontRender(): Boolean {
+    fun dontRender(): Boolean {
         return enchantment == null || !visible
     }
 
