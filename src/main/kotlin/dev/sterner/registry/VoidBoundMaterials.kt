@@ -6,6 +6,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 
 
@@ -20,6 +21,15 @@ enum class VoidBoundMaterials(
     private val toughness: Float
 ) :
     ArmorMaterial {
+    TRAVELLER(
+        "voidbound:traveller",
+        16,
+        intArrayOf(1, 3, 4, 2),
+        25,
+        SoundEvents.ARMOR_EQUIP_GOLD,
+        Items.LEATHER,
+        0.2f
+    ),
     HALLOWED(
         "voidbound:hallowed",
         16,
