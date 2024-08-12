@@ -2,6 +2,7 @@ package dev.sterner.common.item.foci
 
 import dev.sterner.api.wand.IWandFocus
 import dev.sterner.registry.VoidBoundBlockRegistry
+import dev.sterner.registry.VoidBoundTags
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.sounds.SoundEvents
@@ -29,7 +30,7 @@ class PortableHoleFoci : IWandFocus {
             for (d in 0 until maxDistance) {
                 distance = d
                 val block = level.getBlockState(BlockPos(hx, hy, hz))
-                if (block.`is`(Blocks.BEDROCK)) {
+                if (block.`is`(VoidBoundTags.PORTABLE_HOLE_BLACKLIST)) {
                     return
                 }
                 if (block.isAir) {
@@ -92,7 +93,7 @@ class PortableHoleFoci : IWandFocus {
 
         fun createHole(level: Level, pos: BlockPos, direction: Direction, distance: Int) {
             val oldState = level.getBlockState(pos)
-            if (oldState.isAir || oldState.`is`(Blocks.BEDROCK) || oldState.`is`(VoidBoundBlockRegistry.PORTABLE_HOLE.get())) {
+            if (oldState.`is`(VoidBoundTags.PORTABLE_HOLE_BLACKLIST)) {
                 return
             }
             val oldEntity = level.getBlockEntity(pos)
