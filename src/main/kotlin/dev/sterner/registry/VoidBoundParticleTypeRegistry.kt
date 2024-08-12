@@ -23,6 +23,10 @@ object VoidBoundParticleTypeRegistry {
         "heal"
     ) { LodestoneWorldParticleType() }
 
+    var BUBBLE_PARTICLE: RegistryObject<LodestoneWorldParticleType> = PARTICLES.register(
+        "bubble"
+    ) { LodestoneWorldParticleType() }
+
     fun registerParticleFactory() {
         ParticleFactoryRegistry.getInstance().register(
             RIFT_PARTICLE.get()
@@ -39,5 +43,14 @@ object VoidBoundParticleTypeRegistry {
                 sprite
             )
         }
+
+        ParticleFactoryRegistry.getInstance().register(
+            BUBBLE_PARTICLE.get()
+        ) { sprite: FabricSpriteProvider? ->
+            LodestoneWorldParticleType.Factory(
+                sprite
+            )
+        }
+    }
     }
 }

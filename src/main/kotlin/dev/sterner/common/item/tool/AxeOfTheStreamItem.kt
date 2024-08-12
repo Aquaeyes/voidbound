@@ -1,6 +1,9 @@
 package dev.sterner.common.item.tool
 
 import dev.sterner.api.util.VoidBoundBlockUtils
+import dev.sterner.networking.BubbleParticlePacket
+import dev.sterner.registry.VoidBoundPacketRegistry
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup
 import net.minecraft.core.BlockPos
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.Mth
@@ -13,6 +16,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Tier
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
+import org.joml.Vector3f
 import team.lodestar.lodestone.systems.item.tools.magic.MagicAxeItem
 
 class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDamage: Float, properties: Properties?) :
@@ -42,8 +46,7 @@ class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDama
                     var d6: Double = e.x - livingEntity.x
                     var d8: Double = e.y - livingEntity.y + (livingEntity.bbHeight / 2.0f)
                     var d10: Double = e.z - livingEntity.z
-                    val d11 =
-                        Mth.sqrt(d6.toFloat() * d6.toFloat() + d8.toFloat() * d8.toFloat() + d10.toFloat() * d10.toFloat())
+                    val d11 = Mth.sqrt(d6.toFloat() * d6.toFloat() + d8.toFloat() * d8.toFloat() + d10.toFloat() * d10.toFloat())
                     d6 /= d11
                     d8 /= d11
                     d10 /= d11
@@ -54,6 +57,14 @@ class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDama
                     val newMotionZ = (e.deltaMovement.z - d10 * d13).coerceIn(-0.25, 0.25)
 
                     e.deltaMovement = Vec3(newMotionX, newMotionY, newMotionZ)
+
+                    val pos = Vector3f(e.x.toFloat() + (level.random.nextFloat() - level.random.nextFloat()) * 0.2f,
+                        e.y.toFloat() + e.bbHeight + (level.random.nextFloat() - level.random.nextFloat()) * 0.2f,
+                        e.z.toFloat() + (level.random.nextFloat() - level.random.nextFloat()) * 0.2f)
+
+                    for (player in PlayerLookup.tracking(livingEntity)) {
+                        VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClient(BubbleParticlePacket(pos) , player)
+                    }
                 }
             }
         }

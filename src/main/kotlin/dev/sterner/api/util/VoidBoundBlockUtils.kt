@@ -18,27 +18,27 @@ object VoidBoundBlockUtils {
     var lastPos: BlockPos? = null
     var lastdistance: Double = 0.0
 
-    fun breakFurthestBlock(world: Level, pos: BlockPos, block: BlockState, player: Player): Boolean {
+    fun breakFurthestBlock(level: Level, pos: BlockPos, blockState: BlockState, player: Player): Boolean {
         lastPos = BlockPos(pos)
         lastdistance = 0.0
-        val reach = if (world.getBlockState(pos).`is`(BlockTags.LOGS)) 2 else 1
-        findBlocks(world, pos, block, reach)
-        val worked: Boolean = harvestBlockSkipCheck(
-            world,
+        val reach = if (level.getBlockState(pos).`is`(BlockTags.LOGS)) 2 else 1
+        findBlocks(level, pos, blockState, reach)
+        val worked: Boolean = harvestBlock(
+            level,
             player,
             lastPos!!
         )
-        world.markAndNotifyBlock(pos, world.getChunkAt(pos), block, block, 3, 20)
-        if (worked && world.getBlockState(pos).`is`(BlockTags.LOGS)) {
-            world.markAndNotifyBlock(pos, world.getChunkAt(pos), block, block, 3, 20)
+        level.markAndNotifyBlock(pos, level.getChunkAt(pos), blockState, blockState, 3, 20)
+        if (worked && level.getBlockState(pos).`is`(BlockTags.LOGS)) {
+            level.markAndNotifyBlock(pos, level.getChunkAt(pos), blockState, blockState, 3, 20)
 
             for (xx in -3..3) {
                 for (yy in -3..3) {
                     for (zz in -3..3) {
-                        world.scheduleTick(
+                        level.scheduleTick(
                             lastPos!!.offset(xx, yy, zz),
-                            world.getBlockState(lastPos!!.offset(xx, yy, zz)).block,
-                            50 + world.random.nextInt(75)
+                            level.getBlockState(lastPos!!.offset(xx, yy, zz)).block,
+                            50 + level.random.nextInt(75)
                         )
                     }
                 }
@@ -48,78 +48,44 @@ object VoidBoundBlockUtils {
         return worked
     }
 
-    fun harvestBlockSkipCheck(world: Level, player: Player, pos: BlockPos): Boolean {
-        return harvestBlock(world, player, pos, false, false, 0, true)
-    }
-
-    fun harvestBlock(
-        world: Level,
-        p: Player,
-        pos: BlockPos,
-        alwaysDrop: Boolean,
-        silkOverride: Boolean,
-        fortuneOverride: Int,
-        skipEvent: Boolean
+    private fun harvestBlock(
+        level: Level,
+        player: Player,
+        pos: BlockPos
     ): Boolean {
-        if (p is ServerPlayer) {
-            val player = p
-
-
-            if (false) {
-                return false
+        if (player is ServerPlayer) {
+            val blockState = level.getBlockState(pos)
+            val blockEntity = level.getBlockEntity(pos)
+            val bl2: Boolean
+            if (player.abilities.instabuild) {
+                bl2 = removeBlock(player, pos)
             } else {
-                val iblockstate = world.getBlockState(pos)
-                val tileentity = world.getBlockEntity(pos)
-                val block: Block = iblockstate.block
-                if (false) {
+                val itemstack1: ItemStack = player.mainHandItem
+                val bl = blockState.canEntityDestroy(level, pos, player)
+                bl2 = removeBlock(player, pos, bl)
+                if (bl2 && bl) {
+                    val fakeStack: ItemStack = itemstack1.copy()
+                    if (0 > EnchantmentHelper.getEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player)) {
 
-                } else {
-                    //world.blockEvent(null, 2001, pos, Block.getStateId(iblockstate))
-                    var flag1 = false
-                    if (player.abilities.instabuild) {
-                        flag1 = removeBlock(player, pos)
-                        //player.interactionManager.player.connection.sendPacket(SPacketBlockChange(world, pos))
-                    } else {
-                        val itemstack1: ItemStack = player.mainHandItem
-                        val flag = alwaysDrop || iblockstate.canEntityDestroy(world, pos, player)
-                        flag1 = removeBlock(player, pos, flag)
-                        if (flag1 && flag) {
-                            var fakeStack: ItemStack = itemstack1.copy()
-                            if (silkOverride || fortuneOverride > EnchantmentHelper.getEnchantmentLevel(
-                                    Enchantments.BLOCK_FORTUNE,
-                                    player
-                                )
-                            ) {
+                        val enchantments: MutableMap<Enchantment, Int?> = EnchantmentHelper.getEnchantments(itemstack1)
 
-                                val enchMap: MutableMap<Enchantment, Int?> =
-                                    EnchantmentHelper.getEnchantments(itemstack1)
-                                if (silkOverride) {
-                                    enchMap[Enchantments.SILK_TOUCH] = 1
-                                }
+                        val fort = max(0.toDouble(), (if (enchantments[Enchantments.BLOCK_FORTUNE] != null) enchantments[Enchantments.BLOCK_FORTUNE] else 0)!!.toDouble()).toInt()
 
-                                val fort = max(
-                                    fortuneOverride.toDouble(),
-                                    (if (enchMap[Enchantments.BLOCK_FORTUNE] != null) enchMap[Enchantments.BLOCK_FORTUNE] else 0)!!.toDouble()
-                                ).toInt()
-
-                                if (fort > 0) {
-                                    enchMap[Enchantments.BLOCK_FORTUNE] = fort
-                                }
-
-                                EnchantmentHelper.setEnchantments(enchMap, fakeStack)
-                            }
-
-                            iblockstate.block.playerDestroy(world, player, pos, iblockstate, tileentity, fakeStack)
+                        if (fort > 0) {
+                            enchantments[Enchantments.BLOCK_FORTUNE] = fort
                         }
+
+                        EnchantmentHelper.setEnchantments(enchantments, fakeStack)
                     }
 
-                    return flag1
+                    blockState.block.playerDestroy(level, player, pos, blockState, blockEntity, fakeStack)
                 }
             }
+
+            return bl2
         } else {
             return false
         }
-        return false
     }
 
     private fun removeBlock(player: Player, pos: BlockPos): Boolean {
@@ -128,21 +94,19 @@ object VoidBoundBlockUtils {
 
 
     private fun removeBlock(player: Player, pos: BlockPos, canHarvest: Boolean): Boolean {
-        val iblockstate = player.level().getBlockState(pos)
+        val blockState = player.level().getBlockState(pos)
 
-        val flag: Boolean =
-            iblockstate.onDestroyedByPlayer(player.level(), pos, player, canHarvest, iblockstate.fluidState)
+        val flag: Boolean = blockState.onDestroyedByPlayer(player.level(), pos, player, canHarvest, blockState.fluidState)
         if (flag) {
             try {
-                iblockstate.block.destroy(player.level(), pos, iblockstate)
-            } catch (var6: Exception) {
-            }
+                blockState.block.destroy(player.level(), pos, blockState)
+            } catch (_: Exception) { }
         }
 
         return flag
     }
 
-    fun findBlocks(world: Level, pos: BlockPos, block: BlockState, reach: Int) {
+    private fun findBlocks(level: Level, pos: BlockPos, blockState: BlockState, reach: Int) {
         for (xx in -reach..reach) {
             for (yy in reach downTo -reach) {
                 for (zz in -reach..reach) {
@@ -158,20 +122,18 @@ object VoidBoundBlockUtils {
                         return
                     }
 
-                    val bs: BlockState = world.getBlockState(lastPos!!.offset(xx, yy, zz))
-                    val same = bs.block == block.block
+                    val bs: BlockState = level.getBlockState(lastPos!!.offset(xx, yy, zz))
+                    val same = bs.block == blockState.block
 
-                    if (same && bs.block.properties.destroyTime >= 0.0f
-                    ) {
+                    if (same && bs.block.properties.destroyTime >= 0.0f) {
                         val xd = (lastPos!!.x + xx - pos.x)
                         val yd = (lastPos!!.y + yy - pos.y)
                         val zd = (lastPos!!.z + zz - pos.z)
                         val d = xd * xd + yd * yd + zd * zd
                         if (d > lastdistance) {
                             lastdistance = d.toDouble()
-                            lastPos =
-                                lastPos!!.offset(xx, yy, zz)
-                            findBlocks(world, pos, block, reach)
+                            lastPos = lastPos!!.offset(xx, yy, zz)
+                            findBlocks(level, pos, blockState, reach)
                             return
                         }
                     }
@@ -179,5 +141,4 @@ object VoidBoundBlockUtils {
             }
         }
     }
-
 }
