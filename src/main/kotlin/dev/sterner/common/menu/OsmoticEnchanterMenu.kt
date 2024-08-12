@@ -1,33 +1,49 @@
 package dev.sterner.common.menu
 
+import dev.sterner.common.blockentity.OsmoticEnchanterBlockEntity
 import dev.sterner.registry.VoidBoundMenuTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.network.FriendlyByteBuf
-import net.minecraft.world.Container
-import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
+import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntityInventory
 
 class OsmoticEnchanterMenu(
     i: Int, inventory: Inventory, val pos: BlockPos,
 ) : AbstractContainerMenu(VoidBoundMenuTypeRegistry.OSMOTIC_ENCHANTER.get(), i) {
 
+    var blockEntityInventory: LodestoneBlockEntityInventory? = null
+    var shouldRefresh = true
+
     constructor(i: Int, inventory: Inventory, buf: FriendlyByteBuf) : this(
         i, inventory, buf.readBlockPos(),
     )
 
-    var container: Container = SimpleContainer(1)
-
-
-
     init {
-        checkContainerSize(container, 1)
-        container.startOpen(inventory.player)
 
-        this.addSlot(Slot(container, 0, 14, 14))
+        if (inventory.player.level().getBlockEntity(pos) is OsmoticEnchanterBlockEntity) {
+            var be = inventory.player.level().getBlockEntity(pos) as OsmoticEnchanterBlockEntity
+            blockEntityInventory = be.inventory
+            this.addSlot(object : Slot(blockEntityInventory!!, 0, 14, 14){
+
+                override fun mayPlace(stack: ItemStack): Boolean {
+                    return stack.isEnchantable
+                }
+
+                override fun set(stack: ItemStack) {
+                    shouldRefresh = true
+                    super.set(stack)
+                }
+
+                override fun onTake(player: Player, stack: ItemStack) {
+                    shouldRefresh = true
+                    super.onTake(player, stack)
+                }
+            })
+        }
 
         var m: Int
 
@@ -48,11 +64,36 @@ class OsmoticEnchanterMenu(
         }
     }
 
-    override fun quickMoveStack(player: Player, index: Int): ItemStack {
-        return ItemStack.EMPTY
+
+    override fun quickMoveStack(playerIn: Player, index: Int): ItemStack {
+        var itemstack = ItemStack.EMPTY
+        val slot = slots[index]
+        if (slot.hasItem()) {
+            val itemstack1 = slot.item
+            itemstack = itemstack1.copy()
+            if (index < this.blockEntityInventory!!.containerSize) {
+                if (!this.moveItemStackTo(
+                        itemstack1, this.blockEntityInventory!!.getContainerSize(),
+                        slots.size, true
+                    )
+                ) {
+                    return ItemStack.EMPTY
+                }
+            } else if (!this.moveItemStackTo(itemstack1, 0, this.blockEntityInventory!!.containerSize, false)) {
+                return ItemStack.EMPTY
+            }
+
+            if (itemstack1.isEmpty) {
+                slot.set(ItemStack.EMPTY)
+            } else {
+                slot.setChanged()
+            }
+        }
+
+        return itemstack
     }
 
     override fun stillValid(player: Player): Boolean {
-        return container.stillValid(player)
+        return true
     }
 }

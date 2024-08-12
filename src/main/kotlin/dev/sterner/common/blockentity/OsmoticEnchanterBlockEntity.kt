@@ -19,10 +19,10 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     state
 ) {
 
-    private val enchantments: MutableList<Int> = mutableListOf()
-    private val levels: MutableList<Int> = mutableListOf()
+    var enchantments: MutableList<Int> = mutableListOf()
+    val levels: MutableList<Int> = mutableListOf()
 
-    private var cachedEnchantments: MutableList<Int> = mutableListOf()
+    var cachedEnchantments: MutableList<Int> = mutableListOf()
     private var progress = 0
     private val cooldown = 0
 
@@ -30,6 +30,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         inventory = object : MalumBlockEntityInventory(1, 64) {
             public override fun onContentsChanged(slot: Int) {
                 this.setChanged()
+                refreshEnchants()
                 needsSync = true
                 BlockHelper.updateAndNotifyState(level, worldPosition)
                 updateData()
@@ -39,7 +40,8 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     fun refreshEnchants() {
-        val enchantmentObjects = getAvailableEnchants(enchantments.stream().map(Enchantment::byId).collect(Collectors.toList()))
+        var enchantmentObjects = getAvailableEnchants(enchantments.stream().map(Enchantment::byId).collect(Collectors.toList()))
+        enchantmentObjects = enchantmentObjects.filter { !it.isCurse }.toMutableList()
         cachedEnchantments = enchantmentObjects.stream().map(BuiltInRegistries.ENCHANTMENT::getId).toList()
     }
 
@@ -85,7 +87,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
     private fun getAvailableEnchants(currentEnchants: List<Enchantment?>): MutableList<Enchantment> {
         val enchantments: MutableList<Enchantment> = ArrayList()
-        if (inventory.getStackInSlot(0) === ItemStack.EMPTY) return enchantments
+        if (inventory.getStackInSlot(0) == ItemStack.EMPTY) return enchantments
         val item: ItemStack = inventory.getStackInSlot(0)
         val valid: List<Enchantment> = getValidEnchantments()
         for (validEnchant in valid) {
