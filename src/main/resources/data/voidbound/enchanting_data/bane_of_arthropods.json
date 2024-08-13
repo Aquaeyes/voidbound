@@ -1,0 +1,13 @@
+{
+  "registry_name": "minecraft:bane_of_arthropods",
+  "spirits": [
+    {
+      "spirit": "aqueous",
+      "count": 3
+    },
+    {
+      "spirit": "wicked",
+      "count": 2
+    }
+  ]
+}

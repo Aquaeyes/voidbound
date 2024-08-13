@@ -1,0 +1,13 @@
+{
+  "registry_name": "minecraft:luck_of_the_sea",
+  "spirits": [
+    {
+      "spirit": "aqueous",
+      "count": 3
+    },
+    {
+      "spirit": "wicked",
+      "count": 2
+    }
+  ]
+}

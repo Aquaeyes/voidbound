@@ -1,0 +1,13 @@
+{
+  "registry_name": "minecraft:frost_walker",
+  "spirits": [
+    {
+      "spirit": "aqueous",
+      "count": 3
+    },
+    {
+      "spirit": "wicked",
+      "count": 2
+    }
+  ]
+}
