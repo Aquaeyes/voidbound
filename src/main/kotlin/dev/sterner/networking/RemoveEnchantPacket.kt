@@ -13,8 +13,9 @@ import team.lodestar.lodestone.systems.network.LodestoneServerPacket
 
 class RemoveEnchantPacket(val enchantment: Int, val pos: BlockPos) : LodestoneServerPacket() {
 
-    override fun encode(buf: FriendlyByteBuf?) {
-        super.encode(buf)
+    override fun encode(buf: FriendlyByteBuf) {
+        buf.writeInt(enchantment)
+        buf.writeBlockPos(pos)
     }
 
     constructor(buf: FriendlyByteBuf): this(buf.readInt(), buf.readBlockPos())

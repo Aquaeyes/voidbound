@@ -6,9 +6,11 @@ import dev.sterner.client.screen.widget.SelectedEnchantmentWidget
 import dev.sterner.client.screen.widget.StartEnchantingWidget
 import dev.sterner.common.blockentity.OsmoticEnchanterBlockEntity
 import dev.sterner.common.menu.OsmoticEnchanterMenu
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.core.BlockPos
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
@@ -35,11 +37,15 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
 
     override fun containerTick() {
         if (menu.shouldRefresh) {
-            selectedEnchants.clear()
             refreshEnchants()
             menu.shouldRefresh = false
         }
         super.containerTick()
+    }
+
+    override fun resize(minecraft: Minecraft, width: Int, height: Int) {
+        refreshEnchants()
+        super.resize(minecraft, width, height)
     }
 
     fun refreshEnchants(){
@@ -66,7 +72,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
             this.addRenderableWidget(widget)
         }
 
-        this.addRenderableWidget(StartEnchantingWidget(this, xInMenu + 13, xInMenu + 18))
+        this.addRenderableWidget(StartEnchantingWidget(this, xInMenu + 13, yInMenu + 18 * 5 + 9))
     }
 
 
@@ -92,6 +98,8 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
         super.render(guiGraphics, mouseX, mouseY, partialTick)
         this.renderTooltip(guiGraphics, mouseX, mouseY)
     }
+
+
 
     companion object {
         private val CONTAINER_TEXTURE: ResourceLocation =

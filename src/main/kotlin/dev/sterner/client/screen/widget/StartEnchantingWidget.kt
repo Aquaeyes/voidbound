@@ -11,17 +11,14 @@ import net.minecraft.network.chat.Component
 
 class StartEnchantingWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : AbstractWidget(x, y, 18, 18, Component.empty()) {
 
-    var active = false
-
     override fun onClick(mouseX: Double, mouseY: Double) {
-        active = true
         VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToServer(StartEnchantingPacket(screen.menu.pos))
         super.onClick(mouseX, mouseY)
     }
 
     override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
 
-        val icon = VoidBound.id("textures/gui/enchanter_check${if(!active) "" else "_glowing"}.png")
+        val icon = VoidBound.id("textures/gui/enchanter_check${if(!screen.menu.be!!.activated) "" else "_glowing"}.png")
 
         guiGraphics.blit(icon, x, y, 0f,0f,18, 18, 18, 18)
     }

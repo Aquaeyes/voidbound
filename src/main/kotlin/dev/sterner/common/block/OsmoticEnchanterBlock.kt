@@ -58,7 +58,11 @@ class OsmoticEnchanterBlock(properties: Properties?) : BaseEntityBlock(propertie
 
         if (level.getBlockEntity(pos) is OsmoticEnchanterBlockEntity) {
             val osmoticEnchanter = level.getBlockEntity(pos) as OsmoticEnchanterBlockEntity
-
+            if (!osmoticEnchanter.activated) {
+                osmoticEnchanter.enchantments.clear()
+            }
+            osmoticEnchanter.cachedEnchantments?.clear()
+            osmoticEnchanter.refreshEnchants()
             player.openMenu(object : ExtendedScreenHandlerFactory {
                 override fun writeScreenOpeningData(player: ServerPlayer, buf: FriendlyByteBuf) {
                     buf.writeBlockPos(pos)

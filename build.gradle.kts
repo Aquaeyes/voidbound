@@ -69,7 +69,8 @@ dependencies {
 
 	//EMI
 	modCompileOnly("dev.emi:emi-fabric:${property("emi_version")}:api")
-	//modLocalRuntime("dev.emi:emi-fabric:${property("emi_version")}")
+	modRuntimeOnly("maven.modrinth:just-enough-effect-descriptions-jeed:${property("jeed_version")}")
+	modLocalRuntime("dev.emi:emi-fabric:${property("emi_version")}")
 
 	// Trinkets Dependency
 	modImplementation("dev.emi:trinkets:${property("trinkets_version")}")

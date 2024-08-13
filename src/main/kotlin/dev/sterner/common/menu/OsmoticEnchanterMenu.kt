@@ -73,7 +73,6 @@ class OsmoticEnchanterMenu(
         }
     }
 
-
     override fun quickMoveStack(playerIn: Player, index: Int): ItemStack {
         var itemstack = ItemStack.EMPTY
         val slot = slots[index]

@@ -69,12 +69,10 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             bl = true
         }
 
-        spirits.forEach { malumSpiritType, i -> println("Hello: $malumSpiritType: $i") }
         spiritsToConsume = spirits
 
         return bl
     }
-
 
     fun receiveScreenData(enchantment: Enchantment, level: Int) {
         enchantments.removeIf { it.enchantment == enchantment }
@@ -99,7 +97,6 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
                 val spiritConsumed = SpiritTypeRegistry.SPIRITS.any { spiritType ->
                     spiritsToConsume.removeFromCharge(spiritType.value, 1)
                 }
-                spiritsToConsume.forEach { malumSpiritType, i ->  println("${malumSpiritType} : $i") }
                 if (spiritConsumed) {
                     cooldown = 0
                 }
@@ -196,7 +193,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         compound.putIntArray("Enchants", enchantments.stream().mapToInt { i -> BuiltInRegistries.ENCHANTMENT.getId(i.enchantment) }.toArray())
         compound.putIntArray("Level", enchantments.stream().mapToInt { i -> i.level }.toArray())
 
-        cachedEnchantments?.stream()?.mapToInt {i -> i}?.toList()?.toMutableList()?.let { compound.putIntArray("Cache", it) }
+        //cachedEnchantments?.stream()?.mapToInt {i -> i}?.toList()?.toMutableList()?.let { compound.putIntArray("Cache", it) }
         spiritsToConsume.serializeNBT(compound)
         compound.putBoolean("Activated", activated)
         super.saveAdditional(compound)
@@ -214,9 +211,9 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             }
         }
         if (compound.contains("Cache")) {
-            cachedEnchantments?.clear()
-            val cachedEnchantmentArray = compound.getIntArray("Cache")
-            Arrays.stream(cachedEnchantmentArray).forEach{i -> cachedEnchantments?.add(i)}
+            //cachedEnchantments?.clear()
+            //val cachedEnchantmentArray = compound.getIntArray("Cache")
+            //Arrays.stream(cachedEnchantmentArray).forEach{i -> cachedEnchantments?.add(i)}
         }
         spiritsToConsume = spiritsToConsume.deserializeNBT(compound)
         activated = compound.getBoolean("Activated")
