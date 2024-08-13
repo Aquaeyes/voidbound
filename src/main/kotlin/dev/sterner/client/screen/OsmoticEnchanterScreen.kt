@@ -3,6 +3,7 @@ package dev.sterner.client.screen
 import dev.sterner.VoidBound
 import dev.sterner.client.screen.widget.EnchantmentWidget
 import dev.sterner.client.screen.widget.SelectedEnchantmentWidget
+import dev.sterner.client.screen.widget.StartEnchantingWidget
 import dev.sterner.common.blockentity.OsmoticEnchanterBlockEntity
 import dev.sterner.common.menu.OsmoticEnchanterMenu
 import net.minecraft.client.gui.GuiGraphics
@@ -64,6 +65,8 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
             widget.enchantment = (Enchantment.byId(enchant))
             this.addRenderableWidget(widget)
         }
+
+        this.addRenderableWidget(StartEnchantingWidget(this, xInMenu + 13, xInMenu + 18))
     }
 
 
@@ -81,16 +84,13 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
         guiGraphics.blit(CONTAINER_TEXTURE, k, l, 0, 0, this.imageWidth, this.imageHeight)
     }
 
-    override fun renderTooltip(guiGraphics: GuiGraphics, x: Int, y: Int) {
-        super.renderTooltip(guiGraphics, x, y)
-        guiGraphics.renderTooltip(
-            this.font,
-            Component.empty(), x, y
-        )
-    }
-
     override fun renderLabels(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {
 
+    }
+
+    override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+        this.renderTooltip(guiGraphics, mouseX, mouseY)
+        super.render(guiGraphics, mouseX, mouseY, partialTick)
     }
 
     companion object {

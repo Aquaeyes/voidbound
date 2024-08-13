@@ -42,6 +42,13 @@ class OsmoticEnchanterMenu(
                     shouldRefresh = true
                     super.onTake(player, stack)
                 }
+
+                override fun mayPickup(player: Player): Boolean {
+                    if (be.progress != 0) {
+                        return true
+                    }
+                    return super.mayPickup(player)
+                }
             })
         }
 

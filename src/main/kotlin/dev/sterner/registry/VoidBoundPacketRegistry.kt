@@ -1,9 +1,7 @@
 package dev.sterner.registry
 
 import dev.sterner.VoidBound
-import dev.sterner.networking.EnchantmentLevelPacket
-import dev.sterner.networking.HeartParticlePacket
-import dev.sterner.networking.SpiritBinderParticlePacket
+import dev.sterner.networking.*
 import io.github.fabricators_of_create.porting_lib.util.EnvExecutor
 import me.pepperbell.simplenetworking.SimpleChannel
 import net.fabricmc.api.EnvType
@@ -27,10 +25,19 @@ object VoidBoundPacketRegistry {
         VOIDBOUND_CHANNEL.registerS2CPacket(
             HeartParticlePacket::class.java, index++
         )
+        VOIDBOUND_CHANNEL.registerS2CPacket(
+            BubbleParticlePacket::class.java, index++
+        )
 
         //C2S
         VOIDBOUND_CHANNEL.registerC2SPacket(
             EnchantmentLevelPacket::class.java, index++
+        )
+        VOIDBOUND_CHANNEL.registerC2SPacket(
+            StartEnchantingPacket::class.java, index++
+        )
+        VOIDBOUND_CHANNEL.registerC2SPacket(
+            RemoveEnchantPacket::class.java, index++
         )
     }
 

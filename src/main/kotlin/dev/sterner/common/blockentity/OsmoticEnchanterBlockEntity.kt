@@ -27,8 +27,8 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     var enchantments: MutableList<EnchantmentInfo> = mutableListOf()
 
     var cachedEnchantments: MutableList<Int> = mutableListOf()
-    private var progress = 0
-    
+    var progress = 0
+
     
     
     
@@ -45,8 +45,20 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         }
     }
 
-    fun receiveScreenData(enchantment: Enchantment, level: Int) {
+    fun startEnchanting() {
+        //TODO remove
+        for (enchantment in this.enchantments) {
+            inventory.getStackInSlot(0).enchant(enchantment.enchantment, enchantment.level)
+        }
+        enchantments.clear()
+        cachedEnchantments.clear()
+    }
 
+
+    fun receiveScreenData(enchantment: Enchantment, level: Int) {
+        enchantments.removeIf { it.enchantment == enchantment }
+        enchantments.add(EnchantmentInfo(enchantment, level))
+        notifyUpdate()
     }
 
     override fun onUse(player: Player, hand: InteractionHand?): InteractionResult {
@@ -64,9 +76,9 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
     fun refreshEnchants() {
         var enchantmentObjects = getAvailableEnchants(enchantments.stream().map {
-            enchantmentInfo: EnchantmentInfo -> Enchantment.byId(BuiltInRegistries.ENCHANTMENT.getId(enchantmentInfo.enchantment))!!
-        }
-            .collect(Collectors.toList()))
+            enchantmentInfo: EnchantmentInfo -> enchantmentInfo.enchantment
+        }.collect(Collectors.toList()))
+
         enchantmentObjects = enchantmentObjects.filter { !it.isCurse }.toMutableList()
         cachedEnchantments = enchantmentObjects.stream().map(BuiltInRegistries.ENCHANTMENT::getId).toList()
     }
@@ -132,7 +144,6 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         compound.putIntArray("Enchants", enchantments.stream().mapToInt { i -> BuiltInRegistries.ENCHANTMENT.getId(i.enchantment) }.toArray())
         compound.putIntArray("Level", enchantments.stream().mapToInt { i -> i.level }.toArray())
 
-
         compound.putIntArray("Cache", cachedEnchantments.stream().mapToInt {i -> i}.toArray())
         compound.putInt("Progress", progress)
         super.saveAdditional(compound)
@@ -141,7 +152,6 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     override fun load(compound: CompoundTag) {
         if (compound.contains("Enchants")) {
             enchantments.clear()
-            cachedEnchantments.clear()
 
             val enchantmentArray = compound.getIntArray("Enchants")
             val levelArray = compound.getIntArray("Level")
@@ -149,7 +159,9 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             for ((index, enchantment) in enchantmentArray.withIndex()) {
                 enchantments.add(EnchantmentInfo(Enchantment.byId(enchantment)!!, levelArray[index]))
             }
-
+        }
+        if (compound.contains("Cache")) {
+            cachedEnchantments.clear()
             val cachedEnchantmentArray = compound.getIntArray("Cache")
             Arrays.stream(cachedEnchantmentArray).forEach{i -> cachedEnchantments.add(i)}
         }
@@ -159,6 +171,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
         super.load(compound)
     }
+
 
 
 }

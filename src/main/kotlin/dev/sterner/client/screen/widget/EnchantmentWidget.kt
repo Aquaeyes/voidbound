@@ -2,6 +2,8 @@ package dev.sterner.client.screen.widget
 
 import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.client.screen.OsmoticEnchanterScreen
+import dev.sterner.networking.RemoveEnchantPacket
+import dev.sterner.registry.VoidBoundPacketRegistry
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.components.Tooltip
@@ -23,6 +25,8 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
         val id = BuiltInRegistries.ENCHANTMENT.getId(enchantment)
         if (screen.selectedEnchants.contains(id)) {
             screen.selectedEnchants.remove(id)
+            VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToServer(RemoveEnchantPacket(id, screen.menu.pos))
+
         } else {
             screen.selectedEnchants.add(BuiltInRegistries.ENCHANTMENT.getId(enchantment))
         }
