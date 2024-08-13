@@ -39,6 +39,10 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         }
     }
 
+    fun recieveScreenData(enchantment: Enchantment, level: Int) {
+
+    }
+
     fun refreshEnchants() {
         var enchantmentObjects = getAvailableEnchants(enchantments.stream().map(Enchantment::byId).collect(Collectors.toList()))
         enchantmentObjects = enchantmentObjects.filter { !it.isCurse }.toMutableList()

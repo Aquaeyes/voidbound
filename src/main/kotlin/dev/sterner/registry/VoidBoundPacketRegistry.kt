@@ -7,18 +7,11 @@ import dev.sterner.networking.SpiritBinderParticlePacket
 import io.github.fabricators_of_create.porting_lib.util.EnvExecutor
 import me.pepperbell.simplenetworking.SimpleChannel
 import net.fabricmc.api.EnvType
-import team.lodestar.lodestone.network.interaction.RightClickEmptyPacket
-import team.lodestar.lodestone.registry.common.LodestonePacketRegistry
-
 
 object VoidBoundPacketRegistry {
 
     const val PROTOCOL_VERSION: String = "1"
     val VOIDBOUND_CHANNEL: SimpleChannel = SimpleChannel(VoidBound.id("main"))
-
-    init {
-
-    }
 
     fun registerVoidBoundPackets() {
         VOIDBOUND_CHANNEL.initServerListener()
@@ -36,7 +29,9 @@ object VoidBoundPacketRegistry {
         )
 
         //C2S
-        VOIDBOUND_CHANNEL.registerC2SPacket(EnchantmentLevelPacket::class.java, index++)
+        VOIDBOUND_CHANNEL.registerC2SPacket(
+            EnchantmentLevelPacket::class.java, index++
+        )
     }
 
 }
