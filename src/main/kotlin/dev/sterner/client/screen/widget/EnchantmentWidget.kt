@@ -2,6 +2,7 @@ package dev.sterner.client.screen.widget
 
 import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.client.screen.OsmoticEnchanterScreen
+import dev.sterner.networking.EnchantmentLevelPacket
 import dev.sterner.networking.RemoveEnchantPacket
 import dev.sterner.registry.VoidBoundPacketRegistry
 import net.minecraft.client.gui.GuiGraphics
@@ -29,6 +30,7 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
 
         } else {
             screen.selectedEnchants.add(BuiltInRegistries.ENCHANTMENT.getId(enchantment))
+            VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToServer(EnchantmentLevelPacket(enchantment!!, level, screen.menu.pos.asLong()))
         }
 
         screen.refreshEnchants()
