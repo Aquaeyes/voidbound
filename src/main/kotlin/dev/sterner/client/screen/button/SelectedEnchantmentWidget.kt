@@ -4,12 +4,7 @@ import dev.sterner.VoidBound
 import dev.sterner.client.screen.OsmoticEnchanterScreen
 import dev.sterner.networking.EnchantmentLevelPacket
 import dev.sterner.registry.VoidBoundPacketRegistry
-import io.netty.buffer.Unpooled
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.NbtUtils
-import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.util.Mth
 
 class SelectedEnchantmentWidget(screen: OsmoticEnchanterScreen, x: Int, y: Int) : EnchantmentWidget(screen, x, y, 31, 20) {
@@ -34,13 +29,15 @@ class SelectedEnchantmentWidget(screen: OsmoticEnchanterScreen, x: Int, y: Int) 
         }
     }
 
+
+
     override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
         if (dontRender()) {
             return
         }
 
         val border = VoidBound.id("textures/gui/enchanter_widget.png")
-        guiGraphics.blit(border, x - 3, y - 3, 0f,0f,31, 23, 31, 23)
+        guiGraphics.blit(border, x, y, 0f,0f,31, 23, 31, 23)
 
         super.renderWidget(guiGraphics, mouseX, mouseY, partialTick)
     }

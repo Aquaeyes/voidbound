@@ -42,10 +42,15 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
         }
 
         val icon = VoidBoundUtils.getEnchantmentIcon(enchantment!!)
+        var xx = x
+        var yy = y
+        if (this is SelectedEnchantmentWidget) {
+            xx += 3
+            yy += 3
+        }
+        guiGraphics.blit(icon, xx, yy, 0f,0f,16, 16, 16, 16)
 
-        guiGraphics.blit(icon, x, y, 0f,0f,16, 16, 16, 16)
-
-        if (mouseX >= x && mouseX < x + 16 && mouseY >= y && mouseY < y + 16) {
+        if (mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height) {
             val tooltip: MutableList<Component> = ArrayList()
             if (enchantment != null) tooltip.add(enchantment!!.getFullname(level))
             setTooltip(Tooltip.create(enchantment!!.getFullname(level)))
