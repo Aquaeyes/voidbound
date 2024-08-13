@@ -2,6 +2,7 @@ package dev.sterner.registry
 
 import dev.sterner.VoidBound
 import dev.sterner.common.block.*
+import dev.sterner.common.blockentity.OsmoticEnchanterBlockEntity
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.core.registries.BuiltInRegistries

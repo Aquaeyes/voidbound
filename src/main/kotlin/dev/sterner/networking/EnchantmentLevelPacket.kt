@@ -4,6 +4,7 @@ import dev.sterner.common.blockentity.OsmoticEnchanterBlockEntity
 import me.pepperbell.simplenetworking.SimpleChannel
 import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.minecraft.core.BlockPos
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.server.MinecraftServer
@@ -20,6 +21,12 @@ class EnchantmentLevelPacket(nbt: CompoundTag) : LodestoneServerNBTPacket(nbt) {
 
     constructor(buf: FriendlyByteBuf): this(buf.readNbt()!!)
 
+    constructor(enchantment: Enchantment, level: Int, asLong: Long) : this(CompoundTag().apply {
+        putInt("Enchantment", BuiltInRegistries.ENCHANTMENT.getId(enchantment))
+        putInt("Level", level)
+        putLong("Pos", asLong)
+    })
+
     override fun executeServerNbt(
         server: MinecraftServer?,
         player: ServerPlayer?,
@@ -35,7 +42,7 @@ class EnchantmentLevelPacket(nbt: CompoundTag) : LodestoneServerNBTPacket(nbt) {
 
             if (player?.level()?.getBlockEntity(pos) is OsmoticEnchanterBlockEntity) {
                 val osmotic = player.level().getBlockEntity(pos) as OsmoticEnchanterBlockEntity
-                osmotic.recieveScreenData(enchantment, level)
+                osmotic.receiveScreenData(enchantment, level)
             }
         }
     }

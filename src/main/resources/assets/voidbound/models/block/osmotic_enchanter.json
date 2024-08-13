@@ -6,7 +6,7 @@
 		"4": "voidbound:block/osmotic_base",
 		"well_0": "voidbound:block/corrupt_well_1",
 		"well_1": "voidbound:block/corrupt_well_0",
-		"particle": "malum:block/tainted_rock"
+		"particle": "malum:block/arcane_rock/tainted/tainted_rock"
 	},
 	"elements": [
 		{

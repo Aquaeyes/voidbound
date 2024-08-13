@@ -5,6 +5,10 @@ import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.Containers
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
@@ -39,8 +43,21 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         }
     }
 
-    fun recieveScreenData(enchantment: Enchantment, level: Int) {
+    fun receiveScreenData(enchantment: Enchantment, level: Int) {
 
+    }
+
+    override fun onUse(player: Player, hand: InteractionHand?): InteractionResult {
+        if (player.mainHandItem.isEnchantable) {
+            inventory.interact(
+                this, player.level(), player, hand
+            ) { s: ItemStack? -> true }
+        }
+        return InteractionResult.SUCCESS
+    }
+
+    override fun tick() {
+        super.tick()
     }
 
     fun refreshEnchants() {
@@ -133,4 +150,6 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
         super.load(compound)
     }
+
+
 }
