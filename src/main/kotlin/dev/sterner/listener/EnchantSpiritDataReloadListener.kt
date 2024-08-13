@@ -13,7 +13,7 @@ import net.minecraft.server.packs.resources.ResourceManager
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener
 import net.minecraft.util.profiling.ProfilerFiller
 
-open class EnchantSpiritDataReloadListener : SimpleJsonResourceReloadListener(GsonBuilder().create(), "enchant_spirit") {
+open class EnchantSpiritDataReloadListener : SimpleJsonResourceReloadListener(GsonBuilder().create(), "enchanting_data") {
 
     override fun apply(
         objectIn: MutableMap<ResourceLocation, JsonElement>,

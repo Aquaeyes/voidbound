@@ -1,6 +1,8 @@
 package dev.sterner.common.blockentity
 
 import com.sammy.malum.common.block.MalumBlockEntityInventory
+import com.sammy.malum.core.systems.recipe.SpiritWithCount
+import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.rift.SimpleSpiritCharge
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
@@ -13,27 +15,27 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
-import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.block.state.BlockState
 import team.lodestar.lodestone.helpers.BlockHelper
 import team.lodestar.lodestone.systems.blockentity.ItemHolderBlockEntity
 import java.util.*
 import java.util.stream.Collectors
+import kotlin.streams.toList
 
 
 class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolderBlockEntity(VoidBoundBlockEntityTypeRegistry.OSMOTIC_ENCHANTER.get(), pos,
     state
 ) {
 
-    data class EnchantmentInfo(val enchantment: Enchantment, val level: Int) {}
+    data class EnchantmentData(val enchantment: Enchantment, val level: Int)
     
-    var enchantments: MutableList<EnchantmentInfo> = mutableListOf()
+    var enchantments: MutableList<EnchantmentData> = mutableListOf()
 
-    var cachedEnchantments: MutableList<Int> = mutableListOf()
-    var progress = 0
-    var targetProgress: Int? = null
+    var cachedEnchantments: MutableList<Int>? = mutableListOf()
     var activated = false
-    
+
+    var spiritsToConsume: SimpleSpiritCharge = SimpleSpiritCharge()
+    var cooldown: Int = 0
     
     init {
         inventory = object : MalumBlockEntityInventory(1, 64) {
@@ -67,7 +69,8 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             bl = true
         }
 
-        targetProgress = spirits.getTotalCharge()
+        spirits.forEach { malumSpiritType, i -> println("Hello: $malumSpiritType: $i") }
+        spiritsToConsume = spirits
 
         return bl
     }
@@ -75,7 +78,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
     fun receiveScreenData(enchantment: Enchantment, level: Int) {
         enchantments.removeIf { it.enchantment == enchantment }
-        enchantments.add(EnchantmentInfo(enchantment, level))
+        enchantments.add(EnchantmentData(enchantment, level))
         notifyUpdate()
     }
 
@@ -90,33 +93,46 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
     override fun tick() {
 
-        if (activated && targetProgress != null) {
-            progress++
-            if (progress >= 20 * 5) {
-                for (enchantment in this.enchantments) {
-                    inventory.getStackInSlot(0).enchant(enchantment.enchantment, enchantment.level)
+        if (activated) {
+            cooldown++
+            if (cooldown > 10) {
+                val spiritConsumed = SpiritTypeRegistry.SPIRITS.any { spiritType ->
+                    spiritsToConsume.removeFromCharge(spiritType.value, 1)
                 }
-                enchantments.clear()
-                refreshEnchants()
-                progress = 0
-                activated = false
-                notifyUpdate()
+                spiritsToConsume.forEach { malumSpiritType, i ->  println("${malumSpiritType} : $i") }
+                if (spiritConsumed) {
+                    cooldown = 0
+                }
             }
 
-        } else {
-            progress = 0
+            if (spiritsToConsume.getTotalCharge() <= 0) {
+                doEnchant()
+            }
+
         }
 
         super.tick()
     }
 
+    private fun doEnchant() {
+        for (enchantment in this.enchantments) {
+            inventory.getStackInSlot(0).enchant(enchantment.enchantment, enchantment.level)
+        }
+        enchantments.clear()
+        refreshEnchants()
+        spiritsToConsume = SimpleSpiritCharge()
+        activated = false
+        cooldown = 0
+        notifyUpdate()
+    }
+
     fun refreshEnchants() {
         var enchantmentObjects = getAvailableEnchants(enchantments.stream().map {
-            enchantmentInfo: EnchantmentInfo -> enchantmentInfo.enchantment
+            enchantmentInfo: EnchantmentData -> enchantmentInfo.enchantment
         }.collect(Collectors.toList()))
 
         enchantmentObjects = enchantmentObjects.filter { !it.isCurse }.toMutableList()
-        cachedEnchantments = enchantmentObjects.stream().map(BuiltInRegistries.ENCHANTMENT::getId).toList() as MutableList<Int>
+        cachedEnchantments = enchantmentObjects.stream().map(BuiltInRegistries.ENCHANTMENT::getId).toList().toMutableList()
     }
 
     private fun canApply(itemStack: ItemStack, enchantment: Enchantment, currentEnchants: List<Enchantment?>): Boolean {
@@ -180,8 +196,8 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         compound.putIntArray("Enchants", enchantments.stream().mapToInt { i -> BuiltInRegistries.ENCHANTMENT.getId(i.enchantment) }.toArray())
         compound.putIntArray("Level", enchantments.stream().mapToInt { i -> i.level }.toArray())
 
-        compound.putIntArray("Cache", cachedEnchantments.stream().mapToInt {i -> i}.toArray())
-        compound.putInt("Progress", progress)
+        cachedEnchantments?.stream()?.mapToInt {i -> i}?.toList()?.toMutableList()?.let { compound.putIntArray("Cache", it) }
+        spiritsToConsume.serializeNBT(compound)
         compound.putBoolean("Activated", activated)
         super.saveAdditional(compound)
     }
@@ -194,17 +210,15 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             val levelArray = compound.getIntArray("Level")
 
             for ((index, enchantment) in enchantmentArray.withIndex()) {
-                enchantments.add(EnchantmentInfo(Enchantment.byId(enchantment)!!, levelArray[index]))
+                enchantments.add(EnchantmentData(Enchantment.byId(enchantment)!!, levelArray[index]))
             }
         }
         if (compound.contains("Cache")) {
-            cachedEnchantments.clear()
+            cachedEnchantments?.clear()
             val cachedEnchantmentArray = compound.getIntArray("Cache")
-            Arrays.stream(cachedEnchantmentArray).forEach{i -> cachedEnchantments.add(i)}
+            Arrays.stream(cachedEnchantmentArray).forEach{i -> cachedEnchantments?.add(i)}
         }
-        if (compound.contains("Progress")) {
-            progress = compound.getInt("Progress")
-        }
+        spiritsToConsume = spiritsToConsume.deserializeNBT(compound)
         activated = compound.getBoolean("Activated")
 
         super.load(compound)

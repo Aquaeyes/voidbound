@@ -18,6 +18,10 @@ data class SimpleSpiritCharge(
     )
 ) {
 
+    fun forEach(action: (MalumSpiritType, Int) -> Unit) {
+        charges.forEach { (type, count) -> action(type, count) }
+    }
+
     fun setInfiniteCount() {
         charges.keys.forEach { charges[it] = 50 }
     }

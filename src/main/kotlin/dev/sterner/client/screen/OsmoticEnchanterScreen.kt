@@ -47,9 +47,9 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
         val xInMenu = (this.width - this.imageWidth) / 2
         val yInMenu = (this.height - this.imageHeight) / 2
 
-        val filteredList = blockEntity!!.cachedEnchantments.filter { enchantId -> enchantId !in selectedEnchants }
+        val filteredList = blockEntity!!.cachedEnchantments?.filter { enchantId -> enchantId !in selectedEnchants }
 
-        for ((index, enchant) in filteredList.withIndex()) {
+        for ((index, enchant) in filteredList!!.withIndex()) {
             val widget = if (index < 8) {
                 EnchantmentWidget(this, xInMenu + index * 18 + 24 + 24 + 8, yInMenu + 15,16, 16)
             } else {
