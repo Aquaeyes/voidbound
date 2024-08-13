@@ -1,9 +1,17 @@
 package dev.sterner.api
 
+import com.sammy.malum.core.listeners.ReapingDataReloadListener
+import com.sammy.malum.core.listeners.SpiritDataReloadListener
+import com.sammy.malum.core.systems.recipe.SpiritWithCount
+import com.sammy.malum.core.systems.spirit.MalumSpiritType
+import dev.sterner.listener.EnchantSpiritDataReloadListener
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.client.Minecraft
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.Enchantments
 import team.lodestar.lodestone.helpers.TrinketsHelper
 
 object VoidBoundApi {
@@ -28,5 +36,19 @@ object VoidBoundApi {
                 VoidBoundItemRegistry.HALLOWED_GOGGLES.get()
             )
         return bl || bl2
+    }
+
+    fun getSpiritFromEnchant(enchantment: Enchantment, level: Int): List<SpiritWithCount> {
+
+        val reg = BuiltInRegistries.ENCHANTMENT.getKey(enchantment)
+        val list = EnchantSpiritDataReloadListener.ENCHANTING_DATA[reg]
+        val out = mutableListOf<SpiritWithCount>()
+        if (list != null) {
+            for (spiritIn in list) {
+                out.add(SpiritWithCount(spiritIn.type, spiritIn.count * level))
+            }
+        }
+
+        return out
     }
 }

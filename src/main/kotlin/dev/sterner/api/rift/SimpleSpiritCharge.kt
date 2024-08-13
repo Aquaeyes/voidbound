@@ -61,4 +61,8 @@ data class SimpleSpiritCharge(
             }
         }
     }
+
+    fun addToCharge(type: MalumSpiritType) {
+
+    }
 }

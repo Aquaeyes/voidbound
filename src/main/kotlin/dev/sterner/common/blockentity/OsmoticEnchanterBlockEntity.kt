@@ -1,6 +1,8 @@
 package dev.sterner.common.blockentity
 
 import com.sammy.malum.common.block.MalumBlockEntityInventory
+import dev.sterner.api.VoidBoundApi
+import dev.sterner.api.rift.SimpleSpiritCharge
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
@@ -28,6 +30,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
     var cachedEnchantments: MutableList<Int> = mutableListOf()
     var progress = 0
+    var targetProgress: Int? = null
     var activated = false
     
     
@@ -45,8 +48,25 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     fun startEnchanting() {
-        activated = true
-        notifyUpdate()
+        if (calculateSpiritRequired()) {
+            activated = true
+            notifyUpdate()
+        }
+    }
+
+    private fun calculateSpiritRequired() : Boolean {
+        var bl = false
+        val spirits = SimpleSpiritCharge()
+
+        for (enchantmentInfo in this.enchantments) {
+            val sc = VoidBoundApi.getSpiritFromEnchant(enchantmentInfo.enchantment, enchantmentInfo.level)
+            spirits.addToCharge(sc.type, sc.count)
+            bl = true
+        }
+
+        targetProgress = spirits.getTotalCharge()
+
+        return bl
     }
 
 
@@ -67,7 +87,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
     override fun tick() {
 
-        if (activated) {
+        if (activated && targetProgress != null) {
             progress++
             if (progress >= 20 * 5) {
                 for (enchantment in this.enchantments) {

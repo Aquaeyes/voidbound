@@ -1,6 +1,8 @@
 package dev.sterner
 
+import com.sammy.malum.MalumMod.SpiritDataReloadListenerFabricImpl
 import com.sammy.malum.common.events.MalumCodexEvents
+import com.sammy.malum.core.listeners.SpiritDataReloadListener
 import dev.emi.trinkets.api.client.TrinketRendererRegistry
 import dev.sterner.api.ClientTickHandler
 import dev.sterner.client.event.MalumCodexEvent
@@ -15,18 +17,21 @@ import dev.sterner.client.renderer.blockentity.SpiritStabilizerBlockEntityRender
 import dev.sterner.client.renderer.entity.*
 import dev.sterner.client.screen.OsmoticEnchanterScreen
 import dev.sterner.common.components.VoidBoundPlayerComponent
+import dev.sterner.listener.EnchantSpiritDataReloadListener
 import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.rendering.v1.*
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.minecraft.client.gui.screens.MenuScreens
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.packs.PackType
 import org.slf4j.LoggerFactory
 
 
@@ -52,6 +57,8 @@ object VoidBound : ModInitializer, ClientModInitializer {
         VoidBoundMenuTypeRegistry.MENU_TYPES.register()
 
         VoidBoundCreativeTabRegistry.init()
+
+        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(EnchantSpiritDataReloadListenerFabricImpl())
 
         UseBlockCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useBlock)
         UseEntityCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useEntity)
@@ -157,5 +164,12 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
     fun id(name: String): ResourceLocation {
         return ResourceLocation(modid, name)
+    }
+
+
+    class EnchantSpiritDataReloadListenerFabricImpl : EnchantSpiritDataReloadListener(), IdentifiableResourceReloadListener {
+        override fun getFabricId(): ResourceLocation {
+            return id("enchanting_data")
+        }
     }
 }
