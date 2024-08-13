@@ -1,8 +1,8 @@
 package dev.sterner.client.screen
 
 import dev.sterner.VoidBound
-import dev.sterner.client.screen.button.EnchantmentWidget
-import dev.sterner.client.screen.button.SelectedEnchantmentWidget
+import dev.sterner.client.screen.widget.EnchantmentWidget
+import dev.sterner.client.screen.widget.SelectedEnchantmentWidget
 import dev.sterner.common.blockentity.OsmoticEnchanterBlockEntity
 import dev.sterner.common.menu.OsmoticEnchanterMenu
 import net.minecraft.client.gui.GuiGraphics

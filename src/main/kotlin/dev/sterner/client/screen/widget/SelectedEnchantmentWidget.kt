@@ -1,4 +1,4 @@
-package dev.sterner.client.screen.button
+package dev.sterner.client.screen.widget
 
 import dev.sterner.VoidBound
 import dev.sterner.client.screen.OsmoticEnchanterScreen

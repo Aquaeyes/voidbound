@@ -5,7 +5,6 @@ import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.Containers
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
@@ -23,13 +22,16 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     state
 ) {
 
-    var enchantments: MutableList<Int> = mutableListOf()
-    val levels: MutableList<Int> = mutableListOf()
+    data class EnchantmentInfo(val enchantment: Enchantment, val level: Int) {}
+    
+    var enchantments: MutableList<EnchantmentInfo> = mutableListOf()
 
     var cachedEnchantments: MutableList<Int> = mutableListOf()
     private var progress = 0
-    private val cooldown = 0
-
+    
+    
+    
+    
     init {
         inventory = object : MalumBlockEntityInventory(1, 64) {
             public override fun onContentsChanged(slot: Int) {
@@ -61,7 +63,10 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     fun refreshEnchants() {
-        var enchantmentObjects = getAvailableEnchants(enchantments.stream().map(Enchantment::byId).collect(Collectors.toList()))
+        var enchantmentObjects = getAvailableEnchants(enchantments.stream().map {
+            enchantmentInfo: EnchantmentInfo -> Enchantment.byId(BuiltInRegistries.ENCHANTMENT.getId(enchantmentInfo.enchantment))!!
+        }
+            .collect(Collectors.toList()))
         enchantmentObjects = enchantmentObjects.filter { !it.isCurse }.toMutableList()
         cachedEnchantments = enchantmentObjects.stream().map(BuiltInRegistries.ENCHANTMENT::getId).toList()
     }
@@ -124,8 +129,10 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     override fun saveAdditional(compound: CompoundTag) {
-        compound.putIntArray("Enchants", enchantments.stream().mapToInt { i -> i }.toArray())
-        compound.putIntArray("Levels", levels.stream().mapToInt { i -> i }.toArray())
+        compound.putIntArray("Enchants", enchantments.stream().mapToInt { i -> BuiltInRegistries.ENCHANTMENT.getId(i.enchantment) }.toArray())
+        compound.putIntArray("Level", enchantments.stream().mapToInt { i -> i.level }.toArray())
+
+
         compound.putIntArray("Cache", cachedEnchantments.stream().mapToInt {i -> i}.toArray())
         compound.putInt("Progress", progress)
         super.saveAdditional(compound)
@@ -134,13 +141,15 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     override fun load(compound: CompoundTag) {
         if (compound.contains("Enchants")) {
             enchantments.clear()
-            levels.clear()
             cachedEnchantments.clear()
 
             val enchantmentArray = compound.getIntArray("Enchants")
-            Arrays.stream(enchantmentArray).forEach { i -> enchantments.add(i) }
-            val levelsArray = compound.getIntArray("Levels")
-            Arrays.stream(levelsArray).forEach{i -> levels.add(i)}
+            val levelArray = compound.getIntArray("Level")
+
+            for ((index, enchantment) in enchantmentArray.withIndex()) {
+                enchantments.add(EnchantmentInfo(Enchantment.byId(enchantment)!!, levelArray[index]))
+            }
+
             val cachedEnchantmentArray = compound.getIntArray("Cache")
             Arrays.stream(cachedEnchantmentArray).forEach{i -> cachedEnchantments.add(i)}
         }

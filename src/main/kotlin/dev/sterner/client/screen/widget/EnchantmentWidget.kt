@@ -1,6 +1,5 @@
-package dev.sterner.client.screen.button
+package dev.sterner.client.screen.widget
 
-import dev.sterner.VoidBound
 import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.client.screen.OsmoticEnchanterScreen
 import net.minecraft.client.gui.GuiGraphics
@@ -44,10 +43,12 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
         val icon = VoidBoundUtils.getEnchantmentIcon(enchantment!!)
         var xx = x
         var yy = y
+
         if (this is SelectedEnchantmentWidget) {
             xx += 3
             yy += 3
         }
+
         guiGraphics.blit(icon, xx, yy, 0f,0f,16, 16, 16, 16)
 
         if (mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height) {
