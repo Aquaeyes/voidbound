@@ -89,8 +89,8 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
     }
 
     override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-        this.renderTooltip(guiGraphics, mouseX, mouseY)
         super.render(guiGraphics, mouseX, mouseY, partialTick)
+        this.renderTooltip(guiGraphics, mouseX, mouseY)
     }
 
     companion object {

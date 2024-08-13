@@ -15,7 +15,9 @@ class OsmoticEnchanterMenu(
     i: Int, inventory: Inventory, val pos: BlockPos,
 ) : AbstractContainerMenu(VoidBoundMenuTypeRegistry.OSMOTIC_ENCHANTER.get(), i) {
 
+    val activated: Boolean = false
     var blockEntityInventory: LodestoneBlockEntityInventory? = null
+    var be: OsmoticEnchanterBlockEntity? = null
     var shouldRefresh = true
 
     constructor(i: Int, inventory: Inventory, buf: FriendlyByteBuf) : this(
@@ -25,8 +27,8 @@ class OsmoticEnchanterMenu(
     init {
 
         if (inventory.player.level().getBlockEntity(pos) is OsmoticEnchanterBlockEntity) {
-            var be = inventory.player.level().getBlockEntity(pos) as OsmoticEnchanterBlockEntity
-            blockEntityInventory = be.inventory
+            be = inventory.player.level().getBlockEntity(pos) as OsmoticEnchanterBlockEntity
+            blockEntityInventory = be?.inventory
             this.addSlot(object : Slot(blockEntityInventory!!, 0, 14, 14){
 
                 override fun mayPlace(stack: ItemStack): Boolean {
@@ -44,7 +46,7 @@ class OsmoticEnchanterMenu(
                 }
 
                 override fun mayPickup(player: Player): Boolean {
-                    if (be.progress != 0) {
+                    if (be?.progress != 0) {
                         return true
                     }
                     return super.mayPickup(player)

@@ -28,8 +28,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
     var cachedEnchantments: MutableList<Int> = mutableListOf()
     var progress = 0
-
-    
+    var activated = false
     
     
     init {
@@ -46,12 +45,8 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     fun startEnchanting() {
-        //TODO remove
-        for (enchantment in this.enchantments) {
-            inventory.getStackInSlot(0).enchant(enchantment.enchantment, enchantment.level)
-        }
-        enchantments.clear()
-        cachedEnchantments.clear()
+        activated = true
+        notifyUpdate()
     }
 
 
@@ -71,6 +66,24 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     override fun tick() {
+
+        if (activated) {
+            progress++
+            if (progress >= 20 * 5) {
+                for (enchantment in this.enchantments) {
+                    inventory.getStackInSlot(0).enchant(enchantment.enchantment, enchantment.level)
+                }
+                enchantments.clear()
+                refreshEnchants()
+                progress = 0
+                activated = false
+                notifyUpdate()
+            }
+
+        } else {
+            progress = 0
+        }
+
         super.tick()
     }
 
@@ -80,7 +93,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         }.collect(Collectors.toList()))
 
         enchantmentObjects = enchantmentObjects.filter { !it.isCurse }.toMutableList()
-        cachedEnchantments = enchantmentObjects.stream().map(BuiltInRegistries.ENCHANTMENT::getId).toList()
+        cachedEnchantments = enchantmentObjects.stream().map(BuiltInRegistries.ENCHANTMENT::getId).toList() as MutableList<Int>
     }
 
     private fun canApply(itemStack: ItemStack, enchantment: Enchantment, currentEnchants: List<Enchantment?>): Boolean {
@@ -146,6 +159,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
         compound.putIntArray("Cache", cachedEnchantments.stream().mapToInt {i -> i}.toArray())
         compound.putInt("Progress", progress)
+        compound.putBoolean("Activated", activated)
         super.saveAdditional(compound)
     }
 
@@ -168,6 +182,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         if (compound.contains("Progress")) {
             progress = compound.getInt("Progress")
         }
+        activated = compound.getBoolean("Activated")
 
         super.load(compound)
     }
