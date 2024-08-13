@@ -60,7 +60,9 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
         for (enchantmentInfo in this.enchantments) {
             val sc = VoidBoundApi.getSpiritFromEnchant(enchantmentInfo.enchantment, enchantmentInfo.level)
-            spirits.addToCharge(sc.type, sc.count)
+            for (spirit in sc) {
+                spirits.addToCharge(spirit.type, spirit.count)
+            }
             bl = true
         }
 
