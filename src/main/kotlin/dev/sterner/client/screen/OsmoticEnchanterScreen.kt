@@ -37,6 +37,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
 
     override fun containerTick() {
         if (menu.shouldRefresh) {
+            selectedEnchants.clear()
             refreshEnchants()
             menu.shouldRefresh = false
         }
@@ -48,31 +49,51 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
         super.resize(minecraft, width, height)
     }
 
-    fun refreshEnchants(){
+    fun refreshEnchants() {
         clearWidgets()
         val xInMenu = (this.width - this.imageWidth) / 2
         val yInMenu = (this.height - this.imageHeight) / 2
 
-        val filteredList = blockEntity!!.cachedEnchantments?.filter { enchantId -> enchantId !in selectedEnchants }
+        val filteredEnchantments = blockEntity?.cachedEnchantments?.filter { it !in selectedEnchants }.orEmpty()
 
-        for ((index, enchant) in filteredList!!.withIndex()) {
-            val widget = if (index < 8) {
-                EnchantmentWidget(this, xInMenu + index * 18 + 24 + 24 + 8, yInMenu + 15,16, 16)
-            } else {
-                EnchantmentWidget(this, xInMenu + (index - 8) * 18 + 24 + 24 + 8, yInMenu + 15 + 16, 16, 16)
-            }
-            widget.enchantment = (Enchantment.byId(enchant))
+        // Render available enchantments
+        renderEnchantments(filteredEnchantments, xInMenu, yInMenu)
 
+        // Render selected enchantments
+        renderSelectedEnchantments(xInMenu, yInMenu)
+
+        // Add the start enchanting button
+        addStartEnchantingWidget(xInMenu, yInMenu)
+    }
+
+    private fun renderEnchantments(enchantments: List<Int>, xInMenu: Int, yInMenu: Int) {
+        enchantments.forEachIndexed { index, enchantId ->
+            val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 166, 15, 17, 17)
+            val widget = EnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset, 16, 16)
+            widget.enchantment = Enchantment.byId(enchantId)
             this.addRenderableWidget(widget)
         }
+    }
 
-        for ((index, enchant) in selectedEnchants.withIndex()) {
-            val widget = SelectedEnchantmentWidget(this, xInMenu + 128 + 32 + 32 + 18 + 7, yInMenu + index * 22 + 18)
-            widget.enchantment = (Enchantment.byId(enchant))
+    private fun renderSelectedEnchantments(xInMenu: Int, yInMenu: Int) {
+        selectedEnchants.forEachIndexed { index, enchantId ->
+            val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 82, 5, 37, 23)
+            val widget = SelectedEnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset)
+            widget.enchantment = Enchantment.byId(enchantId)
             this.addRenderableWidget(widget)
         }
+    }
 
-        this.addRenderableWidget(StartEnchantingWidget(this, xInMenu + 13, yInMenu + 18 * 5 + 9))
+    private fun addStartEnchantingWidget(xInMenu: Int, yInMenu: Int) {
+        val widgetX = xInMenu + 13 + 16 * 6
+        val widgetY = yInMenu + 18 * 5 + 19
+        this.addRenderableWidget(StartEnchantingWidget(this, widgetX, widgetY))
+    }
+
+    private fun calculateWidgetPosition(index: Int, itemsPerRow: Int, baseX: Int, baseY: Int, offsetY: Int, offsetX: Int): Pair<Int, Int> {
+        val xOffset = (index % itemsPerRow) * offsetX + baseX
+        val yOffset = (index / itemsPerRow) * offsetY + baseY
+        return Pair(xOffset, yOffset)
     }
 
 
