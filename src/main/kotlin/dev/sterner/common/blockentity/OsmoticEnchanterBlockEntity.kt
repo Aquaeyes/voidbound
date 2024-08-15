@@ -37,12 +37,15 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     var activated = false
 
     var spiritsToConsume: SimpleSpiritCharge = SimpleSpiritCharge()
+    var consumedSpirits: SimpleSpiritCharge = SimpleSpiritCharge()
+
     var cooldown: Int = 0
     
     init {
         inventory = object : MalumBlockEntityInventory(1, 64) {
             public override fun onContentsChanged(slot: Int) {
                 spiritsToConsume = SimpleSpiritCharge()
+                consumedSpirits = SimpleSpiritCharge()
                 cachedEnchantments = mutableListOf()
                 enchantments = mutableListOf()
                 refreshEnchants()
@@ -50,6 +53,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
                 needsSync = true
                 notifyUpdate()
                 BlockHelper.updateAndNotifyState(level, worldPosition)
+                updateData()
                 super.onContentsChanged(slot)
             }
         }
@@ -103,6 +107,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             cooldown++
             if (cooldown > 10) {
                 val spiritConsumed = SpiritTypeRegistry.SPIRITS.any { spiritType ->
+                    consumedSpirits.addToCharge(spiritType.value, 1)
                     spiritsToConsume.removeFromCharge(spiritType.value, 1)
                 }
                 if (spiritConsumed) {
@@ -126,6 +131,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         enchantments.clear()
         refreshEnchants()
         spiritsToConsume = SimpleSpiritCharge()
+        consumedSpirits = SimpleSpiritCharge()
         activated = false
         cooldown = 0
         notifyUpdate()
@@ -204,6 +210,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
         cachedEnchantments?.stream()?.mapToInt {i -> i}?.toList()?.toMutableList()?.let { compound.putIntArray("Cache", it) }
         spiritsToConsume.serializeNBT(compound)
+        consumedSpirits.serializeNBT(compound)
         compound.putBoolean("Activated", activated)
         super.saveAdditional(compound)
     }
@@ -225,6 +232,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             Arrays.stream(cachedEnchantmentArray).forEach{i -> cachedEnchantments?.add(i)}
         }
         spiritsToConsume = spiritsToConsume.deserializeNBT(compound)
+        consumedSpirits = consumedSpirits.deserializeNBT(compound)
         activated = compound.getBoolean("Activated")
 
         super.load(compound)

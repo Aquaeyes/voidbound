@@ -15,6 +15,7 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
     Component.empty()
 ) {
 
+    var isScy: Boolean = false
     var spirit_type: MalumSpiritType? = null
     private val icon = VoidBound.id("textures/gui/spirit_bar.png")
 
