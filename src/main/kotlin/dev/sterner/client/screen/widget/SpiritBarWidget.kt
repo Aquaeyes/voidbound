@@ -101,15 +101,6 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
         return normalizer
     }
 
-    private fun unpackIntToRGBA(color: Int): FloatArray {
-        val a = (color shr 24) and 0xFF
-        val r = (color shr 16) and 0xFF
-        val g = (color shr 8) and 0xFF
-        val b = color and 0xFF
-
-        return floatArrayOf(r / 255f, g / 255f, b / 255f, a / 255f)
-    }
-
     override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
 
     }
