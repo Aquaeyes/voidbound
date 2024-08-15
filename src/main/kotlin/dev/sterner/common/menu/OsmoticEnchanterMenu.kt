@@ -46,9 +46,6 @@ class OsmoticEnchanterMenu(
                 }
 
                 override fun mayPickup(player: Player): Boolean {
-                    if (!be?.activated!!) {
-                        return true
-                    }
                     return super.mayPickup(player)
                 }
             })

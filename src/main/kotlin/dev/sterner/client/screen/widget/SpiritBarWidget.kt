@@ -47,10 +47,10 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
             // Calculate the Y position for the top of the filled portion
             val adjustedY = y + (maxBarHeight - fillHeight)
 
-            // Calculate texture coordinates for cropping
             val minU = 0f // Start at the beginning of the texture horizontally
-            val minV = (maxBarHeight - fillHeight).toFloat() / height.toFloat()  // Top of the portion to display
+            val minV = 1f - (fillHeight.toFloat() / height.toFloat())  // Crop from the top
 
+            // Setup shader instance if required
             val shaderInstance = LodestoneShaderRegistry.DISTORTED_TEXTURE.instance.get() as ExtendedShaderInstance
             if (isScy) {
                 shaderInstance.safeGetUniform("YFrequency").set(1f)
@@ -64,11 +64,13 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
             val builder = VFXBuilders.createScreen()
                 .setPosColorTexLightmapDefaultFormat()
                 .setShader(shaderInstanceSupplier)
-                .setAlpha(if (isScy) 0.5f else 1f)
+                .setAlpha(if (isScy) 0.75f else 1f)
                 .setColor(spirit_type!!.primaryColor.brighter())
                 .setLight(RenderHelper.FULL_BRIGHT)
+
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE)
 
+            // Render the texture with adjusted UV for top cropping
             ArcanaCodexHelper.renderTexture(
                 icon,                         // ResourceLocation
                 guiGraphics.pose(),            // PoseStack
@@ -76,12 +78,13 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
                 x,                             // X position
                 adjustedY,                     // Adjusted Y position (moves upwards)
                 minU,                          // U (texture starting position)
-                minV,                          // V (cropped starting Y position)
+                minV,                          // **Adjusted minV for top cropping**
                 width,                         // Bar width
                 fillHeight,                    // Filled height
                 width,                         // Full texture width
                 height                         // Full texture height
             )
+
             shaderInstance.setUniformDefaults()
             RenderSystem.defaultBlendFunc()
 
