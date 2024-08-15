@@ -5,7 +5,9 @@ import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.rift.SimpleSpiritCharge
+import dev.sterner.networking.UpdateSpiritAmountPacket
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
+import dev.sterner.registry.VoidBoundPacketRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
@@ -70,13 +72,14 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         }
 
         spiritsToConsume = spirits
-
+        VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClientsTracking(UpdateSpiritAmountPacket(spiritsToConsume, blockPos.asLong()), this)
         return bl
     }
 
     fun receiveScreenData(enchantment: Enchantment, level: Int) {
         enchantments.removeIf { it.enchantment == enchantment }
         enchantments.add(EnchantmentData(enchantment, level))
+        calculateSpiritRequired()
         notifyUpdate()
     }
 
@@ -107,7 +110,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             }
 
         }
-
+        //println("${spiritsToConsume.getTotalCharge()} + ${level!!.isClientSide()}")
         super.tick()
     }
 

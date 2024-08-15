@@ -28,6 +28,9 @@ object VoidBoundPacketRegistry {
         VOIDBOUND_CHANNEL.registerS2CPacket(
             BubbleParticlePacket::class.java, index++
         )
+        VOIDBOUND_CHANNEL.registerS2CPacket(
+            UpdateSpiritAmountPacket::class.java, index++
+        )
 
         //C2S
         VOIDBOUND_CHANNEL.registerC2SPacket(

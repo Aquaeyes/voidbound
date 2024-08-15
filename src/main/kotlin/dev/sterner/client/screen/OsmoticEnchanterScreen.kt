@@ -95,6 +95,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
         val widgetY = yInMenu + 18 * 5 + 19 + 28
         this.addRenderableWidget(StartEnchantingWidget(this, widgetX, widgetY))
     }
+
     private fun addSpiritBarWidget(xInMenu: Int, yInMenu: Int) {
         val topRowSpirits = arrayOf(
             SpiritTypeRegistry.AERIAL_SPIRIT,
@@ -129,7 +130,6 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
         return Pair(xOffset, yOffset)
     }
 
-
     private fun getBlockEntity(playerInventory: Inventory, blockPos: BlockPos): OsmoticEnchanterBlockEntity? {
         val blockEntity = playerInventory.player.level().getBlockEntity(blockPos)
         if (blockEntity is OsmoticEnchanterBlockEntity) {
@@ -152,8 +152,6 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
         super.render(guiGraphics, mouseX, mouseY, partialTick)
         this.renderTooltip(guiGraphics, mouseX, mouseY)
     }
-
-
 
     companion object {
         private val CONTAINER_TEXTURE: ResourceLocation =
