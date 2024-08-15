@@ -1,16 +1,21 @@
 package dev.sterner.client.screen.widget
 
+import dev.sterner.VoidBound
 import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.client.screen.OsmoticEnchanterScreen
 import dev.sterner.networking.EnchantmentLevelPacket
 import dev.sterner.networking.RemoveEnchantPacket
 import dev.sterner.registry.VoidBoundPacketRegistry
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.client.gui.narration.NarrationElementOutput
+import net.minecraft.client.renderer.texture.AbstractTexture
+import net.minecraft.client.renderer.texture.TextureManager
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.enchantment.Enchantment
 
 
@@ -45,8 +50,9 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
         if (dontRender()) {
             return
         }
-
+        //var icon: ResourceLocation? = null
         val icon = VoidBoundUtils.getEnchantmentIcon(enchantment!!)
+
         var xx = x
         var yy = y
 
