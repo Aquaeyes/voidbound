@@ -12,6 +12,10 @@ import net.minecraft.network.chat.Component
 class StartEnchantingWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : AbstractWidget(x, y, 22, 14, Component.empty()) {
 
     override fun onClick(mouseX: Double, mouseY: Double) {
+        if (screen.menu.be?.activated == true) {
+            return
+        }
+
         VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToServer(StartEnchantingPacket(screen.menu.pos))
         super.onClick(mouseX, mouseY)
     }

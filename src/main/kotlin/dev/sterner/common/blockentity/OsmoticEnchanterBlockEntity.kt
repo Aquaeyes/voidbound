@@ -109,8 +109,8 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
                 // Variable to track if a spirit has been consumed
                 var spiritConsumed = false
 
-                // Iterate through each spirit type
-                SpiritTypeRegistry.SPIRITS.forEach { spiritType ->
+                // Iterate through each spirit type, but stop after one spirit is processed
+                for (spiritType in SpiritTypeRegistry.SPIRITS) {
                     val requiredCharge = spiritsToConsume.getChargeForType(spiritType.value)
                     val currentCharge = consumedSpirits.getChargeForType(spiritType.value)
 
@@ -118,7 +118,9 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
                     if (currentCharge < requiredCharge) {
                         consumedSpirits.addToCharge(spiritType.value, 1)
                         spiritConsumed = true  // Mark that a spirit was consumed
-                        return@forEach // Exit after processing one spirit
+
+                        // Exit the loop after processing this spirit type
+                        break
                     }
                 }
 

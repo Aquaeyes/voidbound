@@ -24,6 +24,11 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
 
     override fun onClick(mouseX: Double, mouseY: Double) {
         val id = BuiltInRegistries.ENCHANTMENT.getId(enchantment)
+
+        if (screen.menu.be?.activated == true) {
+            return
+        }
+
         if (screen.selectedEnchants.contains(id)) {
             screen.selectedEnchants.remove(id)
 

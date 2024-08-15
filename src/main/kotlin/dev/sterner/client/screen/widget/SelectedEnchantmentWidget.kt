@@ -20,6 +20,11 @@ import java.awt.Color
 class SelectedEnchantmentWidget(screen: OsmoticEnchanterScreen, x: Int, y: Int) : EnchantmentWidget(screen, x, y, 22, 33) {
 
     override fun onClick(mouseX: Double, mouseY: Double) {
+
+        if (screen.menu.be?.activated == true) {
+            return
+        }
+
         val area1XStart: Double = x + 6.0
         val area1XEnd: Double = x + 16.0
         val area1YStart: Double = y.toDouble()
