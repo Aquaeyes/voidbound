@@ -136,7 +136,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
             for ((index, spiritType) in spiritTypes.withIndex()) {
                 val widget = SpiritBarWidget(this, xInMenu + 12 + 17 * index, yInMenu + yOffset)
                 widget.spirit_type = spiritType
-                widget.isScy = isScy
+                widget.isScry = isScy
                 this.addRenderableWidget(widget)
             }
         }
