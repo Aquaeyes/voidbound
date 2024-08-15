@@ -17,6 +17,7 @@ import net.minecraft.world.phys.Vec3
 import org.joml.Matrix4f
 import org.joml.Vector3f
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
+import team.lodestar.lodestone.registry.client.LodestoneShaderRegistry
 import team.lodestar.lodestone.systems.easing.Easing
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
 import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
@@ -82,8 +83,6 @@ object VoidBoundRenderUtils {
         y1: Int,
         width: Int,
         height: Int,
-        textureWidth: Int,
-        textureHeight: Int,
         red: Float,
         green: Float,
         blue: Float,
@@ -128,7 +127,7 @@ object VoidBoundRenderUtils {
         alpha: Float
     ) {
         RenderSystem.setShaderTexture(0, atlasLocation)
-        RenderSystem.setShader { GameRenderer.getPositionColorTexShader() }
+        RenderSystem.setShader { LodestoneShaderRegistry.LODESTONE_TEXTURE.instance.get() }
         RenderSystem.enableBlend()
         val matrix4f: Matrix4f = guiGraphics.pose().last().pose()
         val bufferBuilder = Tesselator.getInstance().builder

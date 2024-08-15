@@ -1,16 +1,25 @@
 package dev.sterner.client.screen.widget
 
+import com.mojang.blaze3d.systems.RenderSystem
+import com.sammy.malum.client.screen.codex.ArcanaCodexHelper
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import dev.sterner.VoidBound
 import dev.sterner.api.rift.SimpleSpiritCharge
-import dev.sterner.api.util.VoidBoundRenderUtils
 import dev.sterner.client.screen.OsmoticEnchanterScreen
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.client.gui.narration.NarrationElementOutput
+import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.network.chat.Component
 import net.minecraft.util.Mth
+import org.lwjgl.opengl.GL11
+import team.lodestar.lodestone.handlers.RenderHandler
+import team.lodestar.lodestone.helpers.RenderHelper
+import team.lodestar.lodestone.registry.client.LodestoneShaderRegistry
+import team.lodestar.lodestone.systems.rendering.VFXBuilders
+import team.lodestar.lodestone.systems.rendering.shader.ExtendedShaderInstance
+import java.util.function.Supplier
 
 class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : AbstractWidget(x, y, 8, 45,
     Component.empty()
@@ -25,8 +34,8 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
             val targetSpirits = screen.menu.be?.spiritsToConsume
             val consumedSpirits = screen.menu.be?.consumedSpirits
 
+            // Calculate the normalized value for the spirit bar fill level
             val normalizer = if (isScy) calcNormal(targetSpirits) else calcNormal(consumedSpirits)
-            val rgba = unpackIntToRGBA(spirit_type!!.primaryColor.rgb)
 
             // Full height of the bar (when completely filled)
             val maxBarHeight = height
@@ -39,13 +48,44 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
             val adjustedY = y + (maxBarHeight - fillHeight)
 
             // Calculate texture coordinates for cropping
-            val minU = 0f
-            val maxU = width.toFloat() / width.toFloat()
+            val minU = 0f // Start at the beginning of the texture horizontally
             val minV = (maxBarHeight - fillHeight).toFloat() / height.toFloat()  // Top of the portion to display
-            val maxV = 1f  // Bottom of the portion to display
 
-            VoidBoundRenderUtils.blit(guiGraphics, icon, x, adjustedY, width, fillHeight, width, height, rgba[0], rgba[1], rgba[2], if (isScy) 0.3f else 1f, minU, maxU, minV, maxV)
+            val shaderInstance = LodestoneShaderRegistry.DISTORTED_TEXTURE.instance.get() as ExtendedShaderInstance
+            if (isScy) {
+                shaderInstance.safeGetUniform("YFrequency").set(1f)
+                shaderInstance.safeGetUniform("XFrequency").set(1f)
+                shaderInstance.safeGetUniform("Speed").set(1f)
+                shaderInstance.safeGetUniform("Intensity").set(1f)
+            }
 
+            val shaderInstanceSupplier = Supplier<ShaderInstance> { shaderInstance }
+
+            val builder = VFXBuilders.createScreen()
+                .setPosColorTexLightmapDefaultFormat()
+                .setShader(shaderInstanceSupplier)
+                .setAlpha(if (isScy) 0.5f else 1f)
+                .setColor(spirit_type!!.primaryColor.brighter())
+                .setLight(RenderHelper.FULL_BRIGHT)
+            RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE)
+
+            ArcanaCodexHelper.renderTexture(
+                icon,                         // ResourceLocation
+                guiGraphics.pose(),            // PoseStack
+                builder,                       // VFXBuilders.ScreenVFXBuilder
+                x,                             // X position
+                adjustedY,                     // Adjusted Y position (moves upwards)
+                minU,                          // U (texture starting position)
+                minV,                          // V (cropped starting Y position)
+                width,                         // Bar width
+                fillHeight,                    // Filled height
+                width,                         // Full texture width
+                height                         // Full texture height
+            )
+            shaderInstance.setUniformDefaults()
+            RenderSystem.defaultBlendFunc()
+
+            // Tooltip logic: show the tooltip if the mouse is over the bar
             if (mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + maxBarHeight) {
                 tooltip = Tooltip.create(Component.translatable(spirit_type!!.identifier))
             }
