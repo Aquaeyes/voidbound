@@ -3,35 +3,27 @@
   "spirits": [
     {
       "spirit": "aerial",
-      "count": 10
+      "count": 16
     },
     {
       "spirit": "aqueous",
-      "count": 10
+      "count": 16
     },
     {
       "spirit": "earthen",
-      "count": 10
+      "count": 16
     },
     {
       "spirit": "infernal",
-      "count": 10
-    },
-    {
-      "spirit": "wicked",
-      "count": 10
+      "count": 16
     },
     {
       "spirit": "sacred",
-      "count": 10
-    },
-    {
-      "spirit": "eldritch",
-      "count": 10
+      "count": 16
     },
     {
       "spirit": "arcane",
-      "count": 10
+      "count": 16
     }
   ]
 }

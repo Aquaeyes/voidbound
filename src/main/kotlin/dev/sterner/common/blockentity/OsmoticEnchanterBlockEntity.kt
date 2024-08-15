@@ -59,7 +59,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         }
     }
 
-    private fun calculateSpiritRequired() : Boolean {
+    fun calculateSpiritRequired() : Boolean {
         var bl = false
         val spirits = SimpleSpiritCharge()
 
