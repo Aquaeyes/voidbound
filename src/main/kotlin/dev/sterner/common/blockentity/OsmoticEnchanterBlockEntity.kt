@@ -48,8 +48,8 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
                 refreshEnchants()
                 this.setChanged()
                 needsSync = true
+                notifyUpdate()
                 BlockHelper.updateAndNotifyState(level, worldPosition)
-                updateData()
                 super.onContentsChanged(slot)
             }
         }
