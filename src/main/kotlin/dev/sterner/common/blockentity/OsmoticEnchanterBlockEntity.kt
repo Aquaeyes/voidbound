@@ -129,6 +129,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
                 // Reset cooldown if a spirit was consumed
                 if (spiritConsumed) {
                     cooldown = 0
+                    notifyUpdate()
                 }
             }
 

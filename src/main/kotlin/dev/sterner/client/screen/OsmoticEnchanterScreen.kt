@@ -40,7 +40,11 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
 
     override fun containerTick() {
         if (menu.shouldRefresh) {
-            selectedEnchants.clear()
+            if (blockEntity?.activated == false) {
+                selectedEnchants.clear()
+            } else {
+                selectedEnchants = blockEntity?.cachedEnchantments!!.toMutableSet()
+            }
             refreshEnchants()
             menu.shouldRefresh = false
         }
