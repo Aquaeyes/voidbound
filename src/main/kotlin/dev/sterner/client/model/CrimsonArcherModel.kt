@@ -17,13 +17,13 @@ import net.minecraft.world.entity.HumanoidArm
 
 
 class CrimsonArcherModel(root: ModelPart) : AbstractCrimsonModel<CrimsonArcherEntity>(root) {
-    private val left_arm: ModelPart = root.getChild("left_arm")
-    private val right_arm: ModelPart = root.getChild("right_arm")
+    private val leftArm: ModelPart = root.getChild("left_arm")
+    private val rightArm: ModelPart = root.getChild("right_arm")
     private val body: ModelPart = root.getChild("body")
     private val head: ModelPart = root.getChild("head")
     private val hat: ModelPart = root.getChild("hat")
-    private val right_leg: ModelPart = root.getChild("right_leg")
-    private val left_leg: ModelPart = root.getChild("left_leg")
+    private val rightLeg: ModelPart = root.getChild("right_leg")
+    private val leftLeg: ModelPart = root.getChild("left_leg")
 
     override fun setupAnim(
         entity: CrimsonArcherEntity,
@@ -37,20 +37,29 @@ class CrimsonArcherModel(root: ModelPart) : AbstractCrimsonModel<CrimsonArcherEn
 
         val armPose = (entity as AbstractCultistEntity).getArmPose()
 
-        if (armPose == AbstractCultistEntity.CrimsonArmPose.BOW_AND_ARROW) {
-            rightArm.yRot = -0.1f + head.yRot
-            rightArm.xRot = -1.5707964f + head.xRot
-            leftArm.xRot = -0.9424779f + head.xRot
-            leftArm.yRot = head.yRot - 0.4f
-            leftArm.zRot = 1.5707964f
-        } else if (armPose == AbstractCultistEntity.CrimsonArmPose.CROSSBOW_HOLD) {
-            AnimationUtils.animateCrossbowHold(this.rightArm, this.leftArm, this.head, true)
-        } else if (armPose == AbstractCultistEntity.CrimsonArmPose.CROSSBOW_CHARGE) {
-            AnimationUtils.animateCrossbowCharge(this.rightArm, this.leftArm, entity, true)
+        when (armPose) {
+            AbstractCultistEntity.CrimsonArmPose.BOW_AND_ARROW -> {
+                rightArm.yRot = -0.1f + head.yRot
+                rightArm.xRot = -1.5707964f + head.xRot
+                leftArm.xRot = -0.9424779f + head.xRot
+                leftArm.yRot = head.yRot - 0.4f
+                leftArm.zRot = 1.5707964f
+            }
+            AbstractCultistEntity.CrimsonArmPose.CROSSBOW_HOLD -> {
+                AnimationUtils.animateCrossbowHold(this.rightArm, this.leftArm, this.head, true)
+            }
+            AbstractCultistEntity.CrimsonArmPose.CROSSBOW_CHARGE -> {
+                AnimationUtils.animateCrossbowCharge(this.rightArm, this.leftArm, entity, true)
+            }
+
+            AbstractCultistEntity.CrimsonArmPose.ATTACKING -> {}
+            AbstractCultistEntity.CrimsonArmPose.SPELLCASTING -> {}
+            AbstractCultistEntity.CrimsonArmPose.NEUTRAL -> {}
+            AbstractCultistEntity.CrimsonArmPose.BLOCK -> {}
         }
     }
 
-    override fun translateToHand(side: HumanoidArm, poseStack: PoseStack?) {
+    override fun translateToHand(side: HumanoidArm, poseStack: PoseStack) {
         val f = if (side == HumanoidArm.RIGHT) 1.0f else -1.0f
         val modelPart = this.getArm(side)
         modelPart.x += f
@@ -79,12 +88,12 @@ class CrimsonArcherModel(root: ModelPart) : AbstractCrimsonModel<CrimsonArcherEn
         blue: Float,
         alpha: Float
     ) {
-        left_arm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha)
-        right_arm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha)
+        leftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha)
+        rightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha)
         body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha)
         head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha)
-        right_leg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha)
-        left_leg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha)
+        rightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha)
+        leftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha)
     }
 
     companion object {
@@ -93,87 +102,87 @@ class CrimsonArcherModel(root: ModelPart) : AbstractCrimsonModel<CrimsonArcherEn
             ModelLayerLocation(VoidBound.id("crimson_archer"), "main")
 
         fun createBodyLayer(): LayerDefinition {
-            val meshdefinition = MeshDefinition()
-            val partdefinition = meshdefinition.root
+            val meshDefinition = MeshDefinition()
+            val partDefinition = meshDefinition.root
 
-            val left_arm = partdefinition.addOrReplaceChild(
+            val leftArm = partDefinition.addOrReplaceChild(
                 "left_arm",
                 CubeListBuilder.create().texOffs(32, 48)
                     .addBox(-1.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f, CubeDeformation(0.0f)),
                 PartPose.offset(5.0f, 2.0f, 0.0f)
             )
 
-            val LeftElbowPad = left_arm.addOrReplaceChild(
+            leftArm.addOrReplaceChild(
                 "LeftElbowPad",
                 CubeListBuilder.create().texOffs(59, 47).mirror()
                     .addBox(2.5f, 0.5f, -2.5f, 1.0f, 4.0f, 5.0f, CubeDeformation(0.0f)).mirror(false),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 
-            val LeftShoulderPad = left_arm.addOrReplaceChild(
+            leftArm.addOrReplaceChild(
                 "LeftShoulderPad",
                 CubeListBuilder.create().texOffs(59, 40).mirror()
                     .addBox(-1.5f, -2.5f, -2.5f, 5.0f, 2.0f, 5.0f, CubeDeformation(0.0f)).mirror(false),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 
-            val right_arm = partdefinition.addOrReplaceChild(
+            val rightArm = partDefinition.addOrReplaceChild(
                 "right_arm",
                 CubeListBuilder.create().texOffs(40, 16)
                     .addBox(-3.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f, CubeDeformation(0.0f)),
                 PartPose.offset(-5.0f, 2.0f, 0.0f)
             )
 
-            val RightShoulderPad = right_arm.addOrReplaceChild(
+            rightArm.addOrReplaceChild(
                 "RightShoulderPad",
                 CubeListBuilder.create().texOffs(59, 40)
                     .addBox(-3.5f, -2.5f, -2.5f, 5.0f, 2.0f, 5.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 
-            val RightElbowPad = right_arm.addOrReplaceChild(
+            rightArm.addOrReplaceChild(
                 "RightElbowPad",
                 CubeListBuilder.create().texOffs(59, 47)
                     .addBox(-3.5f, 0.5f, -2.5f, 1.0f, 4.0f, 5.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 
-            val body = partdefinition.addOrReplaceChild(
+            val body = partDefinition.addOrReplaceChild(
                 "body",
                 CubeListBuilder.create().texOffs(16, 16)
                     .addBox(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 
-            val ChestArmor = body.addOrReplaceChild(
+            body.addOrReplaceChild(
                 "ChestArmor",
                 CubeListBuilder.create().texOffs(59, 27)
                     .addBox(-4.5f, -0.4f, -2.4f, 9.0f, 8.0f, 5.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 
-            val Leggings = body.addOrReplaceChild(
+            val leggings = body.addOrReplaceChild(
                 "Leggings",
                 CubeListBuilder.create().texOffs(0, 0)
                     .addBox(0.5f, 9.6f, -2.8f, 3.0f, 2.0f, 1.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 
-            val ClothThing = Leggings.addOrReplaceChild(
+            leggings.addOrReplaceChild(
                 "ClothThing",
                 CubeListBuilder.create().texOffs(0, 32)
                     .addBox(-5.0f, -0.5f, -2.5f, 8.0f, 3.0f, 5.0f, CubeDeformation(0.0f)),
                 PartPose.offsetAndRotation(-1.0f, 11.5f, 0.0f, 0.0f, 0.0f, -0.5236f)
             )
 
-            val Cape = body.addOrReplaceChild(
+            body.addOrReplaceChild(
                 "Cape",
                 CubeListBuilder.create().texOffs(0, 50)
                     .addBox(-3.5f, 0.0f, 0.0f, 7.0f, 14.0f, 1.0f, CubeDeformation(0.0f)),
                 PartPose.offsetAndRotation(0.0f, 0.0f, 2.0f, 0.0873f, 0.0f, 0.0f)
             )
 
-            val head = partdefinition.addOrReplaceChild(
+            val head = partDefinition.addOrReplaceChild(
                 "head",
                 CubeListBuilder.create()
                     .texOffs(0, 0)
@@ -186,62 +195,62 @@ class CrimsonArcherModel(root: ModelPart) : AbstractCrimsonModel<CrimsonArcherEn
                 PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, 0.0873f, 0.0f, 0.0f)
             )
 
-            val hat = partdefinition.addOrReplaceChild(
+            partDefinition.addOrReplaceChild(
                 "hat",
                 CubeListBuilder.create(),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 
-            val HoodBack = head.addOrReplaceChild(
+            head.addOrReplaceChild(
                 "HoodBack",
                 CubeListBuilder.create().texOffs(76, 17)
                     .addBox(-4.0f, -8.5f, 2.3f, 8.0f, 7.0f, 2.0f, CubeDeformation(0.0f)),
                 PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, -0.1396f, 0.0f, 0.0f)
             )
 
-            val right_leg = partdefinition.addOrReplaceChild(
+            val rightLeg = partDefinition.addOrReplaceChild(
                 "right_leg",
                 CubeListBuilder.create().texOffs(0, 16)
                     .addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, CubeDeformation(0.0f)),
                 PartPose.offset(-1.9f, 12.0f, 0.0f)
             )
 
-            val RightKneePad = right_leg.addOrReplaceChild(
+            rightLeg.addOrReplaceChild(
                 "RightKneePad",
                 CubeListBuilder.create().texOffs(0, 4)
                     .addBox(-1.5f, 3.5f, -2.5f, 3.0f, 3.0f, 1.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 
-            val RightBoot = right_leg.addOrReplaceChild(
+            rightLeg.addOrReplaceChild(
                 "RightBoot",
                 CubeListBuilder.create().texOffs(0, 40)
                     .addBox(-2.5f, 7.0f, -2.5f, 5.0f, 5.0f, 5.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 
-            val left_leg = partdefinition.addOrReplaceChild(
+            val leftLeg = partDefinition.addOrReplaceChild(
                 "left_leg",
                 CubeListBuilder.create().texOffs(0, 16).mirror()
                     .addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, CubeDeformation(0.0f)).mirror(false),
                 PartPose.offset(1.9f, 12.0f, 0.0f)
             )
 
-            val LEftBoot = left_leg.addOrReplaceChild(
+            leftLeg.addOrReplaceChild(
                 "LEftBoot",
                 CubeListBuilder.create().texOffs(0, 40)
                     .addBox(-2.5f, 7.0f, -2.5f, 5.0f, 5.0f, 5.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 
-            val RightKneePad_1 = left_leg.addOrReplaceChild(
+            leftLeg.addOrReplaceChild(
                 "RightKneePad_1",
                 CubeListBuilder.create().texOffs(0, 4)
                     .addBox(-1.5f, 3.5f, -2.5f, 3.0f, 3.0f, 1.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 
-            return LayerDefinition.create(meshdefinition, 128, 128)
+            return LayerDefinition.create(meshDefinition, 128, 128)
         }
     }
 }

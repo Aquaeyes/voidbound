@@ -92,7 +92,7 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
                         camera,
                         poseStack,
                         entry.key,
-                        VoidBoundTokens.WARD_BORDER,
+                        VoidBoundTokens.wardBorder,
                         entry.value,
                         20
                     )

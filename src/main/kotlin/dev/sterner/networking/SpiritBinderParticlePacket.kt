@@ -11,7 +11,7 @@ import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.entity.LivingEntity
 import team.lodestar.lodestone.systems.network.LodestoneClientPacket
 
-class SpiritBinderParticlePacket(var entityId: Int, val pos: BlockPos, val spiritType: String) :
+class SpiritBinderParticlePacket(private val entityId: Int, val pos: BlockPos, private val spiritType: String) :
     LodestoneClientPacket() {
 
     constructor(buf: FriendlyByteBuf) : this(buf.readInt(), buf.readBlockPos(), buf.readUtf())

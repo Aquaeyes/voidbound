@@ -1,14 +1,12 @@
 package dev.sterner.common.block
 
 import dev.sterner.common.blockentity.OsmoticEnchanterBlockEntity
-import dev.sterner.common.blockentity.PortableHoleBlockEntity
 import dev.sterner.common.menu.OsmoticEnchanterMenu
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.minecraft.core.BlockPos
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.world.Container
 import net.minecraft.world.Containers
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -29,7 +27,7 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class OsmoticEnchanterBlock(properties: Properties?) : BaseEntityBlock(properties) {
+class OsmoticEnchanterBlock(properties: Properties) : BaseEntityBlock(properties) {
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
         return OsmoticEnchanterBlockEntity(pos, state)
@@ -107,9 +105,9 @@ class OsmoticEnchanterBlock(properties: Properties?) : BaseEntityBlock(propertie
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
 
-        val o = Shapes.box(0.0, 0.0, 0.0, 1.0, 2.0/16, 1.0)
-        val i = Shapes.box(6.0/16, 2.0/16, 6.0/16, 10.0/16, 4.0/16, 10.0/16)
-        val j = Shapes.box(2.0/16, 6.0/16, 2.0/16, 14.0/16, 8.0/16, 14.0/16)
+        val o = Shapes.box(0.0, 0.0, 0.0, 1.0, 2.0 / 16, 1.0)
+        val i = Shapes.box(6.0 / 16, 2.0 / 16, 6.0 / 16, 10.0 / 16, 4.0 / 16, 10.0 / 16)
+        val j = Shapes.box(2.0 / 16, 6.0 / 16, 2.0 / 16, 14.0 / 16, 8.0 / 16, 14.0 / 16)
 
         return Shapes.join(j, Shapes.join(o, i, BooleanOp.OR), BooleanOp.OR)
     }

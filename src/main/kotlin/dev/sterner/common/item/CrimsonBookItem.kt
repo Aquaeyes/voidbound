@@ -30,8 +30,6 @@ class CrimsonBookItem(properties: Properties) : Item(properties) {
             player.getItemInHand(usedHand).getOrCreateTag().putBoolean("open", true)
         }
 
-
-
         return super.use(level, player, usedHand)
     }
 

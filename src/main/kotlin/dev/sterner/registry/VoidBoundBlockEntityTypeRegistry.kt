@@ -3,6 +3,7 @@ package dev.sterner.registry
 import dev.sterner.VoidBound
 import dev.sterner.common.blockentity.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
+import io.github.fabricators_of_create.porting_lib.util.RegistryObject
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.entity.BlockEntityType
 
@@ -11,7 +12,7 @@ object VoidBoundBlockEntityTypeRegistry {
     val BLOCK_ENTITY_TYPES: LazyRegistrar<BlockEntityType<*>> =
         LazyRegistrar.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, VoidBound.modid)
 
-    var SPIRIT_BINDER = BLOCK_ENTITY_TYPES.register("spirit_binder") {
+    var SPIRIT_BINDER: RegistryObject<BlockEntityType<SpiritBinderBlockEntity>> = BLOCK_ENTITY_TYPES.register("spirit_binder") {
         BlockEntityType.Builder.of(
             { pos, state -> SpiritBinderBlockEntity(pos, state) },
             VoidBoundBlockRegistry.SPIRIT_BINDER.get(),
@@ -19,7 +20,7 @@ object VoidBoundBlockEntityTypeRegistry {
             .build(null)
     }
 
-    var SPIRIT_BINDER_STABILIZER = BLOCK_ENTITY_TYPES.register("spirit_stabilizer") {
+    var SPIRIT_BINDER_STABILIZER: RegistryObject<BlockEntityType<SpiritStabilizerBlockEntity>> = BLOCK_ENTITY_TYPES.register("spirit_stabilizer") {
         BlockEntityType.Builder.of(
             { pos, state -> SpiritStabilizerBlockEntity(pos, state) },
             VoidBoundBlockRegistry.SPIRIT_STABILIZER.get(),
@@ -27,7 +28,7 @@ object VoidBoundBlockEntityTypeRegistry {
             .build(null)
     }
 
-    var DESTABILIZED_SPIRIT_RIFT = BLOCK_ENTITY_TYPES.register("destabilized_spirit_rift") {
+    var DESTABILIZED_SPIRIT_RIFT: RegistryObject<BlockEntityType<SpiritRiftBlockEntity>> = BLOCK_ENTITY_TYPES.register("destabilized_spirit_rift") {
         BlockEntityType.Builder.of(
             { pos, state -> SpiritRiftBlockEntity(pos, state) },
             VoidBoundBlockRegistry.SPIRIT_RIFT.get()
@@ -36,7 +37,7 @@ object VoidBoundBlockEntityTypeRegistry {
     }
 
 
-    var PORTABLE_HOLE = BLOCK_ENTITY_TYPES.register("portable_hole") {
+    var PORTABLE_HOLE: RegistryObject<BlockEntityType<PortableHoleBlockEntity>> = BLOCK_ENTITY_TYPES.register("portable_hole") {
         BlockEntityType.Builder.of(
             { pos, state -> PortableHoleBlockEntity(pos, state) },
             VoidBoundBlockRegistry.PORTABLE_HOLE.get()
@@ -44,9 +45,9 @@ object VoidBoundBlockEntityTypeRegistry {
             .build(null)
     }
 
-    var OSMOTIC_ENCHANTER = BLOCK_ENTITY_TYPES.register("osmotic_enchanter") {
+    var OSMOTIC_ENCHANTER: RegistryObject<BlockEntityType<OsmoticEnchanterBlockEntity>> = BLOCK_ENTITY_TYPES.register("osmotic_enchanter") {
         BlockEntityType.Builder.of(
-            {pos, state -> OsmoticEnchanterBlockEntity(pos, state)},
+            { pos, state -> OsmoticEnchanterBlockEntity(pos, state) },
             VoidBoundBlockRegistry.OSMOTIC_ENCHANTER.get()
         )
             .build(null)

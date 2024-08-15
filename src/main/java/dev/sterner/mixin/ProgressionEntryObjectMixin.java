@@ -15,7 +15,7 @@ public class ProgressionEntryObjectMixin implements ProgressionEntryObjectExtens
 
     @NotNull
     @Override
-    public ProgressionEntryObject setIcon(@NotNull ItemStack itemStack) {
+    public ProgressionEntryObject voidbound$setIcon(@NotNull ItemStack itemStack) {
         iconStack = itemStack;
         return (ProgressionEntryObject) (Object) this;
     }

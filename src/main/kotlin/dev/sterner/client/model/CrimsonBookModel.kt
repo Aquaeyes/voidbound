@@ -18,7 +18,7 @@ import java.util.function.Function
 
 
 class CrimsonBookModel(modelPart: ModelPart) :
-    Model(Function<ResourceLocation, RenderType> { location: ResourceLocation ->
+    Model(Function { location: ResourceLocation ->
         RenderType.entitySolid(
             location
         )
@@ -64,10 +64,10 @@ class CrimsonBookModel(modelPart: ModelPart) :
             ModelLayerLocation(VoidBound.id("crimson_rites"), "main")
 
         fun createBodyLayer(): LayerDefinition {
-            val meshdefinition = MeshDefinition()
-            val partdefinition = meshdefinition.root
+            val meshDefinition = MeshDefinition()
+            val partDefinition = meshDefinition.root
 
-            val root = partdefinition.addOrReplaceChild(
+            val root = partDefinition.addOrReplaceChild(
                 "root",
                 CubeListBuilder.create(),
                 PartPose.offsetAndRotation(0.0f, 24.0f, -4.0f, -1.5708f, 0.0f, 0.0f)
@@ -117,7 +117,7 @@ class CrimsonBookModel(modelPart: ModelPart) :
                 PartPose.offset(0.0f, -1.0f, -8.0f)
             )
 
-            return LayerDefinition.create(meshdefinition, 64, 64)
+            return LayerDefinition.create(meshDefinition, 64, 64)
         }
     }
 }

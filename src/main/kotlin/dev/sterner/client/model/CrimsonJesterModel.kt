@@ -164,7 +164,8 @@ class CrimsonJesterModel(root: ModelPart) : AbstractCrimsonModel<CrimsonJesterEn
                     .addBox(-4.0f, -0.1f, -4.0f, 8.0f, 1.0f, 2.0f, CubeDeformation(0.0f)),
                 PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, 0.2731f, 0.0f, 0.0f)
             )
-            val hat = partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.offset(0.0f, 0.0f, 0.0f))
+            val hat =
+                partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.offset(0.0f, 0.0f, 0.0f))
 
 
             val HatRingBuckle = head.addOrReplaceChild(

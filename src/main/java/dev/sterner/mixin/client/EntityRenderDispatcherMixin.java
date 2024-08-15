@@ -25,7 +25,7 @@ public abstract class EntityRenderDispatcherMixin {
             shift = At.Shift.AFTER
     )
     )
-    private void neat_renderHealthBar(Entity entity, double worldX, double worldY, double worldZ, float entityYRot, float partialTicks, PoseStack poseStack, MultiBufferSource buffers, int light, CallbackInfo ci) {
+    private void voidbound$renderHealthBar(Entity entity, double worldX, double worldY, double worldZ, float entityYRot, float partialTicks, PoseStack poseStack, MultiBufferSource buffers, int light, CallbackInfo ci) {
         SpiritIconRenderer.render(entity, poseStack, buffers, cameraOrientation());
     }
 }

@@ -13,25 +13,25 @@ import net.minecraft.nbt.CompoundTag
 
 object MalumCodexEvent {
 
-    val DARK_VOID_GILDED: BookWidgetStyle = BookWidgetStyle(
+    private val DARK_VOID_GILDED: BookWidgetStyle = BookWidgetStyle(
         BookWidgetStyle.WidgetStylePreset(modid, "void_frame"),
         BookWidgetStyle.WidgetStylePreset("dark_filling"),
         BookWidgetStyle.WidgetDesignType.GILDED
     )
 
-    val VOID_GILDED: BookWidgetStyle = BookWidgetStyle(
+    private val VOID_GILDED: BookWidgetStyle = BookWidgetStyle(
         BookWidgetStyle.WidgetStylePreset(modid, "void_frame"),
         BookWidgetStyle.WidgetStylePreset("paper_filling"),
         BookWidgetStyle.WidgetDesignType.GILDED
     )
 
-    val DARK_VOID: BookWidgetStyle = BookWidgetStyle(
+    private val DARK_VOID: BookWidgetStyle = BookWidgetStyle(
         BookWidgetStyle.WidgetStylePreset(modid, "void_frame"),
         BookWidgetStyle.WidgetStylePreset("paper_filling"),
         BookWidgetStyle.WidgetDesignType.DEFAULT
     )
 
-    val VOID: BookWidgetStyle = BookWidgetStyle(
+    private val VOID: BookWidgetStyle = BookWidgetStyle(
         BookWidgetStyle.WidgetStylePreset(modid, "void_frame"),
         BookWidgetStyle.WidgetStylePreset("paper_filling"),
         BookWidgetStyle.WidgetDesignType.DEFAULT
@@ -39,8 +39,6 @@ object MalumCodexEvent {
 
 
     fun addVoidBoundEntries(screen: ArcanaProgressionScreen?, entries: MutableList<PlacedBookEntry>) {
-
-
         screen?.addEntry("call_of_the_void", 0, 12) { builder ->
             builder.configureWidget { it: ProgressionEntryObject ->
                 val ext = it as ProgressionEntryObjectExtension
@@ -48,7 +46,7 @@ object MalumCodexEvent {
                 val tag = CompoundTag()
                 tag.putBoolean("Glowing", true)
                 item.tag = tag
-                ext.setIcon(item).setStyle(VOID_GILDED)
+                ext.`voidbound$setIcon`(item).setStyle(VOID_GILDED)
             }.addPage(HeadlineTextPage("call_of_the_void", "call_of_the_void.1"))
         }
 

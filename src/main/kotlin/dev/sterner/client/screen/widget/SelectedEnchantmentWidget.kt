@@ -5,23 +5,20 @@ import dev.sterner.VoidBound
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.rift.SimpleSpiritCharge
 import dev.sterner.client.screen.OsmoticEnchanterScreen
-import dev.sterner.listener.EnchantSpiritDataReloadListener
 import dev.sterner.networking.EnchantmentLevelPacket
 import dev.sterner.registry.VoidBoundPacketRegistry
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.util.Mth
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.enchantment.EnchantmentHelper
 import java.awt.Color
 
-class SelectedEnchantmentWidget(screen: OsmoticEnchanterScreen, x: Int, y: Int) : EnchantmentWidget(screen, x, y, 22, 33) {
+class SelectedEnchantmentWidget(screen: OsmoticEnchanterScreen, x: Int, y: Int) :
+    EnchantmentWidget(screen, x, y, 22, 33) {
 
     override fun onClick(mouseX: Double, mouseY: Double) {
 
-        if (screen.menu.be?.activated == true) {
+        if (screen.menu.osmoticEnchanter?.activated == true) {
             return
         }
 
@@ -46,8 +43,14 @@ class SelectedEnchantmentWidget(screen: OsmoticEnchanterScreen, x: Int, y: Int) 
                 if (canAddLevel()) {
                     level += 1
                     level = Mth.clamp(level, 0, enchantment!!.maxLevel)
-                    VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToServer(EnchantmentLevelPacket(enchantment!!, level, screen.menu.pos.asLong()))
-                    screen.menu.be!!.receiveScreenData(enchantment!!, level)
+                    VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(
+                        EnchantmentLevelPacket(
+                            enchantment!!,
+                            level,
+                            screen.menu.pos.asLong()
+                        )
+                    )
+                    screen.menu.osmoticEnchanter!!.receiveScreenData(enchantment!!, level)
                 }
             }
 
@@ -55,8 +58,14 @@ class SelectedEnchantmentWidget(screen: OsmoticEnchanterScreen, x: Int, y: Int) 
             mouseX in area2XStart..area2XEnd && mouseY in area2YStart..area2YEnd -> {
                 level -= 1
                 level = Mth.clamp(level, 1, enchantment!!.maxLevel)
-                VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToServer(EnchantmentLevelPacket(enchantment!!, level, screen.menu.pos.asLong()))
-                screen.menu.be!!.receiveScreenData(enchantment!!, level)
+                VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(
+                    EnchantmentLevelPacket(
+                        enchantment!!,
+                        level,
+                        screen.menu.pos.asLong()
+                    )
+                )
+                screen.menu.osmoticEnchanter!!.receiveScreenData(enchantment!!, level)
             }
 
             // Cast mouseX and mouseY to Int and check if the mouse is in area 3
@@ -66,9 +75,9 @@ class SelectedEnchantmentWidget(screen: OsmoticEnchanterScreen, x: Int, y: Int) 
         }
     }
 
-    private fun canAddLevel() : Boolean {
+    private fun canAddLevel(): Boolean {
         val spirits: List<SpiritWithCount> = VoidBoundApi.getSpiritFromEnchant(enchantment!!, level)
-        val toConsume: SimpleSpiritCharge = screen.menu.be!!.spiritsToConsume
+        val toConsume: SimpleSpiritCharge = screen.menu.osmoticEnchanter!!.spiritsToConsume
 
         for (spirit in spirits) {
             val charge = toConsume.getChargeForType(spirit.type)
@@ -85,10 +94,10 @@ class SelectedEnchantmentWidget(screen: OsmoticEnchanterScreen, x: Int, y: Int) 
         }
 
         val border = VoidBound.id("textures/gui/enchanter_widget.png")
-        guiGraphics.blit(border, x, y, 0f,0f, width, height, width, height)
+        guiGraphics.blit(border, x, y, 0f, 0f, width, height, width, height)
 
-        if (screen.menu.be?.activated == false) {
-            val l = Component.empty().append(Component.translatable("enchantment.level.$level"));
+        if (screen.menu.osmoticEnchanter?.activated == false) {
+            val l = Component.empty().append(Component.translatable("enchantment.level.$level"))
             guiGraphics.drawCenteredString(Minecraft.getInstance().font, l, x + 15, y + 17, Color.WHITE.rgb)
         }
 

@@ -7,7 +7,7 @@
   "authors": [
     "MrSterner"
   ],
-  "license": "CC0-1.0",
+  "license": "ARR",
   "icon": "assets/voidbound/icon.png",
   "environment": "*",
   "entrypoints": {

@@ -21,7 +21,7 @@ public abstract class MinecraftMixin {
 
 
     @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;render(FJZ)V"))
-    private void onFrameStart(boolean tick, CallbackInfo ci) {
+    private void voidbound$onFrameStart(boolean tick, CallbackInfo ci) {
         ClientTickHandler.INSTANCE.renderTick(isPaused() ? pausePartialTick : getFrameTime());
     }
 }

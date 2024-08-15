@@ -27,6 +27,4 @@ class PickaxeOfTheCoreItem(material: Tier?, damage: Int, speed: Float, magicDama
     override fun getBlockTags(): TagKey<Block> {
         return BlockTags.MINEABLE_WITH_PICKAXE
     }
-
-
 }

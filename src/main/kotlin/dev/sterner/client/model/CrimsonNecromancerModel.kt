@@ -137,7 +137,8 @@ class CrimsonNecromancerModel(root: ModelPart) : AbstractCrimsonModel<CrimsonNec
                 PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, 0.0873f, 0.0f, 0.0f)
             )
 
-            val hat = partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.offset(0.0f, 0.0f, 0.0f))
+            val hat =
+                partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.offset(0.0f, 0.0f, 0.0f))
 
             val HoodBuckle = hat.addOrReplaceChild(
                 "HoodBuckle",

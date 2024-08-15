@@ -24,7 +24,7 @@ import kotlin.math.acos
 
 class CallOfTheVoidItem : Item(Properties().stacksTo(1)) {
 
-    var cooldown = 0
+    private var cooldown = 0
 
     override fun allowNbtUpdateAnimation(
         player: Player?,
@@ -111,9 +111,9 @@ class CallOfTheVoidItem : Item(Properties().stacksTo(1)) {
                         locateStructure(level, stack, entity)
                     }
                 }
-                var lookDir: Vec3 = entity.lookAngle
-                var playerPos: BlockPos = entity.onPos
-                var pos: BlockPos = BlockPos.of(stack.tag!!.getLong("StructureLoc"))
+                val lookDir: Vec3 = entity.lookAngle
+                val playerPos: BlockPos = entity.onPos
+                val pos: BlockPos = BlockPos.of(stack.tag!!.getLong("StructureLoc"))
                 val margin = 20.0 // margin for error in degrees
 
                 if (isLookingTowards(lookDir, playerPos, pos, margin)) {

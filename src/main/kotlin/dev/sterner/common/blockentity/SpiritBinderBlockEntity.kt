@@ -18,7 +18,6 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
     var rift: SpiritRiftBlockEntity? = null
     private var needsSync = true
 
-
     fun tick() {
         if (needsSync) {
             init()
@@ -35,8 +34,6 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
                     tickNoneState()
                 }
             }
-
-
         }
     }
 

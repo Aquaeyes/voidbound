@@ -1,6 +1,5 @@
 package dev.sterner.common.entity
 
-import dev.sterner.common.entity.CrimsonHeavyKnightEntity.Companion.IS_SHIELD_BLOCKING
 import dev.sterner.common.entity.ai.goal.HealAllyGoal
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import net.minecraft.nbt.CompoundTag
@@ -15,10 +14,10 @@ import net.minecraft.world.level.Level
 class CrimsonClericEntity(level: Level) :
     AbstractCultistEntity(VoidBoundEntityTypeRegistry.CRIMSON_CLERIC_ENTITY.get(), level) {
 
-    var healCooldown = 0
+    private var healCooldown = 0
 
     override fun addAdditionalSaveData(compound: CompoundTag) {
-        compound.putInt("HealCooldown", this.healCooldown);
+        compound.putInt("HealCooldown", this.healCooldown)
         super.addAdditionalSaveData(compound)
     }
 
@@ -58,7 +57,7 @@ class CrimsonClericEntity(level: Level) :
         entityData.set(IS_HEALING, b)
     }
 
-    fun isHealing() : Boolean {
+    fun isHealing(): Boolean {
         return entityData.get(IS_HEALING)
     }
 

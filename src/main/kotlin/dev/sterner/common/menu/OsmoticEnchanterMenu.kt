@@ -15,8 +15,8 @@ class OsmoticEnchanterMenu(
     i: Int, inventory: Inventory, val pos: BlockPos,
 ) : AbstractContainerMenu(VoidBoundMenuTypeRegistry.OSMOTIC_ENCHANTER.get(), i) {
 
-    var blockEntityInventory: LodestoneBlockEntityInventory? = null
-    var be: OsmoticEnchanterBlockEntity? = null
+    var inventory: LodestoneBlockEntityInventory? = null
+    var osmoticEnchanter: OsmoticEnchanterBlockEntity? = null
     var shouldRefresh = true
 
     constructor(i: Int, inventory: Inventory, buf: FriendlyByteBuf) : this(
@@ -26,9 +26,9 @@ class OsmoticEnchanterMenu(
     init {
 
         if (inventory.player.level().getBlockEntity(pos) is OsmoticEnchanterBlockEntity) {
-            be = inventory.player.level().getBlockEntity(pos) as OsmoticEnchanterBlockEntity
-            blockEntityInventory = be?.inventory
-            this.addSlot(object : Slot(blockEntityInventory!!, 0, 14 + 18 * 5 + 5, 14 + 18 * 5 - 14 + 24){
+            osmoticEnchanter = inventory.player.level().getBlockEntity(pos) as OsmoticEnchanterBlockEntity
+            this.inventory = osmoticEnchanter?.inventory
+            this.addSlot(object : Slot(this.inventory!!, 0, 14 + 18 * 5 + 5, 14 + 18 * 5 - 14 + 24) {
 
                 override fun mayPlace(stack: ItemStack): Boolean {
                     return stack.isEnchantable
@@ -70,31 +70,31 @@ class OsmoticEnchanterMenu(
     }
 
     override fun quickMoveStack(playerIn: Player, index: Int): ItemStack {
-        var itemstack = ItemStack.EMPTY
+        var itemStack = ItemStack.EMPTY
         val slot = slots[index]
         if (slot.hasItem()) {
-            val itemstack1 = slot.item
-            itemstack = itemstack1.copy()
-            if (index < this.blockEntityInventory!!.containerSize) {
+            val itemStack1 = slot.item
+            itemStack = itemStack1.copy()
+            if (index < this.inventory!!.containerSize) {
                 if (!this.moveItemStackTo(
-                        itemstack1, this.blockEntityInventory!!.getContainerSize(),
+                        itemStack1, this.inventory!!.containerSize,
                         slots.size, true
                     )
                 ) {
                     return ItemStack.EMPTY
                 }
-            } else if (!this.moveItemStackTo(itemstack1, 0, this.blockEntityInventory!!.containerSize, false)) {
+            } else if (!this.moveItemStackTo(itemStack1, 0, this.inventory!!.containerSize, false)) {
                 return ItemStack.EMPTY
             }
 
-            if (itemstack1.isEmpty) {
+            if (itemStack1.isEmpty) {
                 slot.set(ItemStack.EMPTY)
             } else {
                 slot.setChanged()
             }
         }
 
-        return itemstack
+        return itemStack
     }
 
     override fun stillValid(player: Player): Boolean {

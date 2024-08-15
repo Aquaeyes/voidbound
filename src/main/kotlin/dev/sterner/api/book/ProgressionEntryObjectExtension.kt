@@ -4,5 +4,5 @@ import com.sammy.malum.client.screen.codex.objects.progression.ProgressionEntryO
 import net.minecraft.world.item.ItemStack
 
 interface ProgressionEntryObjectExtension {
-    fun setIcon(itemStack: ItemStack): ProgressionEntryObject
+    fun `voidbound$setIcon`(itemStack: ItemStack): ProgressionEntryObject
 }

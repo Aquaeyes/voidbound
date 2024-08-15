@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.levelgen.structure.Structure
 
 object VoidBoundTags {
+
     val WEEPING_WELL: TagKey<Structure> = structure("weeping_well")
 
     val PORTABLE_HOLE_BLACKLIST: TagKey<Block> = block("portable_hole_blacklist")

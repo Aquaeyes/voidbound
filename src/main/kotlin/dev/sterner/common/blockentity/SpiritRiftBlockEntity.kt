@@ -1,9 +1,9 @@
 package dev.sterner.common.blockentity
 
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
+import dev.sterner.api.blockentity.SyncedBlockEntity
 import dev.sterner.api.rift.RiftType
 import dev.sterner.api.rift.SimpleSpiritCharge
-import dev.sterner.api.blockentity.SyncedBlockEntity
 import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.common.rift.DestabilizedRiftType
 import dev.sterner.common.rift.EldritchRiftType
@@ -21,10 +21,10 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 
-class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) :
+class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState) :
     SyncedBlockEntity(VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get(), pos, state) {
 
-    var riftType: RiftType = VoidBoundRiftTypeRegistry.NORMAL.get()
+    private var riftType: RiftType = VoidBoundRiftTypeRegistry.NORMAL.get()
     var simpleSpiritCharge = SimpleSpiritCharge()
 
     val x = (worldPosition.x.toFloat() + 0.5f).toDouble()
@@ -32,7 +32,7 @@ class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) :
     val z = (worldPosition.z.toFloat() + 0.5f).toDouble()
 
     var alpha: Float = 0f
-    var previousAlpha: Float = 0f
+    private var previousAlpha: Float = 0f
     var targetAlpha: Float = 0f
     var entity: PathfinderMob? = null
 
@@ -50,15 +50,21 @@ class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) :
 
     fun onUse(player: Player, hand: InteractionHand, hit: BlockHitResult) {
         if (hand == InteractionHand.MAIN_HAND) {
-            if (riftType is NormalRiftType) {
-                riftType = VoidBoundRiftTypeRegistry.ELDRITCH.get()
-                player.sendSystemMessage(Component.translatable("Eldritch"))
-            } else if (riftType is EldritchRiftType) {
-                riftType = VoidBoundRiftTypeRegistry.DESTABILIZED.get()
-                player.sendSystemMessage(Component.translatable("Destabilized"))
-            } else if (riftType is DestabilizedRiftType) {
-                riftType = VoidBoundRiftTypeRegistry.NORMAL.get()
-                player.sendSystemMessage(Component.translatable("Normal"))
+            when (riftType) {
+                is NormalRiftType -> {
+                    riftType = VoidBoundRiftTypeRegistry.ELDRITCH.get()
+                    player.sendSystemMessage(Component.translatable("Eldritch"))
+                }
+
+                is EldritchRiftType -> {
+                    riftType = VoidBoundRiftTypeRegistry.DESTABILIZED.get()
+                    player.sendSystemMessage(Component.translatable("Destabilized"))
+                }
+
+                is DestabilizedRiftType -> {
+                    riftType = VoidBoundRiftTypeRegistry.NORMAL.get()
+                    player.sendSystemMessage(Component.translatable("Normal"))
+                }
             }
             notifyUpdate()
         }
@@ -109,17 +115,9 @@ class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState?) :
         simpleSpiritCharge.serializeNBT(tag)
         tag.putString("RiftType", riftType.toString())
         tag.putBoolean("Infinite", infinite)
-        if (alpha != null) {
-            tag.putFloat("Alpha", alpha)
-        }
-
-        if (previousAlpha != null) {
-            tag.putFloat("PrevAlpha", previousAlpha)
-        }
-
-        if (targetAlpha != null) {
-            tag.putFloat("TargetAlpha", targetAlpha)
-        }
+        tag.putFloat("Alpha", alpha)
+        tag.putFloat("PrevAlpha", previousAlpha)
+        tag.putFloat("TargetAlpha", targetAlpha)
         super.saveAdditional(tag)
     }
 

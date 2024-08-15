@@ -5,7 +5,6 @@ import dev.sterner.common.entity.CrimsonClericEntity
 import dev.sterner.networking.HeartParticlePacket
 import dev.sterner.registry.VoidBoundPacketRegistry
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
-import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.util.Mth
@@ -17,7 +16,7 @@ import kotlin.math.sqrt
 
 
 class HealAllyGoal(
-    val healer: CrimsonClericEntity, movespeed: Double,
+    private val healer: CrimsonClericEntity, movespeed: Double,
     private val attackIntervalMin: Int, maxAttackTime: Int, maxAttackDistanceIn: Float
 ) :
     Goal() {
@@ -30,7 +29,7 @@ class HealAllyGoal(
     private val maxAttackDistance = maxAttackDistanceIn * maxAttackDistanceIn
 
     init {
-        this.flags = (EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK))
+        this.flags = (EnumSet.of(Flag.MOVE, Flag.LOOK))
     }
 
     override fun canUse(): Boolean {
@@ -44,7 +43,7 @@ class HealAllyGoal(
                             mob.health < mob.maxHealth &&
                             mob != healer &&
                             mob.isAlive
-                        )
+                            )
                 ) {
                     this.mob = mob
                     return true
@@ -73,17 +72,18 @@ class HealAllyGoal(
 
         healer.lookControl.setLookAt(mob!!)
         if (!(d0 > maxAttackDistance.toDouble())) {
-            healer.getNavigation().stop()
+            healer.navigation.stop()
         } else {
-            healer.getNavigation().moveTo(this.mob!!, this.entityMoveSpeed)
+            healer.navigation.moveTo(this.mob!!, this.entityMoveSpeed)
         }
         if (mob!!.distanceTo(healer) <= 3.0) {
-            healer.getMoveControl().strafe(-0.5f, 0f)
+            healer.moveControl.strafe(-0.5f, 0f)
         }
         if (--this.rangedAttackTime == 0) {
             val f = this.attackRadius
             this.healAlly(mob!!)
-            this.rangedAttackTime = Mth.floor(f * (this.maxRangedAttackTime - this.attackIntervalMin).toFloat() + attackIntervalMin.toFloat())
+            this.rangedAttackTime =
+                Mth.floor(f * (this.maxRangedAttackTime - this.attackIntervalMin).toFloat() + attackIntervalMin.toFloat())
         } else if (this.rangedAttackTime < 0) {
             this.rangedAttackTime = Mth.floor(
                 Mth.lerp(
@@ -99,12 +99,13 @@ class HealAllyGoal(
         mob.heal(15f)
         mob.level().playSound(null, mob, SoundEvents.EVOKER_CAST_SPELL, SoundSource.NEUTRAL, 1.0f, 1.0f)
         for (player in PlayerLookup.tracking(mob)) {
-            for (i in 0 .. 20) {
-                VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClient(HeartParticlePacket(
-                    Vector3f(
-                        mob.getRandomX(0.5).toFloat(), mob.getRandomY().toFloat(), mob.getRandomZ(0.5).toFloat()
-                    )
-                ),
+            for (i in 0..20) {
+                VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(
+                    HeartParticlePacket(
+                        Vector3f(
+                            mob.getRandomX(0.5).toFloat(), mob.randomY.toFloat(), mob.getRandomZ(0.5).toFloat()
+                        )
+                    ),
                     player
                 )
             }

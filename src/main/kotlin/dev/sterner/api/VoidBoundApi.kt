@@ -1,9 +1,6 @@
 package dev.sterner.api
 
-import com.sammy.malum.core.listeners.ReapingDataReloadListener
-import com.sammy.malum.core.listeners.SpiritDataReloadListener
 import com.sammy.malum.core.systems.recipe.SpiritWithCount
-import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import dev.sterner.listener.EnchantSpiritDataReloadListener
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.client.Minecraft
@@ -11,7 +8,6 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.Enchantments
 import team.lodestar.lodestone.helpers.TrinketsHelper
 
 object VoidBoundApi {

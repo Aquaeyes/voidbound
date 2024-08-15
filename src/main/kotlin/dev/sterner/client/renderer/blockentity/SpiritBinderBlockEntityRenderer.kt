@@ -62,7 +62,7 @@ class SpiritBinderBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
     }
 
     companion object {
-        var TOKEN = RenderTypeToken.createCachedToken(
+        var TOKEN: RenderTypeToken = RenderTypeToken.createCachedToken(
             LodestoneLib.lodestonePath("textures/particle/wisp.png")
         )
     }

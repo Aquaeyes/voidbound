@@ -12,7 +12,7 @@ import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters
 
 object VoidBoundCreativeTabRegistry {
 
-    var GROUP: CreativeModeTab? = null
+    private var GROUP: CreativeModeTab? = null
 
     fun init() {
         GROUP = FabricItemGroup.builder().title(Component.translatable("itemGroup." + VoidBound.modid))

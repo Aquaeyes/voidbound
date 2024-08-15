@@ -1,8 +1,6 @@
 package dev.sterner
 
-import com.sammy.malum.MalumMod.SpiritDataReloadListenerFabricImpl
 import com.sammy.malum.common.events.MalumCodexEvents
-import com.sammy.malum.core.listeners.SpiritDataReloadListener
 import dev.emi.trinkets.api.client.TrinketRendererRegistry
 import dev.sterner.api.ClientTickHandler
 import dev.sterner.client.event.MalumCodexEvent
@@ -34,7 +32,7 @@ import org.slf4j.LoggerFactory
 
 object VoidBound : ModInitializer, ClientModInitializer {
 
-    val modid: String = "voidbound"
+    const val modid: String = "voidbound"
     private val logger = LoggerFactory.getLogger(modid)
 
     override fun onInitialize() {
@@ -55,7 +53,8 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
         VoidBoundCreativeTabRegistry.init()
 
-        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(EnchantSpiritDataReloadListenerFabricImpl())
+        ResourceManagerHelper.get(PackType.SERVER_DATA)
+            .registerReloadListener(EnchantSpiritDataReloadListenerFabricImpl())
 
         UseBlockCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useBlock)
         UseEntityCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useEntity)
@@ -168,7 +167,8 @@ object VoidBound : ModInitializer, ClientModInitializer {
     }
 
 
-    class EnchantSpiritDataReloadListenerFabricImpl : EnchantSpiritDataReloadListener(), IdentifiableResourceReloadListener {
+    class EnchantSpiritDataReloadListenerFabricImpl : EnchantSpiritDataReloadListener(),
+        IdentifiableResourceReloadListener {
         override fun getFabricId(): ResourceLocation {
             return id("enchanting_data")
         }

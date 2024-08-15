@@ -78,7 +78,7 @@ class WandItem(properties: Properties) : Item(
         super.releaseUsing(stack, level, livingEntity, timeCharged)
     }
 
-    override fun use(pLevel: Level?, pPlayer: Player, pHand: InteractionHand?): InteractionResultHolder<ItemStack> {
+    override fun use(pLevel: Level, pPlayer: Player, pHand: InteractionHand): InteractionResultHolder<ItemStack>? {
         val itemstack = pPlayer.getItemInHand(pHand)
         if (pPlayer.cooldowns.isOnCooldown(itemstack.item)) {
             return InteractionResultHolder.fail(itemstack)
@@ -88,11 +88,11 @@ class WandItem(properties: Properties) : Item(
         }
     }
 
-    override fun getUseDuration(pStack: ItemStack?): Int {
+    override fun getUseDuration(pStack: ItemStack): Int {
         return 72000
     }
 
-    override fun getUseAnimation(pStack: ItemStack?): UseAnim {
+    override fun getUseAnimation(pStack: ItemStack): UseAnim? {
         return UseAnim.BOW
     }
 }

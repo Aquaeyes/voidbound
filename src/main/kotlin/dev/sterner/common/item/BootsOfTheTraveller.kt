@@ -19,11 +19,21 @@ class BootsOfTheTraveller(properties: Properties) : MalumArmorItem(
         val attributes: Multimap<Attribute, AttributeModifier> = ArrayListMultimap.create()
         attributes.put(
             PortingLibAttributes.STEP_HEIGHT_ADDITION,
-            AttributeModifier(UUID.fromString("745DB17C-C623-495F-8C9F-6020A9A58B5B"), "StepHeight", 0.5, AttributeModifier.Operation.ADDITION)
+            AttributeModifier(
+                UUID.fromString("745DB17C-C623-495F-8C9F-6020A9A58B5B"),
+                "StepHeight",
+                0.5,
+                AttributeModifier.Operation.ADDITION
+            )
         )
         attributes.put(
             Attributes.MOVEMENT_SPEED,
-            AttributeModifier(UUID.fromString("645DB17C-C623-495F-8C9F-6010A9A58B5B"), "Speed", 0.4, AttributeModifier.Operation.MULTIPLY_BASE)
+            AttributeModifier(
+                UUID.fromString("645DB17C-C623-495F-8C9F-6010A9A58B5B"),
+                "Speed",
+                0.4,
+                AttributeModifier.Operation.MULTIPLY_BASE
+            )
         )
         return attributes
     }

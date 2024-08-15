@@ -9,18 +9,18 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import kotlin.math.abs
 import kotlin.math.max
 
 object VoidBoundBlockUtils {
 
-    var lastPos: BlockPos? = null
-    var lastdistance: Double = 0.0
+    private var lastPos: BlockPos? = null
+    private var lastDistance: Double = 0.0
 
     fun breakFurthestBlock(level: Level, pos: BlockPos, blockState: BlockState, player: Player): Boolean {
         lastPos = BlockPos(pos)
-        lastdistance = 0.0
+        lastDistance = 0.0
         val reach = if (level.getBlockState(pos).`is`(BlockTags.LOGS)) 2 else 1
         findBlocks(level, pos, blockState, reach)
         val worked: Boolean = harvestBlock(
@@ -60,16 +60,19 @@ object VoidBoundBlockUtils {
             if (player.abilities.instabuild) {
                 bl2 = removeBlock(player, pos)
             } else {
-                val itemstack1: ItemStack = player.mainHandItem
+                val itemStack: ItemStack = player.mainHandItem
                 val bl = blockState.canEntityDestroy(level, pos, player)
                 bl2 = removeBlock(player, pos, bl)
                 if (bl2 && bl) {
-                    val fakeStack: ItemStack = itemstack1.copy()
+                    val fakeStack: ItemStack = itemStack.copy()
                     if (0 > EnchantmentHelper.getEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player)) {
 
-                        val enchantments: MutableMap<Enchantment, Int?> = EnchantmentHelper.getEnchantments(itemstack1)
+                        val enchantments: MutableMap<Enchantment, Int?> = EnchantmentHelper.getEnchantments(itemStack)
 
-                        val fort = max(0.toDouble(), (if (enchantments[Enchantments.BLOCK_FORTUNE] != null) enchantments[Enchantments.BLOCK_FORTUNE] else 0)!!.toDouble()).toInt()
+                        val fort = max(
+                            0.toDouble(),
+                            (if (enchantments[Enchantments.BLOCK_FORTUNE] != null) enchantments[Enchantments.BLOCK_FORTUNE] else 0)!!.toDouble()
+                        ).toInt()
 
                         if (fort > 0) {
                             enchantments[Enchantments.BLOCK_FORTUNE] = fort
@@ -96,11 +99,13 @@ object VoidBoundBlockUtils {
     private fun removeBlock(player: Player, pos: BlockPos, canHarvest: Boolean): Boolean {
         val blockState = player.level().getBlockState(pos)
 
-        val flag: Boolean = blockState.onDestroyedByPlayer(player.level(), pos, player, canHarvest, blockState.fluidState)
+        val flag: Boolean =
+            blockState.onDestroyedByPlayer(player.level(), pos, player, canHarvest, blockState.fluidState)
         if (flag) {
             try {
                 blockState.block.destroy(player.level(), pos, blockState)
-            } catch (_: Exception) { }
+            } catch (_: Exception) {
+            }
         }
 
         return flag
@@ -110,15 +115,15 @@ object VoidBoundBlockUtils {
         for (xx in -reach..reach) {
             for (yy in reach downTo -reach) {
                 for (zz in -reach..reach) {
-                    if (Math.abs(lastPos!!.x + xx - pos.x) > 24) {
+                    if (abs(lastPos!!.x + xx - pos.x) > 24) {
                         return
                     }
 
-                    if (Math.abs(lastPos!!.y + yy - pos.y) > 48) {
+                    if (abs(lastPos!!.y + yy - pos.y) > 48) {
                         return
                     }
 
-                    if (Math.abs(lastPos!!.z + zz - pos.z) > 24) {
+                    if (abs(lastPos!!.z + zz - pos.z) > 24) {
                         return
                     }
 
@@ -130,8 +135,8 @@ object VoidBoundBlockUtils {
                         val yd = (lastPos!!.y + yy - pos.y)
                         val zd = (lastPos!!.z + zz - pos.z)
                         val d = xd * xd + yd * yd + zd * zd
-                        if (d > lastdistance) {
-                            lastdistance = d.toDouble()
+                        if (d > lastDistance) {
+                            lastDistance = d.toDouble()
                             lastPos = lastPos!!.offset(xx, yy, zz)
                             findBlocks(level, pos, blockState, reach)
                             return

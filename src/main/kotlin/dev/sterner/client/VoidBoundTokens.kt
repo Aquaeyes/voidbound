@@ -5,8 +5,8 @@ import dev.sterner.VoidBound
 import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
 
 object VoidBoundTokens {
-    val WARD_BORDER: RenderTypeToken =
+    val wardBorder: RenderTypeToken =
         RenderTypeToken.createToken(VoidBound.id("textures/block/runeborder.png"))
-    val NOISY: RenderTypeToken =
+    val noisy: RenderTypeToken =
         RenderTypeToken.createToken(MalumMod.malumPath("textures/vfx/tt.png"))
 }

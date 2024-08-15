@@ -8,7 +8,7 @@ object ClientTickHandler {
 
     var ticksWithCrimsonOpen: Int = 0
     var ticksInGame: Int = 0
-    var partialTicks: Float = 0f
+    private var partialTicks: Float = 0f
 
     fun total(): Float {
         return ticksInGame + partialTicks

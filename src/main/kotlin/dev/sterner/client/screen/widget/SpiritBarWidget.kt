@@ -1,7 +1,6 @@
 package dev.sterner.client.screen.widget
 
 import com.mojang.blaze3d.systems.RenderSystem
-import com.mojang.blaze3d.vertex.PoseStack
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import dev.sterner.VoidBound
 import dev.sterner.api.rift.SimpleSpiritCharge
@@ -13,28 +12,27 @@ import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
 import org.lwjgl.opengl.GL11
 import team.lodestar.lodestone.helpers.RenderHelper
 import team.lodestar.lodestone.registry.client.LodestoneShaderRegistry
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
-import team.lodestar.lodestone.systems.rendering.VFXBuilders.ScreenVFXBuilder
 import team.lodestar.lodestone.systems.rendering.shader.ExtendedShaderInstance
 import java.util.function.Supplier
 
-class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : AbstractWidget(x, y, 8, 45,
+class SpiritBarWidget(private var screen: OsmoticEnchanterScreen, x: Int, y: Int) : AbstractWidget(
+    x, y, 8, 45,
     Component.empty()
 ) {
 
     var isScry: Boolean = false
-    var spirit_type: MalumSpiritType? = null
+    var spiritType: MalumSpiritType? = null
     private val icon = VoidBound.id("textures/gui/spirit_bar.png")
 
     override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-        if (spirit_type != null) {
-            val targetSpirits = screen.menu.be?.spiritsToConsume
-            val consumedSpirits = screen.menu.be?.consumedSpirits
+        if (spiritType != null) {
+            val targetSpirits = screen.menu.osmoticEnchanter?.spiritsToConsume
+            val consumedSpirits = screen.menu.osmoticEnchanter?.consumedSpirits
 
             // Calculate the normalized value for the spirit bar fill level
             val normalizer = if (isScry) calcNormal(targetSpirits) else calcNormal(consumedSpirits)
@@ -48,10 +46,8 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
             // Calculate the Y position for the top of the filled portion
             val adjustedY = y + (maxBarHeight - fillHeight)
 
-            val minU = 0f // Start at the beginning of the texture horizontally
-            val minV = 1f - (fillHeight / height.toFloat())  // Crop from the top
+            val minV = 1f - (fillHeight / height.toFloat())
 
-            // Setup shader instance if required
             val shaderInstance = LodestoneShaderRegistry.DISTORTED_TEXTURE.instance.get() as ExtendedShaderInstance
             if (isScry) {
                 shaderInstance.safeGetUniform("YFrequency").set(1f)
@@ -66,7 +62,7 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
                 .setPosColorTexLightmapDefaultFormat()
                 .setShader(shaderInstanceSupplier)
                 .setAlpha(if (isScry) 0.75f else 1f)
-                .setColor(spirit_type!!.primaryColor.brighter())
+                .setColor(spiritType!!.primaryColor.brighter())
                 .setLight(RenderHelper.FULL_BRIGHT)
 
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE)
@@ -78,7 +74,7 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
                 builder,                       // VFXBuilders.ScreenVFXBuilder
                 x,                             // X position
                 adjustedY,                     // Adjusted Y position (moves upwards)
-                minU,                          // U (texture starting position)
+                0f,                          // U (texture starting position)
                 minV,                          // **Adjusted minV for top cropping**
                 width.toFloat(),                         // Bar width
                 fillHeight,                    // Filled height
@@ -91,17 +87,16 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
 
             // Tooltip logic: show the tooltip if the mouse is over the bar
             if (mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + maxBarHeight) {
-                tooltip = Tooltip.create(Component.translatable(spirit_type!!.identifier))
+                tooltip = Tooltip.create(Component.translatable(spiritType!!.identifier))
             }
         }
     }
 
 
-
     private fun calcNormal(targetSpirits: SimpleSpiritCharge?): Float {
         var normalizer = 0f
         if (targetSpirits != null) {
-            normalizer = targetSpirits.getChargeForType(spirit_type!!) / 256f
+            normalizer = targetSpirits.getChargeForType(spiritType!!) / 256f
             normalizer = Mth.clamp(normalizer, 0.0f, 1.0f)
         }
         return normalizer

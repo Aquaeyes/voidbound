@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 
 @MethodsReturnNonnullByDefault
-abstract class SyncedBlockEntity(type: BlockEntityType<*>?, pos: BlockPos, state: BlockState?) :
+abstract class SyncedBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     BlockEntity(type, pos, state), CustomDataPacketHandlingBlockEntity, CustomUpdateTagHandlingBlockEntity {
 
     override fun getUpdateTag(): CompoundTag {

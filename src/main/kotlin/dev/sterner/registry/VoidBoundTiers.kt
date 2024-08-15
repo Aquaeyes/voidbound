@@ -12,12 +12,10 @@ enum class VoidBoundTiers(
     private val speed: Float,
     private val damage: Float,
     private val enchantmentValue: Int,
-    repairIngredient: Supplier<Ingredient>
+    private val repairIngredient: Supplier<Ingredient>
 ) :
     Tier {
     ELEMENTAL(4, 2000, 8.0f, 3.0f, 16, Supplier { Ingredient.of(ItemRegistry.MALIGNANT_PEWTER_INGOT.get()) });
-
-    private val repairIngredient = LazyLoadedValue(repairIngredient)
 
     override fun getUses(): Int {
         return this.uses

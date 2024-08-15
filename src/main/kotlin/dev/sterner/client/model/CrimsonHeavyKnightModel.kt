@@ -239,10 +239,10 @@ class CrimsonHeavyKnightModel(root: ModelPart) : AbstractCrimsonModel<CrimsonHea
                     .addBox(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 0.0f, 0.0f)
             ).addOrReplaceChild(
-                    "helm",
-            CubeListBuilder.create().texOffs(64, 0)
-                .addBox(-4.5f, -8.7f, -4.5f, 9.0f, 9.0f, 9.0f, CubeDeformation(0.0f)),
-            PartPose.offset(0.0f, 0.0f, 0.0f)
+                "helm",
+                CubeListBuilder.create().texOffs(64, 0)
+                    .addBox(-4.5f, -8.7f, -4.5f, 9.0f, 9.0f, 9.0f, CubeDeformation(0.0f)),
+                PartPose.offset(0.0f, 0.0f, 0.0f)
             )
 
             val NeckArmorL = head.addOrReplaceChild(
@@ -259,7 +259,8 @@ class CrimsonHeavyKnightModel(root: ModelPart) : AbstractCrimsonModel<CrimsonHea
                 PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.2705f)
             )
 
-            val hat = partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.offset(0.0f, 0.0f, 0.0f))
+            val hat =
+                partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.offset(0.0f, 0.0f, 0.0f))
 
 
             val body = partdefinition.addOrReplaceChild(

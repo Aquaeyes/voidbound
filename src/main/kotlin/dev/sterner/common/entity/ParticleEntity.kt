@@ -23,10 +23,10 @@ import kotlin.math.sin
 class ParticleEntity(level: Level) : Entity(VoidBoundEntityTypeRegistry.PARTICLE_ENTITY.get(), level) {
     val trailPointBuilder: TrailPointBuilder = TrailPointBuilder.create(10)
     var spiritType: MalumSpiritType? = null
-    var destination: Vec3? = null
-    var windDown: Float = 1f
-    var age: Int = 0
-    var maxAge: Int = 20 * 3
+    private var destination: Vec3? = null
+    private var windDown: Float = 1f
+    private var age: Int = 0
+    private var maxAge: Int = 20 * 3
 
     constructor(level: Level, dest: Vec3) : this(level) {
         this.destination = dest
@@ -126,7 +126,7 @@ class ParticleEntity(level: Level) : Entity(VoidBoundEntityTypeRegistry.PARTICLE
         this.spiritType = spiritType
     }
 
-    fun setSpirit(spiritIdentifier: String) {
+    private fun setSpirit(spiritIdentifier: String) {
         getEntityData().set(DATA_SPIRIT, spiritIdentifier)
     }
 

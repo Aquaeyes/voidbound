@@ -46,7 +46,7 @@ class CrimsonArcherEntity(level: Level) :
         goalSelector.addGoal(3, RangedCrossbowAttackGoal(this, 1.0, 8.0f))
     }
 
-    override fun populateDefaultEquipmentSlots(random: RandomSource?, difficulty: DifficultyInstance?) {
+    override fun populateDefaultEquipmentSlots(random: RandomSource, difficulty: DifficultyInstance) {
         this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack(Items.CROSSBOW))
     }
 
@@ -54,14 +54,14 @@ class CrimsonArcherEntity(level: Level) :
         return projectileWeapon === Items.CROSSBOW
     }
 
-    override fun performRangedAttack(target: LivingEntity?, velocity: Float) {
+    override fun performRangedAttack(target: LivingEntity, velocity: Float) {
         this.performCrossbowAttack(this, 1.6f)
     }
 
     override fun shootCrossbowProjectile(
-        target: LivingEntity?,
-        crossbowStack: ItemStack?,
-        projectile: Projectile?,
+        target: LivingEntity,
+        crossbowStack: ItemStack,
+        projectile: Projectile,
         projectileAngle: Float
     ) {
         this.shootCrossbowProjectile(this, target, projectile, projectileAngle, 1.6f)

@@ -18,7 +18,6 @@ class RiftParticle(
 ) :
     FrameSetParticle(world, options, spriteSet, x, y, z, xd, yd, zd) {
     init {
-        //addFrames(0, 31)
         addLoop(0, 31, 1)
         setLifetime(frameSet.size)
     }

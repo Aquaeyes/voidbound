@@ -18,7 +18,7 @@ import net.tslat.smartbrainlib.util.BrainUtils
 import java.util.function.BiPredicate
 
 class GolemStorageSensor : PredicateSensor<BlockEntity, SoulSteelGolemEntity>(
-    BiPredicate { be: BlockEntity, entity: SoulSteelGolemEntity ->
+    BiPredicate { _: BlockEntity, entity: SoulSteelGolemEntity ->
         entity.getGolemCore() == GolemCore.FILL || entity.getGolemCore() == GolemCore.EMPTY
     }
 ) {

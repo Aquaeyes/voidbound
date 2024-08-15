@@ -16,12 +16,12 @@ import java.awt.Color
 
 abstract class RiftType {
 
-    val firstColor = Color(100, 100, 255, 255)
-    val secondColor = Color(200, 100, 255, 255)
+    private val firstColor = Color(100, 100, 255, 255)
+    private val secondColor = Color(200, 100, 255, 255)
 
 
-    val firstColorAlpha = Color(100, 100, 255, 25)
-    val secondColorAlpha = Color(200, 100, 255, 25)
+    private val firstColorAlpha = Color(100, 100, 255, 25)
+    private val secondColorAlpha = Color(200, 100, 255, 25)
 
     open fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity) {
 

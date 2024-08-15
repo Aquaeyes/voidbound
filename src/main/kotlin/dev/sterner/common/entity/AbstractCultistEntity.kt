@@ -59,7 +59,7 @@ abstract class AbstractCultistEntity(entityType: EntityType<out Monster>, level:
         return SoundEvents.VINDICATOR_DEATH
     }
 
-    override fun getHurtSound(damageSource: DamageSource?): SoundEvent {
+    override fun getHurtSound(damageSource: DamageSource): SoundEvent? {
         return SoundEvents.VINDICATOR_HURT
     }
 

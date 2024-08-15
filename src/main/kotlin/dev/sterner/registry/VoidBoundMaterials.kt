@@ -12,12 +12,12 @@ import net.minecraft.world.item.crafting.Ingredient
 
 enum class VoidBoundMaterials(
 
-    val materialName: String,
+    private val materialName: String,
     private val durabilityMultiplier: Int,
     private val damageReduction: IntArray,
-    val enchantability: Int,
+    private val enchantability: Int,
     private val equipSound: SoundEvent,
-    repairItem: Item,
+    private val repairItem: Item,
     private val toughness: Float
 ) :
     ArmorMaterial {
@@ -39,8 +39,6 @@ enum class VoidBoundMaterials(
         ItemRegistry.HALLOWED_GOLD_INGOT.get(),
         0.0f
     );
-
-    private val repairItem: Item = repairItem
 
     override fun getDurabilityForType(type: ArmorItem.Type): Int {
         return this.durabilityMultiplier * MAX_DAMAGE_ARRAY[type.slot.index]

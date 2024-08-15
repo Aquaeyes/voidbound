@@ -11,10 +11,10 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
 
+@Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
 class PortableHoleFoci : IWandFocus {
 
     override fun onFocusRightClick(stack: ItemStack, level: Level, player: Player, hitResult: HitResult) {

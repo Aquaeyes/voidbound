@@ -37,13 +37,11 @@ class SpiritBinderBlock(properties: Properties) : BaseEntityBlock(
         registerDefaultState(defaultBlockState().setValue(MODIFIER, Modifier.NONE))
     }
 
-    @Deprecated("Deprecated in Minecraft")
     override fun onPlace(state: BlockState, level: Level, pos: BlockPos, oldState: BlockState, movedByPiston: Boolean) {
         checkRift(level, pos)
         super.onPlace(state, level, pos, oldState, movedByPiston)
     }
 
-    @Deprecated("Deprecated in Minecraft")
     override fun neighborChanged(
         state: BlockState,
         level: Level,
@@ -65,7 +63,6 @@ class SpiritBinderBlock(properties: Properties) : BaseEntityBlock(
         }
     }
 
-    @Deprecated("Deprecated in Minecraft")
     override fun use(
         state: BlockState,
         level: Level,
@@ -133,12 +130,10 @@ class SpiritBinderBlock(properties: Properties) : BaseEntityBlock(
         }
     }
 
-    @Deprecated("Deprecated in Minecraft")
     override fun getRenderShape(state: BlockState): RenderShape {
         return RenderShape.MODEL
     }
 
-    @Deprecated("Deprecated in Minecraft")
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
         return makeShape()
     }

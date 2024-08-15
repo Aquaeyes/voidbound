@@ -19,8 +19,9 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.item.enchantment.Enchantment
 
 
-class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
-                             playerInventory: Inventory, title: Component
+class OsmoticEnchanterScreen(
+    menu: OsmoticEnchanterMenu,
+    playerInventory: Inventory, title: Component
 ) : AbstractContainerScreen<OsmoticEnchanterMenu>(menu, playerInventory, title) {
 
     private var blockEntity: OsmoticEnchanterBlockEntity? = null
@@ -135,7 +136,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
         fun addSpiritWidgets(spiritTypes: Array<MalumSpiritType>, xInMenu: Int, yOffset: Int) {
             for ((index, spiritType) in spiritTypes.withIndex()) {
                 val widget = SpiritBarWidget(this, xInMenu + 12 + 17 * index, yInMenu + yOffset)
-                widget.spirit_type = spiritType
+                widget.spiritType = spiritType
                 widget.isScry = isScy
                 this.addRenderableWidget(widget)
             }
@@ -146,7 +147,14 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
         addSpiritWidgets(bottomRowSpirits, xInMenu, 100)
     }
 
-    private fun calculateWidgetPosition(index: Int, itemsPerRow: Int, baseX: Int, baseY: Int, offsetY: Int, offsetX: Int): Pair<Int, Int> {
+    private fun calculateWidgetPosition(
+        index: Int,
+        itemsPerRow: Int,
+        baseX: Int,
+        baseY: Int,
+        offsetY: Int,
+        offsetX: Int
+    ): Pair<Int, Int> {
         val xOffset = (index % itemsPerRow) * offsetX + baseX
         val yOffset = (index / itemsPerRow) * offsetY + baseY
         return Pair(xOffset, yOffset)

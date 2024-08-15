@@ -15,7 +15,6 @@ import org.joml.Matrix4f
 class PortableHoleBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
     BlockEntityRenderer<PortableHoleBlockEntity> {
 
-
     override fun render(
         blockEntity: PortableHoleBlockEntity,
         partialTick: Float,
@@ -30,7 +29,6 @@ class PortableHoleBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
             buffer.getBuffer(RenderType.endPortal())
         )
     }
-
 
     private fun shouldDrawSide(direction: Direction, entity: PortableHoleBlockEntity): Boolean {
         val state: BlockState =
@@ -154,6 +152,4 @@ class PortableHoleBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
     private fun addVertex(vertices: VertexConsumer, model: Matrix4f, x: Float, y: Float, z: Float, u: Float, v: Float) {
         vertices.vertex(model, x, y, z).uv(u, v).endVertex()
     }
-
-
 }

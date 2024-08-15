@@ -8,38 +8,37 @@ import net.fabricmc.api.EnvType
 
 object VoidBoundPacketRegistry {
 
-    const val PROTOCOL_VERSION: String = "1"
-    val VOIDBOUND_CHANNEL: SimpleChannel = SimpleChannel(VoidBound.id("main"))
+    val VOID_BOUND_CHANNEL: SimpleChannel = SimpleChannel(VoidBound.id("main"))
 
     fun registerVoidBoundPackets() {
-        VOIDBOUND_CHANNEL.initServerListener()
+        VOID_BOUND_CHANNEL.initServerListener()
         EnvExecutor.runWhenOn(
             EnvType.CLIENT
-        ) { Runnable { VOIDBOUND_CHANNEL.initClientListener() } }
+        ) { Runnable { VOID_BOUND_CHANNEL.initClientListener() } }
 
         var index = 0
-        VOIDBOUND_CHANNEL.registerS2CPacket(
+        VOID_BOUND_CHANNEL.registerS2CPacket(
             SpiritBinderParticlePacket::class.java, index++
         )
 
-        VOIDBOUND_CHANNEL.registerS2CPacket(
+        VOID_BOUND_CHANNEL.registerS2CPacket(
             HeartParticlePacket::class.java, index++
         )
-        VOIDBOUND_CHANNEL.registerS2CPacket(
+        VOID_BOUND_CHANNEL.registerS2CPacket(
             BubbleParticlePacket::class.java, index++
         )
-        VOIDBOUND_CHANNEL.registerS2CPacket(
+        VOID_BOUND_CHANNEL.registerS2CPacket(
             UpdateSpiritAmountPacket::class.java, index++
         )
 
         //C2S
-        VOIDBOUND_CHANNEL.registerC2SPacket(
+        VOID_BOUND_CHANNEL.registerC2SPacket(
             EnchantmentLevelPacket::class.java, index++
         )
-        VOIDBOUND_CHANNEL.registerC2SPacket(
+        VOID_BOUND_CHANNEL.registerC2SPacket(
             StartEnchantingPacket::class.java, index++
         )
-        VOIDBOUND_CHANNEL.registerC2SPacket(
+        VOID_BOUND_CHANNEL.registerC2SPacket(
             RemoveEnchantPacket::class.java, index++
         )
     }

@@ -1,6 +1,5 @@
 package dev.sterner.common.entity
 
-import dev.sterner.common.entity.CrimsonArcherEntity.Companion.IS_CHARGING_CROSSBOW
 import dev.sterner.common.entity.ai.goal.RaiseShieldGoal
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import net.minecraft.nbt.CompoundTag
@@ -10,7 +9,6 @@ import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.tags.DamageTypeTags
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.damagesource.DamageSource
-import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
@@ -68,7 +66,7 @@ class CrimsonHeavyKnightEntity(level: Level) :
     }
 
     override fun addAdditionalSaveData(compound: CompoundTag) {
-        compound.putInt("ShieldCooldown", this.shieldCoolDown);
+        compound.putInt("ShieldCooldown", this.shieldCoolDown)
         super.addAdditionalSaveData(compound)
     }
 
@@ -87,7 +85,7 @@ class CrimsonHeavyKnightEntity(level: Level) :
 
     override fun blockUsingShield(attacker: LivingEntity) {
         super.blockUsingShield(attacker)
-        if (attacker.mainHandItem.getItem() is AxeItem) this.disableShield(true)
+        if (attacker.mainHandItem.item is AxeItem) this.disableShield(true)
     }
 
     override fun isBlocking(): Boolean {
@@ -105,15 +103,14 @@ class CrimsonHeavyKnightEntity(level: Level) :
 
             val directEntity = source.directEntity
             if (!source.`is`(DamageTypeTags.IS_PROJECTILE) && directEntity is LivingEntity) {
-                val livingEntity = directEntity
-                this.blockUsingShield(livingEntity)
+                this.blockUsingShield(directEntity)
             }
         }
 
         return super.hurt(source, amount)
     }
 
-    fun disableShield(increase: Boolean) {
+    private fun disableShield(increase: Boolean) {
         var chance = 0.25f + EnchantmentHelper.getBlockEfficiency(this).toFloat() * 0.05f
         if (increase) chance += 0.75.toFloat()
         if (random.nextFloat() < chance) {
@@ -122,7 +119,6 @@ class CrimsonHeavyKnightEntity(level: Level) :
             level().broadcastEntityEvent(this, 30.toByte())
         }
     }
-
 
 
     companion object {

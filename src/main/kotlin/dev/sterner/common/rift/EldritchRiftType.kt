@@ -37,7 +37,7 @@ class EldritchRiftType : RiftType() {
                 blockEntity.counter++
                 for (spirit in spiritDataOptional.get()) {
                     for (player in PlayerLookup.tracking(blockEntity)) {
-                        VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClient(
+                        VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(
                             SpiritBinderParticlePacket(
                                 blockEntity.entity!!.id,
                                 blockPos,

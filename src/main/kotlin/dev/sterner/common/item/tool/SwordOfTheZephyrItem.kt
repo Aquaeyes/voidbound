@@ -1,6 +1,5 @@
 package dev.sterner.common.item.tool
 
-import dev.sterner.api.util.VoidBoundEntityUtils
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.util.Mth
@@ -50,14 +49,10 @@ class SwordOfTheZephyrItem(
 
         player.deltaMovement = Vec3(player.deltaMovement.x, newMotionY, player.deltaMovement.z)
 
-        if (player is ServerPlayer) {
-            VoidBoundEntityUtils.resetFloatCounter(player as ServerPlayer?)
-        }
-
         val targets: List<*> =
             player.level().getEntities(player, player.boundingBox.inflate(2.5, 2.5, 2.5))
         var miny: Int
-        if (targets.size > 0) {
+        if (targets.isNotEmpty()) {
             miny = 0
             while (miny < targets.size) {
                 val entity: Entity = targets[miny] as Entity

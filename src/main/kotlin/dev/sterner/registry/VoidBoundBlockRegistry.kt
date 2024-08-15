@@ -2,8 +2,8 @@ package dev.sterner.registry
 
 import dev.sterner.VoidBound
 import dev.sterner.common.block.*
-import dev.sterner.common.blockentity.OsmoticEnchanterBlockEntity
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
+import io.github.fabricators_of_create.porting_lib.util.RegistryObject
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.Block
@@ -15,7 +15,7 @@ object VoidBoundBlockRegistry {
 
     val BLOCKS: LazyRegistrar<Block> = LazyRegistrar.create(BuiltInRegistries.BLOCK, VoidBound.modid)
 
-    var SPIRIT_BINDER = BLOCKS.register("spirit_binder") {
+    var SPIRIT_BINDER: RegistryObject<SpiritBinderBlock> = BLOCKS.register("spirit_binder") {
         SpiritBinderBlock(
             Properties.of()
                 .mapColor(MapColor.STONE)
@@ -24,15 +24,15 @@ object VoidBoundBlockRegistry {
         )
     }
 
-    var SPIRIT_STABILIZER = BLOCKS.register("spirit_stabilizer") {
+    var SPIRIT_STABILIZER: RegistryObject<SpiritBinderStabilizerBlock> = BLOCKS.register("spirit_stabilizer") {
         SpiritBinderStabilizerBlock(Properties.of())
     }
 
-    var SPIRIT_RIFT = BLOCKS.register("spirit_rift") {
+    var SPIRIT_RIFT: RegistryObject<SpiritRiftBlock> = BLOCKS.register("spirit_rift") {
         SpiritRiftBlock(Properties.of())
     }
 
-    var PORTABLE_HOLE = BLOCKS.register("portable_hole") {
+    var PORTABLE_HOLE: RegistryObject<PortableHoleBlock> = BLOCKS.register("portable_hole") {
         PortableHoleBlock(
             FabricBlockSettings.create()
                 .luminance(5)
@@ -43,7 +43,7 @@ object VoidBoundBlockRegistry {
         )
     }
 
-    var OSMOTIC_ENCHANTER = BLOCKS.register("osmotic_enchanter") {
+    var OSMOTIC_ENCHANTER: RegistryObject<OsmoticEnchanterBlock> = BLOCKS.register("osmotic_enchanter") {
         OsmoticEnchanterBlock(FabricBlockSettings.create())
     }
 }

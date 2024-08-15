@@ -32,7 +32,7 @@ class WandItemRenderer : DynamicItemRenderer {
         }
         val cubeVertexData = RenderUtils.makeCubePositions(0.25f).applyWobble(0f, 0.35f, 0.01f)
         val builder = VFXBuilders.createWorld()
-            .setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(VoidBoundTokens.WARD_BORDER))
+            .setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(VoidBoundTokens.wardBorder))
         //val builder2 = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(Tokens.WARD_BORDER)).setColorRaw(0.9f,0.09f,0.9f)
 
         matrices.pushPose()

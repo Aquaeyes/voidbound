@@ -4,16 +4,15 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.sammy.malum.core.handlers.SpiritHarvestHandler
-import com.sammy.malum.core.listeners.SpiritDataReloadListener
 import com.sammy.malum.core.systems.recipe.SpiritWithCount
-import com.sammy.malum.core.systems.spirit.EntitySpiritDropData
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.resources.ResourceManager
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener
 import net.minecraft.util.profiling.ProfilerFiller
 
-open class EnchantSpiritDataReloadListener : SimpleJsonResourceReloadListener(GsonBuilder().create(), "enchanting_data") {
+open class EnchantSpiritDataReloadListener :
+    SimpleJsonResourceReloadListener(GsonBuilder().create(), "enchanting_data") {
 
     override fun apply(
         objectIn: MutableMap<ResourceLocation, JsonElement>,
@@ -46,7 +45,6 @@ open class EnchantSpiritDataReloadListener : SimpleJsonResourceReloadListener(Gs
         }
         return spiritData
     }
-
 
     companion object {
         var ENCHANTING_DATA: MutableMap<ResourceLocation, List<SpiritWithCount>> = mutableMapOf()

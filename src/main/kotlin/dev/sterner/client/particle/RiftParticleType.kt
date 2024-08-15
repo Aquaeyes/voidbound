@@ -9,9 +9,9 @@ import team.lodestar.lodestone.systems.particle.world.options.WorldParticleOptio
 import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType
 
 class RiftParticleType : LodestoneWorldParticleType() {
-    class Factory(private val sprite: SpriteSet) : ParticleProvider<WorldParticleOptions?> {
+    class Factory(private val sprite: SpriteSet) : ParticleProvider<WorldParticleOptions> {
         override fun createParticle(
-            data: WorldParticleOptions?,
+            data: WorldParticleOptions,
             world: ClientLevel,
             x: Double,
             y: Double,

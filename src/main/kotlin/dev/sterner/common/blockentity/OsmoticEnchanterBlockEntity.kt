@@ -25,12 +25,13 @@ import java.util.stream.Collectors
 import kotlin.streams.toList
 
 
-class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolderBlockEntity(VoidBoundBlockEntityTypeRegistry.OSMOTIC_ENCHANTER.get(), pos,
+class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolderBlockEntity(
+    VoidBoundBlockEntityTypeRegistry.OSMOTIC_ENCHANTER.get(), pos,
     state
 ) {
 
     data class EnchantmentData(val enchantment: Enchantment, val level: Int)
-    
+
     var enchantments: MutableList<EnchantmentData> = mutableListOf()
 
     var cachedEnchantments: MutableList<Int>? = mutableListOf()
@@ -39,8 +40,8 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     var spiritsToConsume: SimpleSpiritCharge = SimpleSpiritCharge()
     var consumedSpirits: SimpleSpiritCharge = SimpleSpiritCharge()
 
-    var cooldown: Int = 0
-    
+    private var cooldown: Int = 0
+
     init {
         inventory = object : MalumBlockEntityInventory(1, 64) {
             public override fun onContentsChanged(slot: Int) {
@@ -65,7 +66,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         }
     }
 
-    fun calculateSpiritRequired() : Boolean {
+    fun calculateSpiritRequired(): Boolean {
         var bl = false
         val spirits = SimpleSpiritCharge()
 
@@ -79,7 +80,12 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
         spiritsToConsume = spirits
         if (level is ServerLevel) {
-            VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClientsTracking(UpdateSpiritAmountPacket(spiritsToConsume, blockPos.asLong()), this)
+            VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClientsTracking(
+                UpdateSpiritAmountPacket(
+                    spiritsToConsume,
+                    blockPos.asLong()
+                ), this
+            )
         }
         return bl
     }
@@ -155,12 +161,13 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     fun refreshEnchants() {
-        var enchantmentObjects = getAvailableEnchants(enchantments.stream().map {
-            enchantmentInfo: EnchantmentData -> enchantmentInfo.enchantment
+        var enchantmentObjects = getAvailableEnchants(enchantments.stream().map { enchantmentInfo: EnchantmentData ->
+            enchantmentInfo.enchantment
         }.collect(Collectors.toList()))
 
         enchantmentObjects = enchantmentObjects.filter { !it.isCurse }.toMutableList()
-        cachedEnchantments = enchantmentObjects.stream().map(BuiltInRegistries.ENCHANTMENT::getId).toList().toMutableList()
+        cachedEnchantments =
+            enchantmentObjects.stream().map(BuiltInRegistries.ENCHANTMENT::getId).toList().toMutableList()
         notifyUpdate()
     }
 
@@ -197,7 +204,13 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         if (inventory.getStackInSlot(0) == ItemStack.EMPTY) return enchantments
         val item = inventory.getStackInSlot(0)
         for (enchantment in BuiltInRegistries.ENCHANTMENT) {
-            if (enchantment.canEnchant(item) && item.isEnchantable && canApply(item, enchantment, enchantments, false)) {
+            if (enchantment.canEnchant(item) && item.isEnchantable && canApply(
+                    item,
+                    enchantment,
+                    enchantments,
+                    false
+                )
+            ) {
                 enchantments.add(enchantment)
             }
         }
@@ -222,10 +235,14 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     override fun saveAdditional(compound: CompoundTag) {
-        compound.putIntArray("Enchants", enchantments.stream().mapToInt { i -> BuiltInRegistries.ENCHANTMENT.getId(i.enchantment) }.toArray())
+        compound.putIntArray(
+            "Enchants",
+            enchantments.stream().mapToInt { i -> BuiltInRegistries.ENCHANTMENT.getId(i.enchantment) }.toArray()
+        )
         compound.putIntArray("Level", enchantments.stream().mapToInt { i -> i.level }.toArray())
 
-        cachedEnchantments?.stream()?.mapToInt {i -> i}?.toList()?.toMutableList()?.let { compound.putIntArray("Cache", it) }
+        cachedEnchantments?.stream()?.mapToInt { i -> i }?.toList()?.toMutableList()
+            ?.let { compound.putIntArray("Cache", it) }
         spiritsToConsume.serializeNBT(compound)
         val consumedNbt = CompoundTag()
         consumedSpirits.serializeNBT(consumedNbt)
@@ -248,7 +265,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         if (compound.contains("Cache")) {
             cachedEnchantments?.clear()
             val cachedEnchantmentArray = compound.getIntArray("Cache")
-            Arrays.stream(cachedEnchantmentArray).forEach{i -> cachedEnchantments?.add(i)}
+            Arrays.stream(cachedEnchantmentArray).forEach { i -> cachedEnchantments?.add(i) }
         }
         spiritsToConsume = spiritsToConsume.deserializeNBT(compound)
         if (compound.contains("Consumed")) {
@@ -259,7 +276,6 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
         super.load(compound)
     }
-
 
 
 }

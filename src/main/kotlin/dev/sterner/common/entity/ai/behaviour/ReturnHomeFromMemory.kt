@@ -74,7 +74,7 @@ class ReturnHomeFromMemory(
 
                     brain.setMemory(
                         MemoryModuleType.WALK_TARGET,
-                        WalkTarget(vec3, this.speedModifier, this.closeEnoughDist)
+                        WalkTarget(vec3!!, this.speedModifier, this.closeEnoughDist)
                     )
                 } else if (!this.closeEnough(pLevel, pEntity, globalPos)) {
                     brain.setMemory(

@@ -15,7 +15,7 @@ import net.tslat.smartbrainlib.util.EntityRetrievalUtil
 import java.util.function.BiPredicate
 
 class GolemGuardSensor : PredicateSensor<LivingEntity, SoulSteelGolemEntity>(
-    BiPredicate { target: LivingEntity, entity: SoulSteelGolemEntity ->
+    BiPredicate { _: LivingEntity, entity: SoulSteelGolemEntity ->
         entity.getGolemCore() == GolemCore.GUARD
     }
 ) {

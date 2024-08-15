@@ -19,7 +19,7 @@ class EnchantmentLevelPacket(nbt: CompoundTag) : LodestoneServerNBTPacket(nbt) {
         super.encode(buf)
     }
 
-    constructor(buf: FriendlyByteBuf): this(buf.readNbt()!!)
+    constructor(buf: FriendlyByteBuf) : this(buf.readNbt()!!)
 
     constructor(enchantment: Enchantment, level: Int, asLong: Long) : this(CompoundTag().apply {
         putInt("Enchantment", BuiltInRegistries.ENCHANTMENT.getId(enchantment))

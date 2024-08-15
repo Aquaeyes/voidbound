@@ -14,9 +14,11 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.enchantment.Enchantment
 
 
-open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int, width: Int, height: Int) : AbstractWidget(x, y, width, height,
-    Component.empty()
-) {
+open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int, width: Int, height: Int) :
+    AbstractWidget(
+        x, y, width, height,
+        Component.empty()
+    ) {
 
     var enchantment: Enchantment? = null
 
@@ -25,18 +27,24 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
     override fun onClick(mouseX: Double, mouseY: Double) {
         val id = BuiltInRegistries.ENCHANTMENT.getId(enchantment)
 
-        if (screen.menu.be?.activated == true) {
+        if (screen.menu.osmoticEnchanter?.activated == true) {
             return
         }
 
         if (screen.selectedEnchants.contains(id)) {
             screen.selectedEnchants.remove(id)
 
-            VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToServer(RemoveEnchantPacket(id, screen.menu.pos))
+            VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(RemoveEnchantPacket(id, screen.menu.pos))
 
         } else if (!screen.selectedEnchants.contains(id) && screen.selectedEnchants.size < 9) {
             screen.selectedEnchants.add(BuiltInRegistries.ENCHANTMENT.getId(enchantment))
-            VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToServer(EnchantmentLevelPacket(enchantment!!, level, screen.menu.pos.asLong()))
+            VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(
+                EnchantmentLevelPacket(
+                    enchantment!!,
+                    level,
+                    screen.menu.pos.asLong()
+                )
+            )
         }
 
         screen.refreshEnchants()
@@ -62,7 +70,7 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
             yy += 7
         }
 
-        guiGraphics.blit(icon, xx, yy, 0f,0f,16, 16, 16, 16)
+        guiGraphics.blit(icon, xx, yy, 0f, 0f, 16, 16, 16, 16)
 
         if (mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height) {
             val tooltip: MutableList<Component> = ArrayList()

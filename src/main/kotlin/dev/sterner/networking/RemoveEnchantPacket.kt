@@ -18,8 +18,7 @@ class RemoveEnchantPacket(val enchantment: Int, val pos: BlockPos) : LodestoneSe
         buf.writeBlockPos(pos)
     }
 
-    constructor(buf: FriendlyByteBuf): this(buf.readInt(), buf.readBlockPos())
-
+    constructor(buf: FriendlyByteBuf) : this(buf.readInt(), buf.readBlockPos())
 
     override fun executeServer(
         server: MinecraftServer?,

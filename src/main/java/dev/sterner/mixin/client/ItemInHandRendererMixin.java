@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ItemInHandRendererMixin {
 
     @Inject(method = "renderItem", at = @At("HEAD"), cancellable = true)
-    private void renderFirstPersonItem(LivingEntity livingEntity, ItemStack stack, ItemDisplayContext transformType,
+    private void voidbound$renderFirstPersonItem(LivingEntity livingEntity, ItemStack stack, ItemDisplayContext transformType,
                                        boolean leftHanded, PoseStack poseStack, MultiBufferSource buffers, int light, CallbackInfo ci) {
         if (CrimsonRitesRenderer.renderHand(stack, transformType, leftHanded, poseStack, buffers, light)) {
             ci.cancel();

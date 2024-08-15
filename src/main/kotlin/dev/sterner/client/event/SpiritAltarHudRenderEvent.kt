@@ -14,7 +14,7 @@ import net.minecraft.world.phys.BlockHitResult
 
 object SpiritAltarHudRenderEvent {
 
-    fun spiritAltarRecipeHud(guiGraphics: GuiGraphics, deltaTick: Float) {
+    fun spiritAltarRecipeHud(guiGraphics: GuiGraphics, partialTick: Float) {
         val client: Minecraft = Minecraft.getInstance()
 
         if (VoidBoundApi.hasGoggles()) {

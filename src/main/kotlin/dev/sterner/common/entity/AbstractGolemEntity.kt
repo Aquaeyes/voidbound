@@ -4,6 +4,7 @@ import dev.sterner.api.entity.GolemCore
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.sounds.SoundEvent
@@ -133,9 +134,9 @@ abstract class AbstractGolemEntity(entityType: EntityType<out PathfinderMob>, le
 
     companion object {
 
-        var coreEntityData =
+        var coreEntityData: EntityDataAccessor<String> =
             SynchedEntityData.defineId(SoulSteelGolemEntity::class.java, EntityDataSerializers.STRING)
-        var ownerUUID =
+        var ownerUUID: EntityDataAccessor<Optional<UUID>> =
             SynchedEntityData.defineId(SoulSteelGolemEntity::class.java, EntityDataSerializers.OPTIONAL_UUID)
 
         fun createGolemAttributes(): AttributeSupplier.Builder {

@@ -22,7 +22,7 @@ import team.lodestar.lodestone.systems.client.ClientTickCounter
 
 object CrimsonRitesRenderer {
     private var model: CrimsonBookModel? = null
-    val TEXTURE: Material = Material(InventoryMenu.BLOCK_ATLAS, VoidBound.id("item/crimson_rites"))
+    private val texture: Material = Material(InventoryMenu.BLOCK_ATLAS, VoidBound.id("item/crimson_rites"))
 
     @JvmStatic
     fun renderHand(
@@ -79,7 +79,7 @@ object CrimsonRitesRenderer {
         val model = getModel()
         model.setupAnim(total(), Mth.clamp(leftPageAngle, 0.0f, 1.0f), Mth.clamp(rightPageAngle, 0.0f, 1.0f), opening)
 
-        val mat: Material = TEXTURE
+        val mat: Material = texture
         val buffer = mat.buffer(buffers, RenderType::entitySolid)
         model.renderToBuffer(poseStack, buffer, light, OverlayTexture.NO_OVERLAY, 1f, 1f, 1f, 1f)
 
