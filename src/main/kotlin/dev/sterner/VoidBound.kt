@@ -10,10 +10,7 @@ import dev.sterner.client.event.SpiritAltarHudRenderEvent
 import dev.sterner.client.model.*
 import dev.sterner.client.renderer.HallowedMonocleRenderer
 import dev.sterner.client.renderer.WandItemRenderer
-import dev.sterner.client.renderer.blockentity.PortableHoleBlockEntityRenderer
-import dev.sterner.client.renderer.blockentity.SpiritBinderBlockEntityRenderer
-import dev.sterner.client.renderer.blockentity.SpiritRiftBlockEntityRenderer
-import dev.sterner.client.renderer.blockentity.SpiritStabilizerBlockEntityRenderer
+import dev.sterner.client.renderer.blockentity.*
 import dev.sterner.client.renderer.entity.*
 import dev.sterner.client.screen.OsmoticEnchanterScreen
 import dev.sterner.common.components.VoidBoundPlayerComponent
@@ -84,6 +81,10 @@ object VoidBound : ModInitializer, ClientModInitializer {
         BlockEntityRenderers.register(
             VoidBoundBlockEntityTypeRegistry.PORTABLE_HOLE.get(),
             ::PortableHoleBlockEntityRenderer
+        )
+        BlockEntityRenderers.register(
+            VoidBoundBlockEntityTypeRegistry.OSMOTIC_ENCHANTER.get(),
+            ::OsmoticEnchanterBlockEntityRenderer
         )
 
         EntityRendererRegistry.register(VoidBoundEntityTypeRegistry.PARTICLE_ENTITY.get(), ::ParticleEntityRenderer)

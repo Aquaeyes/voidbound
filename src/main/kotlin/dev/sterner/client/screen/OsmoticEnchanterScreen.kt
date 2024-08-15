@@ -95,7 +95,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
 
     private fun renderEnchantments(enchantments: List<Int>, xInMenu: Int, yInMenu: Int) {
         enchantments.forEachIndexed { index, enchantId ->
-            val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 167, 15 + 26, 17, 17)
+            val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 168, 15 + 26, 17, 17)
             val widget = EnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset, 16, 16)
             widget.enchantment = Enchantment.byId(enchantId)
             this.addRenderableWidget(widget)
@@ -104,7 +104,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
 
     private fun renderSelectedEnchantments(xInMenu: Int, yInMenu: Int) {
         selectedEnchants.forEachIndexed { index, enchantId ->
-            val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 82, 5, 34, 23)
+            val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 83, 5, 34, 23)
             val widget = SelectedEnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset)
             widget.enchantment = Enchantment.byId(enchantId)
             this.addRenderableWidget(widget)
@@ -112,7 +112,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
     }
 
     private fun addStartEnchantingWidget(xInMenu: Int, yInMenu: Int) {
-        val widgetX = xInMenu + 13 + 16 * 6 - 4
+        val widgetX = xInMenu + 13 + 16 * 6 - 3
         val widgetY = yInMenu + 18 * 5 + 19 + 28
         this.addRenderableWidget(StartEnchantingWidget(this, widgetX, widgetY))
     }
@@ -134,7 +134,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
 
         fun addSpiritWidgets(spiritTypes: Array<MalumSpiritType>, xInMenu: Int, yOffset: Int) {
             for ((index, spiritType) in spiritTypes.withIndex()) {
-                val widget = SpiritBarWidget(this, xInMenu + 11 + 17 * index, yInMenu + yOffset)
+                val widget = SpiritBarWidget(this, xInMenu + 12 + 17 * index, yInMenu + yOffset)
                 widget.spirit_type = spiritType
                 widget.isScy = isScy
                 this.addRenderableWidget(widget)

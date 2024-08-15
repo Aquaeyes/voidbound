@@ -104,8 +104,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         if (activated) {
             cooldown++
 
-            // Check if cooldown has passed 2 ticks
-            if (cooldown > 2) {
+            if (cooldown > 1) {
                 // Variable to track if a spirit has been consumed
                 var spiritConsumed = false
 
