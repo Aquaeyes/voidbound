@@ -101,26 +101,37 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     override fun tick() {
-
         if (activated) {
             cooldown++
-            if (cooldown > 10) {
-                val spiritConsumed = SpiritTypeRegistry.SPIRITS.any { spiritType ->
-                    consumedSpirits.addToCharge(spiritType.value, 1)
-                    spiritsToConsume.removeFromCharge(spiritType.value, 1)
+
+            // Check if cooldown has passed 2 ticks
+            if (cooldown > 2) {
+                // Variable to track if a spirit has been consumed
+                var spiritConsumed = false
+
+                // Iterate through each spirit type
+                SpiritTypeRegistry.SPIRITS.forEach { spiritType ->
+                    val requiredCharge = spiritsToConsume.getChargeForType(spiritType.value)
+                    val currentCharge = consumedSpirits.getChargeForType(spiritType.value)
+
+                    // Check if more charge needs to be added for this spirit type
+                    if (currentCharge < requiredCharge) {
+                        consumedSpirits.addToCharge(spiritType.value, 1)
+                        spiritConsumed = true  // Mark that a spirit was consumed
+                        return@forEach // Exit after processing one spirit
+                    }
                 }
 
-
-
+                // Reset cooldown if a spirit was consumed
                 if (spiritConsumed) {
                     cooldown = 0
                 }
             }
 
-            if (spiritsToConsume.getTotalCharge() <= 0) {
+            // If all the spirits are consumed, perform the enchantment
+            if (consumedSpirits.getTotalCharge() >= spiritsToConsume.getTotalCharge()) {
                 doEnchant()
             }
-
         }
 
         super.tick()
