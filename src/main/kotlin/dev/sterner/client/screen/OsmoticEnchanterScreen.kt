@@ -1,5 +1,6 @@
 package dev.sterner.client.screen
 
+import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.VoidBound
 import dev.sterner.client.screen.widget.EnchantmentWidget
@@ -94,47 +95,32 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
         val widgetY = yInMenu + 18 * 5 + 19 + 28
         this.addRenderableWidget(StartEnchantingWidget(this, widgetX, widgetY))
     }
-
     private fun addSpiritBarWidget(xInMenu: Int, yInMenu: Int) {
+        val topRowSpirits = arrayOf(
+            SpiritTypeRegistry.AERIAL_SPIRIT,
+            SpiritTypeRegistry.AQUEOUS_SPIRIT,
+            SpiritTypeRegistry.EARTHEN_SPIRIT,
+            SpiritTypeRegistry.INFERNAL_SPIRIT
+        )
 
-        var widget = SpiritBarWidget(this,  xInMenu + 11 + 17 * 0, yInMenu + 37)
-        widget.spirit_type = SpiritTypeRegistry.AERIAL_SPIRIT
-        this.addRenderableWidget(widget)
+        val bottomRowSpirits = arrayOf(
+            SpiritTypeRegistry.ARCANE_SPIRIT,
+            SpiritTypeRegistry.ELDRITCH_SPIRIT,
+            SpiritTypeRegistry.WICKED_SPIRIT,
+            SpiritTypeRegistry.SACRED_SPIRIT
+        )
 
-        widget = SpiritBarWidget(this,  xInMenu + 11 + 17 * 1, yInMenu + 37)
-        widget.spirit_type = SpiritTypeRegistry.AQUEOUS_SPIRIT
-        this.addRenderableWidget(widget)
+        fun addSpiritWidgets(spiritTypes: Array<MalumSpiritType>, xInMenu: Int, yOffset: Int) {
+            for ((index, spiritType) in spiritTypes.withIndex()) {
+                val widget = SpiritBarWidget(this, xInMenu + 11 + 17 * index, yInMenu + yOffset)
+                widget.spirit_type = spiritType
+                this.addRenderableWidget(widget)
+            }
+        }
 
-        widget = SpiritBarWidget(this,  xInMenu + 11 + 17 * 2, yInMenu + 37)
-        widget.spirit_type = SpiritTypeRegistry.EARTHEN_SPIRIT
-        this.addRenderableWidget(widget)
+        addSpiritWidgets(topRowSpirits, xInMenu, 37)
 
-        widget = SpiritBarWidget(this,  xInMenu + 11 + 17 * 3, yInMenu + 37)
-        widget.spirit_type = SpiritTypeRegistry.INFERNAL_SPIRIT
-        this.addRenderableWidget(widget)
-
-
-
-        widget = SpiritBarWidget(this,  xInMenu + 11 + 17 * 0, yInMenu + 100)
-        widget.spirit_type = SpiritTypeRegistry.ARCANE_SPIRIT
-        this.addRenderableWidget(widget)
-
-        widget = SpiritBarWidget(this,  xInMenu + 11 + 17 * 1, yInMenu + 100)
-        widget.spirit_type = SpiritTypeRegistry.ELDRITCH_SPIRIT
-        this.addRenderableWidget(widget)
-
-        widget = SpiritBarWidget(this,  xInMenu + 11 + 17 * 2, yInMenu + 100)
-        widget.spirit_type = SpiritTypeRegistry.WICKED_SPIRIT
-        this.addRenderableWidget(widget)
-
-        widget = SpiritBarWidget(this,  xInMenu + 11 + 17 * 3, yInMenu + 100)
-        widget.spirit_type = SpiritTypeRegistry.SACRED_SPIRIT
-        this.addRenderableWidget(widget)
-
-
-
-
-
+        addSpiritWidgets(bottomRowSpirits, xInMenu, 100)
     }
 
     private fun calculateWidgetPosition(index: Int, itemsPerRow: Int, baseX: Int, baseY: Int, offsetY: Int, offsetX: Int): Pair<Int, Int> {
