@@ -57,12 +57,6 @@ data class SimpleSpiritCharge(
         charges.forEach { (type, count) -> nbt.putInt(type.identifier, count) }
     }
 
-    fun readPacket(): SimpleSpiritCharge {
-
-
-        return SimpleSpiritCharge()
-    }
-
     fun getTotalCharge(): Int {
         return charges.values.sum()
     }
@@ -79,6 +73,4 @@ data class SimpleSpiritCharge(
     fun addToCharge(type: MalumSpiritType) {
         charges[type] = charges.getOrDefault(type, 0) + 1
     }
-
-
 }

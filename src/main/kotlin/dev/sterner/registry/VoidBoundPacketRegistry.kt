@@ -43,5 +43,4 @@ object VoidBoundPacketRegistry {
             RemoveEnchantPacket::class.java, index++
         )
     }
-
 }

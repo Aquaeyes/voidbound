@@ -1,7 +1,6 @@
 package dev.sterner.common.blockentity
 
 import com.sammy.malum.common.block.MalumBlockEntityInventory
-import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.rift.SimpleSpiritCharge
@@ -43,8 +42,11 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     init {
         inventory = object : MalumBlockEntityInventory(1, 64) {
             public override fun onContentsChanged(slot: Int) {
-                this.setChanged()
+                spiritsToConsume = SimpleSpiritCharge()
+                cachedEnchantments = mutableListOf()
+                enchantments = mutableListOf()
                 refreshEnchants()
+                this.setChanged()
                 needsSync = true
                 BlockHelper.updateAndNotifyState(level, worldPosition)
                 updateData()
@@ -136,6 +138,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
         enchantmentObjects = enchantmentObjects.filter { !it.isCurse }.toMutableList()
         cachedEnchantments = enchantmentObjects.stream().map(BuiltInRegistries.ENCHANTMENT::getId).toList().toMutableList()
+        notifyUpdate()
     }
 
     private fun canApply(itemStack: ItemStack, enchantment: Enchantment, currentEnchants: List<Enchantment?>): Boolean {
@@ -199,7 +202,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         compound.putIntArray("Enchants", enchantments.stream().mapToInt { i -> BuiltInRegistries.ENCHANTMENT.getId(i.enchantment) }.toArray())
         compound.putIntArray("Level", enchantments.stream().mapToInt { i -> i.level }.toArray())
 
-        //cachedEnchantments?.stream()?.mapToInt {i -> i}?.toList()?.toMutableList()?.let { compound.putIntArray("Cache", it) }
+        cachedEnchantments?.stream()?.mapToInt {i -> i}?.toList()?.toMutableList()?.let { compound.putIntArray("Cache", it) }
         spiritsToConsume.serializeNBT(compound)
         compound.putBoolean("Activated", activated)
         super.saveAdditional(compound)
@@ -217,9 +220,9 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             }
         }
         if (compound.contains("Cache")) {
-            //cachedEnchantments?.clear()
-            //val cachedEnchantmentArray = compound.getIntArray("Cache")
-            //Arrays.stream(cachedEnchantmentArray).forEach{i -> cachedEnchantments?.add(i)}
+            cachedEnchantments?.clear()
+            val cachedEnchantmentArray = compound.getIntArray("Cache")
+            Arrays.stream(cachedEnchantmentArray).forEach{i -> cachedEnchantments?.add(i)}
         }
         spiritsToConsume = spiritsToConsume.deserializeNBT(compound)
         activated = compound.getBoolean("Activated")
