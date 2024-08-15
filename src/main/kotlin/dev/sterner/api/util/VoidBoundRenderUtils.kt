@@ -87,7 +87,11 @@ object VoidBoundRenderUtils {
         red: Float,
         green: Float,
         blue: Float,
-        alpha: Float
+        alpha: Float,
+        minU: Float,
+        maxU: Float,
+        minV: Float,
+        maxV: Float
     ) {
         innerBlit(
             guiGraphics,
@@ -96,10 +100,10 @@ object VoidBoundRenderUtils {
             y1,
             width,
             height,
-            0f,
-            width.toFloat() / textureWidth.toFloat(),
-            0f,
-            height.toFloat() / textureHeight.toFloat(),
+            minU,
+            maxU,
+            minV,
+            maxV,
             red,
             green,
             blue,
