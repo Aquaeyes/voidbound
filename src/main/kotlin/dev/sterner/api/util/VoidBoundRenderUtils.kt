@@ -20,6 +20,7 @@ import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.registry.client.LodestoneShaderRegistry
 import team.lodestar.lodestone.systems.easing.Easing
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
+import team.lodestar.lodestone.systems.rendering.VFXBuilders.ScreenVFXBuilder
 import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
 import java.awt.Color
 
@@ -27,6 +28,30 @@ import java.awt.Color
 object VoidBoundRenderUtils {
 
     val CHECKMARK: ResourceLocation = VoidBound.id("textures/gui/check.png")
+
+    fun renderTexture(
+        texture: ResourceLocation?,
+        poseStack: PoseStack?,
+        builder: ScreenVFXBuilder,
+        x: Int,
+        y: Float,
+        u: Float,
+        v: Float,
+        width: Float,
+        height: Float,
+        textureWidth: Int,
+        textureHeight: Int
+    ) {
+        RenderSystem.enableBlend()
+        RenderSystem.enableDepthTest()
+        builder.setPositionWithWidth(x.toFloat(), y, width, height)
+            .setZLevel(0)
+            .setShaderTexture(texture)
+            .setUVWithWidth(u, v, width, height, textureWidth.toFloat(), textureHeight.toFloat())
+            .draw(poseStack)
+        RenderSystem.disableDepthTest()
+        RenderSystem.disableBlend()
+    }
 
     fun renderWobblyWorldIcon(
         icon: ResourceLocation,

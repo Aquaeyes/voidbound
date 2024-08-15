@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import dev.sterner.VoidBound
 import dev.sterner.api.rift.SimpleSpiritCharge
+import dev.sterner.api.util.VoidBoundRenderUtils
 import dev.sterner.client.screen.OsmoticEnchanterScreen
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
@@ -71,7 +72,7 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE)
 
             // Render the texture with adjusted UV for top cropping
-            renderTexture(
+            VoidBoundRenderUtils.renderTexture(
                 icon,                         // ResourceLocation
                 guiGraphics.pose(),            // PoseStack
                 builder,                       // VFXBuilders.ScreenVFXBuilder
@@ -95,29 +96,7 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
         }
     }
 
-    private fun renderTexture(
-        texture: ResourceLocation?,
-        poseStack: PoseStack?,
-        builder: ScreenVFXBuilder,
-        x: Int,
-        y: Float,
-        u: Float,
-        v: Float,
-        width: Float,
-        height: Float,
-        textureWidth: Int,
-        textureHeight: Int
-    ) {
-        RenderSystem.enableBlend()
-        RenderSystem.enableDepthTest()
-        builder.setPositionWithWidth(x.toFloat(), y, width, height)
-            .setZLevel(0)
-            .setShaderTexture(texture)
-            .setUVWithWidth(u, v, width, height, textureWidth.toFloat(), textureHeight.toFloat())
-            .draw(poseStack)
-        RenderSystem.disableDepthTest()
-        RenderSystem.disableBlend()
-    }
+
 
     private fun calcNormal(targetSpirits: SimpleSpiritCharge?): Float {
         var normalizer = 0f
