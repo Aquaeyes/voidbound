@@ -26,7 +26,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
 
     init {
         imageWidth = 232
-        imageHeight = 222
+        imageHeight = 247
         blockEntity = getBlockEntity(playerInventory, menu.pos)
     }
 
@@ -68,7 +68,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
 
     private fun renderEnchantments(enchantments: List<Int>, xInMenu: Int, yInMenu: Int) {
         enchantments.forEachIndexed { index, enchantId ->
-            val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 166, 15, 17, 17)
+            val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 167, 15 + 26, 17, 17)
             val widget = EnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset, 16, 16)
             widget.enchantment = Enchantment.byId(enchantId)
             this.addRenderableWidget(widget)
@@ -77,7 +77,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
 
     private fun renderSelectedEnchantments(xInMenu: Int, yInMenu: Int) {
         selectedEnchants.forEachIndexed { index, enchantId ->
-            val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 82, 5, 37, 23)
+            val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 82, 5, 34, 23)
             val widget = SelectedEnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset)
             widget.enchantment = Enchantment.byId(enchantId)
             this.addRenderableWidget(widget)
@@ -85,8 +85,8 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
     }
 
     private fun addStartEnchantingWidget(xInMenu: Int, yInMenu: Int) {
-        val widgetX = xInMenu + 13 + 16 * 6
-        val widgetY = yInMenu + 18 * 5 + 19
+        val widgetX = xInMenu + 13 + 16 * 6 - 4
+        val widgetY = yInMenu + 18 * 5 + 19 + 28
         this.addRenderableWidget(StartEnchantingWidget(this, widgetX, widgetY))
     }
 

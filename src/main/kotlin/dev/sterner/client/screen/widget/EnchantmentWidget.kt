@@ -52,7 +52,7 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
 
         if (this is SelectedEnchantmentWidget) {
             xx += 3
-            yy += 10
+            yy += 7
         }
 
         guiGraphics.blit(icon, xx, yy, 0f,0f,16, 16, 16, 16)

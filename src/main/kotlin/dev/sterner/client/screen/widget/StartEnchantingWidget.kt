@@ -9,7 +9,7 @@ import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.network.chat.Component
 
-class StartEnchantingWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : AbstractWidget(x, y, 18, 18, Component.empty()) {
+class StartEnchantingWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : AbstractWidget(x, y, 22, 14, Component.empty()) {
 
     override fun onClick(mouseX: Double, mouseY: Double) {
         VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToServer(StartEnchantingPacket(screen.menu.pos))
@@ -20,7 +20,7 @@ class StartEnchantingWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) 
 
         val icon = VoidBound.id("textures/gui/enchanter_check${if(!screen.menu.be!!.activated) "" else "_glowing"}.png")
 
-        guiGraphics.blit(icon, x, y, 0f,0f,18, 18, 18, 18)
+        guiGraphics.blit(icon, x, y, 0f,0f, width, height, width, height)
     }
 
     override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {

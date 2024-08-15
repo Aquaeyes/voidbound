@@ -29,7 +29,7 @@ class OsmoticEnchanterMenu(
         if (inventory.player.level().getBlockEntity(pos) is OsmoticEnchanterBlockEntity) {
             be = inventory.player.level().getBlockEntity(pos) as OsmoticEnchanterBlockEntity
             blockEntityInventory = be?.inventory
-            this.addSlot(object : Slot(blockEntityInventory!!, 0, 14 + 18 * 5 + 4, 14 + 18 * 5 - 14){
+            this.addSlot(object : Slot(blockEntityInventory!!, 0, 14 + 18 * 5 + 4, 14 + 18 * 5 - 14 + 24){
 
                 override fun mayPlace(stack: ItemStack): Boolean {
                     return stack.isEnchantable
@@ -60,7 +60,7 @@ class OsmoticEnchanterMenu(
         while (l < 3) {
             m = 0
             while (m < 9) {
-                this.addSlot(Slot(inventory, m + l * 9 + 9, 36 + m * 18, 3 * 18 + 86 + l * 18))
+                this.addSlot(Slot(inventory, m + l * 9 + 9, 36 + m * 18, 3 * 18 + 86 + l * 18 + 25))
                 ++m
             }
             ++l
@@ -68,7 +68,7 @@ class OsmoticEnchanterMenu(
 
         l = 0
         while (l < 9) {
-            this.addSlot(Slot(inventory, l, 36 + l * 18, 3 * 18 + 144))
+            this.addSlot(Slot(inventory, l, 36 + l * 18, 3 * 18 + 144 + 25))
             ++l
         }
     }
