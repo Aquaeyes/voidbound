@@ -51,7 +51,6 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
                 refreshEnchants()
                 this.setChanged()
                 needsSync = true
-                notifyUpdate()
                 BlockHelper.updateAndNotifyState(level, worldPosition)
                 updateData()
                 super.onContentsChanged(slot)
@@ -110,6 +109,9 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
                     consumedSpirits.addToCharge(spiritType.value, 1)
                     spiritsToConsume.removeFromCharge(spiritType.value, 1)
                 }
+
+
+
                 if (spiritConsumed) {
                     cooldown = 0
                 }
@@ -210,7 +212,9 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
         cachedEnchantments?.stream()?.mapToInt {i -> i}?.toList()?.toMutableList()?.let { compound.putIntArray("Cache", it) }
         spiritsToConsume.serializeNBT(compound)
-        consumedSpirits.serializeNBT(compound)
+        val consumedNbt = CompoundTag()
+        consumedSpirits.serializeNBT(consumedNbt)
+        compound.put("Consumed", consumedNbt)
         compound.putBoolean("Activated", activated)
         super.saveAdditional(compound)
     }
@@ -232,7 +236,10 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             Arrays.stream(cachedEnchantmentArray).forEach{i -> cachedEnchantments?.add(i)}
         }
         spiritsToConsume = spiritsToConsume.deserializeNBT(compound)
-        consumedSpirits = consumedSpirits.deserializeNBT(compound)
+        if (compound.contains("Consumed")) {
+            val c = compound.get("Consumed") as CompoundTag
+            consumedSpirits = consumedSpirits.deserializeNBT(c)
+        }
         activated = compound.getBoolean("Activated")
 
         super.load(compound)

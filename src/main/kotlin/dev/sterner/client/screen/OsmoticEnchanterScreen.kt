@@ -72,7 +72,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
         renderSelectedEnchantments(xInMenu, yInMenu)
         //
         addSpiritBarWidget(xInMenu, yInMenu, true)
-        //addSpiritBarWidget(xInMenu, yInMenu, false)
+        addSpiritBarWidget(xInMenu, yInMenu, false)
 
         val iterator = renderables.iterator()
         while (iterator.hasNext()) {

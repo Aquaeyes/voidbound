@@ -2,6 +2,7 @@ package dev.sterner.client.screen.widget
 
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import dev.sterner.VoidBound
+import dev.sterner.api.rift.SimpleSpiritCharge
 import dev.sterner.api.util.VoidBoundRenderUtils
 import dev.sterner.client.screen.OsmoticEnchanterScreen
 import net.minecraft.client.gui.GuiGraphics
@@ -22,12 +23,9 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
     override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
         if (spirit_type != null) {
             val targetSpirits = screen.menu.be?.spiritsToConsume
-            var normalizer = 0f
-            if (targetSpirits != null) {
-                normalizer = targetSpirits.getChargeForType(spirit_type!!) / 256f
-                normalizer = Mth.clamp(normalizer, 0.0f, 1.0f)
-            }
-            println(normalizer)
+            val consumedSpirits = screen.menu.be?.consumedSpirits
+
+            val normalizer = if (isScy) calcNormal(targetSpirits) else calcNormal(consumedSpirits)
             val rgba = unpackIntToRGBA(spirit_type!!.primaryColor.rgb)
 
             // Full height of the bar (when completely filled)
@@ -46,12 +44,21 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
             val minV = (maxBarHeight - fillHeight).toFloat() / height.toFloat()  // Top of the portion to display
             val maxV = 1f  // Bottom of the portion to display
 
-            VoidBoundRenderUtils.blit(guiGraphics, icon, x, adjustedY, width, fillHeight, width, height, rgba[0], rgba[1], rgba[2], 1f, minU, maxU, minV, maxV)
+            VoidBoundRenderUtils.blit(guiGraphics, icon, x, adjustedY, width, fillHeight, width, height, rgba[0], rgba[1], rgba[2], if (isScy) 0.3f else 1f, minU, maxU, minV, maxV)
 
             if (mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + maxBarHeight) {
                 tooltip = Tooltip.create(Component.translatable(spirit_type!!.identifier))
             }
         }
+    }
+
+    private fun calcNormal(targetSpirits: SimpleSpiritCharge?): Float {
+        var normalizer = 0f
+        if (targetSpirits != null) {
+            normalizer = targetSpirits.getChargeForType(spirit_type!!) / 256f
+            normalizer = Mth.clamp(normalizer, 0.0f, 1.0f)
+        }
+        return normalizer
     }
 
     private fun unpackIntToRGBA(color: Int): FloatArray {
