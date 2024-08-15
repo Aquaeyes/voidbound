@@ -8,6 +8,7 @@ import com.sammy.malum.client.renderer.block.TotemPoleRenderer
 import dev.sterner.VoidBound
 import dev.sterner.api.ClientTickHandler
 import net.minecraft.client.Camera
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.GameRenderer
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.BlockPos
@@ -72,6 +73,68 @@ object VoidBoundRenderUtils {
         bufferBuilder.vertex(matrix, -2f, -2f, 0f).uv(0f, 0f).endVertex()
         tessellator.end()
         matrixStack.popPose()
+    }
+
+    fun blit(
+        guiGraphics: GuiGraphics,
+        atlasLocation: ResourceLocation,
+        x1: Int,
+        y1: Int,
+        width: Int,
+        height: Int,
+        textureWidth: Int,
+        textureHeight: Int,
+        red: Float,
+        green: Float,
+        blue: Float,
+        alpha: Float
+    ) {
+        innerBlit(
+            guiGraphics,
+            atlasLocation,
+            x1,
+            y1,
+            width,
+            height,
+            0f,
+            width.toFloat() / textureWidth.toFloat(),
+            0f,
+            height.toFloat() / textureHeight.toFloat(),
+            red,
+            green,
+            blue,
+            alpha
+        )
+    }
+
+    fun innerBlit(
+        guiGraphics: GuiGraphics,
+        atlasLocation: ResourceLocation,
+        x1: Int,
+        y1: Int,
+        width: Int,
+        height: Int,
+        minU: Float,
+        maxU: Float,
+        minV: Float,
+        maxV: Float,
+        red: Float,
+        green: Float,
+        blue: Float,
+        alpha: Float
+    ) {
+        RenderSystem.setShaderTexture(0, atlasLocation)
+        RenderSystem.setShader { GameRenderer.getPositionColorTexShader() }
+        RenderSystem.enableBlend()
+        val matrix4f: Matrix4f = guiGraphics.pose().last().pose()
+        val bufferBuilder = Tesselator.getInstance().builder
+        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_TEX)
+        bufferBuilder.vertex(matrix4f, x1.toFloat(), y1.toFloat(), 0f).color(red, green, blue, alpha).uv(minU, minV).endVertex()
+        bufferBuilder.vertex(matrix4f, x1.toFloat(), (y1 + height).toFloat(), 0f).color(red, green, blue, alpha).uv(minU, maxV).endVertex()
+        bufferBuilder.vertex(matrix4f, (x1 + width).toFloat(), (y1 + height).toFloat(), 0f).color(red, green, blue, alpha).uv(maxU, maxV).endVertex()
+        bufferBuilder.vertex(matrix4f, (x1 + width).toFloat(), y1.toFloat(), 0f).color(red, green, blue, alpha).uv(maxU, minV).endVertex()
+        BufferUploader.drawWithShader(bufferBuilder.end())
+        RenderSystem.disableBlend()
     }
 
     fun renderCubeAtPos(
