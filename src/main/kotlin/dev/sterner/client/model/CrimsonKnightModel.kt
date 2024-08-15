@@ -42,7 +42,7 @@ class CrimsonKnightModel(root: ModelPart) : AbstractCrimsonModel<CrimsonKnightEn
         body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha)
     }
 
-    override fun translateToHand(side: HumanoidArm, poseStack: PoseStack?) {
+    override fun translateToHand(side: HumanoidArm, poseStack: PoseStack) {
         val f = if (side == HumanoidArm.RIGHT) 0.5f else -0.5f
         val modelPart = this.getArm(side)
         modelPart.x += f

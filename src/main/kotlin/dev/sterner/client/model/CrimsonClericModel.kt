@@ -82,7 +82,7 @@ class CrimsonClericModel(root: ModelPart) : AbstractCrimsonModel<CrimsonClericEn
         }
     }
 
-    override fun translateToHand(side: HumanoidArm, poseStack: PoseStack?) {
+    override fun translateToHand(side: HumanoidArm, poseStack: PoseStack) {
         val f = if (side == HumanoidArm.RIGHT) 1.0f else -1.0f
         val modelPart = this.getArm(side)
         modelPart.x += f

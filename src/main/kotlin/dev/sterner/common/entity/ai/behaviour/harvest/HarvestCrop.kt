@@ -16,10 +16,10 @@ import net.tslat.smartbrainlib.util.BrainUtils
 
 class HarvestCrop : ExtendedBehaviour<SoulSteelGolemEntity>() {
 
-    private var crop: Pair<BlockPos, BlockState>? = null
+    private var crop: com.mojang.datafixers.util.Pair<BlockPos, BlockState>? = null
 
-    override fun getMemoryRequirements(): MutableList<Pair<MemoryModuleType<*>, MemoryStatus>> {
-        return mutableListOf(Pair.of(VoidBoundMemoryTypeRegistry.NEARBY_CROPS.get(), MemoryStatus.VALUE_PRESENT))
+    override fun getMemoryRequirements(): MutableList<com.mojang.datafixers.util.Pair<MemoryModuleType<*>, MemoryStatus>> {
+        return mutableListOf(com.mojang.datafixers.util.Pair.of(VoidBoundMemoryTypeRegistry.NEARBY_CROPS.get(), MemoryStatus.VALUE_PRESENT))
     }
 
     override fun start(entity: SoulSteelGolemEntity) {

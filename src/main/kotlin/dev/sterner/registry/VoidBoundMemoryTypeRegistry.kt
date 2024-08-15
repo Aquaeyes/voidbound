@@ -19,8 +19,8 @@ object VoidBoundMemoryTypeRegistry {
         MemoryModuleType<List<ItemEntity>>(Optional.empty())
     }
 
-    var NEARBY_CROPS: RegistryObject<MemoryModuleType<List<Pair<BlockPos, BlockState>>>> = MEMORY_TYPES.register("nearby_crops") {
-        MemoryModuleType<List<Pair<BlockPos, BlockState>>>(Optional.empty())
+    var NEARBY_CROPS: RegistryObject<MemoryModuleType<List<com.mojang.datafixers.util.Pair<BlockPos, BlockState>>>> = MEMORY_TYPES.register("nearby_crops") {
+        MemoryModuleType<List<com.mojang.datafixers.util.Pair<BlockPos, BlockState>>>(Optional.empty())
     }
 
     var INPUT_STORAGE_LOCATION: RegistryObject<MemoryModuleType<BlockPos>> = MEMORY_TYPES.register("input_storage_location") {

@@ -23,7 +23,7 @@ class CrimsonJesterModel(root: ModelPart) : AbstractCrimsonModel<CrimsonJesterEn
     private val hat: ModelPart = root.getChild("hat")
     private val body: ModelPart = root.getChild("body")
 
-    override fun translateToHand(side: HumanoidArm, poseStack: PoseStack?) {
+    override fun translateToHand(side: HumanoidArm, poseStack: PoseStack) {
         val f = if (side == HumanoidArm.RIGHT) 1.0f else -1.0f
         val modelPart = this.getArm(side)
         modelPart.x += f
