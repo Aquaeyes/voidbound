@@ -2,12 +2,36 @@
   "registry_name": "minecraft:infinity",
   "spirits": [
     {
+      "spirit": "aerial",
+      "count": 10
+    },
+    {
       "spirit": "aqueous",
-      "count": 3
+      "count": 10
+    },
+    {
+      "spirit": "earthen",
+      "count": 10
+    },
+    {
+      "spirit": "infernal",
+      "count": 10
     },
     {
       "spirit": "wicked",
-      "count": 2
+      "count": 10
+    },
+    {
+      "spirit": "sacred",
+      "count": 10
+    },
+    {
+      "spirit": "eldritch",
+      "count": 10
+    },
+    {
+      "spirit": "arcane",
+      "count": 10
     }
   ]
 }

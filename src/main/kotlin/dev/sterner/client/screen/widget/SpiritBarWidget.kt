@@ -20,10 +20,10 @@ class SpiritBarWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int) : Abst
 
     override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
         if (spirit_type != null) {
-            var targetSpirits = screen.menu.be?.spiritsToConsume
+            val targetSpirits = screen.menu.be?.spiritsToConsume
             var normalizer = 0f
             if (targetSpirits != null) {
-                normalizer = targetSpirits.getChargeForType(spirit_type!!) / 128f
+                normalizer = targetSpirits.getChargeForType(spirit_type!!) / 256f
                 normalizer = Mth.clamp(normalizer, 0.0f, 1.0f)
             }
             println(normalizer)

@@ -110,7 +110,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             }
 
         }
-        //println("${spiritsToConsume.getTotalCharge()} + ${level!!.isClientSide()}")
+
         super.tick()
     }
 
