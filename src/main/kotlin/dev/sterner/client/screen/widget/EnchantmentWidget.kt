@@ -31,13 +31,14 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
         val id = BuiltInRegistries.ENCHANTMENT.getId(enchantment)
         if (screen.selectedEnchants.contains(id)) {
             screen.selectedEnchants.remove(id)
+
             VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToServer(RemoveEnchantPacket(id, screen.menu.pos))
 
-        } else {
+        } else if (!screen.selectedEnchants.contains(id)) {
             screen.selectedEnchants.add(BuiltInRegistries.ENCHANTMENT.getId(enchantment))
             VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToServer(EnchantmentLevelPacket(enchantment!!, level, screen.menu.pos.asLong()))
-        }
 
+        }
         screen.refreshEnchants()
         super.onClick(mouseX, mouseY)
     }

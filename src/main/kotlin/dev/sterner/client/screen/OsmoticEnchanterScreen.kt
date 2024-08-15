@@ -13,7 +13,6 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.core.BlockPos
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
@@ -26,6 +25,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
 
     private var blockEntity: OsmoticEnchanterBlockEntity? = null
     var selectedEnchants: MutableSet<Int> = mutableSetOf()
+    var maxSpiritCharge = 256
 
     init {
         imageWidth = 232
@@ -35,7 +35,7 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
 
     override fun init() {
         super.init()
-        refreshEnchants()
+        menu.shouldRefresh = true
     }
 
     override fun containerTick() {
@@ -53,7 +53,10 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
     }
 
     fun refreshEnchants() {
+        val cache = renderables.filterIsInstance<SelectedEnchantmentWidget>().toMutableList()
+
         clearWidgets()
+
         val xInMenu = (this.width - this.imageWidth) / 2
         val yInMenu = (this.height - this.imageHeight) / 2
 
@@ -62,14 +65,27 @@ class OsmoticEnchanterScreen(menu: OsmoticEnchanterMenu,
         // Render available enchantments
         renderEnchantments(filteredEnchantments, xInMenu, yInMenu)
 
-        // Render selected enchantments
-        renderSelectedEnchantments(xInMenu, yInMenu)
-
         // Add the start enchanting button
         addStartEnchantingWidget(xInMenu, yInMenu)
 
+        // Render selected enchantments
+        renderSelectedEnchantments(xInMenu, yInMenu)
         //
         addSpiritBarWidget(xInMenu, yInMenu)
+
+        val iterator = renderables.iterator()
+        while (iterator.hasNext()) {
+            val rend = iterator.next()
+            if (rend is SelectedEnchantmentWidget) {
+                for (c in cache) {
+                    if (rend.enchantment == c.enchantment) {
+                        rend.level = c.level
+                    }
+                }
+            }
+        }
+
+        blockEntity?.calculateSpiritRequired()
     }
 
     private fun renderEnchantments(enchantments: List<Int>, xInMenu: Int, yInMenu: Int) {

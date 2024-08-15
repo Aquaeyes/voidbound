@@ -11,6 +11,7 @@ import dev.sterner.registry.VoidBoundPacketRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
@@ -72,7 +73,9 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         }
 
         spiritsToConsume = spirits
-        VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClientsTracking(UpdateSpiritAmountPacket(spiritsToConsume, blockPos.asLong()), this)
+        if (level is ServerLevel) {
+            VoidBoundPacketRegistry.VOIDBOUND_CHANNEL.sendToClientsTracking(UpdateSpiritAmountPacket(spiritsToConsume, blockPos.asLong()), this)
+        }
         return bl
     }
 
