@@ -68,11 +68,9 @@ class WandItemRenderer : DynamicItemRenderer {
         val focus = VoidBoundWandFociRegistry.WAND_FOCUS.getOptional(focusName?.let { ResourceLocation.tryParse(it) })
         if (focus.isPresent) {
 
-            println(focus.get().toString())
-
             fociModel?.renderToBuffer(
                 matrices,
-                vertexConsumers.getBuffer(RenderType.entityTranslucent(VoidBound.id("textures/models/portable_hole.png"))),
+                vertexConsumers.getBuffer(RenderType.entityTranslucent(VoidBound.id("textures/models/${ResourceLocation.tryParse(focusName!!)!!.path}.png"))),
                 light,
                 overlay,
                 1f,
