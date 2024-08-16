@@ -82,27 +82,27 @@
   "malum.gui.book.entry.axe_of_the_stream": "Axe of the Stream",
   "malum.gui.book.entry.axe_of_the_stream.description": "Thaum is that you?",
   "malum.gui.book.entry.page.headline.axe_of_the_stream": "Axe of the Stream",
-  "malum.gui.book.entry.page.text.axe_of_the_stream.1": "Hazzaaa",
+  "malum.gui.book.entry.page.text.axe_of_the_stream.1": "Harvest Logs from furthest point, hold to suck in items",
 
   "malum.gui.book.entry.pickaxe_of_the_core": "Pickaxe of the Core",
   "malum.gui.book.entry.pickaxe_of_the_core.description": "Thaum is that you?",
   "malum.gui.book.entry.page.headline.pickaxe_of_the_core": "Pickaxe of the Core",
-  "malum.gui.book.entry.page.text.pickaxe_of_the_core.1": "Hazzaaa",
+  "malum.gui.book.entry.page.text.pickaxe_of_the_core.1": "Classic 3x3 mining",
 
   "malum.gui.book.entry.shovel_of_the_earthmover": "Shovel of the Earthmover",
   "malum.gui.book.entry.shovel_of_the_earthmover.description": "Thaum is that you?",
   "malum.gui.book.entry.page.headline.shovel_of_the_earthmover": "Shovel of the Earthmover",
-  "malum.gui.book.entry.page.text.shovel_of_the_earthmover.1": "Hazzaaa",
+  "malum.gui.book.entry.page.text.shovel_of_the_earthmover.1": "Classic 3x3 mining",
 
   "malum.gui.book.entry.hoe_of_growth": "Hoe of Growth",
   "malum.gui.book.entry.hoe_of_growth.description": "Thaum is that you?",
   "malum.gui.book.entry.page.headline.hoe_of_growth": "Hoe of Growth",
-  "malum.gui.book.entry.page.text.hoe_of_growth.1": "Hazzaaa",
+  "malum.gui.book.entry.page.text.hoe_of_growth.1": "Classic 3x3 tilling",
 
   "malum.gui.book.entry.sword_of_the_zephyr": "Sword of the Zephyr",
   "malum.gui.book.entry.sword_of_the_zephyr.description": "Thaum is that you?",
   "malum.gui.book.entry.page.headline.sword_of_the_zephyr": "Sword of the Zephyr",
-  "malum.gui.book.entry.page.text.sword_of_the_zephyr.1": "Hazzaaa",
+  "malum.gui.book.entry.page.text.sword_of_the_zephyr.1": "Hold to float and push entities",
 
   "malum.gui.book.entry.hallowed_goggles": "Hallowed Goggles",
   "malum.gui.book.entry.hallowed_goggles.description": "Thaum is that you?",
@@ -118,15 +118,15 @@
   "malum.gui.book.entry.boots_of_the_traveller": "Boots of the Traveller",
   "malum.gui.book.entry.boots_of_the_traveller.description": "Thaum is that you?",
   "malum.gui.book.entry.page.headline.boots_of_the_traveller": "Boots of the Traveller",
-  "malum.gui.book.entry.page.text.boots_of_the_traveller.1": "Swish and Swoosh",
+  "malum.gui.book.entry.page.text.boots_of_the_traveller.1": "Swish and Swoosh, step height and speed increase",
 
   "malum.gui.book.entry.void.portable_hole": "Portable Hole",
   "malum.gui.book.entry.void.portable_hole.description": "Wall is Hole",
   "malum.gui.book.entry.page.headline.void.portable_hole": "Portable Hole",
-  "malum.gui.book.entry.page.text.void.portable_hole.1": "Put on a Wand",
+  "malum.gui.book.entry.page.text.void.portable_hole.1": "Put on a Wand and use on a wall, dont work on bedrock and obsidian",
 
   "malum.gui.book.entry.void.warding": "Warding",
   "malum.gui.book.entry.void.warding.description": "Protect yourself",
   "malum.gui.book.entry.page.headline.void.warding": "Warding",
-  "malum.gui.book.entry.page.text.void.warding.1": "Make Blocks indestructible"
+  "malum.gui.book.entry.page.text.void.warding.1": "Make Blocks indestructible (not yet impl)"
 }
