@@ -74,6 +74,7 @@ class OsmoticEnchanterBlock(properties: Properties) : BaseEntityBlock(properties
                     return OsmoticEnchanterMenu(i, inventory, pos)
                 }
             })
+            return InteractionResult.SUCCESS
         }
 
 

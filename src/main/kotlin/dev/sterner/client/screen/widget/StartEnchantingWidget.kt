@@ -23,8 +23,10 @@ class StartEnchantingWidget(private var screen: OsmoticEnchanterScreen, x: Int, 
 
     override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
 
-        val icon =
-            VoidBound.id("textures/gui/enchanter_check${if (!screen.menu.osmoticEnchanter!!.activated) "" else "_glowing"}.png")
+        var icon = VoidBound.id("textures/gui/enchanter_check.png")
+        if (screen.menu.osmoticEnchanter?.activated == false) {
+            icon = VoidBound.id("textures/gui/enchanter_check_glowing.png")
+        }
 
         guiGraphics.blit(icon, x, y, 0f, 0f, width, height, width, height)
     }

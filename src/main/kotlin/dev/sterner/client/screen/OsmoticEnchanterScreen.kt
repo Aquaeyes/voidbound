@@ -44,7 +44,9 @@ class OsmoticEnchanterScreen(
             if (blockEntity?.activated == false) {
                 selectedEnchants.clear()
             } else {
-                selectedEnchants = blockEntity?.cachedEnchantments!!.toMutableSet()
+                if (blockEntity?.cachedEnchantments != null) {
+                    selectedEnchants = blockEntity?.cachedEnchantments!!.toMutableSet()
+                }
             }
             refreshEnchants()
             menu.shouldRefresh = false
