@@ -2,12 +2,17 @@ package dev.sterner.api
 
 import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import dev.sterner.listener.EnchantSpiritDataReloadListener
+import dev.sterner.registry.VoidBoundComponentRegistry
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.client.Minecraft
+import net.minecraft.core.BlockPos
+import net.minecraft.core.GlobalPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelAccessor
 import team.lodestar.lodestone.helpers.TrinketsHelper
 
 object VoidBoundApi {
@@ -46,5 +51,9 @@ object VoidBoundApi {
         }
 
         return out
+    }
+
+    fun canPlayerBreakBlock(level: Level, player: Player, blockPos: BlockPos): Boolean {
+        return !VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(level).isPosBoundToAnotherPlayer(player, GlobalPos.of(player.level().dimension(), blockPos))
     }
 }
