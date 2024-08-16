@@ -67,15 +67,12 @@ class OsmoticEnchanterScreen(
 
         val filteredEnchantments = blockEntity?.cachedEnchantments?.filter { it !in selectedEnchants }.orEmpty()
 
-        // Render available enchantments
-        renderEnchantments(filteredEnchantments, xInMenu, yInMenu)
+        addEnchantments(filteredEnchantments, xInMenu, yInMenu)
 
-        // Add the start enchanting button
         addStartEnchantingWidget(xInMenu, yInMenu)
 
-        // Render selected enchantments
-        renderSelectedEnchantments(xInMenu, yInMenu)
-        //
+        addSelectedEnchantments(xInMenu, yInMenu)
+
         addSpiritBarWidget(xInMenu, yInMenu, true)
         addSpiritBarWidget(xInMenu, yInMenu, false)
 
@@ -94,7 +91,7 @@ class OsmoticEnchanterScreen(
         blockEntity?.calculateSpiritRequired()
     }
 
-    private fun renderEnchantments(enchantments: List<Int>, xInMenu: Int, yInMenu: Int) {
+    private fun addEnchantments(enchantments: List<Int>, xInMenu: Int, yInMenu: Int) {
         enchantments.forEachIndexed { index, enchantId ->
             val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 168, 15 + 26, 17, 17)
             val widget = EnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset, 16, 16)
@@ -103,7 +100,7 @@ class OsmoticEnchanterScreen(
         }
     }
 
-    private fun renderSelectedEnchantments(xInMenu: Int, yInMenu: Int) {
+    private fun addSelectedEnchantments(xInMenu: Int, yInMenu: Int) {
         selectedEnchants.forEachIndexed { index, enchantId ->
             val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 83, 5, 34, 23)
             val widget = SelectedEnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset)
