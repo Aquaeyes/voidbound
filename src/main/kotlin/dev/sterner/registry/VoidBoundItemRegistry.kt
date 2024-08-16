@@ -35,7 +35,11 @@ object VoidBoundItemRegistry {
     }
 
     val PORTABLE_HOLE_FOCI: RegistryObject<Item> = ITEMS.register("portable_hole_foci") {
-        BaseFociItem(SpiritTypeRegistry.WICKED_SPIRIT, Item.Properties())
+        BaseFociItem(VoidBoundWandFociRegistry.PORTABLE_HOLE.get(), SpiritTypeRegistry.WICKED_SPIRIT, Item.Properties().stacksTo(1))
+    }
+
+    val WARDING_FOCI: RegistryObject<Item> = ITEMS.register("warding_foci") {
+        BaseFociItem(VoidBoundWandFociRegistry.WARDING.get(), SpiritTypeRegistry.AERIAL_SPIRIT, Item.Properties().stacksTo(1))
     }
 
     val EMPTY_SPIRIT_SHARD: RegistryObject<Item> = ITEMS.register("empty_spirit_shard") {
