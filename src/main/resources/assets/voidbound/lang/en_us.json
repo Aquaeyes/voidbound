@@ -128,5 +128,10 @@
   "malum.gui.book.entry.void.warding": "Warding",
   "malum.gui.book.entry.void.warding.description": "Protect yourself",
   "malum.gui.book.entry.page.headline.void.warding": "Warding",
-  "malum.gui.book.entry.page.text.void.warding.1": "Make Blocks indestructible (not yet impl)"
+  "malum.gui.book.entry.page.text.void.warding.1": "Make Blocks indestructible (not yet impl)",
+
+  "malum.gui.book.entry.void.osmotic_enchanter": "Osmotic Enchanter",
+  "malum.gui.book.entry.void.osmotic_enchanter.description": "Enchant everything",
+  "malum.gui.book.entry.page.headline.void.osmotic_enchanter": "Osmotic Enchanter",
+  "malum.gui.book.entry.page.text.void.osmotic_enchanter.1": "Consumes Spirits to enchant items"
 }

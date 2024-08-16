@@ -31,7 +31,7 @@ object MalumCodexEvent {
 
     private val DARK_VOID: BookWidgetStyle = BookWidgetStyle(
         BookWidgetStyle.WidgetStylePreset(modid, "void_frame"),
-        BookWidgetStyle.WidgetStylePreset("paper_filling"),
+        BookWidgetStyle.WidgetStylePreset("dark_filling"),
         BookWidgetStyle.WidgetDesignType.DEFAULT
     )
 
@@ -67,12 +67,30 @@ object MalumCodexEvent {
                 .configureWidget { w: ProgressionEntryObject ->
                     w.setIcon(
                         VoidBoundItemRegistry.WARDING_FOCI.get()
-                    ).setStyle(VOID)
+                    ).setStyle(DARK_VOID)
                 }
                 .addPage(HeadlineTextPage("void.warding", "void.warding.1"))
                 .addPage(
                     SpiritInfusionPage.fromOutput(
                         VoidBoundItemRegistry.WARDING_FOCI.get()
+                    )
+                )
+                .afterUmbralCrystal()
+        }
+
+        screen?.addEntry("void.osmotic_enchanter", -7, 10
+        ) { b: PlacedBookEntryBuilder ->
+            b
+                .withTraceFragmentEntry()
+                .configureWidget { w: ProgressionEntryObject ->
+                    w.setIcon(
+                        VoidBoundItemRegistry.OSMOTIC_ENCHANTER.get()
+                    ).setStyle(VOID_GILDED)
+                }
+                .addPage(HeadlineTextPage("void.osmotic_enchanter", "void.osmotic_enchanter.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.OSMOTIC_ENCHANTER.get()
                     )
                 )
                 .afterUmbralCrystal()
