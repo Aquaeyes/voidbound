@@ -28,6 +28,8 @@ object VoidBoundCreativeTabRegistry {
                 entries.accept(VoidBoundItemRegistry.HALLOWED_GOGGLES.get())
                 entries.accept(VoidBoundItemRegistry.HALLOWED_MONOCLE.get())
                 entries.accept(VoidBoundItemRegistry.CALL_OF_THE_VOID.get())
+                entries.accept(VoidBoundItemRegistry.CRYSTAL_FOCI.get())
+                entries.accept(VoidBoundItemRegistry.PORTABLE_HOLE_FOCI.get())
                 entries.accept(VoidBoundItemRegistry.EMPTY_SPIRIT_SHARD.get())
                 //entries.accept(VoidBoundItemRegistry.DIVIDER.get())
                 entries.accept(VoidBoundItemRegistry.CORE_EMPTY.get())

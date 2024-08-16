@@ -1,6 +1,7 @@
 package dev.sterner
 
 import com.sammy.malum.common.events.MalumCodexEvents
+import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.emi.trinkets.api.client.TrinketRendererRegistry
 import dev.sterner.api.ClientTickHandler
 import dev.sterner.client.event.MalumCodexEvent
@@ -28,6 +29,8 @@ import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.PackType
 import org.slf4j.LoggerFactory
+import team.lodestar.lodestone.helpers.ColorHelper
+import java.awt.Color
 
 
 object VoidBound : ModInitializer, ClientModInitializer {
@@ -124,6 +127,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
         )
 
         EntityModelLayerRegistry.registerModelLayer(GolemCoreModel.LAYER_LOCATION, GolemCoreModel::createBodyLayer)
+        EntityModelLayerRegistry.registerModelLayer(FociModel.LAYER_LOCATION, FociModel::createBodyLayer)
         EntityModelLayerRegistry.registerModelLayer(WandItemModel.LAYER_LOCATION) { WandItemModel.createBodyLayer() }
         EntityModelLayerRegistry.registerModelLayer(CrimsonKnightModel.LAYER_LOCATION) { CrimsonKnightModel.createBodyLayer() }
         EntityModelLayerRegistry.registerModelLayer(CrimsonArcherModel.LAYER_LOCATION) { CrimsonArcherModel.createBodyLayer() }

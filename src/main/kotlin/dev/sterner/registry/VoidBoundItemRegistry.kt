@@ -1,8 +1,10 @@
 package dev.sterner.registry
 
+import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
 import dev.sterner.common.item.*
+import dev.sterner.common.item.foci.BaseFociItem
 import dev.sterner.common.item.tool.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject
@@ -26,6 +28,14 @@ object VoidBoundItemRegistry {
 
     val HALLOWED_GOLD_CAPPED_RUNEWOOD_WAND: RegistryObject<WandItem> = ITEMS.register("hallowed_gold_capped_runewood_wand") {
         WandItem(Item.Properties())
+    }
+
+    val CRYSTAL_FOCI: RegistryObject<Item> = ITEMS.register("crystal_foci") {
+        Item(Item.Properties())
+    }
+
+    val PORTABLE_HOLE_FOCI: RegistryObject<Item> = ITEMS.register("portable_hole_foci") {
+        BaseFociItem(SpiritTypeRegistry.WICKED_SPIRIT, Item.Properties())
     }
 
     val EMPTY_SPIRIT_SHARD: RegistryObject<Item> = ITEMS.register("empty_spirit_shard") {
