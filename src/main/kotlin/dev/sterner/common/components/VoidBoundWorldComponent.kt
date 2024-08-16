@@ -4,7 +4,9 @@ import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent
 import dev.sterner.api.util.VoidBoundRenderUtils
 import dev.sterner.client.VoidBoundTokens
 import dev.sterner.common.item.WandItem
+import dev.sterner.common.item.foci.WardingFoci
 import dev.sterner.registry.VoidBoundComponentRegistry
+import dev.sterner.registry.VoidBoundWandFociRegistry
 import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
 import net.minecraft.client.Minecraft
@@ -12,6 +14,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos
 import net.minecraft.nbt.*
 import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.CompassItem
 import net.minecraft.world.level.Level
@@ -102,7 +105,7 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
     override fun readFromNbt(tag: CompoundTag) {
         posOwnerMap.clear()
 
-        val list = tag.getList("playerWardPosMap", 10)
+        val list = tag.getList("PlayerWardPosMap", 10)
 
         for (i in 0 until list.size) {
             val playerTag = list.getCompound(i)
@@ -143,7 +146,7 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
             list.add(playerTag)
         }
 
-        tag.put("playerWardPosMap", list)
+        tag.put("PlayerWardPosMap", list)
     }
 
     private fun getLodestoneDimension(compoundTag: CompoundTag): Optional<ResourceKey<Level>> {
@@ -182,18 +185,25 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
             val localPlayer = Minecraft.getInstance().player
             if (localPlayer != null) {
                 if (localPlayer.mainHandItem.item is WandItem) {
-                    val levelComp = VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(localPlayer.level())
+                    val wand = localPlayer.mainHandItem
+                    if (wand.tag?.contains("FocusName") == true) {
+                        val focusName = wand.tag?.getString("FocusName")
+                        val focus = VoidBoundWandFociRegistry.WAND_FOCUS.getOptional(focusName?.let { ResourceLocation.tryParse(it) })
+                        if (focus.isPresent && focus.get() is WardingFoci) {
+                            val levelComp = VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(localPlayer.level())
 
-                    val poses: List<BlockPos> = levelComp.getAllPos(localPlayer)
-                    for (pos in poses) {
-                        VoidBoundRenderUtils.renderCubeAtPos(
-                            camera,
-                            poseStack,
-                            pos,
-                            VoidBoundTokens.wardBorder,
-                            20,
-                            20
-                        )
+                            val poses: List<BlockPos> = levelComp.getAllPos(localPlayer)
+                            for (pos in poses) {
+                                VoidBoundRenderUtils.renderCubeAtPos(
+                                    camera,
+                                    poseStack,
+                                    pos,
+                                    VoidBoundTokens.wardBorder,
+                                    20,
+                                    20
+                                )
+                            }
+                        }
                     }
                 }
             }

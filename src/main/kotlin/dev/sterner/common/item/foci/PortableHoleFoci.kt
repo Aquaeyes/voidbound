@@ -34,9 +34,13 @@ class PortableHoleFoci : IWandFocus {
                 if (block.`is`(VoidBoundTags.PORTABLE_HOLE_BLACKLIST)) {
                     return
                 }
+                if (!VoidBoundApi.canBlockBreak(level, BlockPos(hx, hy, hz))) {
+                    return
+                }
                 if (block.isAir) {
                     break
                 }
+
                 when (blockHit.direction) {
                     Direction.DOWN -> hy--
                     Direction.UP -> hy++

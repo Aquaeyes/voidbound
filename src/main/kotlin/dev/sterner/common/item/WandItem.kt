@@ -40,7 +40,10 @@ class WandItem(properties: Properties) : Item(
                     add(stack, slot.safeInsert(itemStack2))
                 }
             } else if (itemStack.item.canFitInsideContainerItems() && itemStack.item is AbstractFociItem) {
-                add(stack, slot.safeTake(itemStack.count, 1, player))
+                val i = add(stack, itemStack)
+                if (i > 0) {
+                    itemStack.shrink(i)
+                }
             }
 
             return true
@@ -97,24 +100,21 @@ class WandItem(properties: Properties) : Item(
         if (!insertedStack.isEmpty && insertedStack.item.canFitInsideContainerItems()) {
             val compoundTag = wandStack.getOrCreateTag()
 
-            // If no items exist, create the Items tag.
             if (!compoundTag.contains("Items")) {
                 compoundTag.put("Items", ListTag())
             }
 
             val listTag = compoundTag.getList("Items", 10)
 
-            // Check if the item already exists in the ListTag
             val optional = getMatchingItem(insertedStack, listTag)
             if (optional.isPresent) {
-                return 0 // If matching item exists, don't add it again
+                return 0
             }
 
-            // Add the new item to the list
             val itemStack2 = insertedStack.copyWithCount(1)
             val compoundTag3 = CompoundTag()
             itemStack2.save(compoundTag3)
-            listTag.add(0, compoundTag3) // Add new item at index 0 (you can decide on the position logic)
+            listTag.add(0, compoundTag3)
 
             // Unbind the currently bound focus, if any
             if (compoundTag.contains("BoundFociIndex")) {
