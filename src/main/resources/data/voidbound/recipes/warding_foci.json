@@ -3,23 +3,31 @@
   "extra_items": [
     {
       "count": 4,
-      "item": "malum:hallowed_gold_ingot"
+      "item": "malum:cluster_of_brilliance"
     },
     {
-      "count": 2,
-      "item": "malum:spectral_lens"
+      "count": 4,
+      "item": "malum:auric_embers"
     }
   ],
   "input": {
     "count": 1,
-    "item": "minecraft:leather"
+    "item": "voidbound:crystal_foci"
   },
   "output": {
-    "item": "voidbound:hallowed_goggles"
+    "item": "voidbound:warding_foci"
   },
   "spirits": [
     {
       "type": "wicked",
+      "count": 8
+    },
+    {
+      "type": "eldritch",
+      "count": 8
+    },
+    {
+      "type": "arcane",
       "count": 8
     },
     {
@@ -31,21 +39,14 @@
       "count": 8
     },
     {
-      "type": "arcane",
-      "count": 8
-    },
-    {
       "type": "aerial",
       "count": 8
     },
     {
       "type": "earthen",
       "count": 8
-    },
-    {
-      "type": "eldritch",
-      "count": 8
-    },
+    }
+  ,
     {
       "type": "aqueous",
       "count": 8

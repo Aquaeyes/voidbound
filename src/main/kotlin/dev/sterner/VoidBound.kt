@@ -154,6 +154,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
         }
 
         MalumCodexEvents.EVENT.register(MalumCodexEvent::addVoidBoundEntries)
+        MalumCodexEvents.VOID_EVENT.register(MalumCodexEvent::addVoidBoundVoidEntries)
         WorldRenderEvents.AFTER_TRANSLUCENT.register(VoidBoundPlayerComponent.Companion::renderCubeAtPos)
         HudRenderCallback.EVENT.register(SpiritAltarHudRenderEvent::spiritAltarRecipeHud)
         ClientTickEvents.END_CLIENT_TICK.register(ClientTickHandler::clientTickEnd)

@@ -40,8 +40,12 @@
   "block.voidbound.spirit_stabilizer": "Spirit Stabilizer",
   "block.voidbound.osmotic_enchanter": "Osmotic Enchanter",
   "itemGroup.voidbound": "Void Bound",
+
   "malum.gui.book.entry.call_of_the_void": "Call of the Void",
   "malum.gui.book.entry.call_of_the_void.description": "Endless darkness in a lost void",
+  "malum.gui.book.entry.page.headline.call_of_the_void": "Call of the Void",
+  "malum.gui.book.entry.page.text.call_of_the_void.1": "Activate it and it will look for a Well into nothingness",
+
   "malum.gui.book.entry.soul_steel_golem": "Soul Steel Golem",
   "malum.gui.book.entry.soul_steel_golem.description": "Santa's little helpers",
   "malum.gui.book.entry.page.headline.soul_steel_golem": "Soul Steel Golem",
@@ -103,5 +107,26 @@
   "malum.gui.book.entry.hallowed_goggles": "Hallowed Goggles",
   "malum.gui.book.entry.hallowed_goggles.description": "Thaum is that you?",
   "malum.gui.book.entry.page.headline.hallowed_goggles": "Hallowed Goggles",
-  "malum.gui.book.entry.page.text.hallowed_goggles.1": "See Rifts and entities spirits"
+  "malum.gui.book.entry.page.text.hallowed_goggles.1": "See Rifts and entities spirits",
+
+
+  "malum.gui.book.entry.hallowed_wand": "Wands",
+  "malum.gui.book.entry.hallowed_wand.description": "Thaum is that you?",
+  "malum.gui.book.entry.page.headline.hallowed_wand": "Hallowed Wand",
+  "malum.gui.book.entry.page.text.hallowed_wand.1": "Used with Foci",
+
+  "malum.gui.book.entry.boots_of_the_traveller": "Boots of the Traveller",
+  "malum.gui.book.entry.boots_of_the_traveller.description": "Thaum is that you?",
+  "malum.gui.book.entry.page.headline.boots_of_the_traveller": "Boots of the Traveller",
+  "malum.gui.book.entry.page.text.boots_of_the_traveller.1": "Swish and Swoosh",
+
+  "malum.gui.book.entry.void.portable_hole": "Portable Hole",
+  "malum.gui.book.entry.void.portable_hole.description": "Wall is Hole",
+  "malum.gui.book.entry.page.headline.void.portable_hole": "Portable Hole",
+  "malum.gui.book.entry.page.text.void.portable_hole.1": "Put on a Wand",
+
+  "malum.gui.book.entry.void.warding": "Warding",
+  "malum.gui.book.entry.void.warding.description": "Protect yourself",
+  "malum.gui.book.entry.page.headline.void.warding": "Warding",
+  "malum.gui.book.entry.page.text.void.warding.1": "Make Blocks indestructible"
 }

@@ -2,14 +2,18 @@ package dev.sterner.client.event
 
 import com.sammy.malum.client.screen.codex.BookWidgetStyle
 import com.sammy.malum.client.screen.codex.PlacedBookEntry
+import com.sammy.malum.client.screen.codex.PlacedBookEntryBuilder
 import com.sammy.malum.client.screen.codex.objects.progression.ProgressionEntryObject
 import com.sammy.malum.client.screen.codex.pages.recipe.SpiritInfusionPage
 import com.sammy.malum.client.screen.codex.pages.text.HeadlineTextPage
 import com.sammy.malum.client.screen.codex.screens.ArcanaProgressionScreen
+import com.sammy.malum.client.screen.codex.screens.VoidProgressionScreen
+import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.VoidBound.modid
 import dev.sterner.api.book.ProgressionEntryObjectExtension
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.nbt.CompoundTag
+import java.util.function.Consumer
 
 object MalumCodexEvent {
 
@@ -37,6 +41,43 @@ object MalumCodexEvent {
         BookWidgetStyle.WidgetDesignType.DEFAULT
     )
 
+    fun addVoidBoundVoidEntries(screen: VoidProgressionScreen?, entries: MutableList<PlacedBookEntry>) {
+        screen?.addEntry("void.portable_hole", -6, 9
+        ) { b: PlacedBookEntryBuilder ->
+            b
+                .withTraceFragmentEntry()
+                .configureWidget { w: ProgressionEntryObject ->
+                    w.setIcon(
+                        VoidBoundItemRegistry.PORTABLE_HOLE_FOCI.get()
+                    ).setStyle(VOID)
+                }
+                .addPage(HeadlineTextPage("void.portable_hole", "void.portable_hole.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.PORTABLE_HOLE_FOCI.get()
+                    )
+                )
+                .afterUmbralCrystal()
+        }
+
+        screen?.addEntry("void.warding", -7, 8
+        ) { b: PlacedBookEntryBuilder ->
+            b
+                .withTraceFragmentEntry()
+                .configureWidget { w: ProgressionEntryObject ->
+                    w.setIcon(
+                        VoidBoundItemRegistry.WARDING_FOCI.get()
+                    ).setStyle(VOID)
+                }
+                .addPage(HeadlineTextPage("void.warding", "void.warding.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.WARDING_FOCI.get()
+                    )
+                )
+                .afterUmbralCrystal()
+        }
+    }
 
     fun addVoidBoundEntries(screen: ArcanaProgressionScreen?, entries: MutableList<PlacedBookEntry>) {
         screen?.addEntry("call_of_the_void", 0, 12) { builder ->
@@ -151,6 +192,33 @@ object MalumCodexEvent {
 
 
         //-9, 5
+
+        screen?.addEntry("boots_of_the_traveller", -12, 4) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.BOOTS_OF_THE_TRAVELLER.get()).setStyle(VOID)
+            }.addPage(HeadlineTextPage("boots_of_the_traveller", "boots_of_the_traveller.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.BOOTS_OF_THE_TRAVELLER.get()
+                    )
+                )
+        }
+
+        screen?.addEntry("hallowed_wand", -11, 5) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.HALLOWED_GOLD_CAPPED_RUNEWOOD_WAND.get()).setStyle(VOID)
+            }.addPage(HeadlineTextPage("hallowed_wand", "hallowed_wand.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.HALLOWED_GOLD_CAPPED_RUNEWOOD_WAND.get()
+                    )
+                )
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.CRYSTAL_FOCI.get()
+                    )
+                )
+        }
 
         screen?.addEntry("hallowed_goggles", -10, 4) { builder ->
             builder.configureWidget {
