@@ -99,7 +99,7 @@ class OsmoticEnchanterBlockEntityRenderer(ctx: BlockEntityRendererProvider.Conte
         val h = blockEntity.oRot + g * partialTick
         poseStack.mulPose(Axis.YP.rotation((Math.PI.toFloat() / 2) - h))
         poseStack.mulPose(Axis.XP.rotationDegrees(-20.0f))
-        poseStack.translate(0.0,-0.3, 0.4)
+        poseStack.translate(0.0,-0.8, 0.4)
         val i = Mth.lerp(partialTick, blockEntity.oFlip, blockEntity.flip)
         val leftPageAngle = Mth.frac(i + 0.25f) * 1.6f - 0.3f
         val rightPageAngle = Mth.frac(i + 0.75f) * 1.6f - 0.3f

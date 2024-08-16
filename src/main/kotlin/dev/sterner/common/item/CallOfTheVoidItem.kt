@@ -43,6 +43,9 @@ class CallOfTheVoidItem : Item(Properties().stacksTo(1)) {
             tag.putBoolean("Active", true)
         } else if (!tag.contains("Active")) {
             tag.putBoolean("Active", true)
+            player.getItemInHand(usedHand).tag = tag
+            player.cooldowns.addCooldown(this, 160)
+            return super.use(level, player, usedHand)
         }
         if (tag.contains("Active") && tag.getBoolean("Active")) {
             tag.putBoolean("Active", false)
