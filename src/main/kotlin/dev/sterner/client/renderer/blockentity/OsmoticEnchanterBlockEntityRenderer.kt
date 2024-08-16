@@ -11,14 +11,11 @@ import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
-import net.minecraft.client.renderer.blockentity.EnchantTableRenderer
 import net.minecraft.client.renderer.texture.OverlayTexture
 import net.minecraft.client.resources.model.Material
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.entity.EnchantmentTableBlockEntity
 import net.minecraft.world.phys.Vec3
 import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntityInventory
 import kotlin.math.sin
@@ -26,8 +23,7 @@ import kotlin.math.sin
 class OsmoticEnchanterBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
     BlockEntityRenderer<OsmoticEnchanterBlockEntity> {
 
-
-    val bookModel = CrimsonBookModel(ctx.bakeLayer(CrimsonBookModel.LAYER_LOCATION))
+    private val bookModel = CrimsonBookModel(ctx.bakeLayer(CrimsonBookModel.LAYER_LOCATION))
 
     private val itemOffset: Vec3 = Vec3(0.5, 0.85, 0.5)
 
