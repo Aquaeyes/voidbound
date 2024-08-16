@@ -99,7 +99,7 @@ public class ParticleEngineMixin {
                 final SpinParticleData spinData = SpinParticleData.createRandomDirection(random, 0, RandomHelper.randomBetween(random, 0f, 0.4f), 0).randomSpinOffset(random).build();
 
                 var scale = GenericParticleData.create(0.3f, 0.4f, 0.5f).setEasing(Easing.QUINTIC_OUT, Easing.SINE_IN).build();
-                var tans = GenericParticleData.create(0.2f * 1, 0.4f * 1, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build();
+                var tans = GenericParticleData.create(0.2f, 0.4f, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build();
 
                 spawnWardParticles(d, e, g, side, tans, scale, spinData, lifetime);
             }
@@ -107,7 +107,7 @@ public class ParticleEngineMixin {
             int lifetime = (RandomHelper.randomBetween(random, 60, 80));
             final SpinParticleData spinData = SpinParticleData.createRandomDirection(random, 0, RandomHelper.randomBetween(random, 0f, 0.4f), 0).randomSpinOffset(random).build();
             var scaleData = GenericParticleData.create(0.05f, 0.1f, 0.15f).setEasing(Easing.QUINTIC_OUT, Easing.SINE_IN).build();
-            var trans = GenericParticleData.create(0.7f * 1, 0.9f * 1, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build();
+            var trans = GenericParticleData.create(0.7f, 0.9f, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build();
             spawnWardParticles(d, e, g, side, trans, scaleData, spinData, lifetime);
             return false;
         }
