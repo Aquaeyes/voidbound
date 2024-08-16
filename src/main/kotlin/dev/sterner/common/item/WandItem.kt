@@ -1,6 +1,6 @@
 package dev.sterner.common.item
 
-import dev.sterner.common.item.foci.BaseFociItem
+import dev.sterner.common.item.foci.AbstractFociItem
 import dev.sterner.registry.VoidBoundWandFociRegistry
 import net.minecraft.core.NonNullList
 import net.minecraft.nbt.CompoundTag
@@ -39,7 +39,7 @@ class WandItem(properties: Properties) : Item(
                 removeOne(stack).ifPresent { itemStack2: ItemStack ->
                     add(stack, slot.safeInsert(itemStack2))
                 }
-            } else if (itemStack.item.canFitInsideContainerItems() && itemStack.item is BaseFociItem) {
+            } else if (itemStack.item.canFitInsideContainerItems() && itemStack.item is AbstractFociItem) {
                 add(stack, slot.safeTake(itemStack.count, 1, player))
             }
 
@@ -60,7 +60,7 @@ class WandItem(properties: Properties) : Item(
                 removeOne(stack).ifPresent { itemStack: ItemStack ->
                     access.set(itemStack)
                 }
-            } else if (other.item is BaseFociItem) {
+            } else if (other.item is AbstractFociItem) {
                 val i = add(stack, other)
                 if (i > 0) {
                     other.shrink(i)
@@ -137,8 +137,8 @@ class WandItem(properties: Properties) : Item(
     }
 
     private fun bindFoci(wandStack: ItemStack, fociItem: ItemStack) {
-        if (fociItem.item is BaseFociItem) {
-            val foci = fociItem.item as BaseFociItem
+        if (fociItem.item is AbstractFociItem) {
+            val foci = fociItem.item as AbstractFociItem
             wandStack.tag!!.putString("FocusName", VoidBoundWandFociRegistry.WAND_FOCUS.getKey(foci.foci).toString())
         }
     }

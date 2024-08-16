@@ -1,10 +1,11 @@
 package dev.sterner.registry
 
-import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
 import dev.sterner.common.item.*
-import dev.sterner.common.item.foci.BaseFociItem
+import dev.sterner.common.item.foci.AbstractFociItem
+import dev.sterner.common.item.foci.PortableHoleFociItem
+import dev.sterner.common.item.foci.WardingFociItem
 import dev.sterner.common.item.tool.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject
@@ -35,11 +36,11 @@ object VoidBoundItemRegistry {
     }
 
     val PORTABLE_HOLE_FOCI: RegistryObject<Item> = ITEMS.register("portable_hole_foci") {
-        BaseFociItem(VoidBoundWandFociRegistry.PORTABLE_HOLE.get(), SpiritTypeRegistry.WICKED_SPIRIT, Item.Properties().stacksTo(1))
+        PortableHoleFociItem(Item.Properties().stacksTo(1))
     }
 
     val WARDING_FOCI: RegistryObject<Item> = ITEMS.register("warding_foci") {
-        BaseFociItem(VoidBoundWandFociRegistry.WARDING.get(), SpiritTypeRegistry.AERIAL_SPIRIT, Item.Properties().stacksTo(1))
+        WardingFociItem(Item.Properties().stacksTo(1))
     }
 
     val EMPTY_SPIRIT_SHARD: RegistryObject<Item> = ITEMS.register("empty_spirit_shard") {
