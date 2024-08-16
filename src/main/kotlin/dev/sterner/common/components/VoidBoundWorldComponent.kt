@@ -1,7 +1,13 @@
 package dev.sterner.common.components
 
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent
+import dev.sterner.api.util.VoidBoundRenderUtils
+import dev.sterner.client.VoidBoundTokens
+import dev.sterner.common.item.WandItem
 import dev.sterner.registry.VoidBoundComponentRegistry
+import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
+import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos
 import net.minecraft.nbt.*
@@ -13,57 +19,88 @@ import java.util.*
 
 class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
 
-    private val playerWardPosMap = mutableMapOf<UUID, MutableSet<GlobalPos>>()
+    private val posOwnerMap = mutableMapOf<GlobalPos, UUID>()
+    private var cachedPositions: List<BlockPos>? = null
 
-    fun isPosBoundToAnotherPlayer(player: Player, pos: GlobalPos): Boolean {
-        val playerUuid = player.uuid
-
-        // Iterate over all player sets in playerWardPosMap, excluding the provided player
-        return playerWardPosMap.any { (uuid, posSet) ->
-            uuid != playerUuid && posSet.contains(pos)
+    fun getAllPos(): List<BlockPos> {
+        // Check if the cache is invalid
+        if (cachedPositions == null) {
+            // Recompute the positions and update the cache
+            cachedPositions = posOwnerMap
+                .filter { it.key.dimension() == level.dimension() }
+                .map { it.key.pos() }
         }
+        return cachedPositions ?: emptyList()
     }
 
-    fun hasBlockPos(player: Player, pos: GlobalPos) : Boolean{
-        val playerUuid = player.uuid
-        return playerWardPosMap.any { (uuid, posSet) ->
-            uuid == playerUuid && posSet.contains(pos)
+    fun getAllPos(player: Player): List<BlockPos> {
+        // Check if the cache is invalid
+        if (cachedPositions == null) {
+            // Recompute the positions and update the cache
+            cachedPositions =  posOwnerMap.filter { it.value == player.uuid }
+                .filter { it.key.dimension() == level.dimension() }
+                .map { it.key.pos() }
         }
+        return cachedPositions ?: emptyList()
+    }
+
+    fun isEmpty(): Boolean {
+        return posOwnerMap.isEmpty()
+    }
+
+    fun isPosBoundToAnotherPlayer(player: Player, pos: GlobalPos): Boolean {
+        val ownerUuid = posOwnerMap[pos]
+        return ownerUuid != null && ownerUuid != player.uuid
+    }
+
+    fun hasBlockPos(pos: GlobalPos): Boolean {
+        return posOwnerMap.containsKey(pos)
+    }
+
+    fun hasBlockPos(player: Player, pos: GlobalPos): Boolean {
+        return posOwnerMap[pos] == player.uuid
     }
 
     fun addPos(uuid: UUID, pos: GlobalPos) {
+        // Only add the position if it is not already owned
         if (isPosOwned(pos)) {
             return
         }
 
-        val playerPosSet = playerWardPosMap.getOrPut(uuid) { mutableSetOf() }
-
-        playerPosSet.add(pos)
+        // Add the position to the global map with the UUID as the owner
+        posOwnerMap[pos] = uuid
+        clearCache() // Invalidate the cache
+        // Sync the changes
         VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.sync(level)
     }
 
-    fun removePos(player: Player, pos: GlobalPos) {
-        val uuid = player.uuid
-        val playerPosSet = playerWardPosMap[uuid]
-
-        // If the player has the position, remove it
-        if (playerPosSet != null && playerPosSet.contains(pos)) {
-            playerPosSet.remove(pos)
-
-            // If the set is now empty, remove the player from the map
-            if (playerPosSet.isEmpty()) {
-                playerWardPosMap.remove(uuid)
-            }
-        }
+    fun removePos(pos: GlobalPos) {
+        posOwnerMap.remove(pos)
+        clearCache() // Invalidate the cache
+        // Sync the changes
         VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.sync(level)
+    }
+
+    fun removePos(uuid: UUID, pos: GlobalPos) {
+        // Remove the position only if it is owned by the specified UUID
+        if (posOwnerMap[pos] == uuid) {
+            posOwnerMap.remove(pos)
+            clearCache() // Invalidate the cache
+            // Sync the changes
+            VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.sync(level)
+        }
     }
 
     private fun isPosOwned(pos: GlobalPos): Boolean {
-        return playerWardPosMap.values.any { posSet -> posSet.contains(pos) }
+        return posOwnerMap.contains(pos)
+    }
+
+    private fun clearCache() {
+        cachedPositions = null
     }
 
     override fun readFromNbt(tag: CompoundTag) {
-        playerWardPosMap.clear()
+        posOwnerMap.clear()
 
         val list = tag.getList("playerWardPosMap", 10)
 
@@ -72,56 +109,50 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
             val playerId = playerTag.getUUID("PlayerUUID")
 
             val posList = playerTag.getList("Positions", 10)
-            val globalPosSet = mutableSetOf<GlobalPos>()
 
             for (j in 0 until posList.size) {
-                val posTag = posList.getCompound(j) // Get the CompoundTag for this position
-                val optionalDimension = getLodestoneDimension(posTag) // Get the dimension for this position
+                val posTag = posList.getCompound(j)
+                val optionalDimension = getLodestoneDimension(posTag)
                 if (optionalDimension.isPresent) {
                     val blockPos = NbtUtils.readBlockPos(posTag.getCompound("GlobalPos"))
                     val globalPos = GlobalPos.of(optionalDimension.get(), blockPos)
-                    globalPosSet.add(globalPos)
+                    posOwnerMap[globalPos] = playerId
                 }
             }
-            playerWardPosMap[playerId] = globalPosSet
         }
     }
 
-
     override fun writeToNbt(tag: CompoundTag) {
-        val list = ListTag()  // This will hold all player data
+        val list = ListTag()
 
-        for ((uuid, posSet) in playerWardPosMap) {
-            val playerTag = CompoundTag()  // Tag for each player
+        for ((globalPos, uuid) in posOwnerMap) {
+            val playerTag = CompoundTag()
             playerTag.putUUID("PlayerUUID", uuid)
 
             val posListTag = ListTag()
-            for (globalPos in posSet) {
-                val posTag = CompoundTag()
+            val posTag = CompoundTag()
 
-                // Write the GlobalPos to NBT
-                NbtUtils.writeBlockPos(globalPos.pos()).let { blockPosTag -> posTag.put("GlobalPos", blockPosTag) }
+            // Write the GlobalPos to NBT
+            NbtUtils.writeBlockPos(globalPos.pos()).let { blockPosTag -> posTag.put("GlobalPos", blockPosTag) }
 
-                // Write the dimension (LodestoneDimension) to NBT
-                addLodestoneTags(globalPos.dimension(), posTag)
+            // Write the dimension (LodestoneDimension) to NBT
+            addLodestoneTags(globalPos.dimension(), posTag)
 
-                // Add this position's tag to the list of positions
-                posListTag.add(posTag)
-            }
+            posListTag.add(posTag)
             playerTag.put("Positions", posListTag)
             list.add(playerTag)
         }
 
-        // Attach the full list to the provided tag
         tag.put("playerWardPosMap", list)
     }
 
-
     private fun getLodestoneDimension(compoundTag: CompoundTag): Optional<ResourceKey<Level>> {
-        return Level.RESOURCE_KEY_CODEC.parse(
-            NbtOps.INSTANCE,
-            compoundTag["Dimension"]
-        ).result()
+        val dimensionTag = compoundTag["Dimension"]
+        return if (dimensionTag != null) {
+            Level.RESOURCE_KEY_CODEC.parse(NbtOps.INSTANCE, dimensionTag).result()
+        } else {
+            Optional.empty()
+        }
     }
 
     private fun addLodestoneTags(
@@ -132,10 +163,40 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
             .encodeStart(NbtOps.INSTANCE, lodestoneDimension)
             .resultOrPartial { _: String? -> }
             .ifPresent { tag: Tag ->
-                compoundTag.put(
-                    "Dimension",
-                    tag
-                )
+                compoundTag.put("Dimension", tag)
             }
+    }
+
+    companion object {
+        fun removeWard(breakEvent: BlockEvents.BreakEvent?) {
+            val pos = breakEvent?.pos
+            if (pos != null) {
+                val comp = VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(breakEvent.player.level())
+                comp.removePos(GlobalPos.of(breakEvent.player.level().dimension(), pos))
+            }
+        }
+
+        fun renderCubeAtPos(ctx: WorldRenderContext) {
+            val camera = ctx.camera()
+            val poseStack = ctx.matrixStack()
+            val localPlayer = Minecraft.getInstance().player
+            if (localPlayer != null) {
+                if (localPlayer.mainHandItem.item is WandItem) {
+                    val levelComp = VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(localPlayer.level())
+
+                    val poses: List<BlockPos> = levelComp.getAllPos(localPlayer)
+                    for (pos in poses) {
+                        VoidBoundRenderUtils.renderCubeAtPos(
+                            camera,
+                            poseStack,
+                            pos,
+                            VoidBoundTokens.wardBorder,
+                            20,
+                            20
+                        )
+                    }
+                }
+            }
+        }
     }
 }

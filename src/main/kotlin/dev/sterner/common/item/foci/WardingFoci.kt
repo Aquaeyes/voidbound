@@ -17,13 +17,9 @@ class WardingFoci : IWandFocus {
             val comp = VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(level)
             val global = GlobalPos.of(level.dimension(), hitResult.blockPos)
             if (comp.hasBlockPos(player, global)) {
-                comp.removePos(player, global)
-                //println("Removed")
+                comp.removePos(player.uuid, global)
             } else {
-                comp.addPos(UUID.randomUUID(), global)
-                println("Added ${level.isClientSide()}")
-                //comp.addPos(player, global)
-                //println("Added")
+                comp.addPos(player.uuid, global)
             }
         }
     }

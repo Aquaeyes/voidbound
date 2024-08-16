@@ -1,5 +1,6 @@
 package dev.sterner.common.item.foci
 
+import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.wand.IWandFocus
 import dev.sterner.registry.VoidBoundBlockRegistry
 import dev.sterner.registry.VoidBoundTags
@@ -93,7 +94,7 @@ class PortableHoleFoci : IWandFocus {
 
         fun createHole(level: Level, pos: BlockPos, direction: Direction, distance: Int) {
             val oldState = level.getBlockState(pos)
-            if (oldState.`is`(VoidBoundTags.PORTABLE_HOLE_BLACKLIST)) {
+            if (oldState.`is`(VoidBoundTags.PORTABLE_HOLE_BLACKLIST) || !VoidBoundApi.canBlockBreak(level, pos)) {
                 return
             }
             val oldEntity = level.getBlockEntity(pos)

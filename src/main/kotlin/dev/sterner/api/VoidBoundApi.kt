@@ -54,6 +54,23 @@ object VoidBoundApi {
     }
 
     fun canPlayerBreakBlock(level: Level, player: Player, blockPos: BlockPos): Boolean {
-        return !VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(level).isPosBoundToAnotherPlayer(player, GlobalPos.of(player.level().dimension(), blockPos))
+        val comp = VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(level)
+        if (comp.isEmpty()) {
+            return true
+        }
+
+        return !comp.isPosBoundToAnotherPlayer(player, GlobalPos.of(player.level().dimension(), blockPos))
+    }
+
+    fun canBlockBreak(level: Level, blockPos: BlockPos): Boolean {
+        val comp = VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(level)
+        if (comp.isEmpty()) {
+            return true
+        }
+
+        if (comp.hasBlockPos(GlobalPos.of(level.dimension(), blockPos))) {
+            return false
+        }
+        return true
     }
 }

@@ -3,10 +3,12 @@ package dev.sterner.common.components
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent
+import dev.sterner.VoidBound
 import dev.sterner.api.util.VoidBoundRenderUtils
 import dev.sterner.client.VoidBoundTokens
 import dev.sterner.common.entity.AbstractGolemEntity
 import dev.sterner.common.entity.SoulSteelGolemEntity
+import dev.sterner.common.item.WandItem
 import dev.sterner.registry.VoidBoundComponentRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
 import net.minecraft.client.Minecraft

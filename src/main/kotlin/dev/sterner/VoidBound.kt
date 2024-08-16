@@ -13,9 +13,11 @@ import dev.sterner.client.renderer.blockentity.*
 import dev.sterner.client.renderer.entity.*
 import dev.sterner.client.screen.OsmoticEnchanterScreen
 import dev.sterner.common.components.VoidBoundPlayerComponent
+import dev.sterner.common.components.VoidBoundWorldComponent
 import dev.sterner.listener.EnchantSpiritDataReloadListener
 import dev.sterner.registry.*
 import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents
+import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents.BlockBreak
 import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents.BreakEvent
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
@@ -30,6 +32,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.PackType
+import net.minecraft.world.level.GameRules
 import org.slf4j.LoggerFactory
 
 
@@ -61,7 +64,10 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
         UseBlockCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useBlock)
         UseEntityCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useEntity)
+        BlockEvents.BLOCK_BREAK.register(VoidBoundWorldComponent.Companion::removeWard)
     }
+
+
 
     override fun onInitializeClient() {
 
@@ -156,6 +162,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
         MalumCodexEvents.EVENT.register(MalumCodexEvent::addVoidBoundEntries)
         MalumCodexEvents.VOID_EVENT.register(MalumCodexEvent::addVoidBoundVoidEntries)
         WorldRenderEvents.AFTER_TRANSLUCENT.register(VoidBoundPlayerComponent.Companion::renderCubeAtPos)
+        WorldRenderEvents.AFTER_TRANSLUCENT.register(VoidBoundWorldComponent.Companion::renderCubeAtPos)
         HudRenderCallback.EVENT.register(SpiritAltarHudRenderEvent::spiritAltarRecipeHud)
         ClientTickEvents.END_CLIENT_TICK.register(ClientTickHandler::clientTickEnd)
 
