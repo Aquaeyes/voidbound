@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:projectile_protection",
+  "texture": "voidbound:textures/gui/enchantment/projectile_protection.png",
   "spirits": [
     {
       "spirit": "earthen",

@@ -29,9 +29,17 @@ open class EnchantSpiritDataReloadListener :
                 continue
             }
 
+            val texture = if (`object`.has("texture")) {
+                `object`.getAsJsonPrimitive("texture").asString
+            } else {
+                "voidbound:textures/gui/enchantment/missing.png"
+            }
+
+            val textureLocation = ResourceLocation(texture)
+
             val array = `object`.getAsJsonArray("spirits")
 
-            ENCHANTING_DATA[resourceLocation] = getSpiritData(array)
+            ENCHANTING_DATA[resourceLocation] = EnchantingData(getSpiritData(array), textureLocation)
         }
     }
 
@@ -46,7 +54,9 @@ open class EnchantSpiritDataReloadListener :
         return spiritData
     }
 
+    data class EnchantingData(val spirits: List<SpiritWithCount>, val texture: ResourceLocation)
+
     companion object {
-        var ENCHANTING_DATA: MutableMap<ResourceLocation, List<SpiritWithCount>> = mutableMapOf()
+        var ENCHANTING_DATA: MutableMap<ResourceLocation, EnchantingData> = mutableMapOf()
     }
 }

@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:infinity",
+  "texture": "voidbound:textures/gui/enchantment/infinity.png",
   "spirits": [
     {
       "spirit": "aerial",

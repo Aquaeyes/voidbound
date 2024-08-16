@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:depth_strider",
+  "texture": "voidbound:textures/gui/enchantment/depth_strider.png",
   "spirits": [
     {
       "spirit": "aqueous",

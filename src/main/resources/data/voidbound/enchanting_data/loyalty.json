@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:loyalty",
+  "texture": "voidbound:textures/gui/enchantment/loyalty.png",
   "spirits": [
     {
       "spirit": "aerial",

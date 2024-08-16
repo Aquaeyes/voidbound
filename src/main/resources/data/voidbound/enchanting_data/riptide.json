@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:riptide",
+  "texture": "voidbound:textures/gui/enchantment/riptide.png",
   "spirits": [
     {
       "spirit": "aerial",

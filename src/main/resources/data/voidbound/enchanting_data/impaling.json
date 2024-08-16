@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:impaling",
+  "texture": "voidbound:textures/gui/enchantment/impaling.png",
   "spirits": [
     {
       "spirit": "aerial",

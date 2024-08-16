@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:looting",
+  "texture": "voidbound:textures/gui/enchantment/looting.png",
   "spirits": [
     {
       "spirit": "wicked",

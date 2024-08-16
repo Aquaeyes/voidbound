@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:unbreaking",
+  "texture": "voidbound:textures/gui/enchantment/unbreaking.png",
   "spirits": [
     {
       "spirit": "aerial",

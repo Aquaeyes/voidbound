@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:respiration",
+  "texture": "voidbound:textures/gui/enchantment/respiration.png",
   "spirits": [
     {
       "spirit": "aerial",

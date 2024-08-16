@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:mending",
+  "texture": "voidbound:textures/gui/enchantment/mending.png",
   "spirits": [
     {
       "spirit": "aerial",

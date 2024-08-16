@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:power",
+  "texture": "voidbound:textures/gui/enchantment/power.png",
   "spirits": [
     {
       "spirit": "aerial",

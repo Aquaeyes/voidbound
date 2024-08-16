@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:quick_charge",
+  "texture": "voidbound:textures/gui/enchantment/quick_charge.png",
   "spirits": [
     {
       "spirit": "aerial",

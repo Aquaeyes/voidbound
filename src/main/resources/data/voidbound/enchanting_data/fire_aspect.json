@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:fire_aspect",
+  "texture": "voidbound:textures/gui/enchantment/fire_aspect.png",
   "spirits": [
     {
       "spirit": "infernal",

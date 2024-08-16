@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:swift_sneak",
+  "texture": "voidbound:textures/gui/enchantment/swift_sneak.png",
   "spirits": [
     {
       "spirit": "aerial",

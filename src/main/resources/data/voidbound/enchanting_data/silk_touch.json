@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:silk_touch",
+  "texture": "voidbound:textures/gui/enchantment/silk_touch.png",
   "spirits": [
     {
       "spirit": "aerial",

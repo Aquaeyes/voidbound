@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:sweeping",
+  "texture": "voidbound:textures/gui/enchantment/sweeping.png",
   "spirits": [
     {
       "spirit": "aerial",

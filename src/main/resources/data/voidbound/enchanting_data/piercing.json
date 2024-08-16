@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:piercing",
+  "texture": "voidbound:textures/gui/enchantment/piercing.png",
   "spirits": [
     {
       "spirit": "earthen",

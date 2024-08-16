@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:smite",
+  "texture": "voidbound:textures/gui/enchantment/smite.png",
   "spirits": [
     {
       "spirit": "aerial",

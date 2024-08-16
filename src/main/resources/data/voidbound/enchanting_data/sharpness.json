@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:sharpness",
+  "texture": "voidbound:textures/gui/enchantment/sharpness.png",
   "spirits": [
     {
       "spirit": "aerial",

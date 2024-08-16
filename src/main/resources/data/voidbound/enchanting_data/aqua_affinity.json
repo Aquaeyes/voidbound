@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:aqua_affinity",
+  "texture": "voidbound:textures/gui/enchantment/aqua_affinity.png",
   "spirits": [
     {
       "spirit": "aerial",

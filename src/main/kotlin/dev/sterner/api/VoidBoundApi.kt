@@ -40,7 +40,7 @@ object VoidBoundApi {
         val list = EnchantSpiritDataReloadListener.ENCHANTING_DATA[reg]
         val out = mutableListOf<SpiritWithCount>()
         if (list != null) {
-            for (spiritIn in list) {
+            for (spiritIn in list.spirits) {
                 out.add(SpiritWithCount(spiritIn.type, spiritIn.count * level))
             }
         }

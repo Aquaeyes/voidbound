@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:feather_falling",
+  "texture": "voidbound:textures/gui/enchantment/feather_falling.png",
   "spirits": [
     {
       "spirit": "aerial",

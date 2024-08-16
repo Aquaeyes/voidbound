@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:frost_walker",
+  "texture": "voidbound:textures/gui/enchantment/frost_walker.png",
   "spirits": [
     {
       "spirit": "aerial",

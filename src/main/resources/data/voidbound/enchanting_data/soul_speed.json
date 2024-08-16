@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:soul_speed",
+  "texture": "voidbound:textures/gui/enchantment/soul_speed.png",
   "spirits": [
     {
       "spirit": "aerial",

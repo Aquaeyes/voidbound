@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:knockback",
+  "texture": "voidbound:textures/gui/enchantment/knockback.png",
   "spirits": [
     {
       "spirit": "aerial",

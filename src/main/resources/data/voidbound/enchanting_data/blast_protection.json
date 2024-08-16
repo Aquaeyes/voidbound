@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:blast_protection",
+  "texture": "voidbound:textures/gui/enchantment/blast_protection.png",
   "spirits": [
     {
       "spirit": "earthen",

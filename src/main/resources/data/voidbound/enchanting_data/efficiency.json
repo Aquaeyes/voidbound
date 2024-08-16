@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:efficiency",
+  "texture": "voidbound:textures/gui/enchantment/efficiency.png",
   "spirits": [
     {
       "spirit": "aerial",

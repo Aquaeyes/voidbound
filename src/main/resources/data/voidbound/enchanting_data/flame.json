@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:flame",
+  "texture": "voidbound:textures/gui/enchantment/flame.png",
   "spirits": [
     {
       "spirit": "aerial",

@@ -5,6 +5,7 @@ import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.visual_effects.SpiritLightSpecs
 import dev.sterner.VoidBound
+import dev.sterner.listener.EnchantSpiritDataReloadListener
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
@@ -116,6 +117,9 @@ object VoidBoundUtils {
     }
 
     fun getEnchantmentIcon(enchantment: Enchantment): ResourceLocation {
-        return VoidBound.id("textures/gui/enchantment/${BuiltInRegistries.ENCHANTMENT.getKey(enchantment)?.path}.png")
+        val reg = BuiltInRegistries.ENCHANTMENT.getKey(enchantment)
+        val list: EnchantSpiritDataReloadListener.EnchantingData? = EnchantSpiritDataReloadListener.ENCHANTING_DATA[reg]
+
+        return list?.texture ?: VoidBound.id("textures/gui/enchantment/${BuiltInRegistries.ENCHANTMENT.getKey(enchantment)?.path}.png")
     }
 }

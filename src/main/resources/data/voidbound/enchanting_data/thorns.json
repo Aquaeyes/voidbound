@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:thorns",
+  "texture": "voidbound:textures/gui/enchantment/thorns.png",
   "spirits": [
     {
       "spirit": "aerial",

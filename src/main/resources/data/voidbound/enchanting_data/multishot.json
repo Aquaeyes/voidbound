@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:multishot",
+  "texture": "voidbound:textures/gui/enchantment/multishot.png",
   "spirits": [
     {
       "spirit": "aerial",

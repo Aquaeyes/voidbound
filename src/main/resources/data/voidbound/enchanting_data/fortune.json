@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:fortune",
+  "texture": "voidbound:textures/gui/enchantment/fortune.png",
   "spirits": [
     {
       "spirit": "aerial",

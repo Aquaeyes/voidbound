@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:luck_of_the_sea",
+  "texture": "voidbound:textures/gui/enchantment/luck_of_the_sea.png",
   "spirits": [
     {
       "spirit": "aerial",

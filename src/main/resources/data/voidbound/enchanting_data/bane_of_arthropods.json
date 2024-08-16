@@ -1,5 +1,6 @@
 {
   "registry_name": "minecraft:bane_of_arthropods",
+  "texture": "voidbound:textures/gui/enchantment/bane_of_arthropods.png",
   "spirits": [
     {
       "spirit": "earthen",
