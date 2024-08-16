@@ -1,0 +1,54 @@
+{
+  "type": "malum:spirit_infusion",
+  "extra_items": [
+    {
+      "count": 4,
+      "item": "malum:hallowed_gold_ingot"
+    },
+    {
+      "count": 2,
+      "item": "malum:prismatic_focus_lens"
+    }
+  ],
+  "input": {
+    "count": 1,
+    "item": "minecraft:leather"
+  },
+  "output": {
+    "item": "voidbound:hallowed_goggles"
+  },
+  "spirits": [
+    {
+      "type": "wicked",
+      "count": 16
+    },
+    {
+      "type": "sacred",
+      "count": 16
+    },
+    {
+      "type": "infernal",
+      "count": 16
+    },
+    {
+      "type": "arcane",
+      "count": 16
+    },
+    {
+      "type": "aerial",
+      "count": 16
+    },
+    {
+      "type": "earthen",
+      "count": 16
+    },
+    {
+      "type": "eldritch",
+      "count": 16
+    },
+    {
+      "type": "aqueous",
+      "count": 16
+    }
+  ]
+}
