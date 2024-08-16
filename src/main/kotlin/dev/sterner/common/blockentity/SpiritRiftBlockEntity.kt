@@ -10,6 +10,7 @@ import dev.sterner.common.rift.EldritchRiftType
 import dev.sterner.common.rift.NormalRiftType
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundRiftTypeRegistry
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
@@ -49,24 +50,27 @@ class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState) :
         }
 
     fun onUse(player: Player, hand: InteractionHand, hit: BlockHitResult) {
-        if (hand == InteractionHand.MAIN_HAND) {
-            when (riftType) {
-                is NormalRiftType -> {
-                    riftType = VoidBoundRiftTypeRegistry.ELDRITCH.get()
-                    player.sendSystemMessage(Component.translatable("Eldritch"))
-                }
+        //TODO remove
+        if (FabricLoader.getInstance().isDevelopmentEnvironment) {
+            if (hand == InteractionHand.MAIN_HAND) {
+                when (riftType) {
+                    is NormalRiftType -> {
+                        riftType = VoidBoundRiftTypeRegistry.ELDRITCH.get()
+                        player.sendSystemMessage(Component.translatable("Eldritch"))
+                    }
 
-                is EldritchRiftType -> {
-                    riftType = VoidBoundRiftTypeRegistry.DESTABILIZED.get()
-                    player.sendSystemMessage(Component.translatable("Destabilized"))
-                }
+                    is EldritchRiftType -> {
+                        riftType = VoidBoundRiftTypeRegistry.DESTABILIZED.get()
+                        player.sendSystemMessage(Component.translatable("Destabilized"))
+                    }
 
-                is DestabilizedRiftType -> {
-                    riftType = VoidBoundRiftTypeRegistry.NORMAL.get()
-                    player.sendSystemMessage(Component.translatable("Normal"))
+                    is DestabilizedRiftType -> {
+                        riftType = VoidBoundRiftTypeRegistry.NORMAL.get()
+                        player.sendSystemMessage(Component.translatable("Normal"))
+                    }
                 }
+                notifyUpdate()
             }
-            notifyUpdate()
         }
     }
 
