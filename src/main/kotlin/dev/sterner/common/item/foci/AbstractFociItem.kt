@@ -21,10 +21,9 @@ import java.awt.Color
 abstract class AbstractFociItem(val foci: IWandFocus, properties: Properties) : Item(properties),
     ItemParticleSupplier {
 
+    abstract fun color(): Color
 
-    open fun color(): Color? = null
-
-    open fun endColor(): Color? = null
+    abstract fun endColor(): Color
 
     open fun isVoid(): Boolean {
         return false
@@ -70,7 +69,7 @@ abstract class AbstractFociItem(val foci: IWandFocus, properties: Properties) : 
         ScreenParticleBuilder.create(LodestoneScreenParticleRegistry.WISP, target)
             .setScaleData(GenericParticleData.create(0.8f * intensity + rand.nextFloat() * 0.6f * intensity, 0f).setEasing(Easing.EXPO_OUT).build())
             .setTransparencyData(GenericParticleData.create(0.1f, 0.2f, 0f).setEasing(Easing.SINE_IN_OUT).build())
-            .setColorData(ColorParticleData.create(color(), endColor()?.darker()).setCoefficient(1.25f).build())
+            .setColorData(ColorParticleData.create(color(), endColor().darker()).setCoefficient(1.25f).build())
             .setSpinData(spinParticleData)
             .setLifetime(20 + rand.nextInt(8))
             .setRandomOffset(0.1)
