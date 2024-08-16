@@ -111,9 +111,7 @@ class CallOfTheVoidItem : Item(Properties().stacksTo(1)) {
                 cooldown++
                 if (cooldown >= 100) {
                     cooldown = 0
-                    if (stack.tag!!.contains("StructureLoc")) {
-
-                    } else {
+                    if (!stack.tag!!.contains("StructureLoc")) {
                         locateStructure(level, stack, entity)
                     }
                 }
