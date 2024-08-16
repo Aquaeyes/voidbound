@@ -2,7 +2,9 @@ package dev.sterner.mixin.client;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.Local;
+import com.sammy.malum.common.entity.nitrate.AbstractNitrateEntity;
 import com.sammy.malum.registry.client.ParticleRegistry;
+import com.sammy.malum.visual_effects.SpiritLightSpecs;
 import dev.sterner.api.VoidBoundApi;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -20,15 +22,21 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import team.lodestar.lodestone.handlers.RenderHandler;
+import team.lodestar.lodestone.helpers.RandomHelper;
+import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry;
 import team.lodestar.lodestone.systems.easing.Easing;
+import team.lodestar.lodestone.systems.particle.SimpleParticleOptions;
 import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder;
 import team.lodestar.lodestone.systems.particle.data.GenericParticleData;
 import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
+import team.lodestar.lodestone.systems.particle.data.spin.SpinParticleData;
 import team.lodestar.lodestone.systems.particle.render_types.LodestoneWorldParticleRenderType;
+import team.lodestar.lodestone.systems.particle.world.LodestoneWorldParticle;
 import team.lodestar.lodestone.systems.particle.world.behaviors.components.DirectionalBehaviorComponent;
 import team.lodestar.lodestone.systems.rendering.VFXBuilders;
 
 import java.awt.*;
+import java.util.function.Consumer;
 
 import static com.sammy.malum.common.item.curiosities.weapons.staff.AuricFlameStaffItem.AURIC_COLOR_DATA;
 
@@ -78,20 +86,45 @@ public class ParticleEngineMixin {
                 d = (double)i + aABB.maxX + f;
             }
 
-
             var v = side.getNormal();
-            WorldParticleBuilder.create(ParticleRegistry.HEXAGON, new DirectionalBehaviorComponent(new Vec3(v.getX(), v.getY(), v.getZ())))
-                    .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
-                    .setTransparencyData(GenericParticleData.create(0.5f * 0.75f, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build())
-                    .setScaleData(GenericParticleData.create(0.35f * 0.65f, 0).setEasing(Easing.SINE_IN_OUT).build())
-                    .setColorData(AURIC_COLOR_DATA)
-                    .setLifetime(5)
+
+            var lightSpecs = SpiritLightSpecs.spiritLightSpecs(level, new Vec3(d, e, g), AURIC_COLOR_DATA);
+            lightSpecs.getBuilder().multiplyLifetime(1.5f);
+            lightSpecs.getBloomBuilder().multiplyLifetime(1.5f);
+            lightSpecs.spawnParticles();
+            Color startingSmokeColor = AURIC_YELLOW;
+            for (int ix = 0; ix < 3; ix++) {
+                int lifetime = (int) (RandomHelper.randomBetween(random, 60, 80) * (1 - ix / 3f));
+                final SpinParticleData spinData = SpinParticleData.createRandomDirection(random, 0, RandomHelper.randomBetween(random, 0f, 0.4f), 0).randomSpinOffset(random).build();
+                WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE, new DirectionalBehaviorComponent(new Vec3(v.getX(), v.getY(), v.getZ())))
+                        .setTransparencyData(GenericParticleData.create(0.2f * 1, 0.4f * 1, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build())
+                        .setSpinData(spinData)
+                        .setScaleData(GenericParticleData.create(0.3f, 0.4f, 0.5f).setEasing(Easing.QUINTIC_OUT, Easing.SINE_IN).build())
+                        .setColorData(ColorParticleData.create(startingSmokeColor, AbstractNitrateEntity.SECOND_SMOKE_COLOR).setEasing(Easing.QUINTIC_OUT).build())
+                        .setLifetime(Math.min(6 + 3, lifetime))
+                        .setLifeDelay(1)
+                        .enableNoClip()
+                        .enableForcedSpawn()
+                        .setSpritePicker(SimpleParticleOptions.ParticleSpritePicker.WITH_AGE)
+                        .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
+                        .spawn(level, d, e, g);
+
+            }
+            int lifetime = (int) (RandomHelper.randomBetween(random, 60, 80) * (2 / 3f));
+            final SpinParticleData spinData = SpinParticleData.createRandomDirection(random, 0, RandomHelper.randomBetween(random, 0f, 0.4f), 0).randomSpinOffset(random).build();
+            WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE, new DirectionalBehaviorComponent(new Vec3(v.getX(), v.getY(), v.getZ())))
+                    .setTransparencyData(GenericParticleData.create(0.7f * 1, 0.9f * 1, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build())
+                    .setSpinData(spinData)
+                    .setScaleData(GenericParticleData.create(0.05f, 0.1f, 0.15f).setEasing(Easing.QUINTIC_OUT, Easing.SINE_IN).build())
+                    .setColorData(ColorParticleData.create(startingSmokeColor, AbstractNitrateEntity.SECOND_SMOKE_COLOR).setEasing(Easing.QUINTIC_OUT).build())
+                    .setLifetime(Math.min(6 + 3, lifetime))
+                    .setLifeDelay(1)
                     .enableNoClip()
                     .enableForcedSpawn()
-                    .setLifeDelay(2)
-                    .spawn(level,d, e, g)
-                    .setRenderType(LodestoneWorldParticleRenderType.LUMITRANSPARENT)
-                    .spawn(level,d, e, g);
+                    .setSpritePicker(SimpleParticleOptions.ParticleSpritePicker.WITH_AGE)
+                    .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
+                    .spawn(level, d, e, g);
+
             return false;
         }
 

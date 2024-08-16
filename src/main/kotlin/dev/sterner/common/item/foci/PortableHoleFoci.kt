@@ -57,10 +57,6 @@ class PortableHoleFoci : IWandFocus {
 
             for (x in -1..1) {
                 for (y in -1..1) {
-                    if (x == 0 && y == 0) {
-                        continue // Skip the center block, as it will be handled separately
-                    }
-
                     val offsetPos = centerPos
                         .relative(perpendiculars.first, x)
                         .relative(perpendiculars.second, y)
@@ -68,7 +64,6 @@ class PortableHoleFoci : IWandFocus {
                     createHole(level, offsetPos, direction, distance)
                 }
             }
-            createHole(level, blockHit.blockPos, blockHit.direction, distance)
 
             player.swing(InteractionHand.MAIN_HAND)
             if (!level.isClientSide) {
