@@ -31,14 +31,20 @@ class CrimsonBookModel(modelPart: ModelPart) :
     private val leftLid: ModelPart = root.getChild("leftLid")
     private val rightLid: ModelPart = root.getChild("rightLid")
 
-    fun setupAnim(time: Float, rightPageFlipAmount: Float, leftPageFlipAmount: Float, bookOpenAmount: Float) {
+    fun setupAnim(time: Float, rightPageFlipAmount: Float, leftPageFlipAmount: Float, bookOpenAmount: Float, inHand: Boolean) {
         val f = (Mth.sin(time * 0.02f) * 0.1f + 1.25f) * bookOpenAmount
         leftLid.zRot = -f
         rightLid.zRot = f
         leftPages.zRot = -f
         rightPages.zRot = f
-        flipPage1.zRot = f - 0.2f
-        flipPage2.zRot = -f + 0.2f
+        if (inHand) {
+            flipPage1.zRot = f - 0.2f * rightPageFlipAmount
+            flipPage2.zRot = -f + 0.2f * leftPageFlipAmount
+        } else {
+            this.flipPage1.zRot = f - f * 2.0F * rightPageFlipAmount;
+            this.flipPage2.zRot = f - f * 2.0F * leftPageFlipAmount;
+        }
+
         leftPages.x = Mth.sin(f)
         rightPages.x = Mth.sin(f)
         flipPage1.x = Mth.sin(f)

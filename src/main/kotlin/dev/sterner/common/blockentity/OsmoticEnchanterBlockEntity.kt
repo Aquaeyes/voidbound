@@ -11,6 +11,8 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.Mth
+import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
@@ -31,6 +33,18 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 ) {
 
     data class EnchantmentData(val enchantment: Enchantment, val level: Int)
+
+    var time: Int = 0
+    var flip: Float = 0f
+    var oFlip: Float = 0f
+    var flipT: Float = 0f
+    var flipA: Float = 0f
+    var open: Float = 0f
+    var oOpen: Float = 0f
+    var rot: Float = 0f
+    var oRot: Float = 0f
+    var tRot: Float = 0f
+
 
     var enchantments: MutableList<EnchantmentData> = mutableListOf()
 
@@ -144,7 +158,76 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             }
         }
 
+        if (level!!.isClientSide) {
+            animationTick()
+        }
         super.tick()
+    }
+
+    fun animationTick() {
+        oOpen = open
+        oRot = rot
+        val player = level!!.getNearestPlayer(
+            blockPos.x.toDouble() + 0.5,
+            blockPos.y.toDouble() + 0.5,
+            blockPos.z.toDouble() + 0.5,
+            3.0,
+            false
+        )
+        if (player != null) {
+            val d: Double = player.x - (blockPos.getX().toDouble() + 0.5)
+            val e: Double = player.z - (blockPos.getZ().toDouble() + 0.5)
+            tRot = Mth.atan2(e, d).toFloat()
+            open += 0.1f
+            if (open < 0.5f || RANDOM.nextInt(40) == 0) {
+                val f: Float = flipT
+
+                do {
+                    flipT += (RANDOM.nextInt(4) - RANDOM.nextInt(
+                        4
+                    )).toFloat()
+                } while (f == flipT)
+            }
+        } else {
+            tRot += 0.02f
+            open -= 0.1f
+        }
+
+        while (rot >= Math.PI.toFloat()) {
+            rot -= (Math.PI * 2).toFloat()
+        }
+
+        while (rot < -Math.PI.toFloat()) {
+            rot += (Math.PI * 2).toFloat()
+        }
+
+        while (tRot >= Math.PI.toFloat()) {
+            tRot -= (Math.PI * 2).toFloat()
+        }
+
+        while (tRot < -Math.PI.toFloat()) {
+            tRot += (Math.PI * 2).toFloat()
+        }
+
+        var g: Float = tRot - rot
+
+        while (g >= Math.PI.toFloat()) {
+            g -= (Math.PI * 2).toFloat()
+        }
+
+        while (g < -Math.PI.toFloat()) {
+            g += (Math.PI * 2).toFloat()
+        }
+
+        rot += g * 0.4f
+        open = Mth.clamp(open, 0.0f, 1.0f)
+        time++
+        oFlip = flip
+        var h: Float = (flipT - flip) * 0.4f
+        val i = 0.2f
+        h = Mth.clamp(h, -0.2f, 0.2f)
+        flipA += (h - flipA) * 0.9f
+        flip += flipA
     }
 
     private fun doEnchant() {
@@ -277,5 +360,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         super.load(compound)
     }
 
-
+    companion object{
+        val RANDOM: RandomSource = RandomSource.create()
+    }
 }
