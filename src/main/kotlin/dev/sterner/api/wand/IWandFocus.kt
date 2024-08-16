@@ -6,7 +6,9 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.phys.HitResult
 
 interface IWandFocus {
-    fun onFocusRightClick(stack: ItemStack, level: Level, player: Player, hitResult: HitResult)
+    fun onFocusRightClick(stack: ItemStack, level: Level, player: Player, hitResult: HitResult) {
+
+    }
 
     fun onUsingFocusTick(stack: ItemStack, level: Level, player: Player) {
 
