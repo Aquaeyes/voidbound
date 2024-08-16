@@ -40,13 +40,8 @@ class CallOfTheVoidItem : Item(Properties().stacksTo(1)) {
         var tag = player.getItemInHand(usedHand).tag
         if (tag == null) {
             tag = CompoundTag()
-            tag.putBoolean("Active", true)
-        } else if (!tag.contains("Active")) {
-            tag.putBoolean("Active", true)
-            player.getItemInHand(usedHand).tag = tag
-            player.cooldowns.addCooldown(this, 160)
-            return super.use(level, player, usedHand)
         }
+
         if (tag.contains("Active") && tag.getBoolean("Active")) {
             tag.putBoolean("Active", false)
             if (tag.contains("StructureLoc")) {
@@ -57,12 +52,15 @@ class CallOfTheVoidItem : Item(Properties().stacksTo(1)) {
             }
 
         } else if (tag.contains("Active")) {
-            if (!tag.getBoolean("Active")) {
+            if (tag.getBoolean("Active")) {
+                tag.putBoolean("Active", false)
+            } else {
                 tag.putBoolean("Active", true)
             }
         } else {
-            tag.putBoolean("Active", false)
+            tag.putBoolean("Active", true)
         }
+
         player.getItemInHand(usedHand).tag = tag
         player.cooldowns.addCooldown(this, 160)
         return super.use(level, player, usedHand)
