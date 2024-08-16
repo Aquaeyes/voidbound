@@ -152,6 +152,22 @@ object MalumCodexEvent {
 
         //-9, 5
 
+        screen?.addEntry("hallowed_goggles", -10, 4) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.HALLOWED_GOGGLES.get()).setStyle(VOID)
+            }.addPage(HeadlineTextPage("hallowed_goggles", "hallowed_goggles.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.HALLOWED_GOGGLES.get()
+                    )
+                )
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.HALLOWED_MONOCLE.get()
+                    )
+                )
+        }
+
         screen?.addEntry("pickaxe_of_the_core", -10, 3) { builder ->
             builder.configureWidget {
                 it.setIcon(VoidBoundItemRegistry.PICKAXE_OF_THE_CORE.get()).setStyle(VOID)

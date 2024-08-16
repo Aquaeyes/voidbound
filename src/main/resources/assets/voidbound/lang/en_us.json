@@ -95,5 +95,10 @@
   "malum.gui.book.entry.sword_of_the_zephyr": "Sword of the Zephyr",
   "malum.gui.book.entry.sword_of_the_zephyr.description": "Thaum is that you?",
   "malum.gui.book.entry.page.headline.sword_of_the_zephyr": "Sword of the Zephyr",
-  "malum.gui.book.entry.page.text.sword_of_the_zephyr.1": "Hazzaaa"
+  "malum.gui.book.entry.page.text.sword_of_the_zephyr.1": "Hazzaaa",
+
+  "malum.gui.book.entry.hallowed_goggles": "Hallowed Goggles",
+  "malum.gui.book.entry.hallowed_goggles.description": "Thaum is that you?",
+  "malum.gui.book.entry.page.headline.hallowed_goggles": "Hallowed Goggles",
+  "malum.gui.book.entry.page.text.hallowed_goggles.1": "See Rifts and entities spirits"
 }
