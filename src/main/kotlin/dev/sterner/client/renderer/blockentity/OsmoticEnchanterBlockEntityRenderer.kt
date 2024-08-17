@@ -50,7 +50,8 @@ class OsmoticEnchanterBlockEntityRenderer(ctx: BlockEntityRendererProvider.Conte
         val itemRenderer = Minecraft.getInstance().itemRenderer
         val level = blockEntity.level
 
-        if (!inventory.isEmpty && level != null && false) {
+        /*
+        if (!inventory.isEmpty && level != null) {
             val stack = inventory.getStackInSlot(0)
             poseStack.pushPose()
             val itemOffset: Vec3 = getItemOffset(blockEntity.level!!, partialTick)
@@ -70,6 +71,8 @@ class OsmoticEnchanterBlockEntityRenderer(ctx: BlockEntityRendererProvider.Conte
             poseStack.popPose()
         }
 
+         */
+
         renderBook(blockEntity, partialTick, poseStack, buffer, packedLight, packedOverlay)
     }
 
@@ -77,7 +80,7 @@ class OsmoticEnchanterBlockEntityRenderer(ctx: BlockEntityRendererProvider.Conte
         blockEntity: OsmoticEnchanterBlockEntity,
         partialTick: Float,
         poseStack: PoseStack,
-        buffers: MultiBufferSource?,
+        buffers: MultiBufferSource,
         packedLight: Int,
         packedOverlay: Int
     ) {
