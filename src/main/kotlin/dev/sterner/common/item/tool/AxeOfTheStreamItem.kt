@@ -106,22 +106,12 @@ class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDama
                 val block = level.getBlockState(pos)
                 if (!player.isShiftKeyDown && block.`is`(BlockTags.LOGS)) {
 
-                    println("Break")
                     if (level is ServerLevel) {
-                        println("Server")
                         for (playerPart in PlayerLookup.tracking(level, pos)) {
-                            VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(AxeOfTheStreamParticleEffect(pos), playerPart)
+                            VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(AxeOfTheStreamParticleEffect(level.getBlockState(pos), pos), playerPart)
                         }
-                    } else {
-                        println("Client")
-                        val state = level.getBlockState(pos)
-                        val coordPos = VoidBoundPosUtils.getFaceCoords(level, state, pos,  player.direction.opposite)
-                        val lightSpecs: ParticleEffectSpawner = SpiritLightSpecs.spiritLightSpecs(level, coordPos, SpiritTypeRegistry.AQUEOUS_SPIRIT)
-                        lightSpecs.builder.multiplyLifetime(1.5f)
-                        lightSpecs.bloomBuilder.multiplyLifetime(1.5f)
-                        lightSpecs.spawnParticles()
-                        lightSpecs.spawnParticles()
                     }
+
                     VoidBoundBlockUtils.breakFurthestBlock(level, pos, block, player)
                     breakEvent.isCanceled = true
                 }
