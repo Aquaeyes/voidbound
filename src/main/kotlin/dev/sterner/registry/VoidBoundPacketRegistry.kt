@@ -30,6 +30,9 @@ object VoidBoundPacketRegistry {
         VOID_BOUND_CHANNEL.registerS2CPacket(
             UpdateSpiritAmountPacket::class.java, index++
         )
+        VOID_BOUND_CHANNEL.registerS2CPacket(
+            AxeOfTheStreamParticleEffect::class.java, index++
+        )
 
         //C2S
         VOID_BOUND_CHANNEL.registerC2SPacket(
@@ -44,5 +47,6 @@ object VoidBoundPacketRegistry {
         VOID_BOUND_CHANNEL.registerC2SPacket(
             SelectFociPacket::class.java, index++
         )
+
     }
 }

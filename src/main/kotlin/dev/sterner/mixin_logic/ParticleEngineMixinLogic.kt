@@ -3,6 +3,7 @@ package dev.sterner.mixin_logic
 import com.sammy.malum.common.entity.nitrate.AbstractNitrateEntity
 import com.sammy.malum.visual_effects.SpiritLightSpecs
 import dev.sterner.api.VoidBoundApi.canPlayerBreakBlock
+import dev.sterner.api.util.VoidBoundPosUtils
 import dev.sterner.mixin.client.ParticleEngineMixin
 import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
@@ -33,46 +34,21 @@ object ParticleEngineMixinLogic {
     private val AURIC_COLOR_DATA: ColorParticleData =
         ColorParticleData.create(AURIC_YELLOW, AURIC_WHITE).setEasing(Easing.SINE_IN_OUT).setCoefficient(0.9f).build()
 
+    operator fun Vec3.component1() = this.x
+    operator fun Vec3.component2() = this.y
+    operator fun Vec3.component3() = this.z
+
+
     fun logic(level: Level, pos: BlockPos, blockState: BlockState, random: RandomSource, side: Direction) : Boolean {
         if (Minecraft.getInstance().player != null && !canPlayerBreakBlock(
                 level,
                 Minecraft.getInstance().player!!, pos
             )
         ) {
-            val i: Int = pos.x
-            val j: Int = pos.y
-            val k: Int = pos.z
-            val f = 0.03f
-            val aABB: AABB = blockState.getShape(level, pos).bounds()
-            var d: Double = i.toDouble() + random.nextDouble() * (aABB.maxX - aABB.minX - 0.2f) + 0.1f + aABB.minX
-            var e: Double = j.toDouble() + random.nextDouble() * (aABB.maxY - aABB.minY - 0.2f) + 0.1f + aABB.minY
-            var g: Double = k.toDouble() + random.nextDouble() * (aABB.maxZ - aABB.minZ - 0.2f) + 0.1f + aABB.minZ
-            if (side == Direction.DOWN) {
-                e = j.toDouble() + aABB.minY - f
-            }
-
-            if (side == Direction.UP) {
-                e = j.toDouble() + aABB.maxY + f
-            }
-
-            if (side == Direction.NORTH) {
-                g = k.toDouble() + aABB.minZ - f
-            }
-
-            if (side == Direction.SOUTH) {
-                g = k.toDouble() + aABB.maxZ + f
-            }
-
-            if (side == Direction.WEST) {
-                d = i.toDouble() + aABB.minX - f
-            }
-
-            if (side == Direction.EAST) {
-                d = i.toDouble() + aABB.maxX + f
-            }
+            val (x, y, z) = VoidBoundPosUtils.getFaceCoords(level, blockState, pos, side)
 
             val lightSpecs =
-                SpiritLightSpecs.spiritLightSpecs(level, Vec3(d, e, g), AURIC_COLOR_DATA)
+                SpiritLightSpecs.spiritLightSpecs(level, Vec3(x, y, z), AURIC_COLOR_DATA)
             lightSpecs.builder.multiplyLifetime(1.5f)
             lightSpecs.bloomBuilder.multiplyLifetime(1.5f)
             lightSpecs.spawnParticles()
@@ -89,7 +65,7 @@ object ParticleEngineMixinLogic {
                 val tans =
                     GenericParticleData.create(0.5f, 0.6f, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build()
 
-                spawnWardParticles(level, d, e, g, side, tans, scale, spinData, lifetime)
+                spawnWardParticles(level, x, y, z, side, tans, scale, spinData, lifetime)
             }
 
             val lifetime = (RandomHelper.randomBetween(random, 60, 80))
@@ -99,7 +75,7 @@ object ParticleEngineMixinLogic {
             val scaleData =
                 GenericParticleData.create(0.02f, 0.03f, 0.04f).setEasing(Easing.QUINTIC_OUT, Easing.SINE_IN).build()
             val trans = GenericParticleData.create(0.7f, 0.9f, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build()
-            spawnWardParticles(level, d, e, g, side, trans, scaleData, spinData, lifetime)
+            spawnWardParticles(level, x, y, z, side, trans, scaleData, spinData, lifetime)
             return false
         }
 
