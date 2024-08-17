@@ -84,10 +84,10 @@ object ParticleEngineMixinLogic {
                         .randomSpinOffset(random).build()
 
                 val scale =
-                    GenericParticleData.create(0.15f, 0.25f, 0.35f).setEasing(Easing.QUINTIC_OUT, Easing.SINE_IN)
+                    GenericParticleData.create(0.05f, 0.1f, 0.15f).setEasing(Easing.QUINTIC_OUT, Easing.SINE_IN)
                         .build()
                 val tans =
-                    GenericParticleData.create(0.1f, 0.2f, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build()
+                    GenericParticleData.create(0.5f, 0.6f, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build()
 
                 spawnWardParticles(level, d, e, g, side, tans, scale, spinData, lifetime)
             }
@@ -97,7 +97,7 @@ object ParticleEngineMixinLogic {
                 SpinParticleData.createRandomDirection(random, 0f, RandomHelper.randomBetween(random, 0f, 0.4f), 0f)
                     .randomSpinOffset(random).build()
             val scaleData =
-                GenericParticleData.create(0.05f, 0.1f, 0.15f).setEasing(Easing.QUINTIC_OUT, Easing.SINE_IN).build()
+                GenericParticleData.create(0.02f, 0.03f, 0.04f).setEasing(Easing.QUINTIC_OUT, Easing.SINE_IN).build()
             val trans = GenericParticleData.create(0.7f, 0.9f, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build()
             spawnWardParticles(level, d, e, g, side, trans, scaleData, spinData, lifetime)
             return false
