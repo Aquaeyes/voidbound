@@ -16,10 +16,10 @@ class WardingFoci : IWandFocus {
         if (hitResult is BlockHitResult) {
             val comp = VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(level)
             val global = GlobalPos.of(level.dimension(), hitResult.blockPos)
-            if (CommonProtection.canBreakBlock(level, hitResult.blockPos, player.gameProfile, player)) {
-                if (comp.hasBlockPos(player, global)) {
-                    comp.removePos(player.uuid, global)
-                } else {
+            if (comp.hasBlockPos(player, global)) {
+                comp.removePos(player.uuid, global)
+            } else {
+                if (CommonProtection.canBreakBlock(level, hitResult.blockPos, player.gameProfile, player)) {
                     comp.addPos(player.uuid, global)
                 }
             }
