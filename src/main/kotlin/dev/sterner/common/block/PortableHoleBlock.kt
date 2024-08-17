@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+import java.util.UUID
 
 class PortableHoleBlock(properties: Properties) : BaseEntityBlock(properties) {
 
@@ -39,13 +40,13 @@ class PortableHoleBlock(properties: Properties) : BaseEntityBlock(properties) {
     }
 
     fun createWithData(
-        player: Player,
+        uuid: UUID,
         pos: BlockPos,
         oldState: BlockState,
         oldEntity: BlockEntity?,
         direction: Direction,
         distance: Int
     ): BlockEntity {
-        return PortableHoleBlockEntity(player, pos, oldState, oldEntity, direction, distance)
+        return PortableHoleBlockEntity(uuid, pos, oldState, oldEntity, direction, distance)
     }
 }

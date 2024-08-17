@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
+import java.util.UUID
 
 @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
 class PortableHoleFoci : IWandFocus {
@@ -62,7 +63,7 @@ class PortableHoleFoci : IWandFocus {
                         .relative(perpendiculars.first, x)
                         .relative(perpendiculars.second, y)
 
-                    createHole(player, level, offsetPos, direction, distance)
+                    createHole(player.uuid, level, offsetPos, direction, distance)
                 }
             }
 
@@ -92,9 +93,10 @@ class PortableHoleFoci : IWandFocus {
             }
         }
 
-        fun createHole(player: Player, level: Level, pos: BlockPos, direction: Direction, distance: Int) {
+        fun createHole(uuid: UUID, level: Level, pos: BlockPos, direction: Direction, distance: Int) {
             val oldState = level.getBlockState(pos)
-            if (oldState.`is`(VoidBoundTags.PORTABLE_HOLE_BLACKLIST) || !VoidBoundApi.canBlockBreak(level, pos) || !CommonProtection.canBreakBlock(level, pos, player.gameProfile, player)) {
+            val player = level.getPlayerByUUID(uuid)
+            if (oldState.`is`(VoidBoundTags.PORTABLE_HOLE_BLACKLIST) || !VoidBoundApi.canBlockBreak(level, pos) || !CommonProtection.canBreakBlock(level, pos, player?.gameProfile, player)) {
                 return
             }
             val oldEntity = level.getBlockEntity(pos)
@@ -106,7 +108,7 @@ class PortableHoleFoci : IWandFocus {
             level.removeBlockEntity(pos)
             level.setBlockEntity(
                 VoidBoundBlockRegistry.PORTABLE_HOLE.get().createWithData(
-                    player,
+                    uuid,
                     pos,
                     oldState,
                     oldEntity,

@@ -121,9 +121,14 @@ class PortableHoleBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
                 val voxelShape = blockState.getShape(entity.level!!, neighborPos).getFaceShape(direction)
 
                 // Iterate through each AABB part of the voxelShape
-                for (aabb in voxelShape.toAabbs()) {
-                    val aabb2 = aabb.move(neighborPos).inflate(0.002)
-                    renderSide(entity, matrix4f, vertexConsumer, aabb2, camX, camY, camZ, direction.opposite)
+                if (!voxelShape.isEmpty) {
+                    val v: MutableList<AABB> = voxelShape.toAabbs()
+                    if (v.isNotEmpty()) {
+                        for (aabb in v) {
+                            val aabb2 = aabb.move(neighborPos).inflate(0.002)
+                            renderSide(entity, matrix4f, vertexConsumer, aabb2, camX, camY, camZ, direction.opposite)
+                        }
+                    }
                 }
             }
         }

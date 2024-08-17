@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import java.util.UUID
 
 class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEntity(
     VoidBoundBlockEntityTypeRegistry.PORTABLE_HOLE.get(), pos,
@@ -26,10 +27,10 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
     private var duration = maxDuration
     private var distance = 0
     private var direction = Direction.DOWN
-    private var owner: Player? = null
+    private var owner: UUID? = null
 
     constructor(
-        owner: Player,
+        owner: UUID,
         pos: BlockPos,
         oldState: BlockState,
         oldEntity: BlockEntity?,
@@ -45,7 +46,7 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
     }
 
     fun tick() {
-        if (level == null || originalBlockState == null) {
+        if (level == null) {
             return
         }
 
@@ -55,16 +56,23 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
 
         if (duration == maxDuration - 1 && distance > 1) {
             val nextPos = blockPos.relative(direction)
-            PortableHoleFoci.createHole(owner!!, level!!, nextPos, direction, distance - 1)
+            if (owner != null && originalBlockState != null) {
+                PortableHoleFoci.createHole(owner!!, level!!, nextPos, direction, distance - 1)
+            }
         }
 
         if (this.duration <= 0) {
-            level!!.setBlockAndUpdate(blockPos, originalBlockState!!)
             if (originalBlockEntity != null) {
-                originalBlockEntity!!.clearRemoved()
-                level!!.setBlockEntity(originalBlockEntity!!)
+                level!!.setBlockAndUpdate(blockPos, originalBlockState!!)
+                if (originalBlockEntity != null) {
+                    originalBlockEntity!!.clearRemoved()
+                    level!!.setBlockEntity(originalBlockEntity!!)
+                }
+                this.level!!.scheduleTick(blockPos, originalBlockState!!.block, 2)
+            } else {
+                level!!.destroyBlock(blockPos, false)
+                level!!.scheduleTick(blockPos, level!!.getBlockState(blockPos).block, 1)
             }
-            this.level!!.scheduleTick(blockPos, originalBlockState!!.block, 2)
         }
     }
 
@@ -72,6 +80,9 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
         tag.putInt("Duration", this.duration)
         tag.putInt("Distance", this.distance)
         tag.putInt("Direction", this.direction.ordinal)
+        if (owner != null) {
+            tag.putUUID("Owner", this.owner!!)
+        }
         if (originalBlockState != null) {
             tag.put("BlockState", NbtUtils.writeBlockState(originalBlockState!!))
         }
@@ -92,6 +103,9 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
         }
         if (tag.contains("Direction")) {
             direction = Direction.entries.toTypedArray()[tag.getInt("Direction")]
+        }
+        if (tag.contains("UUID")) {
+            owner = tag.getUUID("UUID")
         }
 
         val holderGetter =
