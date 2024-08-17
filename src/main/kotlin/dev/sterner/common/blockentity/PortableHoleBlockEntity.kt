@@ -46,7 +46,7 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
     }
 
     fun tick() {
-        if (level == null) {
+        if (level == null || originalBlockState == null) {
             return
         }
 
@@ -56,23 +56,18 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
 
         if (duration == maxDuration - 1 && distance > 1) {
             val nextPos = blockPos.relative(direction)
-            if (owner != null && originalBlockState != null) {
+            if (owner != null) {
                 PortableHoleFoci.createHole(owner!!, level!!, nextPos, direction, distance - 1)
             }
         }
 
         if (this.duration <= 0) {
+            level!!.setBlockAndUpdate(blockPos, originalBlockState!!)
             if (originalBlockEntity != null) {
-                level!!.setBlockAndUpdate(blockPos, originalBlockState!!)
-                if (originalBlockEntity != null) {
-                    originalBlockEntity!!.clearRemoved()
-                    level!!.setBlockEntity(originalBlockEntity!!)
-                }
-                this.level!!.scheduleTick(blockPos, originalBlockState!!.block, 2)
-            } else {
-                level!!.destroyBlock(blockPos, false)
-                level!!.scheduleTick(blockPos, level!!.getBlockState(blockPos).block, 1)
+                originalBlockEntity!!.clearRemoved()
+                level!!.setBlockEntity(originalBlockEntity!!)
             }
+            this.level!!.scheduleTick(blockPos, originalBlockState!!.block, 2)
         }
     }
 
@@ -104,8 +99,8 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
         if (tag.contains("Direction")) {
             direction = Direction.entries.toTypedArray()[tag.getInt("Direction")]
         }
-        if (tag.contains("UUID")) {
-            owner = tag.getUUID("UUID")
+        if (tag.contains("Owner")) {
+            owner = tag.getUUID("Owner")
         }
 
         val holderGetter =
