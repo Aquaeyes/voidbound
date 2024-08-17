@@ -4,6 +4,7 @@ import dev.sterner.common.blockentity.PortableHoleBlockEntity
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
@@ -38,12 +39,13 @@ class PortableHoleBlock(properties: Properties) : BaseEntityBlock(properties) {
     }
 
     fun createWithData(
+        player: Player,
         pos: BlockPos,
         oldState: BlockState,
         oldEntity: BlockEntity?,
         direction: Direction,
         distance: Int
     ): BlockEntity {
-        return PortableHoleBlockEntity(pos, oldState, oldEntity, direction, distance)
+        return PortableHoleBlockEntity(player, pos, oldState, oldEntity, direction, distance)
     }
 }

@@ -11,6 +11,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtUtils
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
@@ -25,8 +26,10 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
     private var duration = maxDuration
     private var distance = 0
     private var direction = Direction.DOWN
+    private var owner: Player? = null
 
     constructor(
+        owner: Player,
         pos: BlockPos,
         oldState: BlockState,
         oldEntity: BlockEntity?,
@@ -37,6 +40,7 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
         this.direction = direction
         this.originalBlockState = oldState
         this.originalBlockEntity = oldEntity
+        this.owner = owner
         notifyUpdate()
     }
 
@@ -51,7 +55,7 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
 
         if (duration == maxDuration - 1 && distance > 1) {
             val nextPos = blockPos.relative(direction)
-            PortableHoleFoci.createHole(level!!, nextPos, direction, distance - 1)
+            PortableHoleFoci.createHole(owner!!, level!!, nextPos, direction, distance - 1)
         }
 
         if (this.duration <= 0) {

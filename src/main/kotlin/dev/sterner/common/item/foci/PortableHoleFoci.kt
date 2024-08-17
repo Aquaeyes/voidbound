@@ -4,6 +4,7 @@ import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.wand.IWandFocus
 import dev.sterner.registry.VoidBoundBlockRegistry
 import dev.sterner.registry.VoidBoundTags
+import eu.pb4.common.protection.api.CommonProtection
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.sounds.SoundEvents
@@ -34,7 +35,7 @@ class PortableHoleFoci : IWandFocus {
                 if (block.`is`(VoidBoundTags.PORTABLE_HOLE_BLACKLIST)) {
                     return
                 }
-                if (!VoidBoundApi.canBlockBreak(level, BlockPos(hx, hy, hz))) {
+                if (!VoidBoundApi.canBlockBreak(level, BlockPos(hx, hy, hz)) || !CommonProtection.canBreakBlock(level, BlockPos(hx, hy, hz), player.gameProfile, player)) {
                     return
                 }
                 if (block.isAir) {
@@ -61,7 +62,7 @@ class PortableHoleFoci : IWandFocus {
                         .relative(perpendiculars.first, x)
                         .relative(perpendiculars.second, y)
 
-                    createHole(level, offsetPos, direction, distance)
+                    createHole(player, level, offsetPos, direction, distance)
                 }
             }
 
@@ -91,9 +92,9 @@ class PortableHoleFoci : IWandFocus {
             }
         }
 
-        fun createHole(level: Level, pos: BlockPos, direction: Direction, distance: Int) {
+        fun createHole(player: Player, level: Level, pos: BlockPos, direction: Direction, distance: Int) {
             val oldState = level.getBlockState(pos)
-            if (oldState.`is`(VoidBoundTags.PORTABLE_HOLE_BLACKLIST) || !VoidBoundApi.canBlockBreak(level, pos)) {
+            if (oldState.`is`(VoidBoundTags.PORTABLE_HOLE_BLACKLIST) || !VoidBoundApi.canBlockBreak(level, pos) || !CommonProtection.canBreakBlock(level, pos, player.gameProfile, player)) {
                 return
             }
             val oldEntity = level.getBlockEntity(pos)
@@ -105,6 +106,7 @@ class PortableHoleFoci : IWandFocus {
             level.removeBlockEntity(pos)
             level.setBlockEntity(
                 VoidBoundBlockRegistry.PORTABLE_HOLE.get().createWithData(
+                    player,
                     pos,
                     oldState,
                     oldEntity,
