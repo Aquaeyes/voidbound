@@ -27,7 +27,7 @@ object VoidBoundParticleTypeRegistry {
         "bubble"
     ) { LodestoneWorldParticleType() }
 
-    fun registerParticleFactory() {
+    fun init() {
         ParticleFactoryRegistry.getInstance().register(
             RIFT_PARTICLE.get()
         ) { sprite: FabricSpriteProvider? ->
