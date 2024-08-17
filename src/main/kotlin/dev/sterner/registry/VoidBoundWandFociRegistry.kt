@@ -13,7 +13,8 @@ import net.minecraft.resources.ResourceKey
 
 object VoidBoundWandFociRegistry {
 
-    private val WAND_FOCUS_KEY: ResourceKey<Registry<IWandFocus>> = ResourceKey.createRegistryKey(VoidBound.id("wand_focus"))
+    private val WAND_FOCUS_KEY: ResourceKey<Registry<IWandFocus>> =
+        ResourceKey.createRegistryKey(VoidBound.id("wand_focus"))
     val WAND_FOCUS: Registry<IWandFocus> = FabricRegistryBuilder.createSimple(WAND_FOCUS_KEY).buildAndRegister()
 
     val WAND_FOCI: LazyRegistrar<IWandFocus> = LazyRegistrar.create(WAND_FOCUS, VoidBound.modid)

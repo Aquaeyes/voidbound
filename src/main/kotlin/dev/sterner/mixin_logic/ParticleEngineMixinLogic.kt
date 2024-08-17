@@ -4,16 +4,13 @@ import com.sammy.malum.common.entity.nitrate.AbstractNitrateEntity
 import com.sammy.malum.visual_effects.SpiritLightSpecs
 import dev.sterner.api.VoidBoundApi.canPlayerBreakBlock
 import dev.sterner.api.util.VoidBoundPosUtils
-import dev.sterner.mixin.client.ParticleEngineMixin
 import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
-import org.spongepowered.asm.mixin.Unique
 import team.lodestar.lodestone.helpers.RandomHelper
 import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry
 import team.lodestar.lodestone.systems.easing.Easing
@@ -39,7 +36,7 @@ object ParticleEngineMixinLogic {
     operator fun Vec3.component3() = this.z
 
 
-    fun logic(level: Level, pos: BlockPos, blockState: BlockState, random: RandomSource, side: Direction) : Boolean {
+    fun logic(level: Level, pos: BlockPos, blockState: BlockState, random: RandomSource, side: Direction): Boolean {
         if (Minecraft.getInstance().player != null && !canPlayerBreakBlock(
                 level,
                 Minecraft.getInstance().player!!, pos

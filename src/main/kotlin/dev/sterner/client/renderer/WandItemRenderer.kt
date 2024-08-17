@@ -5,7 +5,6 @@ import com.sammy.malum.client.RenderUtils
 import dev.sterner.VoidBound
 import dev.sterner.client.VoidBoundTokens
 import dev.sterner.client.model.FociModel
-import dev.sterner.client.model.GolemCoreModel
 import dev.sterner.client.model.WandItemModel
 import dev.sterner.registry.VoidBoundWandFociRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer
@@ -70,7 +69,17 @@ class WandItemRenderer : DynamicItemRenderer {
 
             fociModel?.renderToBuffer(
                 matrices,
-                vertexConsumers.getBuffer(RenderType.entityTranslucent(VoidBound.id("textures/models/${ResourceLocation.tryParse(focusName!!)!!.path}.png"))),
+                vertexConsumers.getBuffer(
+                    RenderType.entityTranslucent(
+                        VoidBound.id(
+                            "textures/models/${
+                                ResourceLocation.tryParse(
+                                    focusName!!
+                                )!!.path
+                            }.png"
+                        )
+                    )
+                ),
                 light,
                 overlay,
                 1f,

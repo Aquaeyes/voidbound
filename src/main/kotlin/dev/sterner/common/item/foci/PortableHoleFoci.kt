@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
-import java.util.UUID
+import java.util.*
 
 @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
 class PortableHoleFoci : IWandFocus {
@@ -36,7 +36,13 @@ class PortableHoleFoci : IWandFocus {
                 if (block.`is`(VoidBoundTags.PORTABLE_HOLE_BLACKLIST)) {
                     return
                 }
-                if (!VoidBoundApi.canBlockBreak(level, BlockPos(hx, hy, hz)) || !CommonProtection.canBreakBlock(level, BlockPos(hx, hy, hz), player.gameProfile, player)) {
+                if (!VoidBoundApi.canBlockBreak(level, BlockPos(hx, hy, hz)) || !CommonProtection.canBreakBlock(
+                        level,
+                        BlockPos(hx, hy, hz),
+                        player.gameProfile,
+                        player
+                    )
+                ) {
                     return
                 }
                 if (block.isAir) {
@@ -96,7 +102,11 @@ class PortableHoleFoci : IWandFocus {
         fun createHole(uuid: UUID, level: Level, pos: BlockPos, direction: Direction, distance: Int) {
             val oldState = level.getBlockState(pos)
             val player = level.getPlayerByUUID(uuid)
-            if (oldState.`is`(VoidBoundTags.PORTABLE_HOLE_BLACKLIST) || !VoidBoundApi.canBlockBreak(level, pos) || !CommonProtection.canBreakBlock(level, pos, player?.gameProfile, player)) {
+            if (oldState.`is`(VoidBoundTags.PORTABLE_HOLE_BLACKLIST) || !VoidBoundApi.canBlockBreak(
+                    level,
+                    pos
+                ) || !CommonProtection.canBreakBlock(level, pos, player?.gameProfile, player)
+            ) {
                 return
             }
             val oldEntity = level.getBlockEntity(pos)

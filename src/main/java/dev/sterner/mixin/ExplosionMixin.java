@@ -16,10 +16,12 @@ import java.util.Set;
 @Mixin(Explosion.class)
 public class ExplosionMixin {
 
-    @Shadow @Final private Level level;
+    @Shadow
+    @Final
+    private Level level;
 
     @WrapWithCondition(method = "explode", at = @At(value = "INVOKE", target = "Ljava/util/Set;add(Ljava/lang/Object;)Z"))
-    private boolean voidbound$wardExplosion(Set<BlockPos> instance, Object e, @Local BlockPos blockPos){
+    private boolean voidbound$wardExplosion(Set<BlockPos> instance, Object e, @Local BlockPos blockPos) {
         return VoidBoundApi.INSTANCE.canBlockBreak(this.level, blockPos);
     }
 }

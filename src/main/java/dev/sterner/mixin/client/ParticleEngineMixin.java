@@ -18,12 +18,15 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ParticleEngine.class)
 public class ParticleEngineMixin {
 
-    @Shadow protected ClientLevel level;
+    @Shadow
+    protected ClientLevel level;
 
-    @Shadow @Final private RandomSource random;
+    @Shadow
+    @Final
+    private RandomSource random;
 
     @WrapWithCondition(method = "crack", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/particle/ParticleEngine;add(Lnet/minecraft/client/particle/Particle;)V"))
-    private boolean voidbound$ward(ParticleEngine instance, Particle effect, @Local(argsOnly = true) BlockPos pos, @Local(argsOnly = true) Direction side, @Local BlockState blockState){
+    private boolean voidbound$ward(ParticleEngine instance, Particle effect, @Local(argsOnly = true) BlockPos pos, @Local(argsOnly = true) Direction side, @Local BlockState blockState) {
         return ParticleEngineMixinLogic.INSTANCE.logic(level, pos, blockState, random, side);
     }
 }

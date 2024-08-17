@@ -1,12 +1,6 @@
 package dev.sterner.common.item.tool
 
-import dev.sterner.registry.VoidBoundPacketRegistry
 import dev.sterner.registry.VoidBoundParticleTypeRegistry
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup
-import net.minecraft.core.BlockPos
-import net.minecraft.core.particles.ParticleTypes
-import net.minecraft.server.level.ServerLevel
-import net.minecraft.server.level.ServerPlayer
 import net.minecraft.util.Mth
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
@@ -16,19 +10,15 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Tier
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.Vec3
 import team.lodestar.lodestone.handlers.RenderHandler
 import team.lodestar.lodestone.helpers.RandomHelper
-import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry
 import team.lodestar.lodestone.systems.easing.Easing
 import team.lodestar.lodestone.systems.item.tools.magic.MagicSwordItem
 import team.lodestar.lodestone.systems.particle.SimpleParticleOptions
 import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
 import team.lodestar.lodestone.systems.particle.data.GenericParticleData
 import team.lodestar.lodestone.systems.particle.render_types.LodestoneWorldParticleRenderType
-import team.lodestar.lodestone.systems.particle.world.options.LodestoneTerrainParticleOptions
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -122,7 +112,10 @@ class SwordOfTheZephyrItem(
 
             builder
                 .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
-                .setTransparencyData(GenericParticleData.create(0f, 0.2f, 0f).setEasing(Easing.SINE_IN, Easing.QUAD_IN).setCoefficient(3.5f).build())
+                .setTransparencyData(
+                    GenericParticleData.create(0f, 0.2f, 0f).setEasing(Easing.SINE_IN, Easing.QUAD_IN)
+                        .setCoefficient(3.5f).build()
+                )
                 .setRenderType(LodestoneWorldParticleRenderType.TRANSPARENT)
                 .setGravityStrength(0f)
                 .setFrictionStrength(0.98f)

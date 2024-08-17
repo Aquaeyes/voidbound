@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientPacketListener
 import net.minecraft.network.FriendlyByteBuf
-import net.minecraft.world.phys.Vec3
 import org.joml.Vector3f
 import team.lodestar.lodestone.handlers.RenderHandler
 import team.lodestar.lodestone.helpers.RandomHelper
@@ -41,7 +40,7 @@ class BubbleParticlePacket(private val motion: Vector3f, private val vector3f: V
                     GenericParticleData.create(0.9f, 0.5f, 0f).setEasing(Easing.CUBIC_OUT, Easing.EXPO_IN).build()
                 )
                 .setScaleData(scaleData)
-                .setColorData(ColorParticleData.create(Color(100,100,255).brighter()).build())
+                .setColorData(ColorParticleData.create(Color(100, 100, 255).brighter()).build())
                 .setLifetime(10)
                 .setLifeDelay(2)
                 .enableNoClip()

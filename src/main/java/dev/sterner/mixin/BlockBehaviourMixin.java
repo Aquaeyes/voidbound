@@ -4,7 +4,6 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import dev.sterner.api.VoidBoundApi;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -16,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class BlockBehaviourMixin {
 
     @ModifyReturnValue(method = "getDestroyProgress", at = @At("RETURN"))
-    private float voidbound$ward(float original, @Local(argsOnly = true) BlockState state, @Local(argsOnly = true) Player player, @Local(argsOnly = true) BlockGetter level, @Local(argsOnly = true) BlockPos pos){
+    private float voidbound$ward(float original, @Local(argsOnly = true) BlockState state, @Local(argsOnly = true) Player player, @Local(argsOnly = true) BlockGetter level, @Local(argsOnly = true) BlockPos pos) {
         if (!VoidBoundApi.INSTANCE.canPlayerBreakBlock(player.level(), player, pos)) {
             return 0f;
         }

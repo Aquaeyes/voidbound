@@ -54,9 +54,14 @@ abstract class AbstractFociItem(val foci: IWandFocus, properties: Properties) : 
 
         val gameTime = level.gameTime + partialTick
         val rand = Minecraft.getInstance().level!!.getRandom()
-        val spinParticleData = SpinParticleData.createRandomDirection(rand, 0f, (if (level.random.nextBoolean()) 1 else -2).toFloat()).setSpinOffset(0.025f * gameTime % 6.28f).setEasing(Easing.EXPO_IN_OUT).build()
+        val spinParticleData =
+            SpinParticleData.createRandomDirection(rand, 0f, (if (level.random.nextBoolean()) 1 else -2).toFloat())
+                .setSpinOffset(0.025f * gameTime % 6.28f).setEasing(Easing.EXPO_IN_OUT).build()
         ScreenParticleBuilder.create(LodestoneScreenParticleRegistry.STAR, target)
-            .setScaleData(GenericParticleData.create(1.2f * intensity + rand.nextFloat() * 0.1f * intensity, 0f).setEasing(Easing.SINE_IN_OUT, Easing.BOUNCE_IN_OUT).build())
+            .setScaleData(
+                GenericParticleData.create(1.2f * intensity + rand.nextFloat() * 0.1f * intensity, 0f)
+                    .setEasing(Easing.SINE_IN_OUT, Easing.BOUNCE_IN_OUT).build()
+            )
             .setTransparencyData(GenericParticleData.create(0.1f, 0.6f, 0f).setEasing(Easing.SINE_IN_OUT).build())
             .setColorData(ColorParticleData.create(color(), endColor()).setCoefficient(2f).build())
             .setSpinData(spinParticleData)
@@ -67,7 +72,10 @@ abstract class AbstractFociItem(val foci: IWandFocus, properties: Properties) : 
             .spawnOnStack(0.0, 0.0)
 
         ScreenParticleBuilder.create(LodestoneScreenParticleRegistry.WISP, target)
-            .setScaleData(GenericParticleData.create(0.8f * intensity + rand.nextFloat() * 0.6f * intensity, 0f).setEasing(Easing.EXPO_OUT).build())
+            .setScaleData(
+                GenericParticleData.create(0.8f * intensity + rand.nextFloat() * 0.6f * intensity, 0f)
+                    .setEasing(Easing.EXPO_OUT).build()
+            )
             .setTransparencyData(GenericParticleData.create(0.1f, 0.2f, 0f).setEasing(Easing.SINE_IN_OUT).build())
             .setColorData(ColorParticleData.create(color(), endColor().darker()).setCoefficient(1.25f).build())
             .setSpinData(spinParticleData)

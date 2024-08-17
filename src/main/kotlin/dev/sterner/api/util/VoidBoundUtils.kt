@@ -120,6 +120,12 @@ object VoidBoundUtils {
         val reg = BuiltInRegistries.ENCHANTMENT.getKey(enchantment)
         val list: EnchantSpiritDataReloadListener.EnchantingData? = EnchantSpiritDataReloadListener.ENCHANTING_DATA[reg]
 
-        return list?.texture ?: VoidBound.id("textures/gui/enchantment/${BuiltInRegistries.ENCHANTMENT.getKey(enchantment)?.path}.png")
+        return list?.texture ?: VoidBound.id(
+            "textures/gui/enchantment/${
+                BuiltInRegistries.ENCHANTMENT.getKey(
+                    enchantment
+                )?.path
+            }.png"
+        )
     }
 }

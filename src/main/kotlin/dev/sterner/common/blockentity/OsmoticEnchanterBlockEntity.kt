@@ -175,8 +175,8 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             false
         )
         if (player != null) {
-            val d: Double = player.x - (blockPos.getX().toDouble() + 0.5)
-            val e: Double = player.z - (blockPos.getZ().toDouble() + 0.5)
+            val d: Double = player.x - (blockPos.x.toDouble() + 0.5)
+            val e: Double = player.z - (blockPos.z.toDouble() + 0.5)
             tRot = Mth.atan2(e, d).toFloat()
             open += 0.1f
             if (open < 0.5f || RANDOM.nextInt(40) == 0) {
@@ -360,7 +360,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         super.load(compound)
     }
 
-    companion object{
+    companion object {
         val RANDOM: RandomSource = RandomSource.create()
     }
 }

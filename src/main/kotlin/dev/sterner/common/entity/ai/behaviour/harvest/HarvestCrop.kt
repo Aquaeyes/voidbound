@@ -1,6 +1,5 @@
 package dev.sterner.common.entity.ai.behaviour.harvest
 
-import com.mojang.datafixers.util.Pair
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import dev.sterner.registry.VoidBoundMemoryTypeRegistry
 import net.minecraft.core.BlockPos
@@ -19,7 +18,12 @@ class HarvestCrop : ExtendedBehaviour<SoulSteelGolemEntity>() {
     private var crop: com.mojang.datafixers.util.Pair<BlockPos, BlockState>? = null
 
     override fun getMemoryRequirements(): MutableList<com.mojang.datafixers.util.Pair<MemoryModuleType<*>, MemoryStatus>> {
-        return mutableListOf(com.mojang.datafixers.util.Pair.of(VoidBoundMemoryTypeRegistry.NEARBY_CROPS.get(), MemoryStatus.VALUE_PRESENT))
+        return mutableListOf(
+            com.mojang.datafixers.util.Pair.of(
+                VoidBoundMemoryTypeRegistry.NEARBY_CROPS.get(),
+                MemoryStatus.VALUE_PRESENT
+            )
+        )
     }
 
     override fun start(entity: SoulSteelGolemEntity) {

@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 
 object VoidBoundModelLayers {
 
-    fun init(){
+    fun init() {
         EntityModelLayerRegistry.registerModelLayer(SoulSteelGolemEntityModel.LAYER_LOCATION) { SoulSteelGolemEntityModel.createBodyLayer() }
         EntityModelLayerRegistry.registerModelLayer(GolemCoreModel.LAYER_LOCATION) { GolemCoreModel.createBodyLayer() }
         EntityModelLayerRegistry.registerModelLayer(FociModel.LAYER_LOCATION) { FociModel.createBodyLayer() }

@@ -63,16 +63,19 @@ class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDama
 
                     if (!level.isClientSide) {
                         for (player in PlayerLookup.tracking(e)) {
-                            for (i in 0 .. 5) {
+                            for (i in 0..5) {
                                 val pos = Vector3f(
                                     e.x.toFloat() + (level.random.nextFloat() - level.random.nextFloat()) * 0.2f,
                                     e.y.toFloat() + e.bbHeight + (level.random.nextFloat() - level.random.nextFloat()) * 0.2f,
                                     e.z.toFloat() + (level.random.nextFloat() - level.random.nextFloat()) * 0.2f
                                 )
-                                VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(BubbleParticlePacket(
-                                    Vector3f(
-                                        motion.x.toFloat(), motion.y.toFloat(), motion.z.toFloat()
-                                    ), pos), player)
+                                VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(
+                                    BubbleParticlePacket(
+                                        Vector3f(
+                                            motion.x.toFloat(), motion.y.toFloat(), motion.z.toFloat()
+                                        ), pos
+                                    ), player
+                                )
                             }
                         }
                     }
@@ -95,7 +98,13 @@ class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDama
 
                     if (level is ServerLevel) {
                         for (playerPart in PlayerLookup.tracking(level, pos)) {
-                            VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(AxeOfTheStreamParticlePacket(level.getBlockState(pos), pos), playerPart)
+                            VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(
+                                AxeOfTheStreamParticlePacket(
+                                    level.getBlockState(
+                                        pos
+                                    ), pos
+                                ), playerPart
+                            )
                         }
                     }
 

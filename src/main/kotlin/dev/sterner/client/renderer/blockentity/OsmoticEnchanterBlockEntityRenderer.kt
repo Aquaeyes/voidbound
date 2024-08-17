@@ -11,10 +11,8 @@ import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
-import net.minecraft.client.renderer.texture.OverlayTexture
 import net.minecraft.client.resources.model.Material
 import net.minecraft.util.Mth
-import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
 import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntityInventory
@@ -102,13 +100,19 @@ class OsmoticEnchanterBlockEntityRenderer(ctx: BlockEntityRendererProvider.Conte
         val h = blockEntity.oRot + g * partialTick
         poseStack.mulPose(Axis.YP.rotation((Math.PI.toFloat() / 2) - h))
         poseStack.mulPose(Axis.XP.rotationDegrees(-20.0f))
-        poseStack.translate(0.0,-0.8, 0.4)
+        poseStack.translate(0.0, -0.8, 0.4)
         val i = Mth.lerp(partialTick, blockEntity.oFlip, blockEntity.flip)
         val leftPageAngle = Mth.frac(i + 0.25f) * 1.6f - 0.3f
         val rightPageAngle = Mth.frac(i + 0.75f) * 1.6f - 0.3f
         val l = Mth.lerp(partialTick, blockEntity.oOpen, blockEntity.open)
 
-        this.bookModel.setupAnim(total(), Mth.clamp(leftPageAngle, 0.0f, 1.0f), Mth.clamp(rightPageAngle, 0.0f, 1.0f), l, false)
+        this.bookModel.setupAnim(
+            total(),
+            Mth.clamp(leftPageAngle, 0.0f, 1.0f),
+            Mth.clamp(rightPageAngle, 0.0f, 1.0f),
+            l,
+            false
+        )
 
         //this.bookModel.setupAnim(f, Mth.clamp(j, 0.0f, 1.0f), Mth.clamp(k, 0.0f, 1.0f), l)
         val mat: Material = texture

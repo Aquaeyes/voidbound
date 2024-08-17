@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import com.mojang.datafixers.util.Pair
 import dev.sterner.VoidBound
 import net.minecraft.client.renderer.ShaderInstance
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.resources.ResourceProvider
 import team.lodestar.lodestone.events.LodestoneShaderRegistrationEvent
 import team.lodestar.lodestone.registry.client.LodestoneShaderRegistry

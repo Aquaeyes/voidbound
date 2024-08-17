@@ -3,7 +3,6 @@ package dev.sterner.registry
 import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
 import dev.sterner.common.item.*
-import dev.sterner.common.item.foci.AbstractFociItem
 import dev.sterner.common.item.foci.PortableHoleFociItem
 import dev.sterner.common.item.foci.WardingFociItem
 import dev.sterner.common.item.tool.*
@@ -27,9 +26,10 @@ object VoidBoundItemRegistry {
         HallowedMonocleItem(Item.Properties())
     }
 
-    val HALLOWED_GOLD_CAPPED_RUNEWOOD_WAND: RegistryObject<WandItem> = ITEMS.register("hallowed_gold_capped_runewood_wand") {
-        WandItem(Item.Properties())
-    }
+    val HALLOWED_GOLD_CAPPED_RUNEWOOD_WAND: RegistryObject<WandItem> =
+        ITEMS.register("hallowed_gold_capped_runewood_wand") {
+            WandItem(Item.Properties())
+        }
 
     val CRYSTAL_FOCI: RegistryObject<Item> = ITEMS.register("crystal_foci") {
         Item(Item.Properties())

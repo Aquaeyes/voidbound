@@ -11,7 +11,8 @@ import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 
-class SelectFociWidget(var screen: FociSelectionScreen, x: Int, y: Int, width: Int, height: Int
+class SelectFociWidget(
+    var screen: FociSelectionScreen, x: Int, y: Int, width: Int, height: Int
 ) : AbstractWidget(x, y, width, height, Component.empty()) {
 
     var foci: ItemStack? = null
@@ -22,7 +23,7 @@ class SelectFociWidget(var screen: FociSelectionScreen, x: Int, y: Int, width: I
         if (mainHandItem?.item is WandItem && foci != null) {
             val wandItem = mainHandItem.item as WandItem
             wandItem.updateSelectedFoci(mainHandItem, foci!!)
-           // wandItem.bindFoci(mainHandItem, foci!!)
+            // wandItem.bindFoci(mainHandItem, foci!!)
             VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(SelectFociPacket(screen.player!!.uuid, foci!!))
         }
         Minecraft.getInstance().setScreen(null)

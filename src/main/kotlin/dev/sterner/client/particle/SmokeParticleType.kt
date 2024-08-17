@@ -1,6 +1,5 @@
 package dev.sterner.client.particle
 
-import com.sammy.malum.client.particles.spiritflame.SpiritFlameParticle
 import net.fabricmc.fabric.impl.client.particle.FabricSpriteProviderImpl
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.particle.Particle

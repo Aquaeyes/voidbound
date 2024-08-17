@@ -4,13 +4,11 @@ import dev.emi.trinkets.api.client.TrinketRendererRegistry
 import dev.sterner.client.renderer.HallowedMonocleRenderer
 import dev.sterner.client.renderer.WandItemRenderer
 import dev.sterner.client.screen.OsmoticEnchanterScreen
-import dev.sterner.listener.EnchantSpiritDataReloadListener
 import dev.sterner.listener.EnchantSpiritDataReloadListenerFabricImpl
 import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.client.rendering.v1.*
-import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.minecraft.client.gui.screens.MenuScreens
 import net.minecraft.client.renderer.item.ItemProperties
@@ -43,7 +41,8 @@ object VoidBound : ModInitializer, ClientModInitializer {
         VoidBoundCreativeTabRegistry.init()
         VoidBoundEvents.init()
 
-        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(EnchantSpiritDataReloadListenerFabricImpl())
+        ResourceManagerHelper.get(PackType.SERVER_DATA)
+            .registerReloadListener(EnchantSpiritDataReloadListenerFabricImpl())
     }
 
     override fun onInitializeClient() {

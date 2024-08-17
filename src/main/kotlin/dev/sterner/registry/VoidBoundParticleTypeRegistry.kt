@@ -1,7 +1,5 @@
 package dev.sterner.registry
 
-import com.sammy.malum.client.particles.spiritflame.SpiritFlameParticleType
-import com.sammy.malum.registry.client.ParticleRegistry
 import dev.sterner.VoidBound
 import dev.sterner.client.particle.RiftParticleType
 import dev.sterner.client.particle.SmokeParticleType
@@ -15,7 +13,8 @@ import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticl
 
 object VoidBoundParticleTypeRegistry {
 
-    val PARTICLES: LazyRegistrar<ParticleType<*>> = LazyRegistrar.create(BuiltInRegistries.PARTICLE_TYPE, VoidBound.modid)
+    val PARTICLES: LazyRegistrar<ParticleType<*>> =
+        LazyRegistrar.create(BuiltInRegistries.PARTICLE_TYPE, VoidBound.modid)
 
     var RIFT_PARTICLE: RegistryObject<RiftParticleType> = PARTICLES.register(
         "rift"

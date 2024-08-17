@@ -34,7 +34,7 @@ class FociSelectionScreen(title: Component) : Screen(title) {
             val content = wandItem.getContents(mainItem)
             for ((index, foci) in content.toList().withIndex()) {
                 val fociWidget = if (index < 6) {
-                   SelectFociWidget(this, xInMenu + 16 * index + 8, yInMenu + 8, 16, 16)
+                    SelectFociWidget(this, xInMenu + 16 * index + 8, yInMenu + 8, 16, 16)
                 } else {
                     SelectFociWidget(this, xInMenu + 16 * index + 8, yInMenu + 8 + 16, 16, 16)
                 }
@@ -47,7 +47,19 @@ class FociSelectionScreen(title: Component) : Screen(title) {
     override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
         val k = (this.width - this.imageWidth) / 2
         val l = (this.height - this.imageHeight) / 2
-        guiGraphics.blit(backgroundTexture, k, l, this.imageWidth, this.imageHeight, 0f, 0f, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight)
+        guiGraphics.blit(
+            backgroundTexture,
+            k,
+            l,
+            this.imageWidth,
+            this.imageHeight,
+            0f,
+            0f,
+            this.imageWidth,
+            this.imageHeight,
+            this.imageWidth,
+            this.imageHeight
+        )
         super.render(guiGraphics, mouseX, mouseY, partialTick)
     }
 

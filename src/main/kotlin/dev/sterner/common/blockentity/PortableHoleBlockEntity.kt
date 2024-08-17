@@ -11,11 +11,10 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtUtils
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import java.util.UUID
+import java.util.*
 
 class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEntity(
     VoidBoundBlockEntityTypeRegistry.PORTABLE_HOLE.get(), pos,

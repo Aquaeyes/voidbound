@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class ItemMixin {
 
     @ModifyReturnValue(method = "canAttackBlock", at = @At("RETURN"))
-    private boolean voidbound$ward(boolean original, @Local(argsOnly = true) BlockState state, @Local(argsOnly = true) Level level, @Local(argsOnly = true) BlockPos pos, @Local(argsOnly = true) Player player){
+    private boolean voidbound$ward(boolean original, @Local(argsOnly = true) BlockState state, @Local(argsOnly = true) Level level, @Local(argsOnly = true) BlockPos pos, @Local(argsOnly = true) Player player) {
         if (!VoidBoundApi.INSTANCE.canPlayerBreakBlock(level, player, pos)) {
             return false;
         }

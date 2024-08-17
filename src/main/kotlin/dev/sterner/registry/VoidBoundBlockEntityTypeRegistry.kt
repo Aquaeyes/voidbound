@@ -13,44 +13,49 @@ object VoidBoundBlockEntityTypeRegistry {
     val BLOCK_ENTITY_TYPES: LazyRegistrar<BlockEntityType<*>> =
         LazyRegistrar.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, VoidBound.modid)
 
-    var SPIRIT_BINDER: RegistryObject<BlockEntityType<SpiritBinderBlockEntity>> = BLOCK_ENTITY_TYPES.register("spirit_binder") {
-        BlockEntityType.Builder.of(
-            { pos, state -> SpiritBinderBlockEntity(pos, state) },
-            VoidBoundBlockRegistry.SPIRIT_BINDER.get(),
-        )
-            .build(null)
-    }
+    var SPIRIT_BINDER: RegistryObject<BlockEntityType<SpiritBinderBlockEntity>> =
+        BLOCK_ENTITY_TYPES.register("spirit_binder") {
+            BlockEntityType.Builder.of(
+                { pos, state -> SpiritBinderBlockEntity(pos, state) },
+                VoidBoundBlockRegistry.SPIRIT_BINDER.get(),
+            )
+                .build(null)
+        }
 
-    var SPIRIT_BINDER_STABILIZER: RegistryObject<BlockEntityType<SpiritStabilizerBlockEntity>> = BLOCK_ENTITY_TYPES.register("spirit_stabilizer") {
-        BlockEntityType.Builder.of(
-            { pos, state -> SpiritStabilizerBlockEntity(pos, state) },
-            VoidBoundBlockRegistry.SPIRIT_STABILIZER.get(),
-        )
-            .build(null)
-    }
+    var SPIRIT_BINDER_STABILIZER: RegistryObject<BlockEntityType<SpiritStabilizerBlockEntity>> =
+        BLOCK_ENTITY_TYPES.register("spirit_stabilizer") {
+            BlockEntityType.Builder.of(
+                { pos, state -> SpiritStabilizerBlockEntity(pos, state) },
+                VoidBoundBlockRegistry.SPIRIT_STABILIZER.get(),
+            )
+                .build(null)
+        }
 
-    var DESTABILIZED_SPIRIT_RIFT: RegistryObject<BlockEntityType<SpiritRiftBlockEntity>> = BLOCK_ENTITY_TYPES.register("destabilized_spirit_rift") {
-        BlockEntityType.Builder.of(
-            { pos, state -> SpiritRiftBlockEntity(pos, state) },
-            VoidBoundBlockRegistry.SPIRIT_RIFT.get()
-        )
-            .build(null)
-    }
+    var DESTABILIZED_SPIRIT_RIFT: RegistryObject<BlockEntityType<SpiritRiftBlockEntity>> =
+        BLOCK_ENTITY_TYPES.register("destabilized_spirit_rift") {
+            BlockEntityType.Builder.of(
+                { pos, state -> SpiritRiftBlockEntity(pos, state) },
+                VoidBoundBlockRegistry.SPIRIT_RIFT.get()
+            )
+                .build(null)
+        }
 
 
-    var PORTABLE_HOLE: RegistryObject<BlockEntityType<PortableHoleBlockEntity>> = BLOCK_ENTITY_TYPES.register("portable_hole") {
-        BlockEntityType.Builder.of(
-            { pos, state -> PortableHoleBlockEntity(pos, state) },
-            VoidBoundBlockRegistry.PORTABLE_HOLE.get()
-        )
-            .build(null)
-    }
+    var PORTABLE_HOLE: RegistryObject<BlockEntityType<PortableHoleBlockEntity>> =
+        BLOCK_ENTITY_TYPES.register("portable_hole") {
+            BlockEntityType.Builder.of(
+                { pos, state -> PortableHoleBlockEntity(pos, state) },
+                VoidBoundBlockRegistry.PORTABLE_HOLE.get()
+            )
+                .build(null)
+        }
 
-    var OSMOTIC_ENCHANTER: RegistryObject<BlockEntityType<OsmoticEnchanterBlockEntity>> = BLOCK_ENTITY_TYPES.register("osmotic_enchanter") {
-        BlockEntityType.Builder.of(
-            { pos, state -> OsmoticEnchanterBlockEntity(pos, state) },
-            VoidBoundBlockRegistry.OSMOTIC_ENCHANTER.get()
-        )
-            .build(null)
-    }
+    var OSMOTIC_ENCHANTER: RegistryObject<BlockEntityType<OsmoticEnchanterBlockEntity>> =
+        BLOCK_ENTITY_TYPES.register("osmotic_enchanter") {
+            BlockEntityType.Builder.of(
+                { pos, state -> OsmoticEnchanterBlockEntity(pos, state) },
+                VoidBoundBlockRegistry.OSMOTIC_ENCHANTER.get()
+            )
+                .build(null)
+        }
 }

@@ -45,9 +45,11 @@ class CrimsonArcherModel(root: ModelPart) : AbstractCrimsonModel<CrimsonArcherEn
                 leftArm.yRot = head.yRot - 0.4f
                 leftArm.zRot = 1.5707964f
             }
+
             AbstractCultistEntity.CrimsonArmPose.CROSSBOW_HOLD -> {
                 AnimationUtils.animateCrossbowHold(this.rightArm, this.leftArm, this.head, true)
             }
+
             AbstractCultistEntity.CrimsonArmPose.CROSSBOW_CHARGE -> {
                 AnimationUtils.animateCrossbowCharge(this.rightArm, this.leftArm, entity, true)
             }

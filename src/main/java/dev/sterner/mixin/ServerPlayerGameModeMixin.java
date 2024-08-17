@@ -17,9 +17,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ServerPlayerGameMode.class)
 public class ServerPlayerGameModeMixin {
 
-    @Shadow @Final protected ServerPlayer player;
+    @Shadow
+    @Final
+    protected ServerPlayer player;
 
-    @Shadow protected ServerLevel level;
+    @Shadow
+    protected ServerLevel level;
 
     @Inject(method = "destroyBlock",
             at = @At(

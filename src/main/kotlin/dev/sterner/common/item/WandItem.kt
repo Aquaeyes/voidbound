@@ -17,7 +17,10 @@ import net.minecraft.world.inventory.ClickAction
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.inventory.tooltip.BundleTooltip
 import net.minecraft.world.inventory.tooltip.TooltipComponent
-import net.minecraft.world.item.*
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Rarity
+import net.minecraft.world.item.UseAnim
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
@@ -284,7 +287,7 @@ class WandItem(properties: Properties) : Item(
         return 72000
     }
 
-    override fun getUseAnimation(pStack: ItemStack): UseAnim? {
+    override fun getUseAnimation(pStack: ItemStack): UseAnim {
         return UseAnim.BOW
     }
 

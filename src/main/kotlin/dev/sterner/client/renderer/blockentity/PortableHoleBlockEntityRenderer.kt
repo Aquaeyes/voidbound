@@ -4,21 +4,14 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import dev.sterner.common.blockentity.PortableHoleBlockEntity
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.ItemInHandRenderer
-import net.minecraft.client.renderer.LevelRenderer
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
-import net.minecraft.client.renderer.entity.ItemRenderer
-import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.util.Mth
-import net.minecraft.world.item.ArrowItem
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
-import net.minecraft.world.phys.shapes.VoxelShape
 import org.joml.Matrix4f
 
 class PortableHoleBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
@@ -72,30 +65,35 @@ class PortableHoleBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
                     addVertex(vertices, model, x2, y2, z1, 1f, 1f)
                     addVertex(vertices, model, x2, y1, z1, 0f, 1f)
                 }
+
                 Direction.NORTH -> {
                     addVertex(vertices, model, x1, y1, z2, 0f, 0f)
                     addVertex(vertices, model, x2, y1, z2, 1f, 0f)
                     addVertex(vertices, model, x2, y2, z2, 1f, 1f)
                     addVertex(vertices, model, x1, y2, z2, 0f, 1f)
                 }
+
                 Direction.WEST -> {
                     addVertex(vertices, model, x2, y1, z1, 0f, 0f)
                     addVertex(vertices, model, x2, y2, z1, 1f, 0f)
                     addVertex(vertices, model, x2, y2, z2, 1f, 1f)
                     addVertex(vertices, model, x2, y1, z2, 0f, 1f)
                 }
+
                 Direction.EAST -> {
                     addVertex(vertices, model, x1, y1, z1, 0f, 0f)
                     addVertex(vertices, model, x1, y1, z2, 1f, 0f)
                     addVertex(vertices, model, x1, y2, z2, 1f, 1f)
                     addVertex(vertices, model, x1, y2, z1, 0f, 1f)
                 }
+
                 Direction.DOWN -> {
                     addVertex(vertices, model, x1, y2, z1, 0f, 0f)
                     addVertex(vertices, model, x1, y2, z2, 1f, 0f)
                     addVertex(vertices, model, x2, y2, z2, 1f, 1f)
                     addVertex(vertices, model, x2, y2, z1, 0f, 1f)
                 }
+
                 Direction.UP -> {
                     addVertex(vertices, model, x1, y1, z1, 0f, 0f)
                     addVertex(vertices, model, x2, y1, z1, 1f, 0f)

@@ -36,15 +36,18 @@ class AxeOfTheStreamParticlePacket(data: CompoundTag) : LodestoneClientNBTPacket
         if (client.level != null) {
             val level = client.level!!
 
-            val holderGetter = (if (client.level != null) level.holderLookup(Registries.BLOCK) else BuiltInRegistries.BLOCK.asLookup()) as HolderGetter<Block?>
+            val holderGetter =
+                (if (client.level != null) level.holderLookup(Registries.BLOCK) else BuiltInRegistries.BLOCK.asLookup()) as HolderGetter<Block?>
 
             val dir = Direction.byName(data.getString("Direction"))
             val state = NbtUtils.readBlockState(holderGetter, data.getCompound("BlockState"))
             val pos = NbtUtils.readBlockPos(data.getCompound("BlockPos"))
 
             for (i in 0..5) {
-                val coordPos = VoidBoundPosUtils.getFaceCoords(level, state, pos,  getPlayerLookDirection(client.player!!).opposite)
-                val lightSpecs: ParticleEffectSpawner = SpiritLightSpecs.spiritLightSpecs(level, coordPos, SpiritTypeRegistry.AQUEOUS_SPIRIT)
+                val coordPos =
+                    VoidBoundPosUtils.getFaceCoords(level, state, pos, getPlayerLookDirection(client.player!!).opposite)
+                val lightSpecs: ParticleEffectSpawner =
+                    SpiritLightSpecs.spiritLightSpecs(level, coordPos, SpiritTypeRegistry.AQUEOUS_SPIRIT)
                 lightSpecs.builder.multiplyLifetime(1.5f)
                 lightSpecs.bloomBuilder.multiplyLifetime(1.5f)
                 lightSpecs.spawnParticles()

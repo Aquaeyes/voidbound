@@ -14,7 +14,7 @@ object VoidBoundKeyBindings {
         KeyMapping("key.voidbound.foci_select", InputConstants.KEY_F, "category.voidbound")
     )
 
-    fun init(){
+    fun init() {
         ClientTickEvents.END_CLIENT_TICK.register(::listenFociKey)
     }
 

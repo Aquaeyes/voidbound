@@ -19,7 +19,6 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.levelgen.structure.Structure
 import net.minecraft.world.phys.Vec3
-import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin
 import kotlin.math.acos
 
 

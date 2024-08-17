@@ -77,7 +77,13 @@ object CrimsonRitesRenderer {
         val leftPageAngle = Mth.frac(0 + 0.25f) * 1.6f - 0.3f
         val rightPageAngle = Mth.frac(0 + 0.75f) * 1.6f - 0.3f
         val model = getModel()
-        model.setupAnim(total(), Mth.clamp(leftPageAngle, 0.0f, 1.0f), Mth.clamp(rightPageAngle, 0.0f, 1.0f), opening, true)
+        model.setupAnim(
+            total(),
+            Mth.clamp(leftPageAngle, 0.0f, 1.0f),
+            Mth.clamp(rightPageAngle, 0.0f, 1.0f),
+            opening,
+            true
+        )
 
         val mat: Material = texture
         val buffer = mat.buffer(buffers, RenderType::entitySolid)

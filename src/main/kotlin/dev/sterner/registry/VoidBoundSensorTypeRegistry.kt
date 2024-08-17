@@ -12,7 +12,8 @@ import net.minecraft.world.entity.ai.sensing.SensorType
 
 object VoidBoundSensorTypeRegistry {
 
-    var SENSOR_TYPES: LazyRegistrar<SensorType<*>> = LazyRegistrar.create(BuiltInRegistries.SENSOR_TYPE, VoidBound.modid)
+    var SENSOR_TYPES: LazyRegistrar<SensorType<*>> =
+        LazyRegistrar.create(BuiltInRegistries.SENSOR_TYPE, VoidBound.modid)
 
     var GOLEM_GATHER_SENSOR: RegistryObject<SensorType<GolemGatherSensor>> = SENSOR_TYPES.register("golem_gather") {
         SensorType(::GolemGatherSensor)

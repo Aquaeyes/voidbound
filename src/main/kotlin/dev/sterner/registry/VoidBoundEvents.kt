@@ -18,7 +18,7 @@ import net.fabricmc.fabric.api.event.player.UseEntityCallback
 
 object VoidBoundEvents {
 
-    fun init(){
+    fun init() {
         UseBlockCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useBlock)
         UseEntityCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useEntity)
         BlockEvents.BLOCK_BREAK.register(VoidBoundWorldComponent.Companion::removeWard)
@@ -26,7 +26,7 @@ object VoidBoundEvents {
     }
 
     @Environment(EnvType.CLIENT)
-    fun clientInit(){
+    fun clientInit() {
         MalumCodexEvents.EVENT.register(MalumCodexEvent::addVoidBoundEntries)
         MalumCodexEvents.VOID_EVENT.register(MalumCodexEvent::addVoidBoundVoidEntries)
         WorldRenderEvents.AFTER_TRANSLUCENT.register(VoidBoundPlayerComponent.Companion::renderCubeAtPos)

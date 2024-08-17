@@ -16,7 +16,6 @@ import net.minecraft.nbt.*
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.CompassItem
 import net.minecraft.world.level.Level
 import java.util.*
 
@@ -40,7 +39,7 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
         // Check if the cache is invalid
         if (cachedPositions == null) {
             // Recompute the positions and update the cache
-            cachedPositions =  posOwnerMap.filter { it.value == player.uuid }
+            cachedPositions = posOwnerMap.filter { it.value == player.uuid }
                 .filter { it.key.dimension() == level.dimension() }
                 .map { it.key.pos() }
         }
@@ -186,9 +185,12 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
                     val wand = localPlayer.mainHandItem
                     if (wand.tag?.contains("FocusName") == true) {
                         val focusName = wand.tag?.getString("FocusName")
-                        val focus = VoidBoundWandFociRegistry.WAND_FOCUS.getOptional(focusName?.let { ResourceLocation.tryParse(it) })
+                        val focus = VoidBoundWandFociRegistry.WAND_FOCUS.getOptional(focusName?.let {
+                            ResourceLocation.tryParse(it)
+                        })
                         if (focus.isPresent && focus.get() is WardingFoci) {
-                            val levelComp = VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(localPlayer.level())
+                            val levelComp =
+                                VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(localPlayer.level())
 
                             val poses: List<BlockPos> = levelComp.getAllPos(localPlayer)
                             for (pos in poses) {

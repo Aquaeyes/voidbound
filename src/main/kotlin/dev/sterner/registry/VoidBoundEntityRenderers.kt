@@ -6,8 +6,8 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers
 
 object VoidBoundEntityRenderers {
-    
-    fun init(){
+
+    fun init() {
         BlockEntityRenderers.register(
             VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER.get(),
             ::SpiritBinderBlockEntityRenderer

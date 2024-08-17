@@ -8,12 +8,10 @@ import com.sammy.malum.client.screen.codex.pages.recipe.SpiritInfusionPage
 import com.sammy.malum.client.screen.codex.pages.text.HeadlineTextPage
 import com.sammy.malum.client.screen.codex.screens.ArcanaProgressionScreen
 import com.sammy.malum.client.screen.codex.screens.VoidProgressionScreen
-import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.VoidBound.modid
 import dev.sterner.api.book.ProgressionEntryObjectExtension
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.nbt.CompoundTag
-import java.util.function.Consumer
 
 object MalumCodexEvent {
 
@@ -42,7 +40,8 @@ object MalumCodexEvent {
     )
 
     fun addVoidBoundVoidEntries(screen: VoidProgressionScreen?, entries: MutableList<PlacedBookEntry>) {
-        screen?.addEntry("void.portable_hole", -6, 9
+        screen?.addEntry(
+            "void.portable_hole", -6, 9
         ) { b: PlacedBookEntryBuilder ->
             b
                 .withTraceFragmentEntry()
@@ -60,7 +59,8 @@ object MalumCodexEvent {
                 .afterUmbralCrystal()
         }
 
-        screen?.addEntry("void.warding", -7, 8
+        screen?.addEntry(
+            "void.warding", -7, 8
         ) { b: PlacedBookEntryBuilder ->
             b
                 .withTraceFragmentEntry()
@@ -78,7 +78,8 @@ object MalumCodexEvent {
                 .afterUmbralCrystal()
         }
 
-        screen?.addEntry("void.osmotic_enchanter", -7, 10
+        screen?.addEntry(
+            "void.osmotic_enchanter", -7, 10
         ) { b: PlacedBookEntryBuilder ->
             b
                 .withTraceFragmentEntry()
