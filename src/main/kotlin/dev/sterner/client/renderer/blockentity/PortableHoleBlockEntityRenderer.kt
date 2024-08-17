@@ -41,7 +41,6 @@ class PortableHoleBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
         val state: BlockState =
             Minecraft.getInstance().level!!.getBlockState(entity.blockPos.relative(direction.opposite))
 
-
         return !state.isAir
     }
 
@@ -50,51 +49,51 @@ class PortableHoleBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
         model: Matrix4f,
         vertices: VertexConsumer,
         aabb: AABB,
-        camX: Float,
-        camY: Float,
-        camZ: Float,
+        x: Float,
+        y: Float,
+        z: Float,
         direction: Direction
     ) {
         if (shouldDrawSide(direction, entity)) {
-            val x1 = (aabb.minX - camX).toFloat()
-            val x2 = (aabb.maxX - camX).toFloat()
-            val y1 = (aabb.minY - camY).toFloat()
-            val y2 = (aabb.maxY - camY).toFloat()
-            val z1 = (aabb.minZ - camZ).toFloat()
-            val z2 = (aabb.maxZ - camZ).toFloat()
+            val x1 = (aabb.minX - x).toFloat()
+            val x2 = (aabb.maxX - x).toFloat()
+            val y1 = (aabb.minY - y).toFloat()
+            val y2 = (aabb.maxY - y).toFloat()
+            val z1 = (aabb.minZ - z).toFloat()
+            val z2 = (aabb.maxZ - z).toFloat()
 
             when (direction) {
-                Direction.SOUTH -> { // Rendering NORTH (minZ)
+                Direction.SOUTH -> {
                     addVertex(vertices, model, x1, y1, z1, 0f, 0f)
                     addVertex(vertices, model, x1, y2, z1, 1f, 0f)
                     addVertex(vertices, model, x2, y2, z1, 1f, 1f)
                     addVertex(vertices, model, x2, y1, z1, 0f, 1f)
                 }
-                Direction.NORTH -> { // Rendering SOUTH (maxZ)
+                Direction.NORTH -> {
                     addVertex(vertices, model, x1, y1, z2, 0f, 0f)
                     addVertex(vertices, model, x2, y1, z2, 1f, 0f)
                     addVertex(vertices, model, x2, y2, z2, 1f, 1f)
                     addVertex(vertices, model, x1, y2, z2, 0f, 1f)
                 }
-                Direction.WEST -> { // Rendering EAST (maxX)
+                Direction.WEST -> {
                     addVertex(vertices, model, x2, y1, z1, 0f, 0f)
                     addVertex(vertices, model, x2, y2, z1, 1f, 0f)
                     addVertex(vertices, model, x2, y2, z2, 1f, 1f)
                     addVertex(vertices, model, x2, y1, z2, 0f, 1f)
                 }
-                Direction.EAST -> { // Fix for WEST (minX)
+                Direction.EAST -> {
                     addVertex(vertices, model, x1, y1, z1, 0f, 0f)
                     addVertex(vertices, model, x1, y1, z2, 1f, 0f)
                     addVertex(vertices, model, x1, y2, z2, 1f, 1f)
                     addVertex(vertices, model, x1, y2, z1, 0f, 1f)
                 }
-                Direction.DOWN -> { // Rendering UP (maxY)
+                Direction.DOWN -> {
                     addVertex(vertices, model, x1, y2, z1, 0f, 0f)
                     addVertex(vertices, model, x1, y2, z2, 1f, 0f)
                     addVertex(vertices, model, x2, y2, z2, 1f, 1f)
                     addVertex(vertices, model, x2, y2, z1, 0f, 1f)
                 }
-                Direction.UP -> { // Fix for DOWN (minY)
+                Direction.UP -> {
                     addVertex(vertices, model, x1, y1, z1, 0f, 0f)
                     addVertex(vertices, model, x2, y1, z1, 1f, 0f)
                     addVertex(vertices, model, x2, y1, z2, 1f, 1f)
@@ -114,12 +113,12 @@ class PortableHoleBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) 
         val camZ = entity.blockPos.z.toFloat()
 
         // Loop through all neighboring positions in each direction
-        for (direction in Direction.values()) {
+        for (direction in Direction.entries) {
             val neighborPos = entity.blockPos.relative(direction.opposite)
             val blockState = entity.level!!.getBlockState(neighborPos)
 
             if (!blockState.`is`(Blocks.AIR)) {
-                val voxelShape = blockState.getShape(entity.level!!, neighborPos)
+                val voxelShape = blockState.getShape(entity.level!!, neighborPos).getFaceShape(direction)
 
                 // Iterate through each AABB part of the voxelShape
                 for (aabb in voxelShape.toAabbs()) {
