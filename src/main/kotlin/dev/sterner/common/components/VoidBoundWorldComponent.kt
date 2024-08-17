@@ -56,17 +56,19 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
         return ownerUuid != null && ownerUuid != player.uuid
     }
 
+    //Time complexity: O(1) on average
     fun hasBlockPos(pos: GlobalPos): Boolean {
         return posOwnerMap.containsKey(pos)
     }
 
+    //Time complexity: O(1) on average
     fun hasBlockPos(player: Player, pos: GlobalPos): Boolean {
         return posOwnerMap[pos] == player.uuid
     }
 
     fun addPos(uuid: UUID, pos: GlobalPos) {
         // Only add the position if it is not already owned
-        if (isPosOwned(pos)) {
+        if (hasBlockPos(pos)) {
             return
         }
 
@@ -92,10 +94,6 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
             // Sync the changes
             VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.sync(level)
         }
-    }
-
-    private fun isPosOwned(pos: GlobalPos): Boolean {
-        return posOwnerMap.contains(pos)
     }
 
     private fun clearCache() {

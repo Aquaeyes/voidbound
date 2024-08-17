@@ -45,6 +45,7 @@ repositories {
 	maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") // Forge Config API Port
 	maven("https://maven.shedaniel.me/")
 	maven("https://dl.cloudsmith.io/public/tslat/sbl/maven/")
+	maven("https://maven.nucleoid.xyz/")
 }
 
 dependencies {
@@ -97,6 +98,8 @@ dependencies {
 	modImplementation("maven.modrinth:fusion-connected-textures:${property("fusion_version")}-fabric-mc${property("minecraft_version")}")
 	modImplementation("net.tslat.smartbrainlib:SmartBrainLib-fabric-${property("minecraft_version")}:${property("smart_brain_lib_version")}")
 
+	modImplementation("eu.pb4:common-protection-api:${property("protection_api_version")}")
+	include("eu.pb4:common-protection-api:${property("protection_api_version")}")
 	//modImplementation("vectorwing:FarmersDelight:${property("farmers_delight_version")}")
 	//modRuntimeOnly("com.simibubi.create:create-fabric-1.20.1:0.5.1-f-build.1417+mc1.20.1")
 }
