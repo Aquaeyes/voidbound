@@ -33,9 +33,6 @@ object VoidBoundPacketRegistry {
         VOID_BOUND_CHANNEL.registerS2CPacket(
             AxeOfTheStreamParticlePacket::class.java, index++
         )
-        VOID_BOUND_CHANNEL.registerS2CPacket(
-            SwordOfTheZephyrParticlePacket::class.java, index++
-        )
 
         //C2S
         VOID_BOUND_CHANNEL.registerC2SPacket(
