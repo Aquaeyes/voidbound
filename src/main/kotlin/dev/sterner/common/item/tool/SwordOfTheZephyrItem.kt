@@ -102,7 +102,7 @@ class SwordOfTheZephyrItem(
 
             stack.hurtAndBreak(
                 1, player
-            ) { player: LivingEntity ->
+            ) { _: LivingEntity ->
                 player.broadcastBreakEvent(
                     player.usedItemHand
                 )

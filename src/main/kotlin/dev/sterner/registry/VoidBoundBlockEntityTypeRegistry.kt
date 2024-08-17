@@ -7,6 +7,7 @@ import io.github.fabricators_of_create.porting_lib.util.RegistryObject
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.entity.BlockEntityType
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 object VoidBoundBlockEntityTypeRegistry {
 
     val BLOCK_ENTITY_TYPES: LazyRegistrar<BlockEntityType<*>> =
