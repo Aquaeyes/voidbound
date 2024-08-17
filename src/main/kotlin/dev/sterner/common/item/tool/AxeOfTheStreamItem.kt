@@ -1,16 +1,11 @@
 package dev.sterner.common.item.tool
 
-import com.sammy.malum.registry.common.SpiritTypeRegistry
-import com.sammy.malum.visual_effects.SpiritLightSpecs
 import dev.sterner.api.util.VoidBoundBlockUtils
-import dev.sterner.api.util.VoidBoundPosUtils
-import dev.sterner.networking.AxeOfTheStreamParticleEffect
+import dev.sterner.networking.AxeOfTheStreamParticlePacket
 import dev.sterner.networking.BubbleParticlePacket
 import dev.sterner.registry.VoidBoundPacketRegistry
 import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
-import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.Mth
@@ -22,17 +17,9 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Tier
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
 import org.joml.Vector3f
-import team.lodestar.lodestone.helpers.DataHelper
-import team.lodestar.lodestone.helpers.RandomHelper
 import team.lodestar.lodestone.systems.item.tools.magic.MagicAxeItem
-import team.lodestar.lodestone.systems.particle.ParticleEffectSpawner
-import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
-import team.lodestar.lodestone.systems.particle.data.GenericParticleData
-import kotlin.math.cos
 
 class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDamage: Float, properties: Properties?) :
     MagicAxeItem(
@@ -108,7 +95,7 @@ class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDama
 
                     if (level is ServerLevel) {
                         for (playerPart in PlayerLookup.tracking(level, pos)) {
-                            VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(AxeOfTheStreamParticleEffect(level.getBlockState(pos), pos), playerPart)
+                            VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(AxeOfTheStreamParticlePacket(level.getBlockState(pos), pos), playerPart)
                         }
                     }
 

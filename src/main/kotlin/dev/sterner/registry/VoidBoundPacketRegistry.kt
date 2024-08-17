@@ -31,7 +31,10 @@ object VoidBoundPacketRegistry {
             UpdateSpiritAmountPacket::class.java, index++
         )
         VOID_BOUND_CHANNEL.registerS2CPacket(
-            AxeOfTheStreamParticleEffect::class.java, index++
+            AxeOfTheStreamParticlePacket::class.java, index++
+        )
+        VOID_BOUND_CHANNEL.registerS2CPacket(
+            SwordOfTheZephyrParticlePacket::class.java, index++
         )
 
         //C2S

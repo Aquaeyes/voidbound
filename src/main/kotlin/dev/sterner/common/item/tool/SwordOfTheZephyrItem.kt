@@ -1,6 +1,10 @@
 package dev.sterner.common.item.tool
 
+import dev.sterner.networking.SwordOfTheZephyrParticlePacket
+import dev.sterner.registry.VoidBoundPacketRegistry
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup
 import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.util.Mth
 import net.minecraft.world.InteractionHand
@@ -71,6 +75,12 @@ class SwordOfTheZephyrItem(
 
                 }
                 ++miny
+            }
+        }
+
+        if (level is ServerLevel) {
+            for (serverPlayer in PlayerLookup.tracking(level, player.onPos)) {
+                VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(SwordOfTheZephyrParticlePacket(player.uuid), serverPlayer)
             }
         }
 

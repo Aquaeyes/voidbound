@@ -2,9 +2,7 @@ package dev.sterner.networking
 
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import com.sammy.malum.visual_effects.SpiritLightSpecs
-import dev.sterner.api.rift.SimpleSpiritCharge
 import dev.sterner.api.util.VoidBoundPosUtils
-import dev.sterner.registry.VoidBoundParticleTypeRegistry
 import me.pepperbell.simplenetworking.SimpleChannel
 import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.minecraft.client.Minecraft
@@ -18,18 +16,10 @@ import net.minecraft.nbt.NbtUtils
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
-import org.joml.Vector3f
-import team.lodestar.lodestone.handlers.RenderHandler
-import team.lodestar.lodestone.helpers.RandomHelper
-import team.lodestar.lodestone.systems.easing.Easing
 import team.lodestar.lodestone.systems.network.LodestoneClientNBTPacket
-import team.lodestar.lodestone.systems.network.LodestoneClientPacket
 import team.lodestar.lodestone.systems.particle.ParticleEffectSpawner
-import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
-import team.lodestar.lodestone.systems.particle.data.GenericParticleData
-import team.lodestar.lodestone.systems.particle.render_types.LodestoneWorldParticleRenderType
 
-class AxeOfTheStreamParticleEffect(data: CompoundTag) : LodestoneClientNBTPacket(data) {
+class AxeOfTheStreamParticlePacket(data: CompoundTag) : LodestoneClientNBTPacket(data) {
 
     constructor(buf: FriendlyByteBuf) : this(buf.readNbt()!!)
 
