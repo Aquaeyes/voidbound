@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class ClientLevelMixin {
 
     @WrapOperation(method = "destroyBlockProgress", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;destroyBlockProgress(ILnet/minecraft/core/BlockPos;I)V"))
-    private void destroyBlockProgress(LevelRenderer instance, int breakerId, BlockPos pos, int progress, Operation<Void> original) {
+    private void voidbound$wardDestroyBlockProgress(LevelRenderer instance, int breakerId, BlockPos pos, int progress, Operation<Void> original) {
         ClientLevel clientLevel = ClientLevel.class.cast(this);
         if (Minecraft.getInstance().player == null || VoidBoundApi.INSTANCE.canPlayerBreakBlock(clientLevel, Minecraft.getInstance().player, pos)) {
             original.call(instance, breakerId, pos, progress);

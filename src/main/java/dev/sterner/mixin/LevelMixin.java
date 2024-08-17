@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class LevelMixin {
 
     @Inject(method = "destroyBlock", at = @At("RETURN"))
-    private void destroyBlock(BlockPos pos, boolean dropBlock, Entity entity, int recursionLeft, CallbackInfoReturnable<Boolean> cir) {
+    private void voidbound$destroyBlock(BlockPos pos, boolean dropBlock, Entity entity, int recursionLeft, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
             var level = (Level.class.cast(this));
             var comp = VoidBoundComponentRegistry.Companion.getVOID_BOUND_WORLD_COMPONENT().get(level);
