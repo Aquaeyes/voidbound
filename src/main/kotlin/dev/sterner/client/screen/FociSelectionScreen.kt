@@ -14,7 +14,7 @@ class FociSelectionScreen(title: Component) : Screen(title) {
 
     var player: Player? = null
 
-    private val BACKGROUND_TEXTURE: ResourceLocation = VoidBound.id("textures/gui/foci_screen.png")
+    private val backgroundTexture: ResourceLocation = VoidBound.id("textures/gui/foci_screen.png")
     private var imageWidth: Int = 113
     private var imageHeight: Int = 62
 
@@ -47,7 +47,7 @@ class FociSelectionScreen(title: Component) : Screen(title) {
     override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
         val k = (this.width - this.imageWidth) / 2
         val l = (this.height - this.imageHeight) / 2
-        guiGraphics.blit(BACKGROUND_TEXTURE, k, l, this.imageWidth, this.imageHeight, 0f, 0f, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight)
+        guiGraphics.blit(backgroundTexture, k, l, this.imageWidth, this.imageHeight, 0f, 0f, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight)
         super.render(guiGraphics, mouseX, mouseY, partialTick)
     }
 
