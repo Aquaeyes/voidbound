@@ -33,7 +33,11 @@ class FociSelectionScreen(title: Component) : Screen(title) {
             val wandItem = mainItem.item as WandItem
             val content = wandItem.getContents(mainItem)
             for ((index, foci) in content.toList().withIndex()) {
-                val fociWidget = SelectFociWidget(this, xInMenu + 16 * index + 32, yInMenu + 32, 16, 16)
+                val fociWidget = if (index < 6) {
+                   SelectFociWidget(this, xInMenu + 16 * index + 8, yInMenu + 8, 16, 16)
+                } else {
+                    SelectFociWidget(this, xInMenu + 16 * index + 8, yInMenu + 8 + 16, 16, 16)
+                }
                 fociWidget.foci = foci
                 this.addRenderableWidget(fociWidget)
             }
