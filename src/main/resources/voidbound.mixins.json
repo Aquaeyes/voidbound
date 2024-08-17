@@ -8,8 +8,7 @@
     "ItemMixin",
     "LevelMixin",
     "ProgressionEntryObjectMixin",
-    "ServerPlayerGameModeMixin",
-    "WeepingWellStructureMixin"
+    "ServerPlayerGameModeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

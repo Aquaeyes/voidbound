@@ -53,7 +53,6 @@ object VoidBound : ModInitializer, ClientModInitializer {
         VoidBoundKeyBindings.init()
         VoidBoundEntityRenderers.init()
         VoidBoundModelLayers.init()
-        VoidBoundModelLayers.init()
         VoidBoundEvents.clientInit()
 
         TrinketRendererRegistry.registerRenderer(
