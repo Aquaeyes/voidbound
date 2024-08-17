@@ -58,6 +58,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
         VoidBoundMenuTypeRegistry.MENU_TYPES.register()
 
         VoidBoundCreativeTabRegistry.init()
+        VoidBoundKeyBindings.init()
 
         ResourceManagerHelper.get(PackType.SERVER_DATA)
             .registerReloadListener(EnchantSpiritDataReloadListenerFabricImpl())

@@ -76,7 +76,7 @@ class WandItem(properties: Properties) : Item(
         }
     }
 
-    private fun getContents(stack: ItemStack): Stream<ItemStack> {
+    fun getContents(stack: ItemStack): Stream<ItemStack> {
         val compoundTag = stack.tag
         if (compoundTag == null) {
             return Stream.empty()
@@ -136,7 +136,7 @@ class WandItem(properties: Properties) : Item(
         }
     }
 
-    private fun bindFoci(wandStack: ItemStack, fociItem: ItemStack) {
+    fun bindFoci(wandStack: ItemStack, fociItem: ItemStack) {
         if (fociItem.item is AbstractFociItem) {
             val foci = fociItem.item as AbstractFociItem
             wandStack.tag!!.putString("FocusName", VoidBoundWandFociRegistry.WAND_FOCUS.getKey(foci.foci).toString())
@@ -286,5 +286,44 @@ class WandItem(properties: Properties) : Item(
 
     override fun getUseAnimation(pStack: ItemStack): UseAnim? {
         return UseAnim.BOW
+    }
+
+    fun updateSelectedFoci(wandStack: ItemStack, selectedFoci: ItemStack) {
+        val compoundTag = wandStack.getOrCreateTag()
+
+        if (!compoundTag.contains("Items")) {
+            return // No items to update
+        }
+
+        val listTag = compoundTag.getList("Items", 10)
+
+        // Search for the matching foci in the NBT list
+        var foundIndex: Int? = null
+        for (i in 0 until listTag.size) {
+            val currentItemStack = ItemStack.of(listTag.getCompound(i))
+            if (ItemStack.isSameItemSameTags(currentItemStack, selectedFoci)) {
+                foundIndex = i
+                break
+            }
+        }
+
+        if (foundIndex == null) {
+            return // Foci not found in the NBT list
+        }
+
+        // Get the selected foci from the NBT list
+        val selectedFociTag = listTag.getCompound(foundIndex)
+
+        // Remove the selected foci from its current position
+        listTag.removeAt(foundIndex)
+
+        // Insert the selected foci at the first position (index 0)
+        listTag.add(0, selectedFociTag)
+
+        // Bind the new foci
+        bindFoci(wandStack, selectedFoci)
+
+        // Update the "BoundFociIndex" in the NBT tag to 0
+        compoundTag.putInt("BoundFociIndex", 0)
     }
 }

@@ -41,5 +41,8 @@ object VoidBoundPacketRegistry {
         VOID_BOUND_CHANNEL.registerC2SPacket(
             RemoveEnchantPacket::class.java, index++
         )
+        VOID_BOUND_CHANNEL.registerC2SPacket(
+            SelectFociPacket::class.java, index++
+        )
     }
 }

@@ -133,5 +133,9 @@
   "malum.gui.book.entry.void.osmotic_enchanter": "Osmotic Enchanter",
   "malum.gui.book.entry.void.osmotic_enchanter.description": "Enchant everything",
   "malum.gui.book.entry.page.headline.void.osmotic_enchanter": "Osmotic Enchanter",
-  "malum.gui.book.entry.page.text.void.osmotic_enchanter.1": "Consumes Spirits to enchant items"
+  "malum.gui.book.entry.page.text.void.osmotic_enchanter.1": "Consumes Spirits to enchant items",
+
+
+  "category.voidbound": "Malum: Voidbound",
+  "key.voidbound.foci_select" : "Select Foci"
 }
