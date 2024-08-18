@@ -12,10 +12,10 @@
   ],
   "input": {
     "count": 1,
-    "item": "voidbound:axe_of_the_stream"
+    "item": "voidbound:hoe_of_growth"
   },
   "output": {
-    "item": "voidbound:axe_of_the_stream",
+    "item": "voidbound:hoe_of_growth",
     "nbt": "{Netherited:1b}"
   },
   "spirits": [

@@ -12,10 +12,10 @@
   ],
   "input": {
     "count": 1,
-    "item": "voidbound:axe_of_the_stream"
+    "item": "voidbound:sword_of_the_zephyr"
   },
   "output": {
-    "item": "voidbound:axe_of_the_stream",
+    "item": "voidbound:sword_of_the_zephyr",
     "nbt": "{Netherited:1b}"
   },
   "spirits": [

@@ -12,10 +12,10 @@
   ],
   "input": {
     "count": 1,
-    "item": "voidbound:axe_of_the_stream"
+    "item": "voidbound:shovel_of_the_earthmover"
   },
   "output": {
-    "item": "voidbound:axe_of_the_stream",
+    "item": "voidbound:shovel_of_the_earthmover",
     "nbt": "{Netherited:1b}"
   },
   "spirits": [
