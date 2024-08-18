@@ -48,6 +48,6 @@ object VoidBoundBlockRegistry {
     }
 
     var TEAR_OF_ENDER: RegistryObject<TearOfEnderBlock> = BLOCKS.register("tear_of_ender") {
-        TearOfEnderBlock(FabricBlockSettings.create())
+        TearOfEnderBlock(FabricBlockSettings.create().noOcclusion())
     }
 }

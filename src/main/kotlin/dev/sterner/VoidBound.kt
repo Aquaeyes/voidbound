@@ -8,9 +8,11 @@ import dev.sterner.listener.EnchantSpiritDataReloadListenerFabricImpl
 import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.minecraft.client.gui.screens.MenuScreens
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.PackType
@@ -74,6 +76,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
             WandItemRenderer()
         )
 
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), VoidBoundBlockRegistry.TEAR_OF_ENDER.get())
         MenuScreens.register(VoidBoundMenuTypeRegistry.OSMOTIC_ENCHANTER.get(), ::OsmoticEnchanterScreen)
     }
 
