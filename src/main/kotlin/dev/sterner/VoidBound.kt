@@ -40,6 +40,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
         VoidBoundCreativeTabRegistry.init()
         VoidBoundEvents.init()
+        VoidBoundWorldGenerations.init()
 
         ResourceManagerHelper.get(PackType.SERVER_DATA)
             .registerReloadListener(EnchantSpiritDataReloadListenerFabricImpl())

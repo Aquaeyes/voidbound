@@ -46,4 +46,8 @@ object VoidBoundBlockRegistry {
     var OSMOTIC_ENCHANTER: RegistryObject<OsmoticEnchanterBlock> = BLOCKS.register("osmotic_enchanter") {
         OsmoticEnchanterBlock(FabricBlockSettings.create())
     }
+
+    var TEAR_OF_ENDER: RegistryObject<TearOfEnderBlock> = BLOCKS.register("tear_of_ender") {
+        TearOfEnderBlock(FabricBlockSettings.create())
+    }
 }
