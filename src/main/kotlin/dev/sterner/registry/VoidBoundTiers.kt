@@ -3,6 +3,7 @@ package dev.sterner.registry
 import com.sammy.malum.registry.common.item.ItemRegistry
 import net.minecraft.world.item.Tier
 import net.minecraft.world.item.crafting.Ingredient
+import java.util.*
 import java.util.function.Supplier
 
 enum class VoidBoundTiers(
@@ -14,7 +15,7 @@ enum class VoidBoundTiers(
     private val repairIngredient: Supplier<Ingredient>
 ) :
     Tier {
-    ELEMENTAL(4, 2000, 8.0f, 3.0f, 16, Supplier { Ingredient.of(ItemRegistry.MALIGNANT_PEWTER_INGOT.get()) });
+    ELEMENTAL(4, 2000, 9.0f, 4.0f, 16, Supplier { Ingredient.of(ItemRegistry.SOUL_STAINED_STEEL_PLATING.get()) });
 
     override fun getUses(): Int {
         return this.uses

@@ -1,0 +1,23 @@
+{
+  "type": "malum:spirit_infusion",
+  "extra_items": [
+    {
+      "count": 1,
+      "item": "malum:hex_ash"
+    }
+  ],
+  "input": {
+    "count": 1,
+    "item": "voidbound:axe_of_the_stream"
+  },
+  "output": {
+    "item": "voidbound:axe_of_the_stream",
+    "nbt": "{Netherited:1b}"
+  },
+  "spirits": [
+    {
+      "type": "infernal",
+      "count": 4
+    }
+  ]
+}

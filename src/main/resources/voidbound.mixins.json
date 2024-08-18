@@ -5,10 +5,12 @@
   "mixins": [
     "BlockBehaviourMixin",
     "ExplosionMixin",
+    "ItemEntityMixin",
     "ItemMixin",
     "LevelMixin",
     "ProgressionEntryObjectMixin",
-    "ServerPlayerGameModeMixin"
+    "ServerPlayerGameModeMixin",
+    "SpiritAltarBlockEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

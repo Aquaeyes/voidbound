@@ -1,32 +1,52 @@
 package dev.sterner.common.item.tool
 
+import com.google.common.collect.ImmutableMultimap
+import com.google.common.collect.Multimap
+import com.sammy.malum.common.recipe.SpiritInfusionRecipe
 import dev.sterner.api.util.VoidBoundBlockUtils
 import dev.sterner.networking.AxeOfTheStreamParticlePacket
 import dev.sterner.networking.BubbleParticlePacket
 import dev.sterner.registry.VoidBoundPacketRegistry
 import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.Style
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.Mth
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.ai.attributes.Attribute
+import net.minecraft.world.entity.ai.attributes.AttributeModifier
+import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.DiggerItem
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.SwordItem
 import net.minecraft.world.item.Tier
+import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.Vec3
 import org.joml.Vector3f
 import team.lodestar.lodestone.systems.item.tools.magic.MagicAxeItem
+import java.awt.Color
 
 class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDamage: Float, properties: Properties?) :
     MagicAxeItem(
         material, damage, speed,
         magicDamage,
         properties
-    ) {
+    ), UpgradableTool {
+
+
+    override fun getDestroySpeed(stack: ItemStack, state: BlockState): Float {
+        return super.getDestroySpeed(stack, state) + getExtraMiningSpeed(stack)
+    }
 
     override fun getUseDuration(stack: ItemStack): Int {
         return 72000
@@ -39,6 +59,7 @@ class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDama
 
     override fun onUseTick(level: Level, livingEntity: LivingEntity, stack: ItemStack, remainingUseDuration: Int) {
         val stuff = level.getEntitiesOfClass(ItemEntity::class.java, livingEntity.boundingBox.inflate(10.0))
+        println(stack.orCreateTag)
         if (stuff != null && stuff.isNotEmpty()) {
             val iterator = stuff.iterator()
             while (iterator.hasNext()) {
@@ -86,6 +107,20 @@ class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDama
         super.onUseTick(level, livingEntity, stack, remainingUseDuration)
     }
 
+    override fun appendHoverText(
+        stack: ItemStack,
+        level: Level?,
+        tooltipComponents: MutableList<Component>,
+        isAdvanced: TooltipFlag
+    ) {
+        val tool = stack.item as UpgradableTool
+        if (tool.getNetherited(stack)) {
+            tooltipComponents.add(Component.translatable("Netherited").withStyle(ChatFormatting.ITALIC).withStyle(
+                Style.EMPTY.withColor(Color(90, 65, 0).rgb)
+            ))
+        }
+        super.appendHoverText(stack, level, tooltipComponents, isAdvanced)
+    }
 
     companion object {
         fun breakBlock(breakEvent: BlockEvents.BreakEvent?) {

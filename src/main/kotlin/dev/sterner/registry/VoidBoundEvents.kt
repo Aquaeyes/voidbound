@@ -1,5 +1,6 @@
 package dev.sterner.registry
 
+import com.google.common.collect.Multimap
 import com.sammy.malum.common.events.MalumCodexEvents
 import dev.sterner.api.ClientTickHandler
 import dev.sterner.client.event.MalumCodexEvent
@@ -7,6 +8,7 @@ import dev.sterner.client.event.SpiritAltarHudRenderEvent
 import dev.sterner.common.components.VoidBoundPlayerComponent
 import dev.sterner.common.components.VoidBoundWorldComponent
 import dev.sterner.common.item.tool.AxeOfTheStreamItem
+import dev.sterner.common.item.tool.UpgradableTool
 import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -15,6 +17,16 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
+import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback
+import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.entity.ai.attributes.Attribute
+import net.minecraft.world.entity.ai.attributes.AttributeModifier
+import net.minecraft.world.entity.ai.attributes.Attributes
+import net.minecraft.world.item.DiggerItem
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.SwordItem
+import java.util.*
+
 
 object VoidBoundEvents {
 
@@ -23,6 +35,32 @@ object VoidBoundEvents {
         UseEntityCallback.EVENT.register(VoidBoundPlayerComponent.Companion::useEntity)
         BlockEvents.BLOCK_BREAK.register(VoidBoundWorldComponent.Companion::removeWard)
         BlockEvents.BLOCK_BREAK.register(AxeOfTheStreamItem.Companion::breakBlock)
+
+        ModifyItemAttributeModifiersCallback.EVENT.register(ModifyItemAttributeModifiersCallback { stack: ItemStack, slot: EquipmentSlot, attributeModifiers: Multimap<Attribute?, AttributeModifier?> ->
+            if (stack.item is UpgradableTool && slot == EquipmentSlot.MAINHAND) {
+
+                val tool = stack.item as UpgradableTool
+                if (stack.item is DiggerItem) {
+                    val digger = stack.item as DiggerItem
+                    attributeModifiers.put(Attributes.ATTACK_DAMAGE, AttributeModifier(
+                        UUID.fromString("DB3F55D3-645C-4F38-A497-9C13A33DB5CF"),
+                        "Weapon modifier2",
+                        tool.getExtraDamage(stack).toDouble() + digger.attackDamage,
+                        AttributeModifier.Operation.ADDITION
+                    ))
+                }
+                if (stack.item is SwordItem) {
+                    val sword = stack.item as SwordItem
+                    attributeModifiers.put(Attributes.ATTACK_DAMAGE, AttributeModifier(
+                        UUID.fromString("DB3F55D3-645C-4F38-A497-9C13A33DB5CF"),
+                        "Weapon modifier2",
+                        tool.getExtraDamage(stack).toDouble() + sword.damage,
+                        AttributeModifier.Operation.ADDITION
+                    ))
+                }
+
+            }
+        })
     }
 
     @Environment(EnvType.CLIENT)

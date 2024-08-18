@@ -120,7 +120,7 @@ object VoidBoundItemRegistry {
     }
 
     val AXE_OF_THE_STREAM: RegistryObject<AxeOfTheStreamItem> = ITEMS.register("axe_of_the_stream") {
-        AxeOfTheStreamItem(VoidBoundTiers.ELEMENTAL, -3f, 0f, 4f, Item.Properties().stacksTo(1))
+        AxeOfTheStreamItem(VoidBoundTiers.ELEMENTAL, -3f, 0f, 4f, Item.Properties())
     }
 
     val SHOVEL_OF_THE_EARTHMOVER: RegistryObject<ShovelOfEarthmoverItem> = ITEMS.register("shovel_of_the_earthmover") {
@@ -136,6 +136,6 @@ object VoidBoundItemRegistry {
     }
 
     val BOOTS_OF_THE_TRAVELLER: RegistryObject<BootsOfTheTraveller> = ITEMS.register("boots_of_the_traveller") {
-        BootsOfTheTraveller(Item.Properties())
+        BootsOfTheTraveller(Item.Properties().stacksTo(1))
     }
 }

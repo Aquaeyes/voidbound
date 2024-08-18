@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "voidbound:axe_of_the_stream"
+    }
+  ],
+  "result": {
+    "item": "voidbound:axe_of_the_stream",
+    "nbt": "{Netherited:1b}"
+  }
+}
