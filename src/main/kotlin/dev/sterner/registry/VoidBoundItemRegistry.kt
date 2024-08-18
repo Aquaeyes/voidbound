@@ -142,4 +142,12 @@ object VoidBoundItemRegistry {
     val ICHOR: RegistryObject<Item> = ITEMS.register("ichor") {
         Item(Item.Properties())
     }
+
+    val TEAR_OF_ENDER: RegistryObject<Item> = ITEMS.register("tear_of_ender") {
+        Item(Item.Properties())
+    }
+
+    val TEAR_OF_CRIMSON: RegistryObject<Item> = ITEMS.register("tear_of_crimson") {
+        Item(Item.Properties())
+    }
 }
