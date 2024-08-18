@@ -38,27 +38,13 @@ object VoidBoundEvents {
 
         ModifyItemAttributeModifiersCallback.EVENT.register(ModifyItemAttributeModifiersCallback { stack: ItemStack, slot: EquipmentSlot, attributeModifiers: Multimap<Attribute?, AttributeModifier?> ->
             if (stack.item is UpgradableTool && slot == EquipmentSlot.MAINHAND) {
-
                 val tool = stack.item as UpgradableTool
-                if (stack.item is DiggerItem) {
-                    val digger = stack.item as DiggerItem
-                    attributeModifiers.put(Attributes.ATTACK_DAMAGE, AttributeModifier(
-                        UUID.fromString("DB3F55D3-645C-4F38-A497-9C13A33DB5CF"),
-                        "Weapon modifier2",
-                        tool.getExtraDamage(stack).toDouble() + digger.attackDamage,
-                        AttributeModifier.Operation.ADDITION
-                    ))
-                }
-                if (stack.item is SwordItem) {
-                    val sword = stack.item as SwordItem
-                    attributeModifiers.put(Attributes.ATTACK_DAMAGE, AttributeModifier(
-                        UUID.fromString("DB3F55D3-645C-4F38-A497-9C13A33DB5CF"),
-                        "Weapon modifier2",
-                        tool.getExtraDamage(stack).toDouble() + sword.damage,
-                        AttributeModifier.Operation.ADDITION
-                    ))
-                }
-
+                attributeModifiers.put(Attributes.ATTACK_DAMAGE, AttributeModifier(
+                    UUID.fromString("DB3F55D3-645C-4F38-A497-9C13A33DB5CF"),
+                    "Weapon modifier2",
+                    tool.getExtraDamage(stack).toDouble(),
+                    AttributeModifier.Operation.ADDITION
+                ))
             }
         })
     }

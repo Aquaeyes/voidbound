@@ -54,6 +54,7 @@ object VoidBoundCreativeTabRegistry {
                 entries.accept(VoidBoundItemRegistry.HOE_OF_GROWTH.get())
                 entries.accept(VoidBoundItemRegistry.SHOVEL_OF_THE_EARTHMOVER.get())
                 entries.accept(VoidBoundItemRegistry.BOOTS_OF_THE_TRAVELLER.get())
+                entries.accept(VoidBoundItemRegistry.ICHOR.get())
 
             }.build()
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ResourceLocation(VoidBound.modid, "main"), GROUP!!)

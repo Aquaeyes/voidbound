@@ -138,4 +138,8 @@ object VoidBoundItemRegistry {
     val BOOTS_OF_THE_TRAVELLER: RegistryObject<BootsOfTheTraveller> = ITEMS.register("boots_of_the_traveller") {
         BootsOfTheTraveller(Item.Properties().stacksTo(1))
     }
+
+    val ICHOR: RegistryObject<Item> = ITEMS.register("ichor") {
+        Item(Item.Properties())
+    }
 }
