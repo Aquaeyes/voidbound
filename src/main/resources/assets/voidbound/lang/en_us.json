@@ -29,6 +29,7 @@
   "item.voidbound.warding_foci": "Warding Foci",
   "item.voidbound.ichor": "Ichor",
   "item.voidbound.tear_of_ender": "Tear of Ender",
+  "item.voidbound.strange_matter": "Strange Matter",
   "item.voidbound.tear_of_crimson": "Tear of Crimson",
   "block.voidbound.tear_of_ender": "Tear of Ender",
   "block.voidbound.tear_of_crimson": "Tear of Crimson",
@@ -140,6 +141,8 @@
   "malum.gui.book.entry.page.headline.void.osmotic_enchanter": "Osmotic Enchanter",
   "malum.gui.book.entry.page.text.void.osmotic_enchanter.1": "Consumes Spirits to enchant items",
 
+  "advancements.voidbound.strange_matter.description": "I'll find some no Matter what",
+  "advancements.voidbound.strange_matter.title": "Hell and Void",
 
   "category.voidbound": "Malum: Voidbound",
   "key.voidbound.foci_select" : "Select Foci"

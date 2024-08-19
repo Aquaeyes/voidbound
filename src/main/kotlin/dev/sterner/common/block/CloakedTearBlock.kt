@@ -12,7 +12,7 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class CloakedTearBlock(properties: Properties) : Block(properties) {
+open class CloakedTearBlock(properties: Properties) : Block(properties) {
 
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {

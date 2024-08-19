@@ -140,7 +140,7 @@ object VoidBoundItemRegistry {
     }
 
     val ICHOR: RegistryObject<Item> = ITEMS.register("ichor") {
-        Item(Item.Properties())
+        IchorItem(Item.Properties())
     }
 
     val TEAR_OF_ENDER: RegistryObject<Item> = ITEMS.register("tear_of_ender") {
@@ -148,6 +148,10 @@ object VoidBoundItemRegistry {
     }
 
     val TEAR_OF_CRIMSON: RegistryObject<Item> = ITEMS.register("tear_of_crimson") {
+        Item(Item.Properties())
+    }
+
+    val STRANGE_MATTER: RegistryObject<Item> = ITEMS.register("strange_matter") {
         Item(Item.Properties())
     }
 }

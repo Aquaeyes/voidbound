@@ -1,14 +1,19 @@
 {
+  "display": {
+    "icon": {
+      "item": "voidbound:strange_matter"
+    },
+    "hidden": true,
+    "title": {
+      "translate": "advancements.voidbound.strange_matter.title"
+    },
+    "description": {
+      "translate": "advancements.voidbound.strange_matter.description"
+    }
+  },
   "criteria": {
-    "has_tear_of_ender": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "voidbound:tear_of_ender"
-          }
-        ]
-      }
+    "opened_crimson_rites": {
+      "trigger": "minecraft:impossible"
     }
   }
 }
