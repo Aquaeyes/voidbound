@@ -1,5 +1,6 @@
 package dev.sterner.registry
 
+import com.sammy.malum.MalumMod
 import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
 import dev.sterner.common.item.*
