@@ -11,6 +11,6 @@ import net.minecraft.world.phys.shapes.VoxelShape
 class TearOfEnderBlock(properties: Properties) : Block(properties) {
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
-        return Shapes.box(6.0/16,12.0/16,6.0/16,10.0/16, 16.0/16, 10.0/16)
+        return Shapes.box(6.0/16,13.0/16,6.0/16,10.0/16, 16.0/16, 10.0/16)
     }
 }

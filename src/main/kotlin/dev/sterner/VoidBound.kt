@@ -76,6 +76,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
             WandItemRenderer()
         )
 
+
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), VoidBoundBlockRegistry.TEAR_OF_ENDER.get())
         MenuScreens.register(VoidBoundMenuTypeRegistry.OSMOTIC_ENCHANTER.get(), ::OsmoticEnchanterScreen)
     }

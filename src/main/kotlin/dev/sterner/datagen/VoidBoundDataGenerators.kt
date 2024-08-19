@@ -11,9 +11,4 @@ class VoidBoundDataGenerators : DataGeneratorEntrypoint {
     override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator?) {
 
     }
-
-    override fun buildRegistry(registryBuilder: RegistrySetBuilder) {
-        registryBuilder.add(Registries.CONFIGURED_FEATURE, VoidBoundPlacedFeatureRegistry::bootstrap)
-        registryBuilder.add(Registries.PLACED_FEATURE, VoidBoundPlacedFeatureRegistry::placedBootStrap)
-    }
 }
