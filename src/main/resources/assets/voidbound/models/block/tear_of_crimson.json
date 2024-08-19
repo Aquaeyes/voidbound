@@ -1,0 +1,7 @@
+{
+  "parent": "voidbound:block/tear_of_ender",
+  "textures": {
+    "0": "voidbound:block/tear_of_crimson",
+    "particle": "voidbound:block/tear_of_crimson"
+  }
+}

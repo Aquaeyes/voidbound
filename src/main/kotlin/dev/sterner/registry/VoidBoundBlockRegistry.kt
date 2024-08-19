@@ -56,7 +56,11 @@ object VoidBoundBlockRegistry {
         )
     }
 
-    var TEAR_OF_ENDER: RegistryObject<TearOfEnderBlock> = BLOCKS.register("tear_of_ender") {
-        TearOfEnderBlock(FabricBlockSettings.create().noOcclusion())
+    var TEAR_OF_ENDER: RegistryObject<TearBlock> = BLOCKS.register("tear_of_ender") {
+        TearBlock(FabricBlockSettings.create().noOcclusion())
+    }
+
+    var TEAR_OF_CRIMSON: RegistryObject<TearBlock> = BLOCKS.register("tear_of_crimson") {
+        TearBlock(FabricBlockSettings.create().noOcclusion())
     }
 }

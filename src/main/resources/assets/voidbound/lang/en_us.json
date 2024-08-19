@@ -30,6 +30,8 @@
   "item.voidbound.ichor": "Ichor",
   "item.voidbound.tear_of_ender": "Tear of Ender",
   "item.voidbound.tear_of_crimson": "Tear of Crimson",
+  "block.voidbound.tear_of_ender": "Tear of Ender",
+  "block.voidbound.tear_of_crimson": "Tear of Crimson",
   "item.voidbound.hallowed_gold_capped_runewood_wand": "Hallowed Gold Capped Runewood Wand",
   "tooltip.voidbound.guard": "Guard",
   "tooltip.voidbound.harvest": "Harvest",
