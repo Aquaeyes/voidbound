@@ -17,7 +17,7 @@ object VoidBoundBlockRegistry {
 
     var SPIRIT_BINDER: RegistryObject<SpiritBinderBlock> = BLOCKS.register("spirit_binder") {
         SpiritBinderBlock(
-            Properties.of()
+            FabricBlockSettings.create()
                 .mapColor(MapColor.STONE)
                 .requiresCorrectToolForDrops()
                 .strength(1.5F, 8.0F)
@@ -25,7 +25,11 @@ object VoidBoundBlockRegistry {
     }
 
     var SPIRIT_STABILIZER: RegistryObject<SpiritBinderStabilizerBlock> = BLOCKS.register("spirit_stabilizer") {
-        SpiritBinderStabilizerBlock(Properties.of())
+        SpiritBinderStabilizerBlock(
+            FabricBlockSettings.create()
+                .mapColor(MapColor.STONE)
+                .requiresCorrectToolForDrops()
+                .strength(1.5F, 8.0F))
     }
 
     var SPIRIT_RIFT: RegistryObject<SpiritRiftBlock> = BLOCKS.register("spirit_rift") {
@@ -44,7 +48,12 @@ object VoidBoundBlockRegistry {
     }
 
     var OSMOTIC_ENCHANTER: RegistryObject<OsmoticEnchanterBlock> = BLOCKS.register("osmotic_enchanter") {
-        OsmoticEnchanterBlock(FabricBlockSettings.create())
+        OsmoticEnchanterBlock(
+            FabricBlockSettings.create()
+                .mapColor(MapColor.STONE)
+                .requiresCorrectToolForDrops()
+                .strength(1.5F, 8.0F)
+        )
     }
 
     var TEAR_OF_ENDER: RegistryObject<TearOfEnderBlock> = BLOCKS.register("tear_of_ender") {
