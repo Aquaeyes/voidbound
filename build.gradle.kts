@@ -21,25 +21,6 @@ sourceSets {
 	}
 }
 
-loom {
-	runs {
-		create("data") {
-			client()
-			name("Data Generation")
-			vmArg("-Dfabric-api.datagen")
-			vmArg("-Dfabric-api.datagen.output-dir=${file("src/generated/resources")}")
-			vmArg("-Dfabric-api.datagen.modid=voidbound")
-			//vmArg("-Dfabric-api.datagen.strict-validation")
-
-			property("porting_lib.datagen.existing_resources", file("src/main/resources").absolutePath)
-			property("voidbound.data.server", "false")
-
-			runDir("build/datagen")
-		}
-	}
-}
-
-
 repositories {
 	flatDir {
 		dirs("libs")
@@ -116,6 +97,8 @@ dependencies {
 	modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${property("reach_entity_attributes_version")}")
 	modImplementation("maven.modrinth:fusion-connected-textures:${property("fusion_version")}-fabric-mc${property("minecraft_version")}")
 	modImplementation("net.tslat.smartbrainlib:SmartBrainLib-fabric-${property("minecraft_version")}:${property("smart_brain_lib_version")}")
+
+	modImplementation ("maven.modrinth:Revelationary:${property("revelationary_version")}")
 
 	modImplementation("eu.pb4:common-protection-api:${property("protection_api_version")}")
 	include("eu.pb4:common-protection-api:${property("protection_api_version")}")

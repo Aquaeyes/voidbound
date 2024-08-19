@@ -1,0 +1,14 @@
+{
+  "criteria": {
+    "has_tear_of_ender": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "voidbound:tear_of_ender"
+          }
+        ]
+      }
+    }
+  }
+}

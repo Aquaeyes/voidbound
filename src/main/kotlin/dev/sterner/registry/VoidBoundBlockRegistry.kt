@@ -63,4 +63,8 @@ object VoidBoundBlockRegistry {
     var TEAR_OF_CRIMSON: RegistryObject<TearBlock> = BLOCKS.register("tear_of_crimson") {
         TearBlock(FabricBlockSettings.create().noOcclusion())
     }
+
+    var TEAR_CLOAK: RegistryObject<CloakedTearBlock> = BLOCKS.register("tear_cloak") {
+        CloakedTearBlock(FabricBlockSettings.create().noOcclusion())
+    }
 }
