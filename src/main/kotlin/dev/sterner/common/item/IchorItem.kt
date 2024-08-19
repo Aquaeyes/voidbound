@@ -10,6 +10,10 @@ import net.minecraft.world.level.block.state.BlockState
 
 class IchorItem(properties: Properties) : Item(properties), RevelationAware {
 
+    init {
+        RevelationAware.register(this)
+    }
+
     override fun getCloakAdvancementIdentifier(): ResourceLocation {
         return VoidBound.id("revelationary/ichor_requirement_advancement")
     }
@@ -18,7 +22,7 @@ class IchorItem(properties: Properties) : Item(properties), RevelationAware {
        return mutableMapOf()
     }
 
-    override fun getItemCloak(): Tuple<Item, Item>? {
+    override fun getItemCloak(): Tuple<Item, Item> {
         return Tuple(this, VoidBoundItemRegistry.STRANGE_MATTER.get())
     }
 }

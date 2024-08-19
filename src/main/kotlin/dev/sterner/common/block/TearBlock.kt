@@ -36,6 +36,8 @@ class TearBlock(val type: Type, properties: Properties) : CloakedTearBlock(prope
         return if (type == Type.CRIMSON) crim else end
     }
 
+    /*
+
     override fun getCloakedItemTranslation(): Tuple<Item, MutableComponent> {
         val crim = VoidBoundItemRegistry.TEAR_OF_CRIMSON.get()
         val end = VoidBoundItemRegistry.TEAR_OF_ENDER.get()
@@ -43,6 +45,8 @@ class TearBlock(val type: Type, properties: Properties) : CloakedTearBlock(prope
         return Tuple(if(type == Type.CRIMSON) crim else end, Component.translatable("item.voidbound.strange_matter"))
     }
 
+
+     */
     enum class Type {
         CRIMSON,
         ENDER
