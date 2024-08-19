@@ -25,6 +25,7 @@ object VoidBoundCreativeTabRegistry {
             }
             .displayItems { _: ItemDisplayParameters?, entries: CreativeModeTab.Output ->
                 entries.accept(VoidBoundItemRegistry.HALLOWED_GOLD_CAPPED_RUNEWOOD_WAND.get())
+                entries.accept(VoidBoundItemRegistry.SOUL_STAINED_STEEL_CAPPED_SOULWOOD_WAND.get())
                 entries.accept(VoidBoundItemRegistry.HALLOWED_GOGGLES.get())
                 entries.accept(VoidBoundItemRegistry.HALLOWED_MONOCLE.get())
                 entries.accept(VoidBoundItemRegistry.CALL_OF_THE_VOID.get())

@@ -31,6 +31,11 @@ object VoidBoundItemRegistry {
             WandItem(Item.Properties())
         }
 
+    val SOUL_STAINED_STEEL_CAPPED_SOULWOOD_WAND: RegistryObject<WandItem> =
+        ITEMS.register("soul_stained_steel_capped_soulwood_wand") {
+            WandItem(Item.Properties())
+        }
+
     val CRYSTAL_FOCI: RegistryObject<Item> = ITEMS.register("crystal_foci") {
         Item(Item.Properties())
     }

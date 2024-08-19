@@ -73,9 +73,12 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
         BuiltinItemRendererRegistry.INSTANCE.register(
             VoidBoundItemRegistry.HALLOWED_GOLD_CAPPED_RUNEWOOD_WAND.get(),
-            WandItemRenderer()
+            WandItemRenderer("hallowed_gold_capped_runewood_wand")
         )
-
+        BuiltinItemRendererRegistry.INSTANCE.register(
+            VoidBoundItemRegistry.SOUL_STAINED_STEEL_CAPPED_SOULWOOD_WAND.get(),
+            WandItemRenderer("soul_stained_steel_capped_soulwood_wand")
+        )
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(),
             VoidBoundBlockRegistry.TEAR_OF_ENDER.get(),

@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
 
-class WandItemRenderer : DynamicItemRenderer {
+class WandItemRenderer(val texture: String) : DynamicItemRenderer {
 
     var model: WandItemModel? = null
 
@@ -53,7 +53,7 @@ class WandItemRenderer : DynamicItemRenderer {
         matrices.scale(1f, -1f, -1f)
         model?.renderToBuffer(
             matrices,
-            vertexConsumers.getBuffer(RenderType.entityTranslucent(VoidBound.id("textures/item/hallowed_gold_capped_runewood_wand.png"))),
+            vertexConsumers.getBuffer(RenderType.entityTranslucent(VoidBound.id("textures/item/$texture.png"))),
             light,
             overlay,
             1f,
