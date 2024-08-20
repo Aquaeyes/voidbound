@@ -16,7 +16,8 @@ enum class VoidBoundTiers(
     private val repairIngredient: Supplier<Ingredient>
 ) :
     Tier {
-    ELEMENTAL(4, 2000, 8.0f, 3.0f, 16, Supplier { Ingredient.of(ItemRegistry.SOUL_STAINED_STEEL_PLATING.get()) });
+    ELEMENTAL(4, 2000, 8.0f, 3.0f, 16, Supplier { Ingredient.of(ItemRegistry.SOUL_STAINED_STEEL_PLATING.get()) }),
+    ICHORIUM(5, 5000, 9.0f, 4.0f, 20, Supplier { Ingredient.of(VoidBoundItemRegistry.ICHOR.get()) });
 
     override fun getUses(): Int {
         return this.uses

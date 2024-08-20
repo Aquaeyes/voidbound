@@ -16,7 +16,7 @@ import team.lodestar.lodestone.systems.item.tools.magic.MagicPickaxeItem
 import java.awt.Color
 
 
-class PickaxeOfTheCoreItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) :
+open class PickaxeOfTheCoreItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) :
     MagicPickaxeItem(
         material, damage, speed,
         magicDamage,

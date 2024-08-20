@@ -34,7 +34,7 @@ import java.awt.Color
 import kotlin.math.cos
 import kotlin.math.sin
 
-class SwordOfTheZephyrItem(
+open class SwordOfTheZephyrItem(
     material: Tier?, attackDamage: Int, attackSpeed: Float, magicDamage: Float,
     properties: Properties?
 ) : MagicSwordItem(

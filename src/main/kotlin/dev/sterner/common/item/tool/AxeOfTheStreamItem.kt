@@ -36,7 +36,7 @@ import org.joml.Vector3f
 import team.lodestar.lodestone.systems.item.tools.magic.MagicAxeItem
 import java.awt.Color
 
-class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDamage: Float, properties: Properties?) :
+open class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDamage: Float, properties: Properties?) :
     MagicAxeItem(
         material, damage, speed,
         magicDamage,

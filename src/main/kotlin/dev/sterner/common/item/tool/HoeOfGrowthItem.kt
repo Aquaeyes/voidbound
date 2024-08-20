@@ -14,7 +14,7 @@ import net.minecraft.world.phys.BlockHitResult
 import team.lodestar.lodestone.systems.item.tools.magic.MagicHoeItem
 import java.awt.Color
 
-class HoeOfGrowthItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) :
+open class HoeOfGrowthItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) :
     MagicHoeItem(
         material, damage, speed,
         magicDamage,

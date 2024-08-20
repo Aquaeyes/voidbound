@@ -58,6 +58,11 @@ object VoidBoundCreativeTabRegistry {
                 entries.accept(VoidBoundItemRegistry.TEAR_OF_CRIMSON.get())
                 entries.accept(VoidBoundItemRegistry.TEAR_OF_ENDER.get())
                 entries.accept(VoidBoundItemRegistry.ICHOR.get())
+                entries.accept(VoidBoundItemRegistry.ICHORIUM_SCYTHE.get())
+                entries.accept(VoidBoundItemRegistry.ICHORIUM_PICKAXE.get())
+                entries.accept(VoidBoundItemRegistry.ICHORIUM_AXE.get())
+                entries.accept(VoidBoundItemRegistry.ICHORIUM_SWORD.get())
+                entries.accept(VoidBoundItemRegistry.ICHORIUM_SHOVEL.get())
 
             }.build()
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ResourceLocation(VoidBound.modid, "main"), GROUP!!)

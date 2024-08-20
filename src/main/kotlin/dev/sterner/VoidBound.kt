@@ -1,6 +1,8 @@
 package dev.sterner
 
+import com.sammy.malum.client.MalumModelLoaderPlugin
 import dev.emi.trinkets.api.client.TrinketRendererRegistry
+import dev.sterner.client.VoidBoundModelLoaderPlugin
 import dev.sterner.client.renderer.HallowedMonocleRenderer
 import dev.sterner.client.renderer.WandItemRenderer
 import dev.sterner.client.screen.OsmoticEnchanterScreen
@@ -9,6 +11,7 @@ import dev.sterner.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.minecraft.client.gui.screens.MenuScreens
@@ -85,6 +88,9 @@ object VoidBound : ModInitializer, ClientModInitializer {
             VoidBoundBlockRegistry.TEAR_OF_CRIMSON.get(),
             VoidBoundBlockRegistry.TEAR_CLOAK.get()
         )
+
+        ModelLoadingPlugin.register(VoidBoundModelLoaderPlugin)
+
         MenuScreens.register(VoidBoundMenuTypeRegistry.OSMOTIC_ENCHANTER.get(), ::OsmoticEnchanterScreen)
     }
 

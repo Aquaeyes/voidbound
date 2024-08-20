@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState
 import team.lodestar.lodestone.systems.item.tools.magic.MagicShovelItem
 import java.awt.Color
 
-class ShovelOfEarthmoverItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) :
+open class ShovelOfEarthmoverItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) :
     MagicShovelItem(
         material, damage, speed,
         magicDamage,

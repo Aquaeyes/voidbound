@@ -1,12 +1,13 @@
 package dev.sterner.registry
 
-import com.sammy.malum.MalumMod
+import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
 import dev.sterner.common.item.*
 import dev.sterner.common.item.foci.PortableHoleFociItem
 import dev.sterner.common.item.foci.WardingFociItem
 import dev.sterner.common.item.tool.*
+import dev.sterner.common.item.tool.ichor.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
@@ -160,4 +161,29 @@ object VoidBoundItemRegistry {
     val STRANGE_MATTER: RegistryObject<Item> = ITEMS.register("strange_matter") {
         Item(Item.Properties())
     }
+
+    val ICHORIUM_PICKAXE: RegistryObject<IchoriumPickaxeItem> = ITEMS.register("ichorium_pickaxe") {
+        IchoriumPickaxeItem(VoidBoundTiers.ICHORIUM, -2, 1f, 2f, Item.Properties().stacksTo(1))
+    }
+
+    val ICHORIUM_HOE: RegistryObject<HoeOfGrowthItem> = ITEMS.register("ichorium_hoe") {
+        IchoriumHoeItem(VoidBoundTiers.ICHORIUM, 0, -1.5f, 1f, Item.Properties().stacksTo(1))
+    }
+
+    val ICHORIUM_AXE: RegistryObject<AxeOfTheStreamItem> = ITEMS.register("ichorium_axe") {
+        IchoriumAxeItem(VoidBoundTiers.ICHORIUM, -3f, 2f, 4f, Item.Properties())
+    }
+
+    val ICHORIUM_SHOVEL: RegistryObject<ShovelOfEarthmoverItem> = ITEMS.register("ichorium_shovel") {
+        IchoriumShovelItem(VoidBoundTiers.ICHORIUM, 2, 0f, 2f, Item.Properties().stacksTo(1))
+    }
+
+    val ICHORIUM_SWORD: RegistryObject<SwordOfTheZephyrItem> = ITEMS.register("ichorium_sword") {
+        IchoriumSwordItem(VoidBoundTiers.ICHORIUM, -1, 0f, 3f, Item.Properties().stacksTo(1))
+    }
+
+    val ICHORIUM_SCYTHE: RegistryObject<Item> = ITEMS.register("ichorium_scythe") {
+        IchoriumScytheItem(VoidBoundTiers.ICHORIUM, -2.5f, 2.1f, FabricItemSettings().stacksTo(1))
+    }
+
 }

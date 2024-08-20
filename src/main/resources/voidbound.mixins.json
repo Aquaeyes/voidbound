@@ -9,6 +9,7 @@
     "ItemMixin",
     "LevelMixin",
     "ProgressionEntryObjectMixin",
+    "ReboundEnchantmentMixin",
     "ServerPlayerGameModeMixin",
     "SpiritAltarBlockEntityMixin"
   ],
