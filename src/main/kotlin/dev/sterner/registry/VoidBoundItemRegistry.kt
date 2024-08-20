@@ -4,8 +4,7 @@ import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
 import dev.sterner.common.item.*
-import dev.sterner.common.item.foci.PortableHoleFociItem
-import dev.sterner.common.item.foci.WardingFociItem
+import dev.sterner.common.item.foci.*
 import dev.sterner.common.item.tool.*
 import dev.sterner.common.item.tool.ichor.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
@@ -49,6 +48,14 @@ object VoidBoundItemRegistry {
 
     val WARDING_FOCI: RegistryObject<Item> = ITEMS.register("warding_foci") {
         WardingFociItem(Item.Properties().stacksTo(1))
+    }
+
+    val EXCAVATION_FOCI: RegistryObject<Item> = ITEMS.register("excavation_foci") {
+        ExcavationFociItem(Item.Properties().stacksTo(1))
+    }
+
+    val SHOCK_FOCI: RegistryObject<Item> = ITEMS.register("shock_foci") {
+        ShockFociItem(Item.Properties().stacksTo(1))
     }
 
     val EMPTY_SPIRIT_SHARD: RegistryObject<Item> = ITEMS.register("empty_spirit_shard") {

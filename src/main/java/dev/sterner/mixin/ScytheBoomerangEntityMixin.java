@@ -3,8 +3,7 @@ package dev.sterner.mixin;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.sammy.malum.common.entity.boomerang.ScytheBoomerangEntity;
-import dev.sterner.api.IIchoriumScytheGhost;
-import dev.sterner.common.item.tool.ichor.IchoriumScytheItem;
+import dev.sterner.api.IchoriumScytheGhost;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -18,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ScytheBoomerangEntity.class)
-public class ScytheBoomerangEntityMixin implements IIchoriumScytheGhost {
+public class ScytheBoomerangEntityMixin implements IchoriumScytheGhost {
 
     @Unique boolean isGhost = false;
 
