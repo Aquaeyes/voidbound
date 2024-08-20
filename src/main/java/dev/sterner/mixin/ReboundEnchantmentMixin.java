@@ -1,21 +1,18 @@
 package dev.sterner.mixin;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.sammy.malum.common.enchantment.ReboundEnchantment;
 import com.sammy.malum.common.entity.boomerang.ScytheBoomerangEntity;
 import com.sammy.malum.registry.common.AttributeRegistry;
+import dev.sterner.api.IIchoriumScytheGhost;
 import dev.sterner.common.item.tool.ichor.IchoriumScytheItem;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ReboundEnchantment.class)
@@ -37,8 +34,9 @@ public class ReboundEnchantmentMixin {
         entity.setData(player, baseDamage, magicDamage,  0);
         entity.setItem(stack);
 
+        ((IIchoriumScytheGhost) entity).setGhost(true);
+
         entity.shootFromRotation(player, player.getXRot(), player.getYRot() + yOffset, 0.0F, (float) (1.5F + player.getAttributeValue(AttributeRegistry.SCYTHE_PROFICIENCY.get()) * 0.125f), 0F);
         player.level().addFreshEntity(entity);
-
     }
 }

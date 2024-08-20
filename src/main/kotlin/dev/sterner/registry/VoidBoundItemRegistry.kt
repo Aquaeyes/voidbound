@@ -14,6 +14,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.SwordItem
 
 object VoidBoundItemRegistry {
@@ -163,27 +164,28 @@ object VoidBoundItemRegistry {
     }
 
     val ICHORIUM_PICKAXE: RegistryObject<IchoriumPickaxeItem> = ITEMS.register("ichorium_pickaxe") {
-        IchoriumPickaxeItem(VoidBoundTiers.ICHORIUM, -2, 1f, 2f, Item.Properties().stacksTo(1))
+        IchoriumPickaxeItem(VoidBoundTiers.ICHORIUM, -2, 1f, 2f, ichorProptery)
     }
 
     val ICHORIUM_HOE: RegistryObject<HoeOfGrowthItem> = ITEMS.register("ichorium_hoe") {
-        IchoriumHoeItem(VoidBoundTiers.ICHORIUM, 0, -1.5f, 1f, Item.Properties().stacksTo(1))
+        IchoriumHoeItem(VoidBoundTiers.ICHORIUM, 0, -1.5f, 1f, ichorProptery)
     }
 
     val ICHORIUM_AXE: RegistryObject<AxeOfTheStreamItem> = ITEMS.register("ichorium_axe") {
-        IchoriumAxeItem(VoidBoundTiers.ICHORIUM, -3f, 2f, 4f, Item.Properties())
+        IchoriumAxeItem(VoidBoundTiers.ICHORIUM, -3f, 2f, 4f, ichorProptery)
     }
 
     val ICHORIUM_SHOVEL: RegistryObject<ShovelOfEarthmoverItem> = ITEMS.register("ichorium_shovel") {
-        IchoriumShovelItem(VoidBoundTiers.ICHORIUM, 2, 0f, 2f, Item.Properties().stacksTo(1))
+        IchoriumShovelItem(VoidBoundTiers.ICHORIUM, 2, 0f, 2f, ichorProptery)
     }
 
     val ICHORIUM_SWORD: RegistryObject<SwordOfTheZephyrItem> = ITEMS.register("ichorium_sword") {
-        IchoriumSwordItem(VoidBoundTiers.ICHORIUM, -1, 0f, 3f, Item.Properties().stacksTo(1))
+        IchoriumSwordItem(VoidBoundTiers.ICHORIUM, -1, 0f, 3f, ichorProptery)
     }
 
     val ICHORIUM_SCYTHE: RegistryObject<Item> = ITEMS.register("ichorium_scythe") {
-        IchoriumScytheItem(VoidBoundTiers.ICHORIUM, -2.5f, 2.1f, FabricItemSettings().stacksTo(1))
+        IchoriumScytheItem(VoidBoundTiers.ICHORIUM, -2.5f, 2.1f, ichorProptery)
     }
 
+    val ichorProptery = FabricItemSettings().stacksTo(1).fireResistant().rarity(Rarity.RARE)
 }

@@ -7,4 +7,6 @@ class IchoriumAxeItem(material: Tier?, damage: Float, speed: Float, magicDamage:
     magicDamage,
     properties
 ) {
+
+
 }
