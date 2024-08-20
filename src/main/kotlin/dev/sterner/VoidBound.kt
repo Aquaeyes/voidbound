@@ -1,7 +1,10 @@
 package dev.sterner
 
+import com.mojang.blaze3d.vertex.PoseStack
 import com.sammy.malum.client.MalumModelLoaderPlugin
 import dev.emi.trinkets.api.client.TrinketRendererRegistry
+import dev.sterner.api.util.VoidBoundRenderUtils
+import dev.sterner.api.util.VoidBoundRenderUtils.renderType
 import dev.sterner.client.VoidBoundModelLoaderPlugin
 import dev.sterner.client.renderer.HallowedMonocleRenderer
 import dev.sterner.client.renderer.WandItemRenderer
@@ -13,13 +16,22 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.MenuScreens
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.PackType
+import net.minecraft.world.phys.HitResult
+import net.minecraft.world.phys.Vec3
+import org.joml.Matrix4f
 import org.slf4j.LoggerFactory
+import team.lodestar.lodestone.handlers.RenderHandler
+import team.lodestar.lodestone.systems.rendering.VFXBuilders
+import java.awt.Color
 
 
 object VoidBound : ModInitializer, ClientModInitializer {
@@ -92,6 +104,44 @@ object VoidBound : ModInitializer, ClientModInitializer {
         ModelLoadingPlugin.register(VoidBoundModelLoaderPlugin)
 
         MenuScreens.register(VoidBoundMenuTypeRegistry.OSMOTIC_ENCHANTER.get(), ::OsmoticEnchanterScreen)
+
+        WorldRenderEvents.AFTER_TRANSLUCENT.register(::renderBeamRTest)
+    }
+
+    private fun renderBeamRTest(worldRenderContext: WorldRenderContext) {
+        val matrices = worldRenderContext.matrixStack()
+        val hit: HitResult? = Minecraft.getInstance().cameraEntity?.pick(10.0, 1f, false)
+        if (hit?.type == HitResult.Type.BLOCK) {
+            matrices.pushPose()
+
+            //renderBeam(matrices, hit.location.x, hit.location.y, hit.location.z)
+            matrices.popPose()
+        }
+
+    }
+    private fun renderBeam(matrices: PoseStack, x: Double, y: Double, z: Double) {
+
+        val builder = VFXBuilders.createWorld()
+        builder.replaceBufferSource(RenderHandler.LATE_DELAYED_RENDER.target)
+            .setRenderType(renderType)
+            .setColor(Color(255, 255, 255))
+            .setAlpha(1.0f)
+
+        matrices.pushPose()
+
+        val camera = Minecraft.getInstance().gameRenderer.mainCamera
+        matrices.translate(-camera.position.x, -camera.position.y, -camera.position.z)
+
+        val matrix4f: Matrix4f = matrices.last().pose()
+
+        val entity = Minecraft.getInstance().player!!
+
+        val startPos = Vec3(entity.x + 0.1, entity.eyeY - 0.2,  entity.z)
+        val endPos = Vec3(x, y , z)
+
+        builder.renderBeam(matrix4f, startPos, endPos, 1f, camera.position)
+
+        matrices.popPose()
     }
 
     fun id(name: String): ResourceLocation {

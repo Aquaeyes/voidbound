@@ -9,4 +9,7 @@ object VoidBoundTokens {
         RenderTypeToken.createToken(VoidBound.id("textures/block/runeborder.png"))
     val noisy: RenderTypeToken =
         RenderTypeToken.createToken(MalumMod.malumPath("textures/vfx/tt.png"))
+
+    val laser: RenderTypeToken =
+        RenderTypeToken.createToken(VoidBound.id("textures/laser.png"))
 }

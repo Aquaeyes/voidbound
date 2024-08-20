@@ -7,14 +7,17 @@ import com.sammy.malum.client.RenderUtils
 import com.sammy.malum.client.renderer.block.TotemPoleRenderer
 import dev.sterner.VoidBound
 import dev.sterner.api.ClientTickHandler
+import dev.sterner.client.VoidBoundTokens
 import net.minecraft.client.Camera
 import net.minecraft.client.renderer.GameRenderer
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.phys.Vec3
 import org.joml.Matrix4f
 import org.joml.Vector3f
+import team.lodestar.lodestone.handlers.RenderHandler
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.systems.easing.Easing
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
@@ -26,6 +29,30 @@ import java.awt.Color
 object VoidBoundRenderUtils {
 
     val CHECKMARK: ResourceLocation = VoidBound.id("textures/gui/check.png")
+
+    var renderType = LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(
+        VoidBoundTokens.laser
+    )
+
+    fun renderBeam(matrixStack: PoseStack, x: Double, y: Double, z: Double, size: Float, entity: Player) {
+        val builder = VFXBuilders.createWorld()
+        builder.replaceBufferSource(RenderHandler.LATE_DELAYED_RENDER.target)
+            .setRenderType(renderType)
+            .setColor(Color(255, 255, 255))
+            .setAlpha(1.0f)
+        val halfSize = size / 2.0f
+        matrixStack.pushPose()
+        matrixStack.translate(-entity.x, -entity.getY(), -entity.getZ())
+
+        val matrix4f: Matrix4f = matrixStack.last().pose()
+
+        val startPos: Vec3 = Vec3((x + entity.x - halfSize), y + entity.y, (z + entity.z - halfSize))
+        val endPos: Vec3 = Vec3((x + entity.x + halfSize + 10), y + entity.y, (z + entity.z + halfSize))
+
+        builder.renderBeam(matrix4f, startPos, endPos, 1f)
+
+        matrixStack.popPose()
+    }
 
     fun renderTexture(
         texture: ResourceLocation?,

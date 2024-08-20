@@ -1,9 +1,8 @@
 package dev.sterner.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
-import com.sammy.malum.client.RenderUtils
 import dev.sterner.VoidBound
-import dev.sterner.client.VoidBoundTokens
+import dev.sterner.api.util.VoidBoundRenderUtils.renderType
 import dev.sterner.client.model.FociModel
 import dev.sterner.client.model.WandItemModel
 import dev.sterner.registry.VoidBoundWandFociRegistry
@@ -14,14 +13,21 @@ import net.minecraft.client.renderer.RenderType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
-import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
+import net.minecraft.world.phys.HitResult
+import net.minecraft.world.phys.Vec3
+import org.joml.Matrix4f
+import org.joml.Quaternionf
+import team.lodestar.lodestone.handlers.RenderHandler
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
+import java.awt.Color
+
 
 class WandItemRenderer(val texture: String) : DynamicItemRenderer {
 
     var model: WandItemModel? = null
 
     var fociModel: FociModel? = null
+
 
     override fun render(
         stack: ItemStack,
@@ -38,18 +44,13 @@ class WandItemRenderer(val texture: String) : DynamicItemRenderer {
         if (fociModel == null) {
             fociModel = FociModel(Minecraft.getInstance().entityModels.bakeLayer(FociModel.LAYER_LOCATION))
         }
-        val cubeVertexData = RenderUtils.makeCubePositions(0.25f).applyWobble(0f, 0.35f, 0.01f)
-        val builder = VFXBuilders.createWorld()
-            .setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(VoidBoundTokens.wardBorder))
-        //val builder2 = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE.applyAndCache(Tokens.WARD_BORDER)).setColorRaw(0.9f,0.09f,0.9f)
 
         matrices.pushPose()
 
         matrices.translate(0f, 0.75f, 0f)
-        //RenderUtils.drawCube(matrices, builder2, 1f, cubeVertexData)
-        //RenderUtils.drawCube(matrices, builder, 1f, cubeVertexData)
 
         matrices.translate(0.5, 0.65, 0.5)
+
         matrices.scale(1f, -1f, -1f)
         model?.renderToBuffer(
             matrices,
@@ -61,7 +62,6 @@ class WandItemRenderer(val texture: String) : DynamicItemRenderer {
             1f,
             1f
         )
-        //matrices.translate(-0.5, -0.65, -0.5)
 
         val focusName = stack.tag?.getString("FocusName")
         val focus = VoidBoundWandFociRegistry.WAND_FOCUS.getOptional(focusName?.let { ResourceLocation.tryParse(it) })
@@ -89,8 +89,6 @@ class WandItemRenderer(val texture: String) : DynamicItemRenderer {
             )
         }
 
-
-        //RenderUtils.drawCube(matrices, builder, 1f, cubeVertexData)
         matrices.popPose()
     }
 }
