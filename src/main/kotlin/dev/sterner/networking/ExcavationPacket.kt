@@ -54,7 +54,7 @@ class ExcavationPacket(data: CompoundTag?) : LodestoneServerNBTPacket(data) {
             var breakTime = data.getInt("BreakTime")
 
             if (progress != breakProgress) {
-                player.level().destroyBlockProgress(playerId, blockPos, progress)
+                //player.level().destroyBlockProgress(playerId, blockPos, progress)
             }
 
             if (breakTime >= 40) {
