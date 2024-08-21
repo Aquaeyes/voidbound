@@ -1,21 +1,20 @@
 package dev.sterner.common.item.foci
 
+import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.registry.client.ParticleRegistry
 import com.sammy.malum.registry.common.SpiritTypeRegistry
-import com.sammy.malum.visual_effects.SparkParticleEffects
 import com.sammy.malum.visual_effects.SpiritLightSpecs
 import dev.sterner.api.util.VoidBoundPosUtils
 import dev.sterner.api.wand.IWandFocus
 import dev.sterner.networking.ExcavationPacket
 import dev.sterner.registry.VoidBoundPacketRegistry
 import net.minecraft.client.Minecraft
-import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundSource
+import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
@@ -28,11 +27,9 @@ import team.lodestar.lodestone.systems.easing.Easing
 import team.lodestar.lodestone.systems.particle.ParticleEffectSpawner
 import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
 import team.lodestar.lodestone.systems.particle.data.GenericParticleData
-import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData
 import team.lodestar.lodestone.systems.particle.data.spin.SpinParticleData
 import team.lodestar.lodestone.systems.particle.render_types.LodestoneWorldParticleRenderType
 import team.lodestar.lodestone.systems.particle.world.behaviors.components.DirectionalBehaviorComponent
-import java.awt.Color
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -53,88 +50,98 @@ class ExcavationFoci : IWandFocus {
         val hit: HitResult? = client.cameraEntity?.pick(maxReach, tickDelta, includeFluids)
 
         if (hit != null) {
-            when (hit.type) {
-                HitResult.Type.MISS -> {}
-                HitResult.Type.BLOCK -> {
-                    val blockHit = hit as BlockHitResult
-                    val blockPos = blockHit.blockPos
-                    val newState = client.level?.getBlockState(blockPos) ?: return
+            if (hit.type ==  HitResult.Type.BLOCK ) {
+                val blockHit = hit as BlockHitResult
+                val blockPos = blockHit.blockPos
+                val newState = client.level?.getBlockState(blockPos) ?: return
 
-
-                    if (blockState != newState) {
-                        this.breakTime = 0
-                        this.breakProgress = -1
-                    }
-
-                    blockState = newState
-
-                    timeToBreak = (20 * blockState!!.getDestroySpeed(level, blockPos))
-
-                    this.breakTime++
-                    val progress: Int = (this.breakTime / this.timeToBreak!!.toFloat() * 10).toInt()
-
-                    VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(ExcavationPacket(blockPos, breakTime, timeToBreak!!.toInt()))
-                    val pos = getProjectileSpawnPos(player, InteractionHand.MAIN_HAND, 1.5f, 0.6f)
-                    spawnChargeParticles(player.level(), player, pos, 0.5f)
-
-
-                    if (breakTime % 6 == 0) {
-                        level.playSound(player, blockPos, blockState!!.soundType.breakSound, SoundSource.BLOCKS)
-                    }
-
-                    if (progress != this.breakProgress) {
-                        this.breakProgress = progress
-                    }
-
-                    client.level!!.destroyBlockProgress(player.id, blockPos, progress)
-
-                    if (this.breakTime >= this.timeToBreak!!) {
-                        this.breakTime = 0
-                        this.breakProgress = -1
-                    }
-
-
-                    val coordPos: List<Vec3> = VoidBoundPosUtils.getFaceCoords(level, blockState!!, blockPos)
-                    for (pos1 in coordPos) {
-                        val lightSpecs: ParticleEffectSpawner = SpiritLightSpecs.spiritLightSpecs(level, pos1, SpiritTypeRegistry.EARTHEN_SPIRIT)
-                        lightSpecs.builder.multiplyLifetime(1.5f)
-                        lightSpecs.bloomBuilder.multiplyLifetime(1.5f)
-                        lightSpecs.spawnParticles()
-                        lightSpecs.spawnParticles()
-                    }
+                if (blockState != newState) {
+                    this.breakTime = 0
+                    this.breakProgress = -1
                 }
 
-                HitResult.Type.ENTITY -> {
+                blockState = newState
 
+                timeToBreak = (20 * blockState!!.getDestroySpeed(level, blockPos))
+
+                this.breakTime++
+                val progress: Int = (this.breakTime / this.timeToBreak!!.toFloat() * 10).toInt()
+
+                VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(ExcavationPacket(blockPos, breakTime, timeToBreak!!.toInt(), progress))
+                val pos = getProjectileSpawnPos(player, InteractionHand.MAIN_HAND, 1.5f, 0.6f)
+                spawnChargeParticles(player.level(), player, pos, 0.5f)
+
+                if (breakTime % 6 == 0) {
+                    level.playSound(player, blockPos, blockState!!.soundType.breakSound, SoundSource.BLOCKS)
                 }
 
-                null -> {
-
+                if (progress != this.breakProgress) {
+                    this.breakProgress = progress
                 }
+                level.destroyBlockProgress(player.id + ExcavationPacket.generatePosHash(blockPos), blockPos, progress)
+
+                if (this.breakTime >= this.timeToBreak!!) {
+                    this.breakTime = 0
+                    this.breakProgress = -1
+                }
+
+                val coordPos: List<Vec3> = VoidBoundPosUtils.getFaceCoords(level, blockState!!, blockPos)
+                for (pos1 in coordPos) {
+                    val lightSpecs: ParticleEffectSpawner = SpiritLightSpecs.spiritLightSpecs(level, pos1, SpiritTypeRegistry.EARTHEN_SPIRIT)
+                    lightSpecs.builder.multiplyLifetime(1.5f)
+                    lightSpecs.bloomBuilder.multiplyLifetime(1.5f)
+
+                    lightSpecs.spawnParticles()
+                    lightSpecs.spawnParticles()
+                }
+
+                spec(level, player.lookAngle.normalize(), pos, SpiritTypeRegistry.EARTHEN_SPIRIT, level.random)
             }
         }
     }
 
-    fun spawnChargeParticles(
+    private fun spec(level: Level, angle: Vec3, pos: Vec3, spiritType: MalumSpiritType, random: RandomSource){
+
+        val lightSpecs: ParticleEffectSpawner = SpiritLightSpecs.spiritLightSpecs(level, pos, spiritType)
+        lightSpecs.builder
+            .multiplyLifetime(2.5f)
+            .setMotion(angle.scale(0.3))
+            .setTransparencyData(GenericParticleData.create(0.2f, 0.8f, 0f).build())
+            .modifyData({ obj: WorldParticleBuilder -> obj.scaleData },
+                { d: GenericParticleData ->
+                    d.multiplyValue(
+                        RandomHelper.randomBetween(
+                            random,
+                            1f,
+                            2f
+                        )
+                    )
+                })
+        lightSpecs.bloomBuilder
+            .multiplyLifetime(1.5f)
+            .setMotion(angle.scale(0.3))
+            .setTransparencyData(GenericParticleData.create(0.05f, 0.35f, 0f).build())
+            .modifyData({ obj: WorldParticleBuilder -> obj.scaleData },
+                { d: GenericParticleData ->
+                    d.multiplyValue(
+                        RandomHelper.randomBetween(
+                            random,
+                            0.5f,
+                            1f
+                        )
+                    )
+                })
+        lightSpecs.spawnParticles()
+
+    }
+
+    private fun spawnChargeParticles(
         pLevel: Level,
         pLivingEntity: LivingEntity,
         pos: Vec3,
         pct: Float
     ) {
         val random = pLevel.random
-
-        val sparkParticles: ParticleEffectSpawner =
-            SparkParticleEffects.spiritMotionSparks(pLevel, Vec3(pos.x, pos.y, pos.z), SpiritTypeRegistry.EARTHEN_SPIRIT)
-        sparkParticles.builder.setMotion(pLivingEntity.lookAngle.normalize().scale(0.3)).modifyData(
-            { obj: WorldParticleBuilder -> obj.scaleData },
-            { d: GenericParticleData ->
-                d.multiplyValue(
-                    1.2f
-                )
-            })
-        sparkParticles.bloomBuilder.setMotion(pLivingEntity.lookAngle.normalize().scale(0.3))
-        sparkParticles.spawnParticles()
-
 
         val spinData = SpinParticleData.createRandomDirection(random, 0.25f, 0.5f)
             .setSpinOffset(RandomHelper.randomBetween(random, 0f, 6.28f)).build()
@@ -143,7 +150,7 @@ class ExcavationFoci : IWandFocus {
             .setTransparencyData(GenericParticleData.create(0.95f * pct, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build())
             .setScaleData(GenericParticleData.create(0.35f * pct, 0f).setEasing(Easing.SINE_IN_OUT).build())
             .setSpinData(spinData)
-            .setColorData(ColorParticleData.create(Color(55, 255, 55), Color(1,70,60)).build())
+            .setColorData(SpiritTypeRegistry.EARTHEN_SPIRIT.createColorData().build())
             .setLifetime(5)
             .setMotion(pLivingEntity.lookAngle.normalize().scale(0.05))
             .addTickActor {
@@ -156,12 +163,12 @@ class ExcavationFoci : IWandFocus {
             .setRenderType(LodestoneWorldParticleRenderType.LUMITRANSPARENT)
             .spawn(pLevel, pos.x, pos.y, pos.z)
 
-        WorldParticleBuilder.create(ParticleRegistry.HEXAGON, DirectionalBehaviorComponent(pLivingEntity.lookAngle.normalize()))
+        WorldParticleBuilder.create(ParticleRegistry.RITUAL_CIRCLE_WISP, DirectionalBehaviorComponent(pLivingEntity.lookAngle.normalize()))
             .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
             .setTransparencyData(GenericParticleData.create(0.95f * pct, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build())
             .setScaleData(GenericParticleData.create(0.35f * pct, 0f).setEasing(Easing.SINE_IN_OUT).build())
             .setSpinData(spinData)
-            .setColorData(ColorParticleData.create(Color(55, 255, 155), Color(1,120,100)).build())
+            .setColorData(SpiritTypeRegistry.EARTHEN_SPIRIT.createColorData().build())
             .setLifetime(5)
             .setMotion(pLivingEntity.lookAngle.normalize().scale(0.05))
             .enableNoClip()
@@ -172,7 +179,7 @@ class ExcavationFoci : IWandFocus {
             .spawn(pLevel, pos.x, pos.y, pos.z)
     }
 
-    fun getProjectileSpawnPos(player: LivingEntity, hand: InteractionHand, distance: Float, spread: Float): Vec3 {
+    private fun getProjectileSpawnPos(player: LivingEntity, hand: InteractionHand, distance: Float, spread: Float): Vec3 {
         val angle = if (hand == InteractionHand.MAIN_HAND) 225 else 90
         val radians = Math.toRadians((angle - player.yHeadRot).toDouble())
         return player.position().add(player.lookAngle.scale(distance.toDouble()))

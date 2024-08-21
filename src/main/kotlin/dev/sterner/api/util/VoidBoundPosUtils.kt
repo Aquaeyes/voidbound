@@ -63,49 +63,54 @@ object VoidBoundPosUtils {
         val f = 0.03 // Offset for particle positioning
 
         // Get the bounding box (AABB) of the block
-        val aABB: AABB = blockState.getShape(level, pos).bounds().inflate(f)
+        val shape = blockState.getShape(level, pos)
+        if (!shape.isEmpty) {
+            val aABB: AABB = blockState.getShape(level, pos).bounds().inflate(f)
 
-        // Calculate the min and max coordinates for the bounding box
-        val minX = i + aABB.minX
-        val minY = j + aABB.minY
-        val minZ = k + aABB.minZ
-        val maxX = i + aABB.maxX
-        val maxY = j + aABB.maxY
-        val maxZ = k + aABB.maxZ
+            // Calculate the min and max coordinates for the bounding box
+            val minX = i + aABB.minX
+            val minY = j + aABB.minY
+            val minZ = k + aABB.minZ
+            val maxX = i + aABB.maxX
+            val maxY = j + aABB.maxY
+            val maxZ = k + aABB.maxZ
 
-        // List to store particle positions
-        val particlePositions = mutableListOf<Vec3>()
+            // List to store particle positions
+            val particlePositions = mutableListOf<Vec3>()
 
-        // Function to generate random positions on a face
-        fun addFaceParticles(x1: Double, y1: Double, z1: Double, x2: Double, y2: Double, z2: Double) {
-            val particleCount = 5 // Number of particles per face
-            for (i in 0..particleCount) {
-                val x = random.nextDouble() * (x2 - x1) + x1
-                val y = random.nextDouble() * (y2 - y1) + y1
-                val z = random.nextDouble() * (z2 - z1) + z1
-                particlePositions.add(Vec3(x, y, z))
+            // Function to generate random positions on a face
+            fun addFaceParticles(x1: Double, y1: Double, z1: Double, x2: Double, y2: Double, z2: Double) {
+                val particleCount = 1 // Number of particles per face
+                for (i in 0..particleCount) {
+                    val x = random.nextDouble() * (x2 - x1) + x1
+                    val y = random.nextDouble() * (y2 - y1) + y1
+                    val z = random.nextDouble() * (z2 - z1) + z1
+                    particlePositions.add(Vec3(x, y, z))
+                }
             }
+
+            // Front face (minZ)
+            addFaceParticles(minX, minY, minZ, maxX, maxY, minZ)
+
+            // Back face (maxZ)
+            addFaceParticles(minX, minY, maxZ, maxX, maxY, maxZ)
+
+            // Left face (minX)
+            addFaceParticles(minX, minY, minZ, minX, maxY, maxZ)
+
+            // Right face (maxX)
+            addFaceParticles(maxX, minY, minZ, maxX, maxY, maxZ)
+
+            // Bottom face (minY)
+            addFaceParticles(minX, minY, minZ, maxX, minY, maxZ)
+
+            // Top face (maxY)
+            addFaceParticles(minX, maxY, minZ, maxX, maxY, maxZ)
+
+            return particlePositions
         }
 
-        // Front face (minZ)
-        addFaceParticles(minX, minY, minZ, maxX, maxY, minZ)
-
-        // Back face (maxZ)
-        addFaceParticles(minX, minY, maxZ, maxX, maxY, maxZ)
-
-        // Left face (minX)
-        addFaceParticles(minX, minY, minZ, minX, maxY, maxZ)
-
-        // Right face (maxX)
-        addFaceParticles(maxX, minY, minZ, maxX, maxY, maxZ)
-
-        // Bottom face (minY)
-        addFaceParticles(minX, minY, minZ, maxX, minY, maxZ)
-
-        // Top face (maxY)
-        addFaceParticles(minX, maxY, minZ, maxX, maxY, maxZ)
-
-        return particlePositions
+        return listOf()
     }
 
     fun getFaceCoords(level: Level, blockState: BlockState, pos: BlockPos, side: Direction): Vec3 {
