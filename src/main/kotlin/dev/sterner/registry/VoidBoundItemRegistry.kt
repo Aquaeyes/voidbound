@@ -3,6 +3,10 @@ package dev.sterner.registry
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
+import dev.sterner.common.foci.ExcavationFociItem
+import dev.sterner.common.foci.PortableHoleFociItem
+import dev.sterner.common.foci.ShockFociItem
+import dev.sterner.common.foci.WardingFociItem
 import dev.sterner.common.item.*
 import dev.sterner.common.item.foci.*
 import dev.sterner.common.item.tool.*

@@ -1,4 +1,4 @@
-package dev.sterner.common.item.foci
+package dev.sterner.common.foci
 
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.registry.client.ParticleRegistry

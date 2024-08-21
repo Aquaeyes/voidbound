@@ -4,7 +4,7 @@ import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent
 import dev.sterner.api.util.VoidBoundRenderUtils
 import dev.sterner.client.VoidBoundTokens
 import dev.sterner.common.item.WandItem
-import dev.sterner.common.item.foci.WardingFoci
+import dev.sterner.common.foci.WardingFoci
 import dev.sterner.registry.VoidBoundComponentRegistry
 import dev.sterner.registry.VoidBoundWandFociRegistry
 import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents
