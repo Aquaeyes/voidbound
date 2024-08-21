@@ -22,18 +22,22 @@ class CrimsonBookItem(properties: Properties) : Item(properties) {
             val tag = CompoundTag()
             item.tag = tag
         }
-        if (player is ServerPlayer) {
-            grantAdvancementCriterion(player, VoidBound.id("revelationary/ichor_requirement_advancement"), "opened_crimson_rites")
-        }
+        var giveAdvancement = false
+
         if (item.tag!!.contains("open")) {
             if (item.tag!!.getBoolean("open")) {
                 player.getItemInHand(usedHand).getOrCreateTag().putBoolean("open", false)
             } else {
                 player.getItemInHand(usedHand).getOrCreateTag().putBoolean("open", true)
+                giveAdvancement = true
             }
 
         } else {
             player.getItemInHand(usedHand).getOrCreateTag().putBoolean("open", true)
+            giveAdvancement = true
+        }
+        if (giveAdvancement && player is ServerPlayer) {
+            grantAdvancementCriterion(player, VoidBound.id("revelationary/ichor_requirement_advancement"), "opened_crimson_rites")
         }
 
         return super.use(level, player, usedHand)
