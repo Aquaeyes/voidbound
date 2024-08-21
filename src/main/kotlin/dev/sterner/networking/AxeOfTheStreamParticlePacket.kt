@@ -39,15 +39,12 @@ class AxeOfTheStreamParticlePacket(data: CompoundTag) : LodestoneClientNBTPacket
             val holderGetter =
                 (if (client.level != null) level.holderLookup(Registries.BLOCK) else BuiltInRegistries.BLOCK.asLookup()) as HolderGetter<Block?>
 
-            val dir = Direction.byName(data.getString("Direction"))
             val state = NbtUtils.readBlockState(holderGetter, data.getCompound("BlockState"))
             val pos = NbtUtils.readBlockPos(data.getCompound("BlockPos"))
 
-            for (i in 0..5) {
-                val coordPos =
-                    VoidBoundPosUtils.getFaceCoords(level, state, pos, getPlayerLookDirection(client.player!!).opposite)
-                val lightSpecs: ParticleEffectSpawner =
-                    SpiritLightSpecs.spiritLightSpecs(level, coordPos, SpiritTypeRegistry.AQUEOUS_SPIRIT)
+            val coordPos = VoidBoundPosUtils.getFaceCoords(level, state, pos)
+            for (i in coordPos) {
+                val lightSpecs: ParticleEffectSpawner = SpiritLightSpecs.spiritLightSpecs(level, i, SpiritTypeRegistry.AQUEOUS_SPIRIT)
                 lightSpecs.builder.multiplyLifetime(1.5f)
                 lightSpecs.bloomBuilder.multiplyLifetime(1.5f)
                 lightSpecs.spawnParticles()
@@ -64,17 +61,6 @@ class AxeOfTheStreamParticlePacket(data: CompoundTag) : LodestoneClientNBTPacket
             tag.put("BlockPos", NbtUtils.writeBlockPos(pos))
 
             return tag
-        }
-
-        fun getPlayerLookDirection(player: Player): Direction {
-            val yaw = player.yRot
-            val pitch = player.xRot
-
-            return when {
-                pitch < -45 -> Direction.UP
-                pitch > 45 -> Direction.DOWN
-                else -> Direction.fromYRot(yaw.toDouble())
-            }
         }
     }
 }

@@ -29,12 +29,10 @@ class ExcavationPacket(data: CompoundTag?) : LodestoneServerNBTPacket(data) {
 
     constructor(buf: FriendlyByteBuf) : this(buf.readNbt()!!)
 
-    constructor(id: Int, blockPos: BlockPos, progress: Int, breakProgress: Int, breakTime: Int) : this(CompoundTag().apply {
-        putInt("Id", id)
+    constructor(blockPos: BlockPos, breakTime: Int, maxBreakTime: Int) : this(CompoundTag().apply {
         put("Pos", NbtUtils.writeBlockPos(blockPos))
-        putInt("Progress", progress)
-        putInt("BreakProgress", breakProgress)
         putInt("BreakTime", breakTime)
+        putInt("MaxBreakTime", maxBreakTime)
     })
 
     override fun executeServerNbt(
@@ -47,17 +45,11 @@ class ExcavationPacket(data: CompoundTag?) : LodestoneServerNBTPacket(data) {
     ) {
         server?.execute {
 
-            val playerId = data.getInt("Id")
             val blockPos = NbtUtils.readBlockPos(data.getCompound("Pos"))
-            val progress = data.getInt("Progress")
-            var breakProgress = data.getInt("BreakProgress")
             var breakTime = data.getInt("BreakTime")
+            val maxBreakTime = data.getInt("MaxBreakTime")
 
-            if (progress != breakProgress) {
-                //player.level().destroyBlockProgress(playerId, blockPos, progress)
-            }
-
-            if (breakTime >= 40) {
+            if (breakTime >= maxBreakTime - 1) {
                 player.level().destroyBlock(blockPos, true)
                 player.level().levelEvent(
                     LevelEvent.PARTICLES_DESTROY_BLOCK,
