@@ -8,7 +8,6 @@ import dev.sterner.common.foci.PortableHoleFociItem
 import dev.sterner.common.foci.ShockFociItem
 import dev.sterner.common.foci.WardingFociItem
 import dev.sterner.common.item.*
-import dev.sterner.common.item.foci.*
 import dev.sterner.common.item.tool.*
 import dev.sterner.common.item.tool.ichor.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
