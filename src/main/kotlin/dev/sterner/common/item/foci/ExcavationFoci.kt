@@ -1,5 +1,6 @@
 package dev.sterner.common.item.foci
 
+import com.sammy.malum.registry.client.ParticleRegistry
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import com.sammy.malum.visual_effects.SparkParticleEffects
 import com.sammy.malum.visual_effects.SpiritLightSpecs
@@ -114,21 +115,6 @@ class ExcavationFoci : IWandFocus {
         }
     }
 
-    fun getDestroyProgress(
-        state: BlockState,
-        player: Player,
-        level: BlockGetter?,
-        pos: BlockPos?
-    ): Float {
-        val f = state.getDestroySpeed(level, pos)
-        if (f == -1.0f) {
-            return 0.0f
-        } else {
-            val i = 30
-            return player.getDestroySpeed(state) / f / i.toFloat()
-        }
-    }
-
     fun spawnChargeParticles(
         pLevel: Level,
         pLivingEntity: LivingEntity,
@@ -163,6 +149,21 @@ class ExcavationFoci : IWandFocus {
             .addTickActor {
                 it.particleSpeed = pLivingEntity.lookAngle
             }
+            .enableNoClip()
+            .enableForcedSpawn()
+            .setLifeDelay(2)
+            .spawn(pLevel, pos.x, pos.y, pos.z)
+            .setRenderType(LodestoneWorldParticleRenderType.LUMITRANSPARENT)
+            .spawn(pLevel, pos.x, pos.y, pos.z)
+
+        WorldParticleBuilder.create(ParticleRegistry.HEXAGON, DirectionalBehaviorComponent(pLivingEntity.lookAngle.normalize()))
+            .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
+            .setTransparencyData(GenericParticleData.create(0.95f * pct, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build())
+            .setScaleData(GenericParticleData.create(0.35f * pct, 0f).setEasing(Easing.SINE_IN_OUT).build())
+            .setSpinData(spinData)
+            .setColorData(ColorParticleData.create(Color(55, 255, 155), Color(1,120,100)).build())
+            .setLifetime(5)
+            .setMotion(pLivingEntity.lookAngle.normalize().scale(0.05))
             .enableNoClip()
             .enableForcedSpawn()
             .setLifeDelay(2)
