@@ -1,6 +1,7 @@
 package dev.sterner.common.item
 
 import dev.sterner.VoidBound
+import dev.sterner.api.util.VoidBoundUtils
 import net.minecraft.advancements.Advancement
 import net.minecraft.client.Minecraft
 import net.minecraft.nbt.CompoundTag
@@ -36,33 +37,15 @@ class CrimsonBookItem(properties: Properties) : Item(properties) {
             player.getItemInHand(usedHand).getOrCreateTag().putBoolean("open", true)
             giveAdvancement = true
         }
+
         if (giveAdvancement && player is ServerPlayer) {
-            grantAdvancementCriterion(player, VoidBound.id("revelationary/ichor_requirement_advancement"), "opened_crimson_rites")
+            VoidBoundUtils.grantAdvancementCriterion(player, VoidBound.id("revelationary/ichor_requirement_advancement"), "opened_crimson_rites")
         }
 
         return super.use(level, player, usedHand)
     }
 
     companion object {
-
-        fun grantAdvancementCriterion(
-            serverPlayerEntity: ServerPlayer,
-            advancementIdentifier: ResourceLocation,
-            criterion: String
-        ) {
-            if (serverPlayerEntity.getServer() == null) {
-                return
-            }
-            val sal = serverPlayerEntity.getServer()!!.advancements
-            val tracker = serverPlayerEntity.advancements
-
-            val advancement: Advancement? = sal.getAdvancement(advancementIdentifier)
-            if (advancement != null) {
-                if (!tracker.getOrStartProgress(advancement).isDone()) {
-                    tracker.award(advancement, criterion)
-                }
-            }
-        }
 
         fun isOpen(): Boolean {
             val v: Boolean? =

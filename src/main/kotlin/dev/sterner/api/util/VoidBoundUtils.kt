@@ -6,10 +6,12 @@ import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.visual_effects.SpiritLightSpecs
 import dev.sterner.VoidBound
 import dev.sterner.listener.EnchantSpiritDataReloadListener
+import net.minecraft.advancements.Advancement
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.item.enchantment.Enchantment
@@ -24,6 +26,25 @@ import java.util.function.Consumer
 import java.util.function.Supplier
 
 object VoidBoundUtils {
+
+    fun grantAdvancementCriterion(
+        serverPlayerEntity: ServerPlayer,
+        advancementIdentifier: ResourceLocation,
+        criterion: String
+    ) {
+        if (serverPlayerEntity.getServer() == null) {
+            return
+        }
+        val sal = serverPlayerEntity.getServer()!!.advancements
+        val tracker = serverPlayerEntity.advancements
+
+        val advancement: Advancement? = sal.getAdvancement(advancementIdentifier)
+        if (advancement != null) {
+            if (!tracker.getOrStartProgress(advancement).isDone()) {
+                tracker.award(advancement, criterion)
+            }
+        }
+    }
 
     fun getSpiritData(entity: LivingEntity): Optional<MutableList<SpiritWithCount>> {
         val key = BuiltInRegistries.ENTITY_TYPE.getKey(entity.type)

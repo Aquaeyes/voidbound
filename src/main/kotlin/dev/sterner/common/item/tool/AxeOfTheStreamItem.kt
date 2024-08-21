@@ -59,28 +59,29 @@ open class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magi
 
     override fun onUseTick(level: Level, livingEntity: LivingEntity, stack: ItemStack, remainingUseDuration: Int) {
         val stuff = level.getEntitiesOfClass(ItemEntity::class.java, livingEntity.boundingBox.inflate(10.0))
-        println(stack.orCreateTag)
+
         if (stuff != null && stuff.isNotEmpty()) {
             val iterator = stuff.iterator()
             while (iterator.hasNext()) {
                 val e: ItemEntity = iterator.next() as ItemEntity
                 if (!e.isRemoved) {
-                    var d6: Double = e.x - livingEntity.x
-                    var d8: Double = e.y - livingEntity.y + (livingEntity.bbHeight / 2.0f)
-                    var d10: Double = e.z - livingEntity.z
-                    val d11 =
-                        Mth.sqrt(d6.toFloat() * d6.toFloat() + d8.toFloat() * d8.toFloat() + d10.toFloat() * d10.toFloat())
-                    d6 /= d11
-                    d8 /= d11
-                    d10 /= d11
-                    val d13 = 0.3
+                    val direction = Vec3(
+                        livingEntity.x - e.x,
+                        (livingEntity.y + livingEntity.bbHeight / 2.0) - (e.y + e.bbHeight / 2.0),
+                        livingEntity.z - e.z
+                    ).normalize()
 
-                    val newMotionX = (e.deltaMovement.x - d6 * d13).coerceIn(-0.25, 0.25)
-                    val newMotionY = (e.deltaMovement.y - (d8 * d13 - 0.1)).coerceIn(-0.25, 0.25)
-                    val newMotionZ = (e.deltaMovement.z - d10 * d13).coerceIn(-0.25, 0.25)
+                    val speedFactor = 0.045
 
-                    val motion = Vec3(newMotionX, newMotionY, newMotionZ)
-                    e.deltaMovement = motion
+                    val newMotion = direction.scale(speedFactor)
+
+                    val clampedMotion = Vec3(
+                        newMotion.x.coerceIn(-0.25, 0.25),
+                        newMotion.y.coerceIn(-0.25, 0.25),
+                        newMotion.z.coerceIn(-0.25, 0.25)
+                    )
+
+                    e.deltaMovement = e.deltaMovement.add(clampedMotion)
 
                     if (!level.isClientSide) {
                         for (player in PlayerLookup.tracking(e)) {
@@ -93,7 +94,7 @@ open class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magi
                                 VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(
                                     BubbleParticlePacket(
                                         Vector3f(
-                                            motion.x.toFloat(), motion.y.toFloat(), motion.z.toFloat()
+                                            clampedMotion.x.toFloat(), clampedMotion.y.toFloat(), clampedMotion.z.toFloat()
                                         ), pos
                                     ), player
                                 )
