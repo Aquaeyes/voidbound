@@ -19,6 +19,9 @@ import kotlin.math.pow
 class ShockFoci : IWandFocus {
 
     var cooldown = 0
+    override fun onFocusRightClick(stack: ItemStack, level: Level, player: Player, hitResult: HitResult) {
+        onUsingFocusTick(stack, level, player)
+    }
 
     override fun onUsingFocusTick(stack: ItemStack, level: Level, player: Player) {
         if (cooldown == 0) {
@@ -40,7 +43,7 @@ class ShockFoci : IWandFocus {
             val hit: EntityHitResult? = ProjectileUtil.getEntityHitResult(
                 level, player, vec3d, vec3d3,
                 player.getBoundingBox().expandTowards(vec3d2.multiply(distance, distance, distance)).inflate(1.0, 1.0, 1.0)
-            ) { target -> !target.isSpectator() }
+            ) { target -> !target.isSpectator }
 
             if (!level.isClientSide && blockHit.location != null) {
                 val bolt = BoltEntity(

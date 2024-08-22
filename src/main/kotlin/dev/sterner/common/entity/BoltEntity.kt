@@ -23,7 +23,19 @@ class BoltEntity(entityType: EntityType<BoltEntity>, world: Level?) : Entity(ent
     constructor(caster: LivingEntity, length: Double, color: Int) : this(VoidBoundEntityTypeRegistry.BOLT_ENTITY.get(), caster.level()) {
         yRot = caster.getYHeadRot()
         xRot = caster.xRot
-        setPos(caster.x, caster.eyeY, caster.z)
+        //setPos(caster.x, caster.eyeY, caster.z)
+
+        // Calculate the rightward direction
+        val rightOffset = -0.5 // Offset by 0.5 units to the right
+        val yawRad = Math.toRadians(caster.yRot.toDouble()) // Convert yaw to radians
+
+        val offsetX = -Math.sin(yawRad) * rightOffset
+        val offsetZ = Math.cos(yawRad) * rightOffset
+
+        // Set the position with the calculated offset
+        setPos(caster.x + offsetX, caster.eyeY, caster.z + offsetZ)
+
+        // Set length and color
         this.length = length.toFloat()
         setColor(color)
     }
@@ -33,14 +45,6 @@ class BoltEntity(entityType: EntityType<BoltEntity>, world: Level?) : Entity(ent
         this.ambientTick = 6
         this.seed = this.random.nextLong()
     }
-
-    constructor(world: Level?, pos: Vec3, direction: Vec3, color: Int) : this(VoidBoundEntityTypeRegistry.BOLT_ENTITY.get(), world) {
-        lookAt(EntityAnchorArgument.Anchor.FEET, direction)
-        setPos(pos.x(), pos.y(), pos.z())
-        length = direction.length().toFloat()
-        setColor(color)
-    }
-
 
     var length: Float
         get() = entityData.get(LENGTH)
