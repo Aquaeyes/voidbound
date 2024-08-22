@@ -14,19 +14,4 @@ class ShockFociItem(properties: Properties) : AbstractFociItem(VoidBoundWandFoci
     override fun color(): Color = Color(155, 255, 255)
 
     override fun endColor(): Color = Color(50, 125, 203)
-
-    override fun appendHoverText(
-        stack: ItemStack,
-        level: Level?,
-        tooltipComponents: MutableList<Component>,
-        isAdvanced: TooltipFlag
-    ) {
-        tooltipComponents.add(
-            Component.translatable("Not yet implemented").withStyle(ChatFormatting.ITALIC).withStyle(
-                Style.EMPTY.withColor(Color.red.rgb)
-            )
-        )
-
-        super.appendHoverText(stack, level, tooltipComponents, isAdvanced)
-    }
 }
