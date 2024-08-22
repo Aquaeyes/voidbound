@@ -60,7 +60,7 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
         }
 
         val rgb: Vec3 = unpackRgb(Color(190, 196, 250).rgb)
-        val alpha = (if (entity.tickCount < 3) 0.3f else max(0.3f * (1 - (entity.tickCount - 3f + tickDelta) / 3f), 0f)) * 3
+        val alpha = (if (entity.tickCount < 3) 0.3f else max(0.3f * (1 - (entity.tickCount - 3f + tickDelta) / 3f), 0f)) * 2
 
         val segmentLengths = FloatArray(segmentNumber)
         for (segment in segmentLengths.indices) {
@@ -72,7 +72,9 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
         }
         val offsetsY = FloatArray(segmentNumber)
         val offsetsX = FloatArray(segmentNumber)
-        val vertexConsumer: VertexConsumer = buffer.getBuffer(VoidBoundRenderTypes.BOLT.apply(VoidBoundTokens.noisy))
+        matrices.pushPose()
+
+        val vertexConsumer: VertexConsumer = buffer.getBuffer(RenderType.lightning())
         val matrix4f: Matrix4f = matrices.last().pose()
 
         matrices.mulPose(Axis.YN.rotationDegrees(entity.getViewYRot(tickDelta)))
@@ -187,6 +189,7 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
                 }
             }
         }
+        matrices.popPose()
     }
 
     companion object {

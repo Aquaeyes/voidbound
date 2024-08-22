@@ -21,8 +21,6 @@ import kotlin.math.sin
 
 
 class BoltEntity(entityType: EntityType<BoltEntity>, world: Level?) : Entity(entityType, world) {
-    var seed: Long
-    var color: FloatArray = floatArrayOf(1f, 0f, 0f, 1f)
     private var ambientTick: Int
 
     constructor(caster: LivingEntity, length: Double) : this(VoidBoundEntityTypeRegistry.BOLT_ENTITY.get(), caster.level()) {
@@ -44,7 +42,6 @@ class BoltEntity(entityType: EntityType<BoltEntity>, world: Level?) : Entity(ent
     init {
         this.noCulling = true
         this.ambientTick = 6
-        this.seed = this.random.nextLong()
     }
 
     var length: Float
@@ -55,11 +52,10 @@ class BoltEntity(entityType: EntityType<BoltEntity>, world: Level?) : Entity(ent
 
     override fun defineSynchedData() {
         entityData.define(LENGTH, 0f)
-        entityData.define(COLOR, 0)
     }
 
     override fun tick() {
-        val forwardOffset = 0.1f
+        val forwardOffset = 0.05f
 
         val forwardX = -sin(Math.toRadians(yRot.toDouble())) * forwardOffset
         val forwardZ = cos(Math.toRadians(yRot.toDouble())) * forwardOffset
@@ -84,9 +80,7 @@ class BoltEntity(entityType: EntityType<BoltEntity>, world: Level?) : Entity(ent
     }
 
     companion object {
-        protected val LENGTH: EntityDataAccessor<Float> =
+        private val LENGTH: EntityDataAccessor<Float> =
             SynchedEntityData.defineId(BoltEntity::class.java, EntityDataSerializers.FLOAT)
-        protected val COLOR: EntityDataAccessor<Int> =
-            SynchedEntityData.defineId(BoltEntity::class.java, EntityDataSerializers.INT)
     }
 }

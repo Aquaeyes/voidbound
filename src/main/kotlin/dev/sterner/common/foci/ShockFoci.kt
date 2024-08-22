@@ -65,7 +65,7 @@ class ShockFoci : IWandFocus {
                 else blockHit.location.distanceTo(player.position())).toDouble()
             )
             level.addFreshEntity(bolt)
-            cooldown = 10
+            cooldown = 12
         }
 
         if (!level.isClientSide){
@@ -77,7 +77,7 @@ class ShockFoci : IWandFocus {
         if (hit != null && blockHit.distanceTo(player) > hit.entity.distanceTo(player)) {
             val hitEntity = hit.entity
 
-            hitEntity.hurt(player.damageSources().playerAttack(player), 3f)
+            hitEntity.hurt(player.damageSources().magic(), 4f)
         }
     }
 
