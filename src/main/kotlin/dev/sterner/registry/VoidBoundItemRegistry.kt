@@ -1,5 +1,6 @@
 package dev.sterner.registry
 
+import com.sammy.malum.common.item.curiosities.tools.TotemicStaffItem
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
@@ -155,6 +156,10 @@ object VoidBoundItemRegistry {
 
     val BOOTS_OF_THE_TRAVELLER: RegistryObject<BootsOfTheTraveller> = ITEMS.register("boots_of_the_traveller") {
         BootsOfTheTraveller(Item.Properties().stacksTo(1))
+    }
+
+    val SOULWOOD_TOTEMIC_STAFF: RegistryObject<Item> = ITEMS.register("soulwood_totemic_staff") {
+        TotemicStaffItem(Item.Properties())
     }
 
     val ICHOR: RegistryObject<Item> = ITEMS.register("ichor") {

@@ -30,6 +30,7 @@
   "item.voidbound.excavation_foci": "Excavation Foci",
   "item.voidbound.shock_foci": "Shock Foci",
   "item.voidbound.ichor": "Ichor",
+  "item.voidbound.soulwood_totemic_staff": "Soulwood Totemic Staff",
   "item.voidbound.tear_of_ender": "Tear of Ender",
   "item.voidbound.strange_matter": "Strange Matter",
   "item.voidbound.tear_of_crimson": "Tear of Crimson",
@@ -124,7 +125,6 @@
   "malum.gui.book.entry.page.headline.hallowed_goggles": "Hallowed Goggles",
   "malum.gui.book.entry.page.text.hallowed_goggles.1": "See Rifts and entities spirits",
 
-
   "malum.gui.book.entry.hallowed_wand": "Wands",
   "malum.gui.book.entry.hallowed_wand.description": "Thaum is that you?",
   "malum.gui.book.entry.page.headline.hallowed_wand": "Hallowed Wand",
@@ -134,6 +134,16 @@
   "malum.gui.book.entry.boots_of_the_traveller.description": "Thaum is that you?",
   "malum.gui.book.entry.page.headline.boots_of_the_traveller": "Boots of the Traveller",
   "malum.gui.book.entry.page.text.boots_of_the_traveller.1": "Swish and Swoosh, step height and speed increase",
+
+  "malum.gui.book.entry.shock_foci": "Shock Focus",
+  "malum.gui.book.entry.shock_foci.description": "This can't come as a Shock for you?",
+  "malum.gui.book.entry.page.headline.shock_foci": "Shock Focus",
+  "malum.gui.book.entry.page.text.shock_foci.1": "Cast a bolt of lightning",
+
+  "malum.gui.book.entry.excavation_foci": "Excavation Focus",
+  "malum.gui.book.entry.excavation_foci.description": "Give me a Break",
+  "malum.gui.book.entry.page.headline.excavation_foci": "Excavation Focus",
+  "malum.gui.book.entry.page.text.excavation_foci.1": "Beam to destroy blocks",
 
   "malum.gui.book.entry.void.portable_hole": "Portable Hole",
   "malum.gui.book.entry.void.portable_hole.description": "Wall is Hole",

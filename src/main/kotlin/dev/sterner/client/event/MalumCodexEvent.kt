@@ -223,7 +223,7 @@ object MalumCodexEvent {
                 )
         }
 
-        screen?.addEntry("hallowed_wand", -11, 5) { builder ->
+        screen?.addEntry("hallowed_wand", -13, 5) { builder ->
             builder.configureWidget {
                 it.setIcon(VoidBoundItemRegistry.HALLOWED_GOLD_CAPPED_RUNEWOOD_WAND.get()).setStyle(VOID)
             }.addPage(HeadlineTextPage("hallowed_wand", "hallowed_wand.1"))
@@ -234,7 +234,34 @@ object MalumCodexEvent {
                 )
                 .addPage(
                     SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.SOUL_STAINED_STEEL_CAPPED_SOULWOOD_WAND.get()
+                    )
+                )
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
                         VoidBoundItemRegistry.CRYSTAL_FOCI.get()
+                    )
+                )
+        }
+
+        screen?.addEntry("shock_foci", -14, 4) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.SHOCK_FOCI.get()).setStyle(DARK_VOID)
+            }.addPage(HeadlineTextPage("shock_foci", "shock_foci.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.SHOCK_FOCI.get()
+                    )
+                )
+        }
+
+        screen?.addEntry("excavation_foci", -14, 6) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.EXCAVATION_FOCI.get()).setStyle(DARK_VOID)
+            }.addPage(HeadlineTextPage("excavation_foci", "excavation_foci.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.EXCAVATION_FOCI.get()
                     )
                 )
         }
