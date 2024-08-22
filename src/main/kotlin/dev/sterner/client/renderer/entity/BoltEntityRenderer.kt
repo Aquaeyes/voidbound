@@ -15,6 +15,8 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.phys.Vec3
 import org.joml.Matrix4f
 import java.awt.Color
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sin
 
 
@@ -35,7 +37,7 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
         val divisionAngle = 50
         val segmentNumber = 7
         val random = entity.level().random
-        val sizeMod = Math.min((entity.tickCount + tickDelta) / 2, 1f).toFloat()
+        val sizeMod = min((entity.tickCount + tickDelta) / 2, 1f)
         val currentLength: Float = entity.length * sizeMod
         val maxDistancePerSegment: Float = entity.length / segmentNumber.toFloat()
 
@@ -51,7 +53,7 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
         }
 
         val rgb: Vec3 = unpackRgb(Color(190, 196, 250).rgb)
-        val alpha = if (entity.tickCount < 3) 0.3f else Math.max(0.3f * (1 - (entity.tickCount - 3f + tickDelta) / 3f), 0f)
+        val alpha = if (entity.tickCount < 3) 0.3f else max(0.3f * (1 - (entity.tickCount - 3f + tickDelta) / 3f), 0f)
 
         val segmentLengths = FloatArray(segmentNumber)
         for (segment in segmentLengths.indices) {

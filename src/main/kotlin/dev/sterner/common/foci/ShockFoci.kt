@@ -20,11 +20,11 @@ class ShockFoci : IWandFocus {
 
     var cooldown = 0
     override fun onFocusRightClick(stack: ItemStack, level: Level, player: Player, hitResult: HitResult) {
-        onUsingFocusTick(stack, level, player)
+        //onUsingFocusTick(stack, level, player)
     }
 
     override fun onUsingFocusTick(stack: ItemStack, level: Level, player: Player) {
-        if (cooldown == 0) {
+        if (true) {
             val distance: Double = getMaxDistance().pow(2.0)
             val vec3d: Vec3 = player.getEyePosition(1f)
             val vec3d2: Vec3 = player.getViewVector(1f)
@@ -49,8 +49,7 @@ class ShockFoci : IWandFocus {
                 val bolt = BoltEntity(
                     player,
                     (if (hit?.entity != null) hit.entity.distanceTo(player)
-                    else blockHit.location.distanceTo(player.position())).toDouble(),
-                    123456
+                    else blockHit.location.distanceTo(player.position())).toDouble()
                 )
                 level.addFreshEntity(bolt)
             }
