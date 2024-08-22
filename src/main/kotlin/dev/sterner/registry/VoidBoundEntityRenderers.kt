@@ -61,5 +61,9 @@ object VoidBoundEntityRenderers {
             VoidBoundEntityTypeRegistry.CRIMSON_HEAVY_KNIGHT_ENTITY.get(),
             ::CrimsonHeavyKnightEntityRenderer
         )
+        EntityRendererRegistry.register(
+            VoidBoundEntityTypeRegistry.BOLT_ENTITY.get(),
+            ::BoltEntityRenderer
+        )
     }
 }

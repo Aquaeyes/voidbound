@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.texture.TextureAtlas
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.phys.Vec3
 import org.joml.Matrix4f
+import java.awt.Color
 import kotlin.math.sin
 
 
@@ -49,7 +50,7 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
             return Vec3(r, g, b)
         }
 
-        val rgb: Vec3 = unpackRgb(entity.getColor())
+        val rgb: Vec3 = unpackRgb(Color(190, 196, 250).rgb)
         val alpha = if (entity.tickCount < 3) 0.3f else Math.max(0.3f * (1 - (entity.tickCount - 3f + tickDelta) / 3f), 0f)
 
         val segmentLengths = FloatArray(segmentNumber)
@@ -97,9 +98,9 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
                             segment,
                             endY,
                             endX,
-                            rgb.x as Float,
-                            rgb.y as Float,
-                            rgb.z as Float,
+                            rgb.x.toFloat(),
+                            rgb.y.toFloat(),
+                            rgb.z.toFloat(),
                             alpha,
                             depthY,
                             depthZ,
@@ -118,9 +119,9 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
                             segment,
                             endY,
                             endX,
-                            rgb.x as Float,
-                            rgb.y as Float,
-                            rgb.z as Float,
+                            rgb.x.toFloat(),
+                            rgb.y.toFloat(),
+                            rgb.z.toFloat(),
                             alpha,
                             depthY,
                             depthZ,
@@ -139,9 +140,9 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
                             segment,
                             endY,
                             endX,
-                            rgb.x as Float,
-                            rgb.y as Float,
-                            rgb.z as Float,
+                            rgb.x.toFloat(),
+                            rgb.y.toFloat(),
+                            rgb.z.toFloat(),
                             alpha,
                             depthY,
                             depthZ,
@@ -160,9 +161,9 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
                             segment,
                             endY,
                             endX,
-                            rgb.x as Float,
-                            rgb.y as Float,
-                            rgb.z as Float,
+                            rgb.x.toFloat(),
+                            rgb.y.toFloat(),
+                            rgb.z.toFloat(),
                             alpha,
                             depthY,
                             depthZ,
@@ -227,5 +228,4 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
             ).color(red, green, blue, alpha).endVertex()
         }
     }
-
 }
