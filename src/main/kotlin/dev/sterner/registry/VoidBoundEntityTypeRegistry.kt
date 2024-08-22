@@ -6,6 +6,7 @@ import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricEntityTypeBuilder
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityDimensions
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
@@ -92,6 +93,15 @@ object VoidBoundEntityTypeRegistry {
                 .dimensions(EntityDimensions(0.6f, 1.9f, true))
                 .spawnGroup(MobCategory.MONSTER)
                 .defaultAttributes { CrimsonJesterEntity.createCrimsonAttributes() }
+                .build()
+        }
+
+    var BOLT_ENTITY: RegistryObject<EntityType<BoltEntity>> =
+        ENTITY_TYPES.register("bolt") {
+            FabricEntityTypeBuilder.create<BoltEntity>()
+                .entityFactory { e, w -> BoltEntity(e, w) }
+                .dimensions(EntityDimensions(0.6f, 1.9f, true))
+                .spawnGroup(MobCategory.MISC)
                 .build()
         }
 }
