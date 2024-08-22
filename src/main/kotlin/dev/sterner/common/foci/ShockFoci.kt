@@ -65,7 +65,7 @@ class ShockFoci : IWandFocus {
                 else blockHit.location.distanceTo(player.position())).toDouble()
             )
             level.addFreshEntity(bolt)
-            cooldown = 12
+            cooldown = 4
         }
 
         if (!level.isClientSide){
