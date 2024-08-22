@@ -4,7 +4,10 @@ import com.mojang.blaze3d.vertex.BufferVertexConsumer
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import com.mojang.math.Axis
+import dev.sterner.VoidBound
+import dev.sterner.client.VoidBoundTokens
 import dev.sterner.common.entity.BoltEntity
+import dev.sterner.registry.VoidBoundRenderTypes
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.entity.EntityRenderer
@@ -14,6 +17,10 @@ import net.minecraft.client.renderer.texture.TextureAtlas
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.phys.Vec3
 import org.joml.Matrix4f
+import team.lodestar.lodestone.handlers.RenderHandler.LodestoneRenderLayer
+import team.lodestar.lodestone.systems.particle.render_types.LodestoneWorldParticleRenderType
+import team.lodestar.lodestone.systems.rendering.LodestoneRenderType
+import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
 import java.awt.Color
 import kotlin.math.max
 import kotlin.math.min
@@ -53,7 +60,7 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
         }
 
         val rgb: Vec3 = unpackRgb(Color(190, 196, 250).rgb)
-        val alpha = if (entity.tickCount < 3) 0.3f else max(0.3f * (1 - (entity.tickCount - 3f + tickDelta) / 3f), 0f)
+        val alpha = (if (entity.tickCount < 3) 0.3f else max(0.3f * (1 - (entity.tickCount - 3f + tickDelta) / 3f), 0f)) * 3
 
         val segmentLengths = FloatArray(segmentNumber)
         for (segment in segmentLengths.indices) {
@@ -65,7 +72,7 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
         }
         val offsetsY = FloatArray(segmentNumber)
         val offsetsX = FloatArray(segmentNumber)
-        val vertexConsumer: VertexConsumer = buffer.getBuffer(RenderType.lightning())
+        val vertexConsumer: VertexConsumer = buffer.getBuffer(VoidBoundRenderTypes.BOLT.apply(VoidBoundTokens.noisy))
         val matrix4f: Matrix4f = matrices.last().pose()
 
         matrices.mulPose(Axis.YN.rotationDegrees(entity.getViewYRot(tickDelta)))

@@ -1,5 +1,6 @@
 package dev.sterner.common.entity
 
+import dev.sterner.common.foci.ShockFoci.Companion.spawnChargeParticles
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import net.fabricmc.api.EnvType
 import net.minecraft.commands.arguments.EntityAnchorArgument
@@ -7,6 +8,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.Entity.RemovalReason
 import net.minecraft.world.entity.EntityType
@@ -29,7 +31,6 @@ class BoltEntity(entityType: EntityType<BoltEntity>, world: Level?) : Entity(ent
         val rightOffset = -0.5
         val yawRad = Math.toRadians(caster.yRot.toDouble() - 140)
         val pitchRad = Math.toRadians(caster.xRot.toDouble())
-
 
         val offsetX = -sin(yawRad) * rightOffset
         val offsetZ = cos(yawRad) * rightOffset
@@ -58,6 +59,15 @@ class BoltEntity(entityType: EntityType<BoltEntity>, world: Level?) : Entity(ent
     }
 
     override fun tick() {
+        val forwardOffset = 0.1f
+
+        val forwardX = -sin(Math.toRadians(yRot.toDouble())) * forwardOffset
+        val forwardZ = cos(Math.toRadians(yRot.toDouble())) * forwardOffset
+
+        val forwardPosition = this.position().add(forwardX, 0.0, forwardZ)
+
+        spawnChargeParticles(this.level(), this, forwardPosition, 0.5f)
+
         ambientTick--
         if (ambientTick < 0) {
             remove(RemovalReason.DISCARDED)
