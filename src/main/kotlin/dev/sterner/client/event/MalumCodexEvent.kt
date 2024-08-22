@@ -244,6 +244,17 @@ object MalumCodexEvent {
                 )
         }
 
+        screen?.addEntry("fire_foci", -14, 5) { builder ->
+            builder.configureWidget {
+                it.setIcon(VoidBoundItemRegistry.FIRE_FOCI.get()).setStyle(DARK_VOID)
+            }.addPage(HeadlineTextPage("fire_foci", "fire_foci.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.FIRE_FOCI.get()
+                    )
+                )
+        }
+
         screen?.addEntry("shock_foci", -14, 4) { builder ->
             builder.configureWidget {
                 it.setIcon(VoidBoundItemRegistry.SHOCK_FOCI.get()).setStyle(DARK_VOID)

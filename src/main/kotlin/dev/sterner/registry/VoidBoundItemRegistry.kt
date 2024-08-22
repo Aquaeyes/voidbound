@@ -4,10 +4,7 @@ import com.sammy.malum.common.item.curiosities.tools.TotemicStaffItem
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
-import dev.sterner.common.foci.ExcavationFociItem
-import dev.sterner.common.foci.PortableHoleFociItem
-import dev.sterner.common.foci.ShockFociItem
-import dev.sterner.common.foci.WardingFociItem
+import dev.sterner.common.foci.*
 import dev.sterner.common.item.*
 import dev.sterner.common.item.tool.*
 import dev.sterner.common.item.tool.ichor.*
@@ -60,6 +57,10 @@ object VoidBoundItemRegistry {
 
     val SHOCK_FOCI: RegistryObject<Item> = ITEMS.register("shock_foci") {
         ShockFociItem(Item.Properties().stacksTo(1))
+    }
+
+    val FIRE_FOCI: RegistryObject<Item> = ITEMS.register("fire_foci") {
+        FireFociItem(Item.Properties().stacksTo(1))
     }
 
     val EMPTY_SPIRIT_SHARD: RegistryObject<Item> = ITEMS.register("empty_spirit_shard") {

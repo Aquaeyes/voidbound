@@ -27,6 +27,7 @@
   "item.voidbound.portable_hole_foci": "Portable Hole Foci",
   "item.voidbound.crystal_foci": "Crystal Foci",
   "item.voidbound.warding_foci": "Warding Foci",
+  "item.voidbound.fire_foci": "Fire Foci",
   "item.voidbound.excavation_foci": "Excavation Foci",
   "item.voidbound.shock_foci": "Shock Foci",
   "item.voidbound.ichor": "Ichor",
@@ -134,6 +135,11 @@
   "malum.gui.book.entry.boots_of_the_traveller.description": "Thaum is that you?",
   "malum.gui.book.entry.page.headline.boots_of_the_traveller": "Boots of the Traveller",
   "malum.gui.book.entry.page.text.boots_of_the_traveller.1": "Swish and Swoosh, step height and speed increase",
+
+  "malum.gui.book.entry.fire_foci": "Fire Focus",
+  "malum.gui.book.entry.fire_foci.description": "I'm getting Fired for this",
+  "malum.gui.book.entry.page.headline.fire_foci": "Fire Focus",
+  "malum.gui.book.entry.page.text.fire_foci.1": "Cast a stream of fire",
 
   "malum.gui.book.entry.shock_foci": "Shock Focus",
   "malum.gui.book.entry.shock_foci.description": "This can't come as a Shock for you?",
