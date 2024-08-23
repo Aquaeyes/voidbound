@@ -98,7 +98,8 @@ object VoidBound : ModInitializer, ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(),
             VoidBoundBlockRegistry.TEAR_OF_ENDER.get(),
             VoidBoundBlockRegistry.TEAR_OF_CRIMSON.get(),
-            VoidBoundBlockRegistry.TEAR_CLOAK.get()
+            VoidBoundBlockRegistry.TEAR_CLOAK.get(),
+            VoidBoundBlockRegistry.OSMOTIC_ENCHANTER.get()
         )
 
         ModelLoadingPlugin.register(VoidBoundModelLoaderPlugin)

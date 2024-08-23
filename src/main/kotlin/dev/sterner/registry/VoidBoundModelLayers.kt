@@ -17,5 +17,6 @@ object VoidBoundModelLayers {
         EntityModelLayerRegistry.registerModelLayer(CrimsonHeavyKnightModel.LAYER_LOCATION) { CrimsonHeavyKnightModel.createBodyLayer() }
         EntityModelLayerRegistry.registerModelLayer(CrimsonNecromancerModel.LAYER_LOCATION) { CrimsonNecromancerModel.createBodyLayer() }
         EntityModelLayerRegistry.registerModelLayer(CrimsonBookModel.LAYER_LOCATION) { CrimsonBookModel.createBodyLayer() }
+        EntityModelLayerRegistry.registerModelLayer(EnchanterCrimsonBookModel.LAYER_LOCATION) { EnchanterCrimsonBookModel.createBodyLayer() }
     }
 }

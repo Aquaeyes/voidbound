@@ -4,10 +4,12 @@ import com.sammy.malum.common.block.MalumBlockEntityInventory
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.rift.SimpleSpiritCharge
+import dev.sterner.common.block.OsmoticEnchanterBlock
 import dev.sterner.networking.UpdateSpiritAmountPacket
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundPacketRegistry
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
@@ -19,11 +21,14 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
+import net.minecraft.world.level.block.entity.EnchantmentTableBlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import team.lodestar.lodestone.helpers.BlockHelper
 import team.lodestar.lodestone.systems.blockentity.ItemHolderBlockEntity
 import java.util.*
 import java.util.stream.Collectors
+import kotlin.math.PI
 import kotlin.streams.toList
 
 
@@ -35,12 +40,6 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     data class EnchantmentData(val enchantment: Enchantment, val level: Int)
 
     var time: Int = 0
-    var flip: Float = 0f
-    var oFlip: Float = 0f
-    var flipT: Float = 0f
-    var flipA: Float = 0f
-    var open: Float = 0f
-    var oOpen: Float = 0f
     var rot: Float = 0f
     var oRot: Float = 0f
     var tRot: Float = 0f
@@ -165,7 +164,6 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     fun animationTick() {
-        oOpen = open
         oRot = rot
         val player = level!!.getNearestPlayer(
             blockPos.x.toDouble() + 0.5,
@@ -174,23 +172,39 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             3.0,
             false
         )
+
+        val dir = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING)
+
         if (player != null) {
+            /*
+             val (clampMin, clampMax) = when (dir) {
+                Direction.SOUTH -> Pair(-45, 45)
+                Direction.NORTH -> Pair(-225, -135)
+                Direction.EAST -> Pair(-135, -45)
+                else -> Pair(45, -225) //-235, 45??????
+            }
+             */
+            val (clampMin, clampMax) = when (dir) {
+                Direction.SOUTH -> Pair(45, 135)//DONE
+                Direction.NORTH -> Pair(-45 - 90, 45 - 90)//DONE
+                Direction.EAST -> Pair(-45, 45) //DONE
+                else -> Pair(135, -180) //>:(
+            }
+
             val d: Double = player.x - (blockPos.x.toDouble() + 0.5)
             val e: Double = player.z - (blockPos.z.toDouble() + 0.5)
-            tRot = Mth.atan2(e, d).toFloat()
-            open += 0.1f
-            if (open < 0.5f || RANDOM.nextInt(40) == 0) {
-                val f: Float = flipT
-
-                do {
-                    flipT += (RANDOM.nextInt(4) - RANDOM.nextInt(
-                        4
-                    )).toFloat()
-                } while (f == flipT)
-            }
+            //val extra =  + Math.toRadians(270.0).toFloat()
+            //println((Mth.atan2(e, d).toFloat()) * 180 / Math.PI)
+            tRot = Mth.atan2(e, d).toFloat() - (PI / 2f).toFloat()
+            //tRot = Mth.clamp(Mth.atan2(e, d).toFloat(), clampMin * (PI / 180f).toFloat(), clampMax * (PI / 180f).toFloat()) - (PI / 2f).toFloat()
         } else {
-            tRot += 0.02f
-            open -= 0.1f
+
+            tRot = when (dir){
+                Direction.NORTH -> 180f
+                Direction.SOUTH -> 0f
+                Direction.WEST -> 90f
+                else -> -90f
+            } * (PI / 180f).toFloat()
         }
 
         while (rot >= Math.PI.toFloat()) {
@@ -220,14 +234,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         }
 
         rot += g * 0.4f
-        open = Mth.clamp(open, 0.0f, 1.0f)
         time++
-        oFlip = flip
-        var h: Float = (flipT - flip) * 0.4f
-        val i = 0.2f
-        h = Mth.clamp(h, -0.2f, 0.2f)
-        flipA += (h - flipA) * 0.9f
-        flip += flipA
     }
 
     private fun doEnchant() {

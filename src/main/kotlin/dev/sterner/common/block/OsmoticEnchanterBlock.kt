@@ -4,6 +4,7 @@ import dev.sterner.common.blockentity.OsmoticEnchanterBlockEntity
 import dev.sterner.common.menu.OsmoticEnchanterMenu
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
@@ -13,16 +14,16 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.BaseEntityBlock
-import net.minecraft.world.level.block.RenderShape
+import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.phys.BlockHitResult
-import net.minecraft.world.phys.shapes.BooleanOp
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
@@ -104,12 +105,91 @@ class OsmoticEnchanterBlock(properties: Properties) : BaseEntityBlock(properties
         return RenderShape.MODEL
     }
 
-    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
+    override fun getOcclusionShape(state: BlockState?, level: BlockGetter?, pos: BlockPos?): VoxelShape {
+        return SHAPE_COMMON
+    }
 
-        val o = Shapes.box(0.0, 0.0, 0.0, 1.0, 2.0 / 16, 1.0)
-        val i = Shapes.box(6.0 / 16, 2.0 / 16, 6.0 / 16, 10.0 / 16, 4.0 / 16, 10.0 / 16)
-        val j = Shapes.box(2.0 / 16, 6.0 / 16, 2.0 / 16, 14.0 / 16, 8.0 / 16, 14.0 / 16)
+    override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
+        return defaultBlockState().setValue(LecternBlock.FACING, context.horizontalDirection.opposite)
+    }
 
-        return Shapes.join(j, Shapes.join(o, i, BooleanOp.OR), BooleanOp.OR)
+    override fun getCollisionShape(
+        state: BlockState?,
+        level: BlockGetter?,
+        pos: BlockPos?,
+        context: CollisionContext?
+    ): VoxelShape {
+        return LecternBlock.SHAPE_COLLISION
+    }
+
+    override fun getShape(
+        state: BlockState,
+        level: BlockGetter?,
+        pos: BlockPos?,
+        context: CollisionContext?
+    ): VoxelShape {
+        return when (state.getValue(LecternBlock.FACING) as Direction) {
+            Direction.NORTH ->SHAPE_NORTH
+            Direction.SOUTH -> SHAPE_SOUTH
+            Direction.EAST -> SHAPE_EAST
+            Direction.WEST -> SHAPE_WEST
+            else -> SHAPE_COMMON
+        }
+    }
+
+    override fun rotate(state: BlockState, rotation: Rotation): BlockState {
+        return state.setValue(LecternBlock.FACING, rotation.rotate(state.getValue(LecternBlock.FACING)))
+    }
+
+    override fun mirror(state: BlockState, mirror: Mirror): BlockState {
+        return state.rotate(mirror.getRotation(state.getValue(LecternBlock.FACING)))
+    }
+
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block?, BlockState?>) {
+        builder.add(LecternBlock.FACING)
+    }
+
+
+    init {
+        this.registerDefaultState(
+            stateDefinition.any().setValue(LecternBlock.FACING, Direction.NORTH)
+        )
+    }
+
+    companion object {
+
+        val SHAPE_BASE: VoxelShape = box(1.0, 0.0, 1.0, 15.0, 3.0, 15.0)
+
+        val SHAPE_POST: VoxelShape = box(3.0, 2.0, 3.0, 13.0, 14.0, 13.0)
+
+        val SHAPE_COMMON: VoxelShape = Shapes.or(SHAPE_BASE, SHAPE_POST)
+
+        val SHAPE_WEST: VoxelShape = Shapes.or(
+            box(1.0, 11.5, 0.5, 5.333333, 13.25, 15.5),
+            box(5.333333, 13.5, 0.5, 9.666667, 15.25, 15.5),
+            box(9.666667, 15.5, 0.5, 12.5, 17.25, 15.5),
+            SHAPE_COMMON
+        )
+
+        val SHAPE_NORTH: VoxelShape = Shapes.or(
+            box(0.5, 11.5, 1.0, 15.5, 13.25, 5.333333),
+            box(0.5, 13.5, 5.333333, 15.5, 15.25, 9.666667),
+            box(0.5, 15.5, 9.666667, 15.5, 17.25, 12.5),
+            SHAPE_COMMON
+        )
+
+        val SHAPE_EAST: VoxelShape = Shapes.or(
+            box(10.666667, 11.5, 0.5, 13.5, 13.25, 15.5),
+            box(6.333333, 13.5, 0.5, 10.666667, 15.25, 15.5),
+            box(3.5, 15.5, 0.5, 6.333333, 17.25, 15.5),
+            SHAPE_COMMON
+        )
+
+        val SHAPE_SOUTH: VoxelShape = Shapes.or(
+            box(0.5, 11.5, 10.666667, 15.5, 13.25, 14.5),
+            box(0.5, 13.5, 6.333333, 15.5, 15.25, 10.666667),
+            box(0.5, 15.5, 3.5, 15.5, 17.25, 6.333333),
+            SHAPE_COMMON
+        )
     }
 }
