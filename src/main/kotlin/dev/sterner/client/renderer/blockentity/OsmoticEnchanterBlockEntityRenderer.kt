@@ -31,7 +31,9 @@ class OsmoticEnchanterBlockEntityRenderer(ctx: BlockEntityRendererProvider.Conte
         packedLight: Int,
         packedOverlay: Int
     ) {
-        renderBook(blockEntity, partialTick, poseStack, buffers, packedLight, packedOverlay)
+        if (blockEntity.blockState.hasProperty(BlockStateProperties.HAS_BOOK) && blockEntity.blockState.getValue(BlockStateProperties.HAS_BOOK)) {
+            renderBook(blockEntity, partialTick, poseStack, buffers, packedLight, packedOverlay)
+        }
     }
 
     private fun renderBook(blockEntity: OsmoticEnchanterBlockEntity, partialTick: Float, poseStack: PoseStack, buffers: MultiBufferSource, packedLight: Int, packedOverlay: Int) {

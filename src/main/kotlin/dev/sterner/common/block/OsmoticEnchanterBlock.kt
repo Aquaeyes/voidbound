@@ -2,18 +2,22 @@ package dev.sterner.common.block
 
 import dev.sterner.common.blockentity.OsmoticEnchanterBlockEntity
 import dev.sterner.common.menu.OsmoticEnchanterMenu
+import dev.sterner.registry.VoidBoundItemRegistry
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.Containers
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
@@ -23,6 +27,8 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.DirectionProperty
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
@@ -54,6 +60,19 @@ class OsmoticEnchanterBlock(properties: Properties) : BaseEntityBlock(properties
         hand: InteractionHand,
         hit: BlockHitResult
     ): InteractionResult {
+
+        val handItem = player.mainHandItem
+        if (handItem.`is`(VoidBoundItemRegistry.CRIMSON_RITES.get()) && !state.getValue(BlockStateProperties.HAS_BOOK)) {
+            level.setBlockAndUpdate(pos, state.setValue(BlockStateProperties.HAS_BOOK, true))
+            player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY)
+            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS)
+            return InteractionResult.SUCCESS
+        } else if (player.isShiftKeyDown && handItem.isEmpty && state.getValue(BlockStateProperties.HAS_BOOK)) {
+            player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack(VoidBoundItemRegistry.CRIMSON_RITES.get()))
+            level.setBlockAndUpdate(pos, state.setValue(BlockStateProperties.HAS_BOOK, false))
+            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS)
+            return InteractionResult.SUCCESS
+        }
 
         if (level.getBlockEntity(pos) is OsmoticEnchanterBlockEntity) {
             val osmoticEnchanter = level.getBlockEntity(pos) as OsmoticEnchanterBlockEntity
@@ -97,6 +116,9 @@ class OsmoticEnchanterBlock(properties: Properties) : BaseEntityBlock(properties
         if (blockEntity is OsmoticEnchanterBlockEntity) {
             Containers.dropContents(level, pos, blockEntity.inventory)
             level.updateNeighbourForOutputSignal(pos, this)
+        }
+        if (state.getValue(BlockStateProperties.HAS_BOOK)) {
+            Containers.dropItemStack(level, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, ItemStack(VoidBoundItemRegistry.CRIMSON_RITES.get()))
         }
         super.onRemove(state, level, pos, newState, movedByPiston)
     }
@@ -146,13 +168,13 @@ class OsmoticEnchanterBlock(properties: Properties) : BaseEntityBlock(properties
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block?, BlockState?>) {
-        builder.add(LecternBlock.FACING)
+        builder.add(LecternBlock.FACING, BlockStateProperties.HAS_BOOK)
     }
 
 
     init {
         this.registerDefaultState(
-            stateDefinition.any().setValue(LecternBlock.FACING, Direction.NORTH)
+            stateDefinition.any().setValue(LecternBlock.FACING, Direction.NORTH).setValue(BlockStateProperties.HAS_BOOK, false)
         )
     }
 
