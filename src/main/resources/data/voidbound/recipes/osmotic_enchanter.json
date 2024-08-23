@@ -3,7 +3,7 @@
   "extra_items": [
     {
       "count": 1,
-      "item": "malum:block_of_brilliance"
+      "item": "voidbound:crimson_rites"
     },
     {
       "count": 4,
@@ -11,20 +11,20 @@
     },
     {
       "count": 4,
-      "item": "malum:hex_ash"
+      "item": "malum:runewood_planks"
     },
     {
       "count": 4,
       "item": "malum:null_slate"
     },
     {
-      "count": 4,
-      "item": "crying_obsidian"
+      "count": 1,
+      "item": "enchanting_table"
     }
   ],
   "input": {
     "count": 1,
-    "item": "enchanting_table"
+    "item": "lectern"
   },
   "output": {
     "item": "voidbound:osmotic_enchanter"
@@ -35,15 +35,19 @@
       "count": 16
     },
     {
+      "type": "eldritch",
+      "count": 16
+    },
+    {
       "type": "sacred",
       "count": 16
     },
     {
-      "type": "infernal",
+      "type": "arcane",
       "count": 16
     },
     {
-      "type": "arcane",
+      "type": "infernal",
       "count": 16
     },
     {
@@ -52,10 +56,6 @@
     },
     {
       "type": "earthen",
-      "count": 16
-    },
-    {
-      "type": "eldritch",
       "count": 16
     },
     {
