@@ -2,7 +2,6 @@
   "replace": false,
   "values": [
     "voidbound:spirit_binder",
-    "voidbound:spirit_stabilizer",
-    "voidbound:osmotic_enchanter"
+    "voidbound:spirit_stabilizer"
     ]
 }
