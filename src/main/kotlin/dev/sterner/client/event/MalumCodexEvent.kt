@@ -8,6 +8,7 @@ import com.sammy.malum.client.screen.codex.pages.recipe.SpiritInfusionPage
 import com.sammy.malum.client.screen.codex.pages.text.HeadlineTextPage
 import com.sammy.malum.client.screen.codex.screens.ArcanaProgressionScreen
 import com.sammy.malum.client.screen.codex.screens.VoidProgressionScreen
+import dev.sterner.VoidBound
 import dev.sterner.VoidBound.modid
 import dev.sterner.api.book.ProgressionEntryObjectExtension
 import dev.sterner.registry.VoidBoundItemRegistry
@@ -298,9 +299,7 @@ object MalumCodexEvent {
                 it.setIcon(VoidBoundItemRegistry.PICKAXE_OF_THE_CORE.get()).setStyle(VOID)
             }.addPage(HeadlineTextPage("pickaxe_of_the_core", "pickaxe_of_the_core.1"))
                 .addPage(
-                    SpiritInfusionPage.fromOutput(
-                        VoidBoundItemRegistry.PICKAXE_OF_THE_CORE.get()
-                    )
+                    SpiritInfusionPage.fromId(VoidBound.id("pickaxe_of_the_core"))
                 )
         }
 
@@ -309,9 +308,7 @@ object MalumCodexEvent {
                 it.setIcon(VoidBoundItemRegistry.AXE_OF_THE_STREAM.get()).setStyle(VOID)
             }.addPage(HeadlineTextPage("axe_of_the_stream", "axe_of_the_stream.1"))
                 .addPage(
-                    SpiritInfusionPage.fromOutput(
-                        VoidBoundItemRegistry.AXE_OF_THE_STREAM.get()
-                    )
+                    SpiritInfusionPage.fromId(VoidBound.id("axe_of_the_stream"))
                 )
         }
 
@@ -320,9 +317,7 @@ object MalumCodexEvent {
                 it.setIcon(VoidBoundItemRegistry.SHOVEL_OF_THE_EARTHMOVER.get()).setStyle(VOID)
             }.addPage(HeadlineTextPage("shovel_of_the_earthmover", "shovel_of_the_earthmover.1"))
                 .addPage(
-                    SpiritInfusionPage.fromOutput(
-                        VoidBoundItemRegistry.SHOVEL_OF_THE_EARTHMOVER.get()
-                    )
+                    SpiritInfusionPage.fromId(VoidBound.id("shovel_of_the_earthmover"))
                 )
         }
 
@@ -331,9 +326,7 @@ object MalumCodexEvent {
                 it.setIcon(VoidBoundItemRegistry.SWORD_OF_THE_ZEPHYR.get()).setStyle(VOID)
             }.addPage(HeadlineTextPage("sword_of_the_zephyr", "sword_of_the_zephyr.1"))
                 .addPage(
-                    SpiritInfusionPage.fromOutput(
-                        VoidBoundItemRegistry.SWORD_OF_THE_ZEPHYR.get()
-                    )
+                    SpiritInfusionPage.fromId(VoidBound.id("sword_of_the_zephyr"))
                 )
         }
 
@@ -342,9 +335,7 @@ object MalumCodexEvent {
                 it.setIcon(VoidBoundItemRegistry.HOE_OF_GROWTH.get()).setStyle(VOID)
             }.addPage(HeadlineTextPage("hoe_of_growth", "hoe_of_growth.1"))
                 .addPage(
-                    SpiritInfusionPage.fromOutput(
-                        VoidBoundItemRegistry.HOE_OF_GROWTH.get()
-                    )
+                    SpiritInfusionPage.fromId(VoidBound.id("hoe_of_growth"))
                 )
         }
     }
