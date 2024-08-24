@@ -16,7 +16,7 @@ public class PistonBaseBlockMixin {
 
     @Inject(method = "isPushable", at = @At("HEAD"), cancellable = true)
     private static void isPushable(BlockState state, Level level, BlockPos pos, Direction movementDirection, boolean allowDestroy, Direction pistonFacing, CallbackInfoReturnable<Boolean> cir) {
-        boolean warded = VoidBoundApi.INSTANCE.canBlockBreak(level, pos);
+        boolean warded = !VoidBoundApi.INSTANCE.canBlockBreak(level, pos);
         if (warded) {
             cir.setReturnValue(false);
         }
