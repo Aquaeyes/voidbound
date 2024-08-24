@@ -1,4 +1,4 @@
-package dev.sterner.common.foci
+package dev.sterner.common.item.foci
 
 import com.sammy.malum.visual_effects.ScreenParticleEffects
 import dev.sterner.api.wand.IWandFocus

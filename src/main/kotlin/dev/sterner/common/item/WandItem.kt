@@ -1,6 +1,6 @@
 package dev.sterner.common.item
 
-import dev.sterner.common.foci.AbstractFociItem
+import dev.sterner.common.item.foci.AbstractFociItem
 import dev.sterner.registry.VoidBoundWandFociRegistry
 import net.minecraft.core.NonNullList
 import net.minecraft.nbt.CompoundTag

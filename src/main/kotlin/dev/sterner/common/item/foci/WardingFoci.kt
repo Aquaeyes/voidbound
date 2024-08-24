@@ -1,5 +1,6 @@
-package dev.sterner.common.foci
+package dev.sterner.common.item.foci
 
+import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.wand.IWandFocus
 import dev.sterner.registry.VoidBoundComponentRegistry
 import eu.pb4.common.protection.api.CommonProtection
@@ -16,11 +17,14 @@ class WardingFoci : IWandFocus {
         if (hitResult is BlockHitResult) {
             val comp = VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(level)
             val global = GlobalPos.of(level.dimension(), hitResult.blockPos)
-            if (comp.hasBlockPos(player, global)) {
-                comp.removePos(player.uuid, global)
-            } else {
-                if (CommonProtection.canBreakBlock(level, hitResult.blockPos, player.gameProfile, player)) {
-                    comp.addPos(player.uuid, global)
+
+            if (VoidBoundApi.canPlayerBreakBlock(level, player, global.pos())) {
+                if (comp.hasBlockPos(player, global)) {
+                    comp.removePos(player.uuid, global)
+                } else {
+                    if (CommonProtection.canBreakBlock(level, hitResult.blockPos, player.gameProfile, player)) {
+                        comp.addPos(player.uuid, global)
+                    }
                 }
             }
         }

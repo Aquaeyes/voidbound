@@ -33,6 +33,7 @@
   "mixins": [
     "voidbound.mixins.json"
   ],
+  "accessWidener": "voidbound.accesswidener",
   "depends": {
     "fabricloader": ">=0.15.11",
     "minecraft": "~1.20.1",

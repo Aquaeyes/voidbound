@@ -1,7 +1,7 @@
 package dev.sterner.common.blockentity
 
 import dev.sterner.api.blockentity.SyncedBlockEntity
-import dev.sterner.common.foci.PortableHoleFoci
+import dev.sterner.common.item.foci.PortableHoleFoci
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundBlockRegistry
 import net.minecraft.core.BlockPos

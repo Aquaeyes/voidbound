@@ -4,10 +4,12 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "BlockBehaviourMixin",
+    "EndermanTakeBlockGoalMixin",
     "ExplosionMixin",
     "ItemEntityMixin",
     "ItemMixin",
     "LevelMixin",
+    "PistonBaseBlockMixin",
     "ProgressionEntryObjectMixin",
     "ReboundEnchantmentMixin",
     "ScytheBoomerangEntityMixin",

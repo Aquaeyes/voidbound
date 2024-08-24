@@ -1,4 +1,4 @@
-package dev.sterner.common.foci
+package dev.sterner.common.item.foci
 
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.wand.IWandFocus

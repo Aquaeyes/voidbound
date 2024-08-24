@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "voidbound:axe_of_the_stream",
+    "voidbound:pickaxe_of_the_core",
+    "voidbound:shovel_of_the_earthmover",
+    "voidbound:sword_of_the_zephyr",
+    "voidbound:hoe_of_growth",
+
+    "voidbound:ichorium_scythe",
+    "voidbound:ichorium_axe",
+    "voidbound:ichorium_pickaxe",
+    "voidbound:ichorium_shovel",
+    "voidbound:ichorium_sword",
+    "voidbound:ichorium_hoe"
+  ]
+}

@@ -1,6 +1,6 @@
 package dev.sterner.common.entity
 
-import dev.sterner.common.foci.ShockFoci.Companion.spawnChargeParticles
+import dev.sterner.common.item.foci.ShockFoci.Companion.spawnChargeParticles
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import net.fabricmc.api.EnvType
 import net.minecraft.commands.arguments.EntityAnchorArgument

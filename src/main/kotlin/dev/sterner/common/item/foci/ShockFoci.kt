@@ -1,4 +1,4 @@
-package dev.sterner.common.foci
+package dev.sterner.common.item.foci
 
 import com.sammy.malum.registry.client.ParticleRegistry
 import dev.sterner.api.wand.IWandFocus

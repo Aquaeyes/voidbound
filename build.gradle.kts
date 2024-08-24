@@ -13,6 +13,10 @@ base {
 	archivesName.set("${property("archives_base_name")}")
 }
 
+loom {
+	accessWidenerPath = file("src/main/resources/voidbound.accesswidener")
+}
+
 sourceSets {
 	named("main") {
 		resources {

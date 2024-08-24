@@ -1,19 +1,20 @@
-package dev.sterner.common.item.tool.ichor
+package dev.sterner.common.item.foci
 
-import dev.sterner.common.item.tool.AxeOfTheStreamItem
+import com.sammy.malum.registry.common.SpiritTypeRegistry
+import dev.sterner.registry.VoidBoundWandFociRegistry
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Tier
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import java.awt.Color
 
-class IchoriumAxeItem(material: Tier?, damage: Float, speed: Float, magicDamage: Float, properties: Properties?) : AxeOfTheStreamItem(material, damage, speed,
-    magicDamage,
-    properties
-) {
+class FireFociItem(properties: Properties) : AbstractFociItem(VoidBoundWandFociRegistry.FIRE.get(), properties) {
+
+    override fun color(): Color = Color(250, 154, 31)
+
+    override fun endColor(): Color = Color(210, 39, 150)
 
     override fun appendHoverText(
         stack: ItemStack,

@@ -20,11 +20,11 @@
   "spirits": [
     {
       "type": "arcane",
-      "count": 16
+      "count": 4
     },
     {
       "type": "eldritch",
-      "count": 16
+      "count": 4
     }
   ]
 }

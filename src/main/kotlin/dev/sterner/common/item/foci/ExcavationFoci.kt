@@ -1,14 +1,19 @@
-package dev.sterner.common.foci
+package dev.sterner.common.item.foci
 
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.registry.client.ParticleRegistry
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import com.sammy.malum.visual_effects.SpiritLightSpecs
+import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.util.VoidBoundPosUtils
 import dev.sterner.api.wand.IWandFocus
+import dev.sterner.mixin.client.ParticleEngineMixin
+import dev.sterner.mixin_logic.ParticleEngineMixinLogic
 import dev.sterner.networking.ExcavationPacket
+import dev.sterner.registry.VoidBoundComponentRegistry
 import dev.sterner.registry.VoidBoundPacketRegistry
 import net.minecraft.client.Minecraft
+import net.minecraft.core.GlobalPos
 import net.minecraft.sounds.SoundSource
 import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
@@ -62,14 +67,31 @@ class ExcavationFoci : IWandFocus {
 
                 blockState = newState
 
-                timeToBreak = (20 * blockState!!.getDestroySpeed(level, blockPos))
 
+                val pos = getProjectileSpawnPos(player, InteractionHand.MAIN_HAND, 1.5f, 0.6f)
+                spawnChargeParticles(player.level(), player, pos, 0.5f)
+                spec(level, player.lookAngle.normalize(), pos, SpiritTypeRegistry.EARTHEN_SPIRIT, level.random)
+
+                if (!VoidBoundApi.canPlayerBreakBlock(level, player, blockPos)) {
+                    ParticleEngineMixinLogic.logic(level, blockPos, blockState!!, level.random, hit.direction)
+                    return
+                }
+
+                timeToBreak = (20 * blockState!!.getDestroySpeed(level, blockPos))
+                val coordPos: List<Vec3> = VoidBoundPosUtils.getFaceCoords(level, blockState!!, blockPos)
+                for (pos1 in coordPos) {
+                    val lightSpecs: ParticleEffectSpawner = SpiritLightSpecs.spiritLightSpecs(level, pos1, SpiritTypeRegistry.EARTHEN_SPIRIT)
+                    lightSpecs.builder.multiplyLifetime(1.5f)
+                    lightSpecs.bloomBuilder.multiplyLifetime(1.5f)
+
+                    lightSpecs.spawnParticles()
+                    lightSpecs.spawnParticles()
+                }
                 this.breakTime++
                 val progress: Int = (this.breakTime / this.timeToBreak!!.toFloat() * 10).toInt()
 
                 VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(ExcavationPacket(blockPos, breakTime, timeToBreak!!.toInt(), progress))
-                val pos = getProjectileSpawnPos(player, InteractionHand.MAIN_HAND, 1.5f, 0.6f)
-                spawnChargeParticles(player.level(), player, pos, 0.5f)
+
 
                 if (breakTime % 6 == 0) {
                     level.playSound(player, blockPos, blockState!!.soundType.breakSound, SoundSource.BLOCKS)
@@ -84,18 +106,6 @@ class ExcavationFoci : IWandFocus {
                     this.breakTime = 0
                     this.breakProgress = -1
                 }
-
-                val coordPos: List<Vec3> = VoidBoundPosUtils.getFaceCoords(level, blockState!!, blockPos)
-                for (pos1 in coordPos) {
-                    val lightSpecs: ParticleEffectSpawner = SpiritLightSpecs.spiritLightSpecs(level, pos1, SpiritTypeRegistry.EARTHEN_SPIRIT)
-                    lightSpecs.builder.multiplyLifetime(1.5f)
-                    lightSpecs.bloomBuilder.multiplyLifetime(1.5f)
-
-                    lightSpecs.spawnParticles()
-                    lightSpecs.spawnParticles()
-                }
-
-                spec(level, player.lookAngle.normalize(), pos, SpiritTypeRegistry.EARTHEN_SPIRIT, level.random)
             }
         }
     }

@@ -6,6 +6,7 @@ import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
 import dev.sterner.common.foci.*
 import dev.sterner.common.item.*
+import dev.sterner.common.item.foci.*
 import dev.sterner.common.item.tool.*
 import dev.sterner.common.item.tool.ichor.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
@@ -72,7 +73,7 @@ object VoidBoundItemRegistry {
     }
 
     val SPIRIT_BINDER: RegistryObject<BlockItem> = ITEMS.register("spirit_binder") {
-        BlockItem(VoidBoundBlockRegistry.SPIRIT_BINDER.get(), Item.Properties())
+        UnimplementedBlockItem(VoidBoundBlockRegistry.SPIRIT_BINDER.get(), Item.Properties())
     }
 
     val OSMOTIC_ENCHANTER: RegistryObject<BlockItem> = ITEMS.register("osmotic_enchanter") {

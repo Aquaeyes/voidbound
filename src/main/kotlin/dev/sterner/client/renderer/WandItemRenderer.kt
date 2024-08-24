@@ -2,7 +2,6 @@ package dev.sterner.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
 import dev.sterner.VoidBound
-import dev.sterner.api.util.VoidBoundRenderUtils.renderType
 import dev.sterner.client.model.FociModel
 import dev.sterner.client.model.WandItemModel
 import dev.sterner.registry.VoidBoundWandFociRegistry
