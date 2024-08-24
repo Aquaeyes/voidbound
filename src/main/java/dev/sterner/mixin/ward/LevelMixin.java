@@ -1,6 +1,5 @@
-package dev.sterner.mixin;
+package dev.sterner.mixin.ward;
 
-import dev.sterner.api.VoidBoundApi;
 import dev.sterner.registry.VoidBoundComponentRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;

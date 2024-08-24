@@ -1,4 +1,4 @@
-package dev.sterner.mixin;
+package dev.sterner.mixin.ward;
 
 import dev.sterner.api.VoidBoundApi;
 import net.minecraft.core.BlockPos;

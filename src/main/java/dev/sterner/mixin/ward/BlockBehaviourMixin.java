@@ -1,4 +1,4 @@
-package dev.sterner.mixin;
+package dev.sterner.mixin.ward;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;

@@ -35,16 +35,4 @@ public class LevelRendererMixin {
     private boolean voidbound$hideRiftBlockLines(LevelRenderer instance, PoseStack poseStack, VertexConsumer consumer, Entity entity, double camX, double camY, double camZ, BlockPos pos, BlockState state) {
         return !state.is(VoidBoundBlockRegistry.INSTANCE.getSPIRIT_RIFT().get());
     }
-/*
-    @Inject(method = "removeProgress", at = @At("HEAD"), cancellable = true)
-    private void injectRemoveProgress(BlockDestructionProgress progress, CallbackInfo ci) {
-        long l = progress.getPos().asLong();
-        Set<BlockDestructionProgress> set = this.destructionProgress.get(l);
-
-        if (set == null) {
-            ci.cancel();
-        }
-    }
-
- */
 }
