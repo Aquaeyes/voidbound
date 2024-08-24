@@ -118,15 +118,6 @@ object VoidBoundRenderUtils {
         camera: Camera,
         poseStack: PoseStack,
         blockPos: BlockPos,
-        renderTypeToken: RenderTypeToken
-    ) {
-        renderCubeAtPos(camera, poseStack, blockPos, renderTypeToken, Color(255, 200, 150), 0.5f, 1.08f)
-    }
-
-    fun renderCubeAtPos(
-        camera: Camera,
-        poseStack: PoseStack,
-        blockPos: BlockPos,
         renderTypeToken: RenderTypeToken,
         color: Color,
         alpha: Float,

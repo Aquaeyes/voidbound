@@ -19,7 +19,6 @@ abstract class RiftType {
     private val firstColor = Color(100, 100, 255, 255)
     private val secondColor = Color(200, 100, 255, 255)
 
-
     private val firstColorAlpha = Color(100, 100, 255, 25)
     private val secondColorAlpha = Color(200, 100, 255, 25)
 

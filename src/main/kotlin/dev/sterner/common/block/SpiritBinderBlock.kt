@@ -1,7 +1,7 @@
 package dev.sterner.common.block
 
 import com.sammy.malum.registry.common.item.ItemRegistry
-import dev.sterner.api.blockentity.Modifier
+import dev.sterner.api.blockentity.SpiritBinderModifier
 import dev.sterner.common.blockentity.SpiritBinderBlockEntity
 import dev.sterner.common.blockentity.SpiritRiftBlockEntity
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
@@ -34,7 +34,7 @@ class SpiritBinderBlock(properties: Properties) : BaseEntityBlock(
 ) {
 
     init {
-        registerDefaultState(defaultBlockState().setValue(MODIFIER, Modifier.NONE))
+        registerDefaultState(defaultBlockState().setValue(MODIFIER, SpiritBinderModifier.NONE))
     }
 
     override fun onPlace(state: BlockState, level: Level, pos: BlockPos, oldState: BlockState, movedByPiston: Boolean) {
@@ -72,19 +72,19 @@ class SpiritBinderBlock(properties: Properties) : BaseEntityBlock(
         hit: BlockHitResult
     ): InteractionResult {
 
-        if (state.getValue(MODIFIER) == Modifier.NONE) {
+        if (state.getValue(MODIFIER) == SpiritBinderModifier.NONE) {
             if (player.mainHandItem.`is`(ItemRegistry.BLOCK_OF_BRILLIANCE.get())) {
-                level.setBlockAndUpdate(pos, state.setValue(MODIFIER, Modifier.BRILLIANT))
+                level.setBlockAndUpdate(pos, state.setValue(MODIFIER, SpiritBinderModifier.BRILLIANT))
                 player.mainHandItem.shrink(1)
                 return InteractionResult.SUCCESS
             }
             if (player.mainHandItem.`is`(ItemRegistry.BLOCK_OF_HEX_ASH.get())) {
-                level.setBlockAndUpdate(pos, state.setValue(MODIFIER, Modifier.HEX_ASH))
+                level.setBlockAndUpdate(pos, state.setValue(MODIFIER, SpiritBinderModifier.HEX_ASH))
                 player.mainHandItem.shrink(1)
                 return InteractionResult.SUCCESS
             }
         } else {
-            if (state.getValue(MODIFIER) == Modifier.BRILLIANT) {
+            if (state.getValue(MODIFIER) == SpiritBinderModifier.BRILLIANT) {
                 Containers.dropItemStack(
                     level,
                     pos.x + 0.5,
@@ -92,9 +92,9 @@ class SpiritBinderBlock(properties: Properties) : BaseEntityBlock(
                     pos.z + 0.5,
                     ItemStack(ItemRegistry.BLOCK_OF_BRILLIANCE.get())
                 )
-                level.setBlockAndUpdate(pos, state.setValue(MODIFIER, Modifier.NONE))
+                level.setBlockAndUpdate(pos, state.setValue(MODIFIER, SpiritBinderModifier.NONE))
                 return InteractionResult.SUCCESS
-            } else if (state.getValue(MODIFIER) == Modifier.HEX_ASH) {
+            } else if (state.getValue(MODIFIER) == SpiritBinderModifier.HEX_ASH) {
                 Containers.dropItemStack(
                     level,
                     pos.x + 0.5,
@@ -102,7 +102,7 @@ class SpiritBinderBlock(properties: Properties) : BaseEntityBlock(
                     pos.z + 0.5,
                     ItemStack(ItemRegistry.BLOCK_OF_HEX_ASH.get())
                 )
-                level.setBlockAndUpdate(pos, state.setValue(MODIFIER, Modifier.NONE))
+                level.setBlockAndUpdate(pos, state.setValue(MODIFIER, SpiritBinderModifier.NONE))
                 return InteractionResult.SUCCESS
             }
         }
@@ -141,7 +141,7 @@ class SpiritBinderBlock(properties: Properties) : BaseEntityBlock(
 
     companion object {
 
-        var MODIFIER: EnumProperty<Modifier> = EnumProperty.create("modifier", Modifier::class.java)
+        var MODIFIER: EnumProperty<SpiritBinderModifier> = EnumProperty.create("modifier", SpiritBinderModifier::class.java)
 
         fun makeShape(): VoxelShape {
             var shape = Shapes.empty()

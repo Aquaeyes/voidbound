@@ -45,5 +45,4 @@ enum class GolemCore(val implemented: Boolean) : StringRepresentable {
             return NONE
         }
     }
-
 }
