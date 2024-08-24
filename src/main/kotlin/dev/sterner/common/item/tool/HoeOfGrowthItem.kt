@@ -1,14 +1,23 @@
 package dev.sterner.common.item.tool
 
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents
 import net.minecraft.ChatFormatting
+import net.minecraft.core.BlockPos
+import net.minecraft.core.NonNullList
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.tags.BlockTags
+import net.minecraft.world.Containers
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.item.HoeItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Tier
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import team.lodestar.lodestone.systems.item.tools.magic.MagicHoeItem
@@ -23,6 +32,22 @@ open class HoeOfGrowthItem(material: Tier?, damage: Int, speed: Float, magicDama
 
     override fun getDestroySpeed(stack: ItemStack, state: BlockState): Float {
         return super.getDestroySpeed(stack, state) + getExtraMiningSpeed(stack)
+    }
+
+    //TODO evaluate this
+    override fun mineBlock(
+        stack: ItemStack,
+        level: Level,
+        state: BlockState,
+        pos: BlockPos,
+        miningEntity: LivingEntity
+    ): Boolean {
+        if (level is ServerLevel && state.`is`(BlockTags.CROPS)) {
+            val list = NonNullList.create<ItemStack>()
+            list.addAll(Block.getDrops(state, level, pos, null, miningEntity, stack))
+            Containers.dropContents(level, pos, list)
+        }
+        return super.mineBlock(stack, level, state, pos, miningEntity)
     }
 
     override fun useOn(context: UseOnContext): InteractionResult {
