@@ -4,7 +4,6 @@ import com.sammy.malum.common.item.curiosities.tools.TotemicStaffItem
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
-import dev.sterner.common.foci.*
 import dev.sterner.common.item.*
 import dev.sterner.common.item.foci.*
 import dev.sterner.common.item.tool.*

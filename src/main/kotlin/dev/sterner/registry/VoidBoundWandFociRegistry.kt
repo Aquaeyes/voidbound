@@ -2,14 +2,12 @@ package dev.sterner.registry
 
 import dev.sterner.VoidBound
 import dev.sterner.api.wand.IWandFocus
-import dev.sterner.common.foci.*
 import dev.sterner.common.item.foci.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
-
 
 object VoidBoundWandFociRegistry {
 
