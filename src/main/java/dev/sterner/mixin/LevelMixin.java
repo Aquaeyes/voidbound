@@ -1,5 +1,6 @@
 package dev.sterner.mixin;
 
+import dev.sterner.api.VoidBoundApi;
 import dev.sterner.registry.VoidBoundComponentRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
