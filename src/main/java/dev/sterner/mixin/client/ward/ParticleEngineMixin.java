@@ -1,4 +1,4 @@
-package dev.sterner.mixin.ward.client;
+package dev.sterner.mixin.client.ward;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.Local;

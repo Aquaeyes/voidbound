@@ -24,7 +24,7 @@
     "client.ItemInHandRendererMixin",
     "client.LevelRendererMixin",
     "client.MinecraftMixin",
-    "ward.client.ClientLevelMixin",
-    "ward.client.ParticleEngineMixin"
+    "client.ward.ClientLevelMixin",
+    "client.ward.ParticleEngineMixin"
   ]
 }

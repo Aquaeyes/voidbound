@@ -1,4 +1,4 @@
-package dev.sterner.mixin.ward.client;
+package dev.sterner.mixin.client.ward;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
