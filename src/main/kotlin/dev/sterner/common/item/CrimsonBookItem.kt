@@ -4,20 +4,36 @@ import com.sammy.malum.client.VoidRevelationHandler
 import com.sammy.malum.client.VoidRevelationHandler.RevelationType
 import dev.sterner.VoidBound
 import dev.sterner.api.util.VoidBoundUtils
+import dev.sterner.registry.VoidBoundBlockRegistry
 import net.minecraft.client.Minecraft
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 
 
-class CrimsonBookItem(properties: Properties) : Item(properties) {
+class CrimsonBookItem(properties: Properties) : BlockItem(VoidBoundBlockRegistry.CRIMSON_RITES.get(), properties) {
+
+    override fun useOn(context: UseOnContext): InteractionResult {
+        if (context.player?.isShiftKeyDown == true) {
+            return super.useOn(context)
+        }
+        return InteractionResult.PASS
+    }
 
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
+
+        if (player.isShiftKeyDown) {
+            return super.use(level, player, usedHand)
+        }
+
         val item = player.getItemInHand(usedHand)
         if (!item.hasTag()) {
             val tag = CompoundTag()

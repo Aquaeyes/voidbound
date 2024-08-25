@@ -36,6 +36,10 @@ object VoidBoundBlockRegistry {
         SpiritRiftBlock(Properties.of())
     }
 
+    var CRIMSON_RITES: RegistryObject<CrimsonRitesBlock> = BLOCKS.register("crimson_rites") {
+        CrimsonRitesBlock(Properties.of())
+    }
+
     var PORTABLE_HOLE: RegistryObject<PortableHoleBlock> = BLOCKS.register("portable_hole") {
         PortableHoleBlock(
             FabricBlockSettings.create()
