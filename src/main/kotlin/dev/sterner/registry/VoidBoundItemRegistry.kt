@@ -83,14 +83,11 @@ object VoidBoundItemRegistry {
         BlockItem(VoidBoundBlockRegistry.OSMOTIC_ENCHANTER.get(), Item.Properties())
     }
 
-    val ELDRITCH_OBELISK: RegistryObject<Item> = ItemRegistry.register(
-        "eldritch_obelisk", ItemRegistry.DEFAULT_PROPERTIES()
-    ) { p: Item.Properties? ->
+    val ELDRITCH_OBELISK: RegistryObject<Item> = ITEMS.register("eldritch_obelisk") {
         MultiBlockItem(
             VoidBoundBlockRegistry.ELDRITCH_OBELISK.get(),
-            p,
-            EldritchObeliskBlockEntity.STRUCTURE
-        )
+            FabricItemSettings(),
+            EldritchObeliskBlockEntity.STRUCTURE)
     }
 
     val SPIRIT_STABILIZER: RegistryObject<UnimplementedBlockItem> = ITEMS.register("spirit_stabilizer") {

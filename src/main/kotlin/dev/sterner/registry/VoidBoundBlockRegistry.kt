@@ -8,6 +8,7 @@ import io.github.fabricators_of_create.porting_lib.util.RegistryObject
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
@@ -76,16 +77,21 @@ object VoidBoundBlockRegistry {
     val ELDRITCH_OBELISK: RegistryObject<Block> = BLOCKS.register(
         "eldritch_obelisk"
     ) {
-        EldritchObeliskBlock(MalumBlockProperties.TAINTED_ROCK().setCutoutRenderType().noOcclusion()).setBlockEntity {
-            VoidBoundBlockEntityTypeRegistry.ELDRITCH_OBELISK.get()
-        }
+        EldritchObeliskBlock(FabricBlockSettings.create()
+            .noOcclusion()
+            .strength(-1.0F, 3600000.0F))
+            .setBlockEntity {
+                VoidBoundBlockEntityTypeRegistry.ELDRITCH_OBELISK.get()
+            }
     }
     val ELDRITCH_OBELISK_COMPONENT: RegistryObject<EldritchObeliskComponentBlock> = BLOCKS.register(
         "eldritch_obelisk_component"
     ) {
         EldritchObeliskComponentBlock(
-            MalumBlockProperties.TAINTED_ROCK().setCutoutRenderType().noOcclusion()
+            FabricBlockSettings.create()
+                .noOcclusion()
+                .strength(-1.0F, 3600000.0F)
+                .noOcclusion()
         )
     }
-
 }

@@ -39,15 +39,15 @@ class ObeliskCoreModel(val root: ModelPart) : Model(Function { location: Resourc
 
     companion object {
         // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-        val LAYER_LOCATION: ModelLayerLocation = ModelLayerLocation(VoidBound.id("obelisk_core"), "main")
+        val LAYER_LOCATION: ModelLayerLocation = ModelLayerLocation(VoidBound.id("core"), "main")
         fun createBodyLayer(): LayerDefinition {
             val meshdefinition = MeshDefinition()
             val partdefinition = meshdefinition.root
 
             val endportal = partdefinition.addOrReplaceChild(
                 "endportal",
-                CubeListBuilder.create().texOffs(0, 0)
-                    .addBox(-6.0f, -90.0f, -6.0f, 12.0f, 64.0f, 12.0f, CubeDeformation(0.0f)),
+                CubeListBuilder.create().texOffs(-4, -2)
+                    .addBox(-7.0f, -90.0f, -7.0f, 14.0f, 64.0f, 14.0f, CubeDeformation(0.0f)),
                 PartPose.offset(0.0f, 34.0f, 0.0f)
             )
 
