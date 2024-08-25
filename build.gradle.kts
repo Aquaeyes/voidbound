@@ -83,7 +83,7 @@ dependencies {
 	//include("team.lodestar.lodestone:lodestone:${property("minecraft_version")}-${property("lodestone_version")}-fabric")
 	modImplementation("team.lodestar.lodestone:lodestone:${property("minecraft_version")}-${property("lodestone_version")}-fabric")
 
-	modImplementation("com.sammy:malum:1.20.1-1.6.2.0e-fabric")
+	modImplementation("com.sammy:malum:${property("malum_version")}")
 
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${property("cca_version")}")
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${property("cca_version")}")

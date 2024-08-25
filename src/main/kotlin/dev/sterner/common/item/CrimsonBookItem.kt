@@ -1,11 +1,11 @@
 package dev.sterner.common.item
 
+import com.sammy.malum.client.VoidRevelationHandler
+import com.sammy.malum.client.VoidRevelationHandler.RevelationType
 import dev.sterner.VoidBound
 import dev.sterner.api.util.VoidBoundUtils
-import net.minecraft.advancements.Advancement
 import net.minecraft.client.Minecraft
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
@@ -40,6 +40,9 @@ class CrimsonBookItem(properties: Properties) : Item(properties) {
 
         if (giveAdvancement && player is ServerPlayer) {
             VoidBoundUtils.grantAdvancementCriterion(player, VoidBound.id("revelationary/ichor_requirement_advancement"), "opened_crimson_rites")
+        }
+        if (giveAdvancement && level.isClientSide) {
+            VoidRevelationHandler.seeTheRevelation(RevelationType.ICHOR)
         }
 
         return super.use(level, player, usedHand)

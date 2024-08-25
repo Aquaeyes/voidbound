@@ -1,5 +1,7 @@
 package dev.sterner.client.event
 
+import com.sammy.malum.client.VoidRevelationHandler
+import com.sammy.malum.client.VoidRevelationHandler.RevelationType
 import com.sammy.malum.client.screen.codex.BookWidgetStyle
 import com.sammy.malum.client.screen.codex.PlacedBookEntry
 import com.sammy.malum.client.screen.codex.PlacedBookEntryBuilder
@@ -13,6 +15,7 @@ import dev.sterner.VoidBound.modid
 import dev.sterner.api.book.ProgressionEntryObjectExtension
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.nbt.CompoundTag
+import java.util.function.BooleanSupplier
 
 object MalumCodexEvent {
 
@@ -96,6 +99,144 @@ object MalumCodexEvent {
                     )
                 )
                 .afterUmbralCrystal()
+        }
+
+        screen?.addEntry(
+            "void.ichor", 0, -2
+        ) { b: PlacedBookEntryBuilder ->
+            b
+                .withTraceFragmentEntry()
+                .configureWidget { w: ProgressionEntryObject ->
+                    w.setIcon(
+                        VoidBoundItemRegistry.ICHOR.get()
+                    ).setStyle(VOID_GILDED)
+                }
+                .addPage(HeadlineTextPage("void.ichor", "void.ichor.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.ICHOR.get()
+                    )
+                )
+                .setEntryVisibleWhen {
+                    VoidRevelationHandler.hasSeenTheRevelation(
+                        RevelationType.ICHOR
+                    )
+                }
+        }
+
+        screen?.addEntry(
+            "void.ichorium_scythe", 1, -3
+        ) { b: PlacedBookEntryBuilder ->
+            b
+                .withTraceFragmentEntry()
+                .configureWidget { w: ProgressionEntryObject ->
+                    w.setIcon(
+                        VoidBoundItemRegistry.ICHORIUM_SCYTHE.get()
+                    ).setStyle(VOID_GILDED)
+                }
+                .addPage(HeadlineTextPage("void.ichorium_scythe", "void.ichorium_scythe.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.ICHORIUM_SCYTHE.get()
+                    )
+                )
+                .setEntryVisibleWhen {
+                    VoidRevelationHandler.hasSeenTheRevelation(
+                        RevelationType.ICHOR
+                    )
+                }
+        }
+
+        screen?.addEntry(
+            "void.ichorium_pickaxe", -1, -3
+        ) { b: PlacedBookEntryBuilder ->
+            b
+                .withTraceFragmentEntry()
+                .configureWidget { w: ProgressionEntryObject ->
+                    w.setIcon(
+                        VoidBoundItemRegistry.ICHORIUM_PICKAXE.get()
+                    ).setStyle(VOID_GILDED)
+                }
+                .addPage(HeadlineTextPage("void.ichorium_pickaxe", "void.ichorium_pickaxe.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.ICHORIUM_PICKAXE.get()
+                    )
+                )
+                .setEntryVisibleWhen {
+                    VoidRevelationHandler.hasSeenTheRevelation(
+                        RevelationType.ICHOR
+                    )
+                }
+        }
+
+        screen?.addEntry(
+            "void.ichorium_sword", 0, -4
+        ) { b: PlacedBookEntryBuilder ->
+            b
+                .withTraceFragmentEntry()
+                .configureWidget { w: ProgressionEntryObject ->
+                    w.setIcon(
+                        VoidBoundItemRegistry.ICHORIUM_SWORD.get()
+                    ).setStyle(VOID_GILDED)
+                }
+                .addPage(HeadlineTextPage("void.ichorium_sword", "void.ichorium_sword.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.ICHORIUM_SWORD.get()
+                    )
+                )
+                .setEntryVisibleWhen {
+                    VoidRevelationHandler.hasSeenTheRevelation(
+                        RevelationType.ICHOR
+                    )
+                }
+        }
+
+        screen?.addEntry(
+            "void.ichorium_shovel", -2, -4
+        ) { b: PlacedBookEntryBuilder ->
+            b
+                .withTraceFragmentEntry()
+                .configureWidget { w: ProgressionEntryObject ->
+                    w.setIcon(
+                        VoidBoundItemRegistry.ICHORIUM_SHOVEL.get()
+                    ).setStyle(VOID_GILDED)
+                }
+                .addPage(HeadlineTextPage("void.ichorium_shovel", "void.ichorium_shovel.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.ICHORIUM_SHOVEL.get()
+                    )
+                )
+                .setEntryVisibleWhen {
+                    VoidRevelationHandler.hasSeenTheRevelation(
+                        RevelationType.ICHOR
+                    )
+                }
+        }
+
+        screen?.addEntry(
+            "void.ichorium_axe", 2, -4
+        ) { b: PlacedBookEntryBuilder ->
+            b
+                .withTraceFragmentEntry()
+                .configureWidget { w: ProgressionEntryObject ->
+                    w.setIcon(
+                        VoidBoundItemRegistry.ICHORIUM_AXE.get()
+                    ).setStyle(VOID_GILDED)
+                }
+                .addPage(HeadlineTextPage("void.ichorium_axe", "void.ichorium_axe.1"))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.ICHORIUM_AXE.get()
+                    )
+                )
+                .setEntryVisibleWhen {
+                    VoidRevelationHandler.hasSeenTheRevelation(
+                        RevelationType.ICHOR
+                    )
+                }
         }
     }
 

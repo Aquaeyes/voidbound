@@ -40,7 +40,7 @@ object VoidBoundUtils {
 
         val advancement: Advancement? = sal.getAdvancement(advancementIdentifier)
         if (advancement != null) {
-            if (!tracker.getOrStartProgress(advancement).isDone()) {
+            if (!tracker.getOrStartProgress(advancement).isDone) {
                 tracker.award(advancement, criterion)
             }
         }
