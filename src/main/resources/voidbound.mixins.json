@@ -3,7 +3,6 @@
   "package": "dev.sterner.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ProgressionEntryObjectMixin",
     "ItemEntityMixin",
     "ReboundEnchantmentMixin",
     "ScytheBoomerangEntityMixin",

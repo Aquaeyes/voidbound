@@ -12,7 +12,6 @@ import com.sammy.malum.client.screen.codex.screens.ArcanaProgressionScreen
 import com.sammy.malum.client.screen.codex.screens.VoidProgressionScreen
 import dev.sterner.VoidBound
 import dev.sterner.VoidBound.modid
-import dev.sterner.api.book.ProgressionEntryObjectExtension
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.nbt.CompoundTag
 import java.util.function.BooleanSupplier
@@ -243,12 +242,11 @@ object MalumCodexEvent {
     fun addVoidBoundEntries(screen: ArcanaProgressionScreen?, entries: MutableList<PlacedBookEntry>) {
         screen?.addEntry("call_of_the_void", 0, 12) { builder ->
             builder.configureWidget { it: ProgressionEntryObject ->
-                val ext = it as ProgressionEntryObjectExtension
                 val item = VoidBoundItemRegistry.CALL_OF_THE_VOID.get().defaultInstance
                 val tag = CompoundTag()
                 tag.putBoolean("Glowing", true)
                 item.tag = tag
-                ext.`voidbound$setIcon`(item).setStyle(VOID_GILDED)
+                it.setIcon(item).setStyle(VOID_GILDED)
             }.addPage(HeadlineTextPage("call_of_the_void", "call_of_the_void.1"))
         }
 
