@@ -20,6 +20,9 @@ object VoidBoundPacketRegistry {
         VOID_BOUND_CHANNEL.registerS2CPacket(
             SpiritBinderParticlePacket::class.java, index++
         )
+        VOID_BOUND_CHANNEL.registerS2CPacket(
+            CultistRiftParticlePacket::class.java, index++
+        )
 
         VOID_BOUND_CHANNEL.registerS2CPacket(
             HeartParticlePacket::class.java, index++

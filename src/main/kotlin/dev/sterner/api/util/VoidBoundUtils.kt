@@ -8,7 +8,6 @@ import dev.sterner.VoidBound
 import dev.sterner.listener.EnchantSpiritDataReloadListener
 import net.minecraft.advancements.Advancement
 import net.minecraft.client.multiplayer.ClientLevel
-import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
@@ -70,29 +69,23 @@ object VoidBoundUtils {
         }
     }
 
-    fun spawnSpiritParticle(level: ClientLevel, blockPos: BlockPos, entity: LivingEntity, type: MalumSpiritType) {
+    fun spawnSpiritParticle(level: ClientLevel, to: Vec3, from: Vec3, yOffset: Float, type: MalumSpiritType) {
         val behavior =
             Consumer<WorldParticleBuilder> { b: WorldParticleBuilder ->
                 b.addTickActor { p: LodestoneWorldParticle ->
                     val particlePos = Vec3(p.x, p.y, p.z)
-                    val targetPos =
-                        Vec3(
-                            blockPos.x + 0.5,
-                            blockPos.y + 0.5,
-                            blockPos.z + 0.5
-                        )
-                    val direction = targetPos.subtract(particlePos).normalize()
+                    val direction = to.subtract(particlePos).normalize()
                     p.particleSpeed = direction.scale(0.05)
                 }
             }
         val rand = level.random
-        val xRand = entity.x + rand.nextDouble() - 0.5
-        val yRand = entity.y + entity.bbHeight / 1.5 + (rand.nextDouble() - 0.5)
-        val zRand = entity.z + rand.nextDouble() - 0.5
+        val xRand = from.x + rand.nextDouble() - 0.5
+        val yRand = from.y + yOffset + (rand.nextDouble() - 0.5)
+        val zRand = from.z + rand.nextDouble() - 0.5
 
         val startPos = Vec3(xRand, yRand, zRand)
 
-        val distance = startPos.distanceTo(Vec3(blockPos.x + 0.5, blockPos.y + 1.5, blockPos.z + 0.5))
+        val distance = startPos.distanceTo(Vec3(to.x + 0.5, to.y + 1.5, to.z + 0.5))
         val baseLifetime = 10
         val speed = 0.05
         val adjustedLifetime = (distance / speed).toInt().coerceAtLeast(baseLifetime) - 20

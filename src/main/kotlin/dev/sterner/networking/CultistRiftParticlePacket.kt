@@ -11,7 +11,7 @@ import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.entity.LivingEntity
 import team.lodestar.lodestone.systems.network.LodestoneClientPacket
 
-class SpiritBinderParticlePacket(private val entityId: Int, val pos: BlockPos, private val spiritType: String) :
+class CultistRiftParticlePacket(private val entityId: Int, val pos: BlockPos, private val spiritType: String) :
     LodestoneClientPacket() {
 
     constructor(buf: FriendlyByteBuf) : this(buf.readInt(), buf.readBlockPos(), buf.readUtf())
@@ -26,7 +26,7 @@ class SpiritBinderParticlePacket(private val entityId: Int, val pos: BlockPos, p
         if (spirit != null && client.level != null) {
             val entity = client.level!!.getEntity(entityId)
             if (entity is LivingEntity) {
-                VoidBoundUtils.spawnSpiritParticle(client.level!!, pos.center, entity.position(), entity.bbHeight / 1.5f, spirit)
+                VoidBoundUtils.spawnSpiritParticle(client.level!!, pos.center, entity.position(), 0f, spirit)
             }
         }
     }
