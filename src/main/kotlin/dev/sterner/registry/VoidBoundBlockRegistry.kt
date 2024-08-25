@@ -76,7 +76,9 @@ object VoidBoundBlockRegistry {
     val ELDRITCH_OBELISK: RegistryObject<Block> = BLOCKS.register(
         "eldritch_obelisk"
     ) {
-        EldritchObeliskBlock(MalumBlockProperties.TAINTED_ROCK().setCutoutRenderType().noOcclusion())
+        EldritchObeliskBlock(MalumBlockProperties.TAINTED_ROCK().setCutoutRenderType().noOcclusion()).setBlockEntity {
+            VoidBoundBlockEntityTypeRegistry.ELDRITCH_OBELISK.get()
+        }
     }
     val ELDRITCH_OBELISK_COMPONENT: RegistryObject<EldritchObeliskComponentBlock> = BLOCKS.register(
         "eldritch_obelisk_component"

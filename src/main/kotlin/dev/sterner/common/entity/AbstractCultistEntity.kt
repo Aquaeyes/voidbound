@@ -38,6 +38,7 @@ abstract class AbstractCultistEntity(entityType: EntityType<out Monster>, level:
         val randomSource = level.random
         this.populateDefaultEquipmentSlots(randomSource, difficulty)
         this.populateDefaultEquipmentEnchantments(randomSource, difficulty)
+        this.setPersistenceRequired()
         return spawnGroupData
     }
 

@@ -1,6 +1,8 @@
 package dev.sterner
 
 import com.mojang.blaze3d.vertex.PoseStack
+import com.sammy.malum.MalumMod
+import com.sammy.malum.MalumModClient
 import com.sammy.malum.client.MalumModelLoaderPlugin
 import dev.emi.trinkets.api.client.TrinketRendererRegistry
 import dev.sterner.client.VoidBoundModelLoaderPlugin
@@ -31,7 +33,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
     private val logger = LoggerFactory.getLogger(modid)
 
     override fun onInitialize() {
-
+        MalumMod()
         VoidBoundTags.init()
         VoidBoundPacketRegistry.registerVoidBoundPackets()
 
@@ -45,6 +47,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
         VoidBoundWandFociRegistry.WAND_FOCI.register()
         VoidBoundRiftTypeRegistry.RIFT_TYPES.register()
         VoidBoundMenuTypeRegistry.MENU_TYPES.register()
+        VoidBoundStructureRegistry.STRUCTURES.register()
 
         VoidBoundCreativeTabRegistry.init()
         VoidBoundEvents.init()
@@ -55,7 +58,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
     }
 
     override fun onInitializeClient() {
-
+        MalumModClient()
         VoidBoundShaders.init()
         VoidBoundParticleTypeRegistry.init()
         VoidBoundKeyBindings.init()
