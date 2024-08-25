@@ -8,6 +8,11 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers
 object VoidBoundEntityRenderers {
 
     fun init() {
+
+        BlockEntityRenderers.register(
+            VoidBoundBlockEntityTypeRegistry.ELDRITCH_OBELISK.get(),
+            ::EldritchObeliskBlockEntityRenderer
+        )
         BlockEntityRenderers.register(
             VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER.get(),
             ::SpiritBinderBlockEntityRenderer

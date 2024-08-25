@@ -1,11 +1,16 @@
 package dev.sterner.registry
 
+import com.sammy.malum.common.block.curiosities.spirit_crucible.SpiritCrucibleCoreBlockEntity
+import com.sammy.malum.registry.common.block.BlockEntityRegistry
+import com.sammy.malum.registry.common.block.BlockRegistry
 import dev.sterner.VoidBound
 import dev.sterner.common.blockentity.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject
+import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 object VoidBoundBlockEntityTypeRegistry {
@@ -58,4 +63,17 @@ object VoidBoundBlockEntityTypeRegistry {
             )
                 .build(null)
         }
+
+    val ELDRITCH_OBELISK: RegistryObject<BlockEntityType<EldritchObeliskBlockEntity>> =
+        BLOCK_ENTITY_TYPES.register("eldritch_obelisk") {
+            BlockEntityType.Builder.of(
+                { pos: BlockPos?, state: BlockState? ->
+                    EldritchObeliskBlockEntity(
+                        pos,
+                        state
+                    )
+                }, VoidBoundBlockRegistry.ELDRITCH_OBELISK.get()
+            ).build(null)
+        }
+
 }

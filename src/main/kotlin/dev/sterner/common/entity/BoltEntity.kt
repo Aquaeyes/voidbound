@@ -4,10 +4,13 @@ import dev.sterner.common.item.foci.ShockFoci.Companion.spawnChargeParticles
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import net.fabricmc.api.EnvType
 import net.minecraft.commands.arguments.EntityAnchorArgument
+import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.Entity.RemovalReason
@@ -55,6 +58,9 @@ class BoltEntity(entityType: EntityType<BoltEntity>, world: Level?) : Entity(ent
     }
 
     override fun tick() {
+        if (ambientTick == 6) {
+            level().playSound(null, BlockPos.containing(position()), SoundEvents.GHAST_SHOOT, SoundSource.PLAYERS, 0.5f, 1.0f)
+        }
         val forwardOffset = 0.05f
 
         val forwardX = -sin(Math.toRadians(yRot.toDouble())) * forwardOffset

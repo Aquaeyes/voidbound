@@ -37,6 +37,7 @@ object VoidBoundCreativeTabRegistry {
                 entries.accept(VoidBoundItemRegistry.WARDING_FOCI.get())
                 entries.accept(VoidBoundItemRegistry.EMPTY_SPIRIT_SHARD.get())
                 entries.accept(VoidBoundItemRegistry.SOULWOOD_TOTEMIC_STAFF.get())
+                entries.accept(VoidBoundItemRegistry.ELDRITCH_OBELISK.get())
                 //entries.accept(VoidBoundItemRegistry.DIVIDER.get())
                 entries.accept(VoidBoundItemRegistry.CORE_EMPTY.get())
                 entries.accept(VoidBoundItemRegistry.GOLEM_CORE_GATHER.get())

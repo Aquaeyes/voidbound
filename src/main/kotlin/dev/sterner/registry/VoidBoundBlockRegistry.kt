@@ -1,5 +1,6 @@
 package dev.sterner.registry
 
+import com.sammy.malum.registry.common.block.MalumBlockProperties
 import dev.sterner.VoidBound
 import dev.sterner.common.block.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
@@ -71,4 +72,18 @@ object VoidBoundBlockRegistry {
     var TEAR_CLOAK: RegistryObject<CloakedTearBlock> = BLOCKS.register("tear_cloak") {
         CloakedTearBlock(FabricBlockSettings.create().noOcclusion())
     }
+
+    val ELDRITCH_OBELISK: RegistryObject<Block> = BLOCKS.register(
+        "eldritch_obelisk"
+    ) {
+        EldritchObeliskBlock(MalumBlockProperties.TAINTED_ROCK().setCutoutRenderType().noOcclusion())
+    }
+    val ELDRITCH_OBELISK_COMPONENT: RegistryObject<EldritchObeliskComponentBlock> = BLOCKS.register(
+        "eldritch_obelisk_component"
+    ) {
+        EldritchObeliskComponentBlock(
+            MalumBlockProperties.TAINTED_ROCK().setCutoutRenderType().noOcclusion()
+        )
+    }
+
 }

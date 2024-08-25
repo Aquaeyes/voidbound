@@ -1,9 +1,12 @@
 package dev.sterner.registry
 
+import com.sammy.malum.common.block.curiosities.spirit_crucible.SpiritCrucibleCoreBlockEntity
 import com.sammy.malum.common.item.curiosities.tools.TotemicStaffItem
+import com.sammy.malum.registry.common.block.BlockRegistry
 import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
+import dev.sterner.common.blockentity.EldritchObeliskBlockEntity
 import dev.sterner.common.item.*
 import dev.sterner.common.item.foci.*
 import dev.sterner.common.item.tool.*
@@ -16,6 +19,7 @@ import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.SwordItem
+import team.lodestar.lodestone.systems.multiblock.MultiBlockItem
 
 object VoidBoundItemRegistry {
 
@@ -77,6 +81,16 @@ object VoidBoundItemRegistry {
 
     val OSMOTIC_ENCHANTER: RegistryObject<BlockItem> = ITEMS.register("osmotic_enchanter") {
         BlockItem(VoidBoundBlockRegistry.OSMOTIC_ENCHANTER.get(), Item.Properties())
+    }
+
+    val ELDRITCH_OBELISK: RegistryObject<Item> = ItemRegistry.register(
+        "eldritch_obelisk", ItemRegistry.DEFAULT_PROPERTIES()
+    ) { p: Item.Properties? ->
+        MultiBlockItem(
+            VoidBoundBlockRegistry.ELDRITCH_OBELISK.get(),
+            p,
+            EldritchObeliskBlockEntity.STRUCTURE
+        )
     }
 
     val SPIRIT_STABILIZER: RegistryObject<UnimplementedBlockItem> = ITEMS.register("spirit_stabilizer") {
