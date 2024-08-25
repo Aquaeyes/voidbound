@@ -26,7 +26,7 @@ class CultistRiftParticlePacket(private val entityId: Int, val pos: BlockPos, pr
         if (spirit != null && client.level != null) {
             val entity = client.level!!.getEntity(entityId)
             if (entity is LivingEntity) {
-                VoidBoundUtils.spawnSpiritParticle(client.level!!, pos.center, entity.position(), 0f, spirit)
+                VoidBoundUtils.spawnSpiritParticle(client.level!!, entity.position().add(0.0,1.2,0.0), pos.center.add(0.5,0.5,0.5), 0f, spirit, false)
             }
         }
     }

@@ -3,6 +3,7 @@ package dev.sterner.common.entity
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.common.entity.ai.goal.FocusSpiritRift
 import dev.sterner.common.entity.ai.goal.HealAllyGoal
+import dev.sterner.networking.CultistRiftParticlePacket
 import dev.sterner.networking.SpiritBinderParticlePacket
 import dev.sterner.registry.VoidBoundBlockRegistry
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
@@ -71,7 +72,7 @@ class CrimsonClericEntity(level: Level) :
             if (level() is ServerLevel) {
                 for (player in PlayerLookup.tracking(this)) {
                     VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(
-                        SpiritBinderParticlePacket(
+                        CultistRiftParticlePacket(
                             this.id,
                             getRiftPos().get(),
                             SpiritTypeRegistry.ELDRITCH_SPIRIT.identifier

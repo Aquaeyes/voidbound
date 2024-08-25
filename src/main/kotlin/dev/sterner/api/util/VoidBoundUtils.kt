@@ -69,7 +69,7 @@ object VoidBoundUtils {
         }
     }
 
-    fun spawnSpiritParticle(level: ClientLevel, to: Vec3, from: Vec3, yOffset: Float, type: MalumSpiritType) {
+    fun spawnSpiritParticle(level: ClientLevel, to: Vec3, from: Vec3, yOffset: Float, type: MalumSpiritType, randStart: Boolean) {
         val behavior =
             Consumer<WorldParticleBuilder> { b: WorldParticleBuilder ->
                 b.addTickActor { p: LodestoneWorldParticle ->
@@ -79,9 +79,20 @@ object VoidBoundUtils {
                 }
             }
         val rand = level.random
-        val xRand = from.x + rand.nextDouble() - 0.5
-        val yRand = from.y + yOffset + (rand.nextDouble() - 0.5)
-        val zRand = from.z + rand.nextDouble() - 0.5
+
+        val xRand: Double?
+        val yRand: Double?
+        val zRand: Double?
+
+        if (randStart) {
+            xRand = from.x + rand.nextDouble() - 0.5
+            yRand = from.y + yOffset + (rand.nextDouble() - 0.5)
+            zRand = from.z + rand.nextDouble() - 0.5
+        } else {
+            xRand = from.x - 0.5
+            yRand = from.y + yOffset - 0.5
+            zRand = from.z - 0.5
+        }
 
         val startPos = Vec3(xRand, yRand, zRand)
 

@@ -26,7 +26,7 @@ class SpiritBinderParticlePacket(private val entityId: Int, val pos: BlockPos, p
         if (spirit != null && client.level != null) {
             val entity = client.level!!.getEntity(entityId)
             if (entity is LivingEntity) {
-                VoidBoundUtils.spawnSpiritParticle(client.level!!, pos.center, entity.position(), entity.bbHeight / 1.5f, spirit)
+                VoidBoundUtils.spawnSpiritParticle(client.level!!, pos.center, entity.position(), entity.bbHeight / 1.5f, spirit, true)
             }
         }
     }
