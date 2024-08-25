@@ -22,6 +22,10 @@ import net.minecraft.world.level.ServerLevelAccessor
 
 abstract class AbstractCultistEntity(entityType: EntityType<out Monster>, level: Level) : Monster(entityType, level) {
 
+    init {
+        this.setPersistenceRequired()
+    }
+
     override fun finalizeSpawn(
         level: ServerLevelAccessor,
         difficulty: DifficultyInstance,
