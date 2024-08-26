@@ -9,6 +9,7 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import kotlin.math.abs
 import kotlin.math.max
@@ -145,5 +146,81 @@ object VoidBoundBlockUtils {
                 }
             }
         }
+    }
+
+    fun getLogsToBreak(
+        level: Level,
+        pos: BlockPos,
+        logsToBreak: MutableList<BlockPos>,
+        logCount: Int,
+        logType: Block
+    ): List<BlockPos> {
+        if (logsToBreak.size > 256) {
+            return logsToBreak
+        }
+
+        val checkAround: MutableList<BlockPos> = ArrayList()
+
+        val aroundLogs: MutableList<BlockPos> = ArrayList()
+        for (aroundLog in BlockPos.betweenClosed(pos.x - 1, pos.y, pos.z - 1, pos.x + 1, pos.y + 1, pos.z + 1)) {
+            aroundLogs.add(aroundLog.immutable())
+        }
+
+        for (aroundLogPos in aroundLogs) {
+            if (logsToBreak.contains(aroundLogPos)) {
+                continue
+            }
+
+            val log = level.getBlockState(aroundLogPos).block
+            if (log == logType) {
+                checkAround.add(aroundLogPos)
+                logsToBreak.add(aroundLogPos)
+            }
+        }
+
+        if (checkAround.size == 0) {
+            return logsToBreak
+        }
+
+        for (aroundPos in checkAround) {
+            for (logPos in getLogsToBreak(level, aroundPos, logsToBreak, logCount, logType)) {
+                if (!logsToBreak.contains(logPos)) {
+                    logsToBreak.add(logPos.immutable())
+                }
+            }
+        }
+
+        val up = pos.above(2)
+        return getLogsToBreak(level, up.immutable(), logsToBreak, logCount, logType)
+    }
+
+    fun getLogCount(level: Level, pos: BlockPos): Int {
+        var logCount = 0
+        var prevLogCount = -1
+
+        var y = 1
+        while (y <= 32) {
+            if (prevLogCount == logCount) {
+                break
+            }
+            prevLogCount = logCount
+
+            for (nearPos in BlockPos.betweenClosed(
+                pos.x - 2,
+                pos.y + (y - 1),
+                pos.z - 2,
+                pos.x + 2,
+                pos.y + (y - 1),
+                pos.z + 2
+            )) {
+                val blockState = level.getBlockState(nearPos)
+                if (blockState.`is`(BlockTags.LOGS)) {
+                    logCount += 1
+                }
+            }
+            y += 1
+        }
+
+        return logCount
     }
 }

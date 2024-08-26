@@ -1,40 +1,35 @@
 package dev.sterner.common.item.tool
 
-import com.google.common.collect.ImmutableMultimap
-import com.google.common.collect.Multimap
-import com.sammy.malum.common.recipe.SpiritInfusionRecipe
 import dev.sterner.api.util.VoidBoundBlockUtils
 import dev.sterner.networking.AxeOfTheStreamParticlePacket
 import dev.sterner.networking.BubbleParticlePacket
+import dev.sterner.registry.VoidBoundItemRegistry
 import dev.sterner.registry.VoidBoundPacketRegistry
 import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
 import net.minecraft.ChatFormatting
+import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
-import net.minecraft.util.Mth
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
-import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.ai.attributes.Attribute
-import net.minecraft.world.entity.ai.attributes.AttributeModifier
-import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.DiggerItem
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.SwordItem
 import net.minecraft.world.item.Tier
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.Vec3
 import org.joml.Vector3f
 import team.lodestar.lodestone.systems.item.tools.magic.MagicAxeItem
 import java.awt.Color
+
 
 open class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDamage: Float, properties: Properties?) :
     MagicAxeItem(
@@ -128,24 +123,41 @@ open class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magi
             val player = breakEvent?.player
             val level = player?.level()
             val pos = breakEvent!!.pos
-            if (level != null && player.mainHandItem.item is AxeOfTheStreamItem) {
+
+            if (level != null) {
                 val block = level.getBlockState(pos)
                 if (!player.isShiftKeyDown && block.`is`(BlockTags.LOGS)) {
+                    if (player.mainHandItem.`is`(VoidBoundItemRegistry.ICHORIUM_AXE.get())) {
+                        val logCount = VoidBoundBlockUtils.getLogCount(level, pos)
+                        val logsToBreak: List<BlockPos> = VoidBoundBlockUtils.getLogsToBreak(level, pos, mutableListOf(), logCount, level.getBlockState(pos).block)
+                        for (logPos in logsToBreak) {
 
-                    if (level is ServerLevel) {
-                        for (playerPart in PlayerLookup.tracking(level, pos)) {
-                            VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(
-                                AxeOfTheStreamParticlePacket(
-                                    level.getBlockState(
-                                        pos
-                                    ), pos
-                                ), playerPart
-                            )
+                            val logState = level.getBlockState(logPos)
+                            val be = level.getBlockEntity(logPos)
+
+                            Block.dropResources(logState, level, logPos, be)
+                            level.setBlock(logPos, Blocks.AIR.defaultBlockState(), 3)
                         }
+                        breakEvent.isCanceled = true
                     }
 
-                    VoidBoundBlockUtils.breakFurthestBlock(level, pos, block, player)
-                    breakEvent.isCanceled = true
+                    if (player.mainHandItem.`is`(VoidBoundItemRegistry.AXE_OF_THE_STREAM.get())) {
+
+                        if (level is ServerLevel) {
+                            for (playerPart in PlayerLookup.tracking(level, pos)) {
+                                VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(
+                                    AxeOfTheStreamParticlePacket(
+                                        level.getBlockState(
+                                            pos
+                                        ), pos
+                                    ), playerPart
+                                )
+                            }
+                        }
+
+                        VoidBoundBlockUtils.breakFurthestBlock(level, pos, block, player)
+                        breakEvent.isCanceled = true
+                    }
                 }
             }
         }
