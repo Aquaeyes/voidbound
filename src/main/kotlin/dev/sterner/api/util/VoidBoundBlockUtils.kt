@@ -162,7 +162,6 @@ object VoidBoundBlockUtils {
         level: Level,
         pos: BlockPos,
         logsToBreak: MutableList<BlockPos>,
-        logCount: Int,
         logType: Block
     ): List<BlockPos> {
         if (logsToBreak.size > 256) {
@@ -193,7 +192,7 @@ object VoidBoundBlockUtils {
         }
 
         for (aroundPos in checkAround) {
-            for (logPos in getLogsToBreak(level, aroundPos, logsToBreak, logCount, logType)) {
+            for (logPos in getLogsToBreak(level, aroundPos, logsToBreak, logType)) {
                 if (!logsToBreak.contains(logPos)) {
                     logsToBreak.add(logPos.immutable())
                 }
@@ -201,7 +200,7 @@ object VoidBoundBlockUtils {
         }
 
         val up = pos.above(2)
-        return getLogsToBreak(level, up.immutable(), logsToBreak, logCount, logType)
+        return getLogsToBreak(level, up.immutable(), logsToBreak, logType)
     }
 
     /**
@@ -221,38 +220,5 @@ object VoidBoundBlockUtils {
             return true
         }
         return false
-    }
-
-    /**
-     * Counts all connected log blocks
-     */
-    fun getLogCount(level: Level, pos: BlockPos): Int {
-        var logCount = 0
-        var prevLogCount = -1
-
-        var y = 1
-        while (y <= 32) {
-            if (prevLogCount == logCount) {
-                break
-            }
-            prevLogCount = logCount
-
-            for (nearPos in BlockPos.betweenClosed(
-                pos.x - 2,
-                pos.y + (y - 1),
-                pos.z - 2,
-                pos.x + 2,
-                pos.y + (y - 1),
-                pos.z + 2
-            )) {
-                val blockState = level.getBlockState(nearPos)
-                if (blockState.`is`(BlockTags.LOGS)) {
-                    logCount += 1
-                }
-            }
-            y += 1
-        }
-
-        return logCount
     }
 }

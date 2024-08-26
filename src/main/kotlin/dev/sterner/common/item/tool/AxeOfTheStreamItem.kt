@@ -144,12 +144,10 @@ open class AxeOfTheStreamItem(
                 val block = level.getBlockState(pos)
                 if (!player.isShiftKeyDown && block.`is`(BlockTags.LOGS)) {
                     if (player.mainHandItem.`is`(VoidBoundItemRegistry.ICHORIUM_AXE.get())) {
-                        val logCount = VoidBoundBlockUtils.getLogCount(level, pos)
                         val logsToBreak: List<BlockPos> = VoidBoundBlockUtils.getLogsToBreak(
                             level,
                             pos,
                             mutableListOf(),
-                            logCount,
                             level.getBlockState(pos).block
                         )
                         for (logPos in logsToBreak) {
@@ -166,13 +164,13 @@ open class AxeOfTheStreamItem(
                     if (player.mainHandItem.`is`(VoidBoundItemRegistry.AXE_OF_THE_STREAM.get())) {
 
                         if (level is ServerLevel) {
-                            for (playerPart in PlayerLookup.tracking(level, pos)) {
+                            for (serverPlayer in PlayerLookup.tracking(level, pos)) {
                                 VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(
                                     AxeOfTheStreamParticlePacket(
                                         level.getBlockState(
                                             pos
                                         ), pos
-                                    ), playerPart
+                                    ), serverPlayer
                                 )
                             }
                         }
