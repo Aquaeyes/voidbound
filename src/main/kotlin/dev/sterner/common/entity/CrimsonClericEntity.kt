@@ -3,6 +3,7 @@ package dev.sterner.common.entity
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.common.entity.ai.goal.FocusSpiritRift
 import dev.sterner.common.entity.ai.goal.HealAllyGoal
+import dev.sterner.common.entity.ai.goal.SummonAllyGoal
 import dev.sterner.networking.CultistRiftParticlePacket
 import dev.sterner.networking.SpiritBinderParticlePacket
 import dev.sterner.registry.VoidBoundBlockRegistry
@@ -87,8 +88,9 @@ class CrimsonClericEntity(level: Level) :
 
     override fun registerGoals() {
         super.registerGoals()
-        this.goalSelector.addGoal(1, FocusSpiritRift(this))
+        this.goalSelector.addGoal(1, SummonAllyGoal(this))
         this.goalSelector.addGoal(2, HealAllyGoal(this, 1.0, 100, 0, 10.0F))
+        this.goalSelector.addGoal(3, FocusSpiritRift(this))
     }
 
     override fun getArmPose(): CrimsonArmPose {
