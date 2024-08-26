@@ -4,13 +4,9 @@ import de.dafuqs.revelationary.api.revelations.RevelationAware
 import dev.sterner.VoidBound
 import dev.sterner.registry.VoidBoundBlockRegistry
 import dev.sterner.registry.VoidBoundItemRegistry
-import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Tuple
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.Items
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 class TearBlock(val type: Type, properties: Properties) : CloakedTearBlock(properties), RevelationAware {

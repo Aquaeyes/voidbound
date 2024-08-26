@@ -15,7 +15,13 @@ import net.minecraft.world.level.block.state.BlockState
 import team.lodestar.lodestone.systems.item.tools.magic.MagicShovelItem
 import java.awt.Color
 
-open class ShovelOfEarthmoverItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) :
+open class ShovelOfEarthmoverItem(
+    material: Tier?,
+    damage: Int,
+    speed: Float,
+    magicDamage: Float,
+    properties: Properties?
+) :
     MagicShovelItem(
         material, damage, speed,
         magicDamage,
@@ -48,8 +54,9 @@ open class ShovelOfEarthmoverItem(material: Tier?, damage: Int, speed: Float, ma
         if (tool.getNetherited(stack)) {
             tooltipComponents.add(
                 Component.translatable("Netherited").withStyle(ChatFormatting.ITALIC).withStyle(
-                Style.EMPTY.withColor(Color(90, 65, 0).rgb)
-            ))
+                    Style.EMPTY.withColor(Color(90, 65, 0).rgb)
+                )
+            )
         }
         super.appendHoverText(stack, level, tooltipComponents, isAdvanced)
     }

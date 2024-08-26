@@ -1,6 +1,5 @@
 package dev.sterner.common.item.foci
 
-import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.registry.VoidBoundWandFociRegistry
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component

@@ -1,9 +1,6 @@
 package dev.sterner.registry
 
-import com.sammy.malum.common.block.curiosities.spirit_crucible.SpiritCrucibleCoreBlockEntity
 import com.sammy.malum.common.item.curiosities.tools.TotemicStaffItem
-import com.sammy.malum.registry.common.block.BlockRegistry
-import com.sammy.malum.registry.common.item.ItemRegistry
 import dev.sterner.VoidBound
 import dev.sterner.api.entity.GolemCore
 import dev.sterner.common.blockentity.EldritchObeliskBlockEntity
@@ -87,7 +84,8 @@ object VoidBoundItemRegistry {
         MultiBlockItem(
             VoidBoundBlockRegistry.ELDRITCH_OBELISK.get(),
             FabricItemSettings(),
-            EldritchObeliskBlockEntity.STRUCTURE)
+            EldritchObeliskBlockEntity.STRUCTURE
+        )
     }
 
     val SPIRIT_STABILIZER: RegistryObject<UnimplementedBlockItem> = ITEMS.register("spirit_stabilizer") {

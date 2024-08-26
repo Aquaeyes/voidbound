@@ -1,6 +1,5 @@
 package dev.sterner.registry
 
-import com.sammy.malum.registry.common.block.MalumBlockProperties
 import dev.sterner.VoidBound
 import dev.sterner.common.block.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
@@ -8,7 +7,6 @@ import io.github.fabricators_of_create.porting_lib.util.RegistryObject
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
@@ -31,7 +29,8 @@ object VoidBoundBlockRegistry {
             FabricBlockSettings.create()
                 .mapColor(MapColor.STONE)
                 .requiresCorrectToolForDrops()
-                .strength(1.5F, 8.0F))
+                .strength(1.5F, 8.0F)
+        )
     }
 
     var SPIRIT_RIFT: RegistryObject<SpiritRiftBlock> = BLOCKS.register("spirit_rift") {
@@ -67,7 +66,7 @@ object VoidBoundBlockRegistry {
     }
 
     var TEAR_OF_CRIMSON: RegistryObject<TearBlock> = BLOCKS.register("tear_of_crimson") {
-        TearBlock(TearBlock.Type.CRIMSON,  FabricBlockSettings.create().noOcclusion())
+        TearBlock(TearBlock.Type.CRIMSON, FabricBlockSettings.create().noOcclusion())
     }
 
     var TEAR_CLOAK: RegistryObject<CloakedTearBlock> = BLOCKS.register("tear_cloak") {
@@ -77,9 +76,11 @@ object VoidBoundBlockRegistry {
     val ELDRITCH_OBELISK: RegistryObject<Block> = BLOCKS.register(
         "eldritch_obelisk"
     ) {
-        EldritchObeliskBlock(FabricBlockSettings.create()
-            .noOcclusion()
-            .strength(-1.0F, 3600000.0F))
+        EldritchObeliskBlock(
+            FabricBlockSettings.create()
+                .noOcclusion()
+                .strength(-1.0F, 3600000.0F)
+        )
             .setBlockEntity {
                 VoidBoundBlockEntityTypeRegistry.ELDRITCH_OBELISK.get()
             }

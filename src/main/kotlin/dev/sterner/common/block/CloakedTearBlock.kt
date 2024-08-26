@@ -16,7 +16,7 @@ open class CloakedTearBlock(properties: Properties) : Block(properties) {
 
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
-        return Shapes.box(6.0/16,13.0/16,6.0/16,10.0/16, 16.0/16, 10.0/16)
+        return Shapes.box(6.0 / 16, 13.0 / 16, 6.0 / 16, 10.0 / 16, 16.0 / 16, 10.0 / 16)
     }
 
     override fun canSurvive(state: BlockState, level: LevelReader, pos: BlockPos): Boolean {

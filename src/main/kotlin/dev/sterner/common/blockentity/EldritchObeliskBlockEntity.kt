@@ -9,13 +9,20 @@ import team.lodestar.lodestone.systems.multiblock.MultiBlockCoreEntity
 import team.lodestar.lodestone.systems.multiblock.MultiBlockStructure
 import java.util.function.Supplier
 
-class EldritchObeliskBlockEntity(type: BlockEntityType<*>?, structure: MultiBlockStructure?, pos: BlockPos?, state: BlockState?) : MultiBlockCoreEntity(type,
+class EldritchObeliskBlockEntity(
+    type: BlockEntityType<*>?,
+    structure: MultiBlockStructure?,
+    pos: BlockPos?,
+    state: BlockState?
+) : MultiBlockCoreEntity(
+    type,
     structure, pos, state
 ) {
 
-    constructor(pos: BlockPos?, state: BlockState?) : this(VoidBoundBlockEntityTypeRegistry.ELDRITCH_OBELISK.get(),
-        STRUCTURE.get(), pos, state)
-
+    constructor(pos: BlockPos?, state: BlockState?) : this(
+        VoidBoundBlockEntityTypeRegistry.ELDRITCH_OBELISK.get(),
+        STRUCTURE.get(), pos, state
+    )
 
 
     companion object {

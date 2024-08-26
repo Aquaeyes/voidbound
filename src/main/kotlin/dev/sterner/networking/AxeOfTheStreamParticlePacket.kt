@@ -8,14 +8,12 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientPacketListener
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtUtils
 import net.minecraft.network.FriendlyByteBuf
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import team.lodestar.lodestone.systems.network.LodestoneClientNBTPacket
@@ -44,7 +42,8 @@ class AxeOfTheStreamParticlePacket(data: CompoundTag) : LodestoneClientNBTPacket
 
             val coordPos = VoidBoundPosUtils.getFaceCoords(level, state, pos)
             for (i in coordPos) {
-                val lightSpecs: ParticleEffectSpawner = SpiritLightSpecs.spiritLightSpecs(level, i, SpiritTypeRegistry.AQUEOUS_SPIRIT)
+                val lightSpecs: ParticleEffectSpawner =
+                    SpiritLightSpecs.spiritLightSpecs(level, i, SpiritTypeRegistry.AQUEOUS_SPIRIT)
                 lightSpecs.builder.multiplyLifetime(1.5f)
                 lightSpecs.bloomBuilder.multiplyLifetime(1.5f)
                 lightSpecs.spawnParticles()

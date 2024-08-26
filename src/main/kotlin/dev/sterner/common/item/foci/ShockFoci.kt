@@ -3,9 +3,7 @@ package dev.sterner.common.item.foci
 import com.sammy.malum.registry.client.ParticleRegistry
 import dev.sterner.api.wand.IWandFocus
 import dev.sterner.common.entity.BoltEntity
-import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.projectile.ProjectileUtil
 import net.minecraft.world.item.ItemStack
@@ -25,9 +23,7 @@ import team.lodestar.lodestone.systems.particle.data.spin.SpinParticleData
 import team.lodestar.lodestone.systems.particle.render_types.LodestoneWorldParticleRenderType
 import team.lodestar.lodestone.systems.particle.world.behaviors.components.DirectionalBehaviorComponent
 import java.awt.Color
-import kotlin.math.cos
 import kotlin.math.pow
-import kotlin.math.sin
 
 
 class ShockFoci : IWandFocus {
@@ -68,7 +64,7 @@ class ShockFoci : IWandFocus {
             cooldown = 4
         }
 
-        if (!level.isClientSide){
+        if (!level.isClientSide) {
             if (cooldown > 0) {
                 cooldown--
             }
@@ -85,48 +81,58 @@ class ShockFoci : IWandFocus {
         return 24.0
     }
 
-companion object {
+    companion object {
 
-    fun spawnChargeParticles(
-        pLevel: Level,
-        pLivingEntity: Entity,
-        pos: Vec3,
-        pct: Float
-    ) {
-        val random = pLevel.random
+        fun spawnChargeParticles(
+            pLevel: Level,
+            pLivingEntity: Entity,
+            pos: Vec3,
+            pct: Float
+        ) {
+            val random = pLevel.random
 
-        val spinData = SpinParticleData.createRandomDirection(random, 0.25f, 0.5f)
-            .setSpinOffset(RandomHelper.randomBetween(random, 0f, 6.28f)).build()
+            val spinData = SpinParticleData.createRandomDirection(random, 0.25f, 0.5f)
+                .setSpinOffset(RandomHelper.randomBetween(random, 0f, 6.28f)).build()
 
-        WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE, DirectionalBehaviorComponent(pLivingEntity.lookAngle.normalize()))
-            .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
-            .setTransparencyData(GenericParticleData.create(0.75f * pct, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build())
-            .setScaleData(GenericParticleData.create(0.1f * pct, 0f).setEasing(Easing.SINE_IN_OUT).build())
-            .setSpinData(spinData)
-            .setColorData(ColorParticleData.create(Color(190, 196, 250)).build())
-            .setLifetime(9)
-            .setMotion(pLivingEntity.lookAngle.normalize().scale(0.05))
-            .enableNoClip()
-            .enableForcedSpawn()
-            .setLifeDelay(2)
-            .spawn(pLevel, pos.x, pos.y, pos.z)
-            .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
-            .spawn(pLevel, pos.x, pos.y, pos.z)
+            WorldParticleBuilder.create(
+                LodestoneParticleRegistry.WISP_PARTICLE,
+                DirectionalBehaviorComponent(pLivingEntity.lookAngle.normalize())
+            )
+                .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
+                .setTransparencyData(
+                    GenericParticleData.create(0.75f * pct, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build()
+                )
+                .setScaleData(GenericParticleData.create(0.1f * pct, 0f).setEasing(Easing.SINE_IN_OUT).build())
+                .setSpinData(spinData)
+                .setColorData(ColorParticleData.create(Color(190, 196, 250)).build())
+                .setLifetime(9)
+                .setMotion(pLivingEntity.lookAngle.normalize().scale(0.05))
+                .enableNoClip()
+                .enableForcedSpawn()
+                .setLifeDelay(2)
+                .spawn(pLevel, pos.x, pos.y, pos.z)
+                .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
+                .spawn(pLevel, pos.x, pos.y, pos.z)
 
-        WorldParticleBuilder.create(ParticleRegistry.RITUAL_CIRCLE_WISP, DirectionalBehaviorComponent(pLivingEntity.lookAngle.normalize()))
-            .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
-            .setTransparencyData(GenericParticleData.create(0.95f * pct, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build())
-            .setScaleData(GenericParticleData.create(0.25f * pct, 0f).setEasing(Easing.SINE_IN_OUT).build())
-            .setSpinData(spinData)
-            .setColorData(ColorParticleData.create(Color(190, 196, 250)).build())
-            .setLifetime(5)
-            .setMotion(pLivingEntity.lookAngle.normalize().scale(0.05))
-            .enableNoClip()
-            .enableForcedSpawn()
-            .setLifeDelay(2)
-            .spawn(pLevel, pos.x, pos.y, pos.z)
-            .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
-            .spawn(pLevel, pos.x, pos.y, pos.z)
+            WorldParticleBuilder.create(
+                ParticleRegistry.RITUAL_CIRCLE_WISP,
+                DirectionalBehaviorComponent(pLivingEntity.lookAngle.normalize())
+            )
+                .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
+                .setTransparencyData(
+                    GenericParticleData.create(0.95f * pct, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build()
+                )
+                .setScaleData(GenericParticleData.create(0.25f * pct, 0f).setEasing(Easing.SINE_IN_OUT).build())
+                .setSpinData(spinData)
+                .setColorData(ColorParticleData.create(Color(190, 196, 250)).build())
+                .setLifetime(5)
+                .setMotion(pLivingEntity.lookAngle.normalize().scale(0.05))
+                .enableNoClip()
+                .enableForcedSpawn()
+                .setLifeDelay(2)
+                .spawn(pLevel, pos.x, pos.y, pos.z)
+                .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
+                .spawn(pLevel, pos.x, pos.y, pos.z)
+        }
     }
-}
 }

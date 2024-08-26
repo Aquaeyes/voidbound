@@ -3,7 +3,8 @@ package dev.sterner.registry
 import dev.sterner.VoidBound
 import dev.sterner.common.worldgen.TearOfCrimsonFeature
 import dev.sterner.common.worldgen.TearOfEnderFeature
-import net.fabricmc.fabric.api.biome.v1.*
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
@@ -26,7 +27,7 @@ object VoidBoundWorldGenerations {
         return ResourceKey.create(Registries.PLACED_FEATURE, VoidBound.id(name))
     }
 
-    fun init(){
+    fun init() {
         Registry.register(BuiltInRegistries.FEATURE, TEAR_OF_ENDER_ID, TEAR_OF_ENDER)
         Registry.register(BuiltInRegistries.FEATURE, TEAR_OF_CRIMSON_ID, TEAR_OF_CRIMSON)
 

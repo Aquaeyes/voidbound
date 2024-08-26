@@ -9,14 +9,11 @@ import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
-import net.minecraft.client.renderer.entity.LivingEntityRenderer
 import net.minecraft.client.resources.model.Material
 import net.minecraft.core.Direction
 import net.minecraft.util.Mth
-import net.minecraft.util.Tuple
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.joml.Quaternionf
-import kotlin.math.PI
 
 class OsmoticEnchanterBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
     BlockEntityRenderer<OsmoticEnchanterBlockEntity> {
@@ -31,12 +28,22 @@ class OsmoticEnchanterBlockEntityRenderer(ctx: BlockEntityRendererProvider.Conte
         packedLight: Int,
         packedOverlay: Int
     ) {
-        if (blockEntity.blockState.hasProperty(BlockStateProperties.HAS_BOOK) && blockEntity.blockState.getValue(BlockStateProperties.HAS_BOOK)) {
+        if (blockEntity.blockState.hasProperty(BlockStateProperties.HAS_BOOK) && blockEntity.blockState.getValue(
+                BlockStateProperties.HAS_BOOK
+            )
+        ) {
             renderBook(blockEntity, partialTick, poseStack, buffers, packedLight, packedOverlay)
         }
     }
 
-    private fun renderBook(blockEntity: OsmoticEnchanterBlockEntity, partialTick: Float, poseStack: PoseStack, buffers: MultiBufferSource, packedLight: Int, packedOverlay: Int) {
+    private fun renderBook(
+        blockEntity: OsmoticEnchanterBlockEntity,
+        partialTick: Float,
+        poseStack: PoseStack,
+        buffers: MultiBufferSource,
+        packedLight: Int,
+        packedOverlay: Int
+    ) {
         poseStack.pushPose()
         poseStack.translate(0.5f, 0.05f, 0.5f)
         val f = blockEntity.time.toFloat() + partialTick
@@ -61,14 +68,14 @@ class OsmoticEnchanterBlockEntityRenderer(ctx: BlockEntityRendererProvider.Conte
                 else -> Pair(0.0f, -0.3f)
             }
 
-            poseStack.mulPose(Quaternionf().rotationY(- h))
+            poseStack.mulPose(Quaternionf().rotationY(-h))
             poseStack.translate(xOffset, 0.4f + yOffset, zOffset)
             poseStack.mulPose(Axis.XP.rotationDegrees(25f))
         }
 
 
         poseStack.scale(-1.0f, -1.0f, 1.0f)
-        poseStack.translate(0.0f, - 2.5f , 0.0f)
+        poseStack.translate(0.0f, -2.5f, 0.0f)
 
         val mat: Material = texture
         val buffer = mat.buffer(buffers, RenderType::entitySolid)

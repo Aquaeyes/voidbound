@@ -7,17 +7,14 @@ import com.sammy.malum.client.RenderUtils
 import com.sammy.malum.client.renderer.block.TotemPoleRenderer
 import dev.sterner.VoidBound
 import dev.sterner.api.ClientTickHandler
-import dev.sterner.client.VoidBoundTokens
 import net.minecraft.client.Camera
 import net.minecraft.client.renderer.GameRenderer
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.phys.Vec3
 import org.joml.Matrix4f
 import org.joml.Vector3f
-import team.lodestar.lodestone.handlers.RenderHandler
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.systems.easing.Easing
 import team.lodestar.lodestone.systems.rendering.VFXBuilders

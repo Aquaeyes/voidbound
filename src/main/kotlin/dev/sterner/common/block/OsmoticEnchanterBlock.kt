@@ -28,7 +28,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.DirectionProperty
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
@@ -118,7 +117,13 @@ class OsmoticEnchanterBlock(properties: Properties) : BaseEntityBlock(properties
             level.updateNeighbourForOutputSignal(pos, this)
         }
         if (state.getValue(BlockStateProperties.HAS_BOOK)) {
-            Containers.dropItemStack(level, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, ItemStack(VoidBoundItemRegistry.CRIMSON_RITES.get()))
+            Containers.dropItemStack(
+                level,
+                pos.x + 0.5,
+                pos.y + 0.5,
+                pos.z + 0.5,
+                ItemStack(VoidBoundItemRegistry.CRIMSON_RITES.get())
+            )
         }
         super.onRemove(state, level, pos, newState, movedByPiston)
     }
@@ -151,7 +156,7 @@ class OsmoticEnchanterBlock(properties: Properties) : BaseEntityBlock(properties
         context: CollisionContext?
     ): VoxelShape {
         return when (state.getValue(LecternBlock.FACING) as Direction) {
-            Direction.NORTH ->SHAPE_NORTH
+            Direction.NORTH -> SHAPE_NORTH
             Direction.SOUTH -> SHAPE_SOUTH
             Direction.EAST -> SHAPE_EAST
             Direction.WEST -> SHAPE_WEST
@@ -174,7 +179,8 @@ class OsmoticEnchanterBlock(properties: Properties) : BaseEntityBlock(properties
 
     init {
         this.registerDefaultState(
-            stateDefinition.any().setValue(LecternBlock.FACING, Direction.NORTH).setValue(BlockStateProperties.HAS_BOOK, false)
+            stateDefinition.any().setValue(LecternBlock.FACING, Direction.NORTH)
+                .setValue(BlockStateProperties.HAS_BOOK, false)
         )
     }
 

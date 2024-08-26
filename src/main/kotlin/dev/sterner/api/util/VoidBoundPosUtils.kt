@@ -3,11 +3,7 @@ package dev.sterner.api.util
 import dev.sterner.common.entity.SoulSteelGolemEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.util.RandomSource
-import net.minecraft.world.entity.PathfinderMob
-import net.minecraft.world.entity.ai.util.GoalUtils
 import net.minecraft.world.entity.ai.util.LandRandomPos
-import net.minecraft.world.entity.ai.util.RandomPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB

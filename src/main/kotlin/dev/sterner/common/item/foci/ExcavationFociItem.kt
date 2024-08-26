@@ -3,7 +3,8 @@ package dev.sterner.common.item.foci
 import dev.sterner.registry.VoidBoundWandFociRegistry
 import java.awt.Color
 
-class ExcavationFociItem(properties: Properties) : AbstractFociItem(VoidBoundWandFociRegistry.EXCAVATION.get(), properties) {
+class ExcavationFociItem(properties: Properties) :
+    AbstractFociItem(VoidBoundWandFociRegistry.EXCAVATION.get(), properties) {
 
     override fun color(): Color = Color(135, 255, 135)
 

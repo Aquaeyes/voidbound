@@ -10,10 +10,12 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import java.awt.Color
 
-class IchoriumShovelItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) : ShovelOfEarthmoverItem(material, damage, speed,
-    magicDamage,
-    properties
-) {
+class IchoriumShovelItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) :
+    ShovelOfEarthmoverItem(
+        material, damage, speed,
+        magicDamage,
+        properties
+    ) {
 
     override fun getRadius(): Int {
         return 5

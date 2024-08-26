@@ -67,9 +67,9 @@ class EldritchObeliskStructure(
     public override fun findGenerationPoint(context: GenerationContext): Optional<GenerationStub> {
         val chunkPos = context.chunkPos()
         val i = startHeight.sample(
-                context.random(),
-                WorldGenerationContext(context.chunkGenerator(), context.heightAccessor())
-            )
+            context.random(),
+            WorldGenerationContext(context.chunkGenerator(), context.heightAccessor())
+        )
         val blockPos = BlockPos(chunkPos.minBlockX, i, chunkPos.minBlockZ)
         return JigsawPlacement.addPieces(
             context,

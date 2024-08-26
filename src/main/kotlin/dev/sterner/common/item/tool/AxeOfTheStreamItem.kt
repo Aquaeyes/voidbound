@@ -31,7 +31,13 @@ import team.lodestar.lodestone.systems.item.tools.magic.MagicAxeItem
 import java.awt.Color
 
 
-open class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magicDamage: Float, properties: Properties?) :
+open class AxeOfTheStreamItem(
+    material: Tier?,
+    damage: Float,
+    speed: Float,
+    magicDamage: Float,
+    properties: Properties?
+) :
     MagicAxeItem(
         material, damage, speed,
         magicDamage,
@@ -89,7 +95,9 @@ open class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magi
                                 VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToClient(
                                     BubbleParticlePacket(
                                         Vector3f(
-                                            clampedMotion.x.toFloat(), clampedMotion.y.toFloat(), clampedMotion.z.toFloat()
+                                            clampedMotion.x.toFloat(),
+                                            clampedMotion.y.toFloat(),
+                                            clampedMotion.z.toFloat()
                                         ), pos
                                     ), player
                                 )
@@ -111,9 +119,11 @@ open class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magi
     ) {
         val tool = stack.item as UpgradableTool
         if (tool.getNetherited(stack)) {
-            tooltipComponents.add(Component.translatable("Netherited").withStyle(ChatFormatting.ITALIC).withStyle(
-                Style.EMPTY.withColor(Color(90, 65, 0).rgb)
-            ))
+            tooltipComponents.add(
+                Component.translatable("Netherited").withStyle(ChatFormatting.ITALIC).withStyle(
+                    Style.EMPTY.withColor(Color(90, 65, 0).rgb)
+                )
+            )
         }
         super.appendHoverText(stack, level, tooltipComponents, isAdvanced)
     }
@@ -129,7 +139,13 @@ open class AxeOfTheStreamItem(material: Tier?, damage: Float, speed: Float, magi
                 if (!player.isShiftKeyDown && block.`is`(BlockTags.LOGS)) {
                     if (player.mainHandItem.`is`(VoidBoundItemRegistry.ICHORIUM_AXE.get())) {
                         val logCount = VoidBoundBlockUtils.getLogCount(level, pos)
-                        val logsToBreak: List<BlockPos> = VoidBoundBlockUtils.getLogsToBreak(level, pos, mutableListOf(), logCount, level.getBlockState(pos).block)
+                        val logsToBreak: List<BlockPos> = VoidBoundBlockUtils.getLogsToBreak(
+                            level,
+                            pos,
+                            mutableListOf(),
+                            logCount,
+                            level.getBlockState(pos).block
+                        )
                         for (logPos in logsToBreak) {
 
                             val logState = level.getBlockState(logPos)

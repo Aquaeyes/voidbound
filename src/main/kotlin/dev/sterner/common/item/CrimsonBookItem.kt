@@ -13,7 +13,6 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.BlockItem
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
@@ -55,7 +54,11 @@ class CrimsonBookItem(properties: Properties) : BlockItem(VoidBoundBlockRegistry
         }
 
         if (giveAdvancement && player is ServerPlayer) {
-            VoidBoundUtils.grantAdvancementCriterion(player, VoidBound.id("revelationary/ichor_requirement_advancement"), "opened_crimson_rites")
+            VoidBoundUtils.grantAdvancementCriterion(
+                player,
+                VoidBound.id("revelationary/ichor_requirement_advancement"),
+                "opened_crimson_rites"
+            )
         }
         if (giveAdvancement && level.isClientSide) {
             VoidRevelationHandler.seeTheRevelation(RevelationType.ICHOR)

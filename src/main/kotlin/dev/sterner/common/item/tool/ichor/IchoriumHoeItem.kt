@@ -10,10 +10,12 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import java.awt.Color
 
-class IchoriumHoeItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) : HoeOfGrowthItem(material, damage, speed,
-    magicDamage,
-    properties
-) {
+class IchoriumHoeItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) :
+    HoeOfGrowthItem(
+        material, damage, speed,
+        magicDamage,
+        properties
+    ) {
 
     override fun appendHoverText(
         stack: ItemStack,

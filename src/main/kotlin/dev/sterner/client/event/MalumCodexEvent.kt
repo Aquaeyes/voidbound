@@ -14,7 +14,6 @@ import dev.sterner.VoidBound
 import dev.sterner.VoidBound.modid
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.nbt.CompoundTag
-import java.util.function.BooleanSupplier
 
 object MalumCodexEvent {
 

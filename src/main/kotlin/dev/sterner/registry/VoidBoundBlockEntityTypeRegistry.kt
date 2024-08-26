@@ -1,8 +1,5 @@
 package dev.sterner.registry
 
-import com.sammy.malum.common.block.curiosities.spirit_crucible.SpiritCrucibleCoreBlockEntity
-import com.sammy.malum.registry.common.block.BlockEntityRegistry
-import com.sammy.malum.registry.common.block.BlockRegistry
 import dev.sterner.VoidBound
 import dev.sterner.common.blockentity.*
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar

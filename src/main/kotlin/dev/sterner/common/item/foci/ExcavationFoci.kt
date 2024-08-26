@@ -42,7 +42,7 @@ class ExcavationFoci : IWandFocus {
     private var breakTime: Int = 0
     private var breakProgress: Int = -1
     private var blockState: BlockState? = null
-    
+
     override fun onUsingFocusTick(stack: ItemStack, level: Level, player: Player) {
         val client = Minecraft.getInstance()
         val maxReach = 10.0
@@ -52,7 +52,7 @@ class ExcavationFoci : IWandFocus {
         val hit: HitResult? = client.cameraEntity?.pick(maxReach, tickDelta, includeFluids)
 
         if (hit != null) {
-            if (hit.type ==  HitResult.Type.BLOCK ) {
+            if (hit.type == HitResult.Type.BLOCK) {
                 val blockHit = hit as BlockHitResult
                 val blockPos = blockHit.blockPos
                 val newState = client.level?.getBlockState(blockPos) ?: return
@@ -77,7 +77,8 @@ class ExcavationFoci : IWandFocus {
                 timeToBreak = (20 * blockState!!.getDestroySpeed(level, blockPos))
                 val coordPos: List<Vec3> = VoidBoundPosUtils.getFaceCoords(level, blockState!!, blockPos)
                 for (pos1 in coordPos) {
-                    val lightSpecs: ParticleEffectSpawner = SpiritLightSpecs.spiritLightSpecs(level, pos1, SpiritTypeRegistry.EARTHEN_SPIRIT)
+                    val lightSpecs: ParticleEffectSpawner =
+                        SpiritLightSpecs.spiritLightSpecs(level, pos1, SpiritTypeRegistry.EARTHEN_SPIRIT)
                     lightSpecs.builder.multiplyLifetime(1.5f)
                     lightSpecs.bloomBuilder.multiplyLifetime(1.5f)
 
@@ -87,7 +88,14 @@ class ExcavationFoci : IWandFocus {
                 this.breakTime++
                 val progress: Int = (this.breakTime / this.timeToBreak!!.toFloat() * 10).toInt()
 
-                VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(ExcavationPacket(blockPos, breakTime, timeToBreak!!.toInt(), progress))
+                VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(
+                    ExcavationPacket(
+                        blockPos,
+                        breakTime,
+                        timeToBreak!!.toInt(),
+                        progress
+                    )
+                )
 
 
                 if (breakTime % 6 == 0) {
@@ -107,7 +115,7 @@ class ExcavationFoci : IWandFocus {
         }
     }
 
-    private fun spec(level: Level, angle: Vec3, pos: Vec3, spiritType: MalumSpiritType, random: RandomSource){
+    private fun spec(level: Level, angle: Vec3, pos: Vec3, spiritType: MalumSpiritType, random: RandomSource) {
 
         val lightSpecs: ParticleEffectSpawner = SpiritLightSpecs.spiritLightSpecs(level, pos, spiritType)
         lightSpecs.builder
@@ -152,9 +160,14 @@ class ExcavationFoci : IWandFocus {
 
         val spinData = SpinParticleData.createRandomDirection(random, 0.25f, 0.5f)
             .setSpinOffset(RandomHelper.randomBetween(random, 0f, 6.28f)).build()
-        WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE, DirectionalBehaviorComponent(pLivingEntity.lookAngle.normalize()))
+        WorldParticleBuilder.create(
+            LodestoneParticleRegistry.WISP_PARTICLE,
+            DirectionalBehaviorComponent(pLivingEntity.lookAngle.normalize())
+        )
             .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
-            .setTransparencyData(GenericParticleData.create(0.95f * pct, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build())
+            .setTransparencyData(
+                GenericParticleData.create(0.95f * pct, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build()
+            )
             .setScaleData(GenericParticleData.create(0.35f * pct, 0f).setEasing(Easing.SINE_IN_OUT).build())
             .setSpinData(spinData)
             .setColorData(SpiritTypeRegistry.EARTHEN_SPIRIT.createColorData().build())
@@ -170,9 +183,14 @@ class ExcavationFoci : IWandFocus {
             .setRenderType(LodestoneWorldParticleRenderType.LUMITRANSPARENT)
             .spawn(pLevel, pos.x, pos.y, pos.z)
 
-        WorldParticleBuilder.create(ParticleRegistry.RITUAL_CIRCLE_WISP, DirectionalBehaviorComponent(pLivingEntity.lookAngle.normalize()))
+        WorldParticleBuilder.create(
+            ParticleRegistry.RITUAL_CIRCLE_WISP,
+            DirectionalBehaviorComponent(pLivingEntity.lookAngle.normalize())
+        )
             .setRenderTarget(RenderHandler.LATE_DELAYED_RENDER)
-            .setTransparencyData(GenericParticleData.create(0.95f * pct, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build())
+            .setTransparencyData(
+                GenericParticleData.create(0.95f * pct, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build()
+            )
             .setScaleData(GenericParticleData.create(0.35f * pct, 0f).setEasing(Easing.SINE_IN_OUT).build())
             .setSpinData(spinData)
             .setColorData(SpiritTypeRegistry.EARTHEN_SPIRIT.createColorData().build())
@@ -186,7 +204,12 @@ class ExcavationFoci : IWandFocus {
             .spawn(pLevel, pos.x, pos.y, pos.z)
     }
 
-    private fun getProjectileSpawnPos(player: LivingEntity, hand: InteractionHand, distance: Float, spread: Float): Vec3 {
+    private fun getProjectileSpawnPos(
+        player: LivingEntity,
+        hand: InteractionHand,
+        distance: Float,
+        spread: Float
+    ): Vec3 {
         val angle = if (hand == InteractionHand.MAIN_HAND) 225 else 90
         val radians = Math.toRadians((angle - player.yHeadRot).toDouble())
         return player.position().add(player.lookAngle.scale(distance.toDouble()))

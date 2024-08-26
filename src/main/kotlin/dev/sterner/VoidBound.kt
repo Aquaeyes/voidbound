@@ -1,9 +1,7 @@
 package dev.sterner
 
-import com.mojang.blaze3d.vertex.PoseStack
 import com.sammy.malum.MalumMod
 import com.sammy.malum.MalumModClient
-import com.sammy.malum.client.MalumModelLoaderPlugin
 import dev.emi.trinkets.api.client.TrinketRendererRegistry
 import dev.sterner.client.VoidBoundModelLoaderPlugin
 import dev.sterner.client.renderer.HallowedMonocleRenderer
@@ -11,7 +9,6 @@ import dev.sterner.client.renderer.WandItemRenderer
 import dev.sterner.client.screen.OsmoticEnchanterScreen
 import dev.sterner.listener.EnchantSpiritDataReloadListenerFabricImpl
 import dev.sterner.registry.*
-import io.github.fabricators_of_create.porting_lib.mixin.common.PistonMovingBlockEntityMixin
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
@@ -92,7 +89,8 @@ object VoidBound : ModInitializer, ClientModInitializer {
             WandItemRenderer("soul_stained_steel_capped_soulwood_wand")
         )
 
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(),
+        BlockRenderLayerMap.INSTANCE.putBlocks(
+            RenderType.cutout(),
             VoidBoundBlockRegistry.TEAR_OF_ENDER.get(),
             VoidBoundBlockRegistry.TEAR_OF_CRIMSON.get(),
             VoidBoundBlockRegistry.TEAR_CLOAK.get(),

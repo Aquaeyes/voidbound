@@ -22,9 +22,7 @@ import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.ai.attributes.Attribute
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.ai.attributes.Attributes
-import net.minecraft.world.item.DiggerItem
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.SwordItem
 import java.util.*
 
 
@@ -39,12 +37,14 @@ object VoidBoundEvents {
         ModifyItemAttributeModifiersCallback.EVENT.register(ModifyItemAttributeModifiersCallback { stack: ItemStack, slot: EquipmentSlot, attributeModifiers: Multimap<Attribute?, AttributeModifier?> ->
             if (stack.item is UpgradableTool && slot == EquipmentSlot.MAINHAND) {
                 val tool = stack.item as UpgradableTool
-                attributeModifiers.put(Attributes.ATTACK_DAMAGE, AttributeModifier(
-                    UUID.fromString("DB3F55D3-645C-4F38-A497-9C13A33DB5CF"),
-                    "Weapon modifier2",
-                    tool.getExtraDamage(stack).toDouble(),
-                    AttributeModifier.Operation.ADDITION
-                ))
+                attributeModifiers.put(
+                    Attributes.ATTACK_DAMAGE, AttributeModifier(
+                        UUID.fromString("DB3F55D3-645C-4F38-A497-9C13A33DB5CF"),
+                        "Weapon modifier2",
+                        tool.getExtraDamage(stack).toDouble(),
+                        AttributeModifier.Operation.ADDITION
+                    )
+                )
             }
         })
     }

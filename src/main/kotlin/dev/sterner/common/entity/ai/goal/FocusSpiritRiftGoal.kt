@@ -14,11 +14,6 @@ class FocusSpiritRiftGoal(private val cleric: CrimsonClericEntity) : Goal() {
         return cleric.getRiftPos().isPresent
     }
 
-    override fun start() {
-        super.start()
-
-    }
-
     override fun tick() {
         super.tick()
         val riftPos = cleric.getRiftPos().get().immutable()

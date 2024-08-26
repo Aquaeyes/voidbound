@@ -4,7 +4,6 @@ import com.sammy.malum.common.block.MalumBlockEntityInventory
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.rift.SimpleSpiritCharge
-import dev.sterner.common.block.OsmoticEnchanterBlock
 import dev.sterner.networking.UpdateSpiritAmountPacket
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundPacketRegistry
@@ -21,7 +20,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
-import net.minecraft.world.level.block.entity.EnchantmentTableBlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import team.lodestar.lodestone.helpers.BlockHelper
@@ -199,7 +197,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             //tRot = Mth.clamp(Mth.atan2(e, d).toFloat(), clampMin * (PI / 180f).toFloat(), clampMax * (PI / 180f).toFloat()) - (PI / 2f).toFloat()
         } else {
 
-            tRot = when (dir){
+            tRot = when (dir) {
                 Direction.NORTH -> 180f
                 Direction.SOUTH -> 0f
                 Direction.WEST -> 90f

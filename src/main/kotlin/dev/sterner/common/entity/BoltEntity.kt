@@ -2,8 +2,6 @@ package dev.sterner.common.entity
 
 import dev.sterner.common.item.foci.ShockFoci.Companion.spawnChargeParticles
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
-import net.fabricmc.api.EnvType
-import net.minecraft.commands.arguments.EntityAnchorArgument
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.syncher.EntityDataAccessor
@@ -11,22 +9,21 @@ import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.Entity.RemovalReason
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.level.Level
-import net.minecraft.world.phys.Vec3
-import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
 
-class BoltEntity(entityType: EntityType<BoltEntity>, world: Level?) : Entity(entityType, world) {
+class BoltEntity(entityType: EntityType<BoltEntity>, level: Level) : Entity(entityType, level) {
     private var ambientTick: Int
 
-    constructor(caster: LivingEntity, length: Double) : this(VoidBoundEntityTypeRegistry.BOLT_ENTITY.get(), caster.level()) {
+    constructor(caster: LivingEntity, length: Double) : this(
+        VoidBoundEntityTypeRegistry.BOLT_ENTITY.get(),
+        caster.level()
+    ) {
         yRot = caster.getYHeadRot()
         xRot = caster.xRot
         val rightOffset = -0.5
@@ -59,7 +56,14 @@ class BoltEntity(entityType: EntityType<BoltEntity>, world: Level?) : Entity(ent
 
     override fun tick() {
         if (ambientTick == 6) {
-            level().playSound(null, BlockPos.containing(position()), SoundEvents.GHAST_SHOOT, SoundSource.PLAYERS, 0.5f, 1.0f)
+            level().playSound(
+                null,
+                BlockPos.containing(position()),
+                SoundEvents.GHAST_SHOOT,
+                SoundSource.PLAYERS,
+                0.5f,
+                1.0f
+            )
         }
         val forwardOffset = 0.05f
 

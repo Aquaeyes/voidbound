@@ -47,7 +47,7 @@ class CrimsonRitesBlock(properties: Properties) : HorizontalDirectionalBlock(pro
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
-        return Shapes.create(4/16.0,0.0,4/16.0, 12/16.0,4.0/16,12/16.0)
+        return Shapes.create(4 / 16.0, 0.0, 4 / 16.0, 12 / 16.0, 4.0 / 16, 12 / 16.0)
     }
 
     override fun getStateForPlacement(context: BlockPlaceContext): BlockState {

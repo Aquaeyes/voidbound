@@ -14,7 +14,9 @@ class TearOfEnderFeature(codec: Codec<NoneFeatureConfiguration?>) :
         val worldGenLevel = context.level()
         val blockPos = context.origin()
 
-        if (worldGenLevel.isEmptyBlock(blockPos) && worldGenLevel.getBlockState(blockPos.above()).`is`(Blocks.END_STONE)) {
+        if (worldGenLevel.isEmptyBlock(blockPos) && worldGenLevel.getBlockState(blockPos.above())
+                .`is`(Blocks.END_STONE)
+        ) {
             worldGenLevel.setBlock(blockPos, (VoidBoundBlockRegistry.TEAR_OF_ENDER.get()).defaultBlockState(), 2)
             return true
         } else {

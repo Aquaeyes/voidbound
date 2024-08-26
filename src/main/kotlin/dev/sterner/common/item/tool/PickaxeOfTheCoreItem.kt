@@ -16,7 +16,13 @@ import team.lodestar.lodestone.systems.item.tools.magic.MagicPickaxeItem
 import java.awt.Color
 
 
-open class PickaxeOfTheCoreItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) :
+open class PickaxeOfTheCoreItem(
+    material: Tier?,
+    damage: Int,
+    speed: Float,
+    magicDamage: Float,
+    properties: Properties?
+) :
     MagicPickaxeItem(
         material, damage, speed,
         magicDamage,
@@ -49,8 +55,9 @@ open class PickaxeOfTheCoreItem(material: Tier?, damage: Int, speed: Float, magi
         if (tool.getNetherited(stack)) {
             tooltipComponents.add(
                 Component.translatable("Netherited").withStyle(ChatFormatting.ITALIC).withStyle(
-                Style.EMPTY.withColor(Color(90, 65, 0).rgb)
-            ))
+                    Style.EMPTY.withColor(Color(90, 65, 0).rgb)
+                )
+            )
         }
         super.appendHoverText(stack, level, tooltipComponents, isAdvanced)
     }

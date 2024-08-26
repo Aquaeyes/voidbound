@@ -69,7 +69,14 @@ object VoidBoundUtils {
         }
     }
 
-    fun spawnSpiritParticle(level: ClientLevel, to: Vec3, from: Vec3, yOffset: Float, type: MalumSpiritType, randStart: Boolean) {
+    fun spawnSpiritParticle(
+        level: ClientLevel,
+        to: Vec3,
+        from: Vec3,
+        yOffset: Float,
+        type: MalumSpiritType,
+        randStart: Boolean
+    ) {
         val behavior =
             Consumer<WorldParticleBuilder> { b: WorldParticleBuilder ->
                 b.addTickActor { p: LodestoneWorldParticle ->

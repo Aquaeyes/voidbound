@@ -10,7 +10,14 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import java.awt.Color
 
-class IchoriumSwordItem(material: Tier?, attackDamage: Int, attackSpeed: Float, magicDamage: Float, properties: Properties?) : SwordOfTheZephyrItem(material, attackDamage,
+class IchoriumSwordItem(
+    material: Tier?,
+    attackDamage: Int,
+    attackSpeed: Float,
+    magicDamage: Float,
+    properties: Properties?
+) : SwordOfTheZephyrItem(
+    material, attackDamage,
     attackSpeed,
     magicDamage,
     properties

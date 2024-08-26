@@ -1,6 +1,5 @@
 package dev.sterner.common.item.tool
 
-import net.fabricmc.fabric.api.loot.v2.LootTableEvents
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.NonNullList
@@ -11,7 +10,6 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.world.Containers
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.item.HoeItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Tier
 import net.minecraft.world.item.TooltipFlag
@@ -85,8 +83,9 @@ open class HoeOfGrowthItem(material: Tier?, damage: Int, speed: Float, magicDama
         if (tool.getNetherited(stack)) {
             tooltipComponents.add(
                 Component.translatable("Netherited").withStyle(ChatFormatting.ITALIC).withStyle(
-                Style.EMPTY.withColor(Color(90, 65, 0).rgb)
-            ))
+                    Style.EMPTY.withColor(Color(90, 65, 0).rgb)
+                )
+            )
         }
         super.appendHoverText(stack, level, tooltipComponents, isAdvanced)
     }

@@ -24,14 +24,15 @@ object VoidBoundModelLoaderPlugin : ModelLoadingPlugin {
             )
         })
 
-        pluginContext!!.modifyModelAfterBake().register(AfterBake register@{ original: BakedModel?, context: AfterBake.Context ->
-            val guiModelLocation = modelPairs[context.id()]
-            if (guiModelLocation != null) {
-                val guiModel = context.baker().bake(guiModelLocation, context.settings())
-                return@register VoidBoundBakedModel(original, guiModel!!)
-            }
-            original
-        })
+        pluginContext!!.modifyModelAfterBake()
+            .register(AfterBake register@{ original: BakedModel?, context: AfterBake.Context ->
+                val guiModelLocation = modelPairs[context.id()]
+                if (guiModelLocation != null) {
+                    val guiModel = context.baker().bake(guiModelLocation, context.settings())
+                    return@register VoidBoundBakedModel(original, guiModel!!)
+                }
+                original
+            })
     }
 
     class VoidBoundBakedModel(heldModel: BakedModel?, guiModel: BakedModel) : ForwardingBakedModel() {

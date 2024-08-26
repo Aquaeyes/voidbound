@@ -19,7 +19,7 @@ class IchorItem(properties: Properties) : Item(properties), RevelationAware {
     }
 
     override fun getBlockStateCloaks(): MutableMap<BlockState, BlockState> {
-       return mutableMapOf()
+        return mutableMapOf()
     }
 
     override fun getItemCloak(): Tuple<Item, Item> {

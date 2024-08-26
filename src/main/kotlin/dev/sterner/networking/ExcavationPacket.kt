@@ -3,9 +3,6 @@ package dev.sterner.networking
 import me.pepperbell.simplenetworking.SimpleChannel
 import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderGetter
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtUtils
 import net.minecraft.network.FriendlyByteBuf
@@ -13,13 +10,8 @@ import net.minecraft.network.protocol.game.ClientboundBlockDestructionPacket
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.network.ServerGamePacketListenerImpl
-import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.LevelEvent
-import net.minecraft.world.level.block.state.BlockState
-import team.lodestar.lodestone.helpers.NBTHelper
 import team.lodestar.lodestone.systems.network.LodestoneServerNBTPacket
 
 
@@ -31,7 +23,7 @@ class ExcavationPacket(data: CompoundTag?) : LodestoneServerNBTPacket(data) {
 
     constructor(buf: FriendlyByteBuf) : this(buf.readNbt()!!)
 
-    constructor(blockPos: BlockPos,  breakTime: Int, maxBreakTime: Int, progress: Int) : this(CompoundTag().apply {
+    constructor(blockPos: BlockPos, breakTime: Int, maxBreakTime: Int, progress: Int) : this(CompoundTag().apply {
         put("Pos", NbtUtils.writeBlockPos(blockPos))
         putInt("BreakTime", breakTime)
         putInt("MaxBreakTime", maxBreakTime)
@@ -61,7 +53,13 @@ class ExcavationPacket(data: CompoundTag?) : LodestoneServerNBTPacket(data) {
                 )
             }
 
-            player.connection.send(ClientboundBlockDestructionPacket(player.id + generatePosHash(blockPos), blockPos, progress))
+            player.connection.send(
+                ClientboundBlockDestructionPacket(
+                    player.id + generatePosHash(blockPos),
+                    blockPos,
+                    progress
+                )
+            )
         }
     }
 

@@ -14,7 +14,9 @@ class TearOfCrimsonFeature(codec: Codec<NoneFeatureConfiguration?>) :
         val worldGenLevel = context.level()
         val blockPos = context.origin()
 
-        if (worldGenLevel.isEmptyBlock(blockPos) && worldGenLevel.getBlockState(blockPos.above()).`is`(Blocks.NETHERRACK)) {
+        if (worldGenLevel.isEmptyBlock(blockPos) && worldGenLevel.getBlockState(blockPos.above())
+                .`is`(Blocks.NETHERRACK)
+        ) {
             worldGenLevel.setBlock(blockPos, (VoidBoundBlockRegistry.TEAR_OF_CRIMSON.get()).defaultBlockState(), 2)
             return true
         } else {
