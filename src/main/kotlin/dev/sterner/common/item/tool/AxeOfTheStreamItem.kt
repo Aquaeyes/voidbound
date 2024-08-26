@@ -129,6 +129,12 @@ open class AxeOfTheStreamItem(
     }
 
     companion object {
+
+        /**
+         * Cancels the event and perform the specific axe effect for axe of the stream as wel as ichorium axe.
+         * Axe of the Stream breaks the furthest block on a tree
+         * Ichorium Axe breaks the whole tree
+         */
         fun breakBlock(breakEvent: BlockEvents.BreakEvent?) {
             val player = breakEvent?.player
             val level = player?.level()

@@ -34,6 +34,9 @@ object VoidBoundEvents {
         BlockEvents.BLOCK_BREAK.register(VoidBoundWorldComponent.Companion::removeWard)
         BlockEvents.BLOCK_BREAK.register(AxeOfTheStreamItem.Companion::breakBlock)
 
+        /**
+         * Add extra damage to UpgradableTools when it has extra damage
+         */
         ModifyItemAttributeModifiersCallback.EVENT.register(ModifyItemAttributeModifiersCallback { stack: ItemStack, slot: EquipmentSlot, attributeModifiers: Multimap<Attribute?, AttributeModifier?> ->
             if (stack.item is UpgradableTool && slot == EquipmentSlot.MAINHAND) {
                 val tool = stack.item as UpgradableTool

@@ -1,5 +1,6 @@
 package dev.sterner.api.util
 
+import com.sammy.malum.registry.common.block.BlockRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.tags.BlockTags
@@ -181,7 +182,7 @@ object VoidBoundBlockUtils {
             }
 
             val log = level.getBlockState(aroundLogPos).block
-            if (log == logType) {
+            if (log == logType || isExposedLog(log, logType)) {
                 checkAround.add(aroundLogPos)
                 logsToBreak.add(aroundLogPos)
             }
@@ -201,6 +202,25 @@ object VoidBoundBlockUtils {
 
         val up = pos.above(2)
         return getLogsToBreak(level, up.immutable(), logsToBreak, logCount, logType)
+    }
+
+    /**
+     * Special case for Malum's exposed log types
+     */
+    private fun isExposedLog(log1: Block, log2: Block): Boolean {
+        if (log1.defaultBlockState().`is`(BlockRegistry.EXPOSED_RUNEWOOD_LOG.get())) {
+            return true
+        }
+        if (log2.defaultBlockState().`is`(BlockRegistry.EXPOSED_RUNEWOOD_LOG.get())) {
+            return true
+        }
+        if (log1.defaultBlockState().`is`(BlockRegistry.EXPOSED_SOULWOOD_LOG.get())) {
+            return true
+        }
+        if (log2.defaultBlockState().`is`(BlockRegistry.EXPOSED_SOULWOOD_LOG.get())) {
+            return true
+        }
+        return false
     }
 
     /**
