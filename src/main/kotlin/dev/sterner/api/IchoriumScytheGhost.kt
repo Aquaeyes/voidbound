@@ -1,5 +1,8 @@
 package dev.sterner.api
 
+/**
+ * When a scythe is a ghost it won't drop or insert itself to an inventory from its entity
+ */
 interface IchoriumScytheGhost {
     fun isGhost(): Boolean
 

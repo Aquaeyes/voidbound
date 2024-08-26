@@ -20,6 +20,9 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.ServerLevelAccessor
 
+/**
+ * Base class for all cultists with some basic goals
+ */
 abstract class AbstractCultistEntity(entityType: EntityType<out Monster>, level: Level) : Monster(entityType, level) {
 
     init {

@@ -10,6 +10,9 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import java.awt.Color
 
+/**
+ * Used by any blockItem which is not fully implemented to notify the player in the tooltip
+ */
 class UnimplementedBlockItem(block: Block, properties: Properties) : BlockItem(block, properties) {
 
     override fun appendHoverText(

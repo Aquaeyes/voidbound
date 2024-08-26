@@ -4,6 +4,9 @@ import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import net.minecraft.nbt.CompoundTag
 
+/**
+ * Simple way to store a lot of spirits, with NBT support and basic operations
+ */
 data class SimpleSpiritCharge(
     private val charges: MutableMap<MalumSpiritType, Int> = mutableMapOf(
         SpiritTypeRegistry.AQUEOUS_SPIRIT to 0,

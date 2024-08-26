@@ -18,6 +18,9 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox
 import net.minecraft.world.phys.BlockHitResult
 import java.util.function.Consumer
 
+/**
+ * Implement to add a classic hammer behaviour to an item, this means an item which should break multiple blocks on one break
+ */
 interface HammerLikeItem {
 
     fun getRadius(): Int

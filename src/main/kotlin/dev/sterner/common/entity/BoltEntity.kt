@@ -16,7 +16,9 @@ import net.minecraft.world.level.Level
 import kotlin.math.cos
 import kotlin.math.sin
 
-
+/**
+ * Used by the shock foci to damage entities and render a lightning bolt
+ */
 class BoltEntity(entityType: EntityType<BoltEntity>, level: Level) : Entity(entityType, level) {
     private var ambientTick: Int
 

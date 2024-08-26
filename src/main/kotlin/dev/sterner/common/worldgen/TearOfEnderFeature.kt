@@ -10,6 +10,9 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 class TearOfEnderFeature(codec: Codec<NoneFeatureConfiguration?>) :
     Feature<NoneFeatureConfiguration?>(codec) {
 
+    /**
+     * Generates at the bottom of end islands on the roof
+     */
     override fun place(context: FeaturePlaceContext<NoneFeatureConfiguration?>): Boolean {
         val worldGenLevel = context.level()
         val blockPos = context.origin()

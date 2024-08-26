@@ -27,9 +27,12 @@ object VoidBoundRenderUtils {
 
     val CHECKMARK: ResourceLocation = VoidBound.id("textures/gui/check.png")
 
-    fun renderTexture(
-        texture: ResourceLocation?,
-        poseStack: PoseStack?,
+    /**
+     * Render a texture on screen with ScreenVFXBuilder
+     */
+    fun drawScreenIcon(
+        texture: ResourceLocation,
+        poseStack: PoseStack,
         builder: ScreenVFXBuilder,
         x: Int,
         y: Float,
@@ -51,6 +54,30 @@ object VoidBoundRenderUtils {
         RenderSystem.disableBlend()
     }
 
+    /**
+     * Render a texture on screen with minecraft's BufferBuilder
+     */
+    fun drawScreenIcon(matrixStack: PoseStack, icon: ResourceLocation) {
+        matrixStack.pushPose()
+        val matrix: Matrix4f = matrixStack.last().pose()
+        val tessellator = Tesselator.getInstance()
+        val bufferBuilder: BufferBuilder = tessellator.builder
+        RenderSystem.setShader { GameRenderer.getPositionTexShader() }
+        RenderSystem.disableDepthTest()
+        matrixStack.translate(12.0, 12.0, 0.0)
+        RenderSystem.setShaderTexture(0, icon)
+        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX)
+        bufferBuilder.vertex(matrix, -2f, 6f, 0f).uv(0f, 1f).endVertex()
+        bufferBuilder.vertex(matrix, 6f, 6f, 0f).uv(1f, 1f).endVertex()
+        bufferBuilder.vertex(matrix, 6f, -2f, 0f).uv(1f, 0f).endVertex()
+        bufferBuilder.vertex(matrix, -2f, -2f, 0f).uv(0f, 0f).endVertex()
+        tessellator.end()
+        matrixStack.popPose()
+    }
+
+    /**
+     * Render a texture quad in world towards camera
+     */
     fun renderWobblyWorldIcon(
         icon: ResourceLocation,
         poseStack: PoseStack,
@@ -81,24 +108,9 @@ object VoidBoundRenderUtils {
         poseStack.popPose()
     }
 
-    fun drawScreenIcon(matrixStack: PoseStack, icon: ResourceLocation) {
-        matrixStack.pushPose()
-        val matrix: Matrix4f = matrixStack.last().pose()
-        val tessellator = Tesselator.getInstance()
-        val bufferBuilder: BufferBuilder = tessellator.builder
-        RenderSystem.setShader { GameRenderer.getPositionTexShader() }
-        RenderSystem.disableDepthTest()
-        matrixStack.translate(12.0, 12.0, 0.0)
-        RenderSystem.setShaderTexture(0, icon)
-        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX)
-        bufferBuilder.vertex(matrix, -2f, 6f, 0f).uv(0f, 1f).endVertex()
-        bufferBuilder.vertex(matrix, 6f, 6f, 0f).uv(1f, 1f).endVertex()
-        bufferBuilder.vertex(matrix, 6f, -2f, 0f).uv(1f, 0f).endVertex()
-        bufferBuilder.vertex(matrix, -2f, -2f, 0f).uv(0f, 0f).endVertex()
-        tessellator.end()
-        matrixStack.popPose()
-    }
-
+    /**
+     * Uses the renderCubeAtPos function with a set alpha
+     */
     fun renderCubeAtPos(
         camera: Camera,
         poseStack: PoseStack,
@@ -111,7 +123,10 @@ object VoidBoundRenderUtils {
         renderCubeAtPos(camera, poseStack, blockPos, renderTypeToken, Color(255, 200, 150), alpha, 1.08f)
     }
 
-    fun renderCubeAtPos(
+    /**
+     * Renders a 1x1x1 block with a RenderTypeToken, scale and alpha ata blockPos in world
+     */
+    private fun renderCubeAtPos(
         camera: Camera,
         poseStack: PoseStack,
         blockPos: BlockPos,
@@ -122,7 +137,6 @@ object VoidBoundRenderUtils {
     ) {
         val targetPosition = Vec3(blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble())
         val transformedPosition: Vec3 = targetPosition.subtract(camera.position)
-
 
         poseStack.pushPose()
 
@@ -138,7 +152,6 @@ object VoidBoundRenderUtils {
             scale,
             cubeVertexData
         )
-
 
         poseStack.popPose()
     }

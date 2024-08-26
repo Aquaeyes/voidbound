@@ -16,6 +16,9 @@ object VoidBoundPosUtils {
         return vec3 ?: golem.position()
     }
 
+    /**
+     * Returns a list of positions corresponding to some random poses around a block
+     */
     fun getFaceCoords(level: Level, blockState: BlockState, pos: BlockPos): List<Vec3> {
         val random = level.random
         val i: Int = pos.x
@@ -74,6 +77,9 @@ object VoidBoundPosUtils {
         return listOf()
     }
 
+    /**
+     * Returns a list of positions corresponding to some random poses on one side of a block
+     */
     fun getFaceCoords(level: Level, blockState: BlockState, pos: BlockPos, side: Direction): Vec3 {
         val random = level.random
         val i: Int = pos.x

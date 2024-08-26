@@ -6,17 +6,20 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtUtils
 import net.minecraft.world.entity.LivingEntity
 
+/**
+ * Used by Eldritch rift to track entities being sucked
+ */
 class VoidBoundEntityComponent(val livingEntity: LivingEntity) : AutoSyncedComponent {
 
-    var spiritBinderPos: BlockPos? = null
+    var eldritchRiftPos: BlockPos? = null
 
     override fun readFromNbt(tag: CompoundTag) {
-        spiritBinderPos = NbtUtils.readBlockPos(tag.getCompound("BlockPos"))
+        eldritchRiftPos = NbtUtils.readBlockPos(tag.getCompound("BlockPos"))
     }
 
     override fun writeToNbt(tag: CompoundTag) {
-        if (spiritBinderPos != null) {
-            val posTag: CompoundTag = NbtUtils.writeBlockPos(spiritBinderPos!!)
+        if (eldritchRiftPos != null) {
+            val posTag: CompoundTag = NbtUtils.writeBlockPos(eldritchRiftPos!!)
             tag.put("BlockPos", posTag)
         }
     }

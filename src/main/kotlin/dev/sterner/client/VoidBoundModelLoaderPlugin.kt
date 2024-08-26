@@ -14,6 +14,10 @@ import java.util.*
 import java.util.function.Consumer
 import java.util.function.Supplier
 
+/**
+ * This is only necessary because malum doesn't allow additions, could make that one better and impl that instead.
+ * Used for the Ichorium Scythe
+ */
 object VoidBoundModelLoaderPlugin : ModelLoadingPlugin {
 
 

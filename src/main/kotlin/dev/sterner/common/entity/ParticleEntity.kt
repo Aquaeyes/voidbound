@@ -20,6 +20,9 @@ import kotlin.math.acos
 import kotlin.math.cos
 import kotlin.math.sin
 
+/**
+ * To make a particle have a trail of other particles
+ */
 class ParticleEntity(level: Level) : Entity(VoidBoundEntityTypeRegistry.PARTICLE_ENTITY.get(), level) {
     val trailPointBuilder: TrailPointBuilder = TrailPointBuilder.create(10)
     var spiritType: MalumSpiritType? = null

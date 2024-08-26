@@ -26,6 +26,9 @@ import java.util.function.Supplier
 
 object VoidBoundUtils {
 
+    /**
+     * Grants the serverPlayerEntity a advancement of an identifier
+     */
     fun grantAdvancementCriterion(
         serverPlayerEntity: ServerPlayer,
         advancementIdentifier: ResourceLocation,
@@ -45,6 +48,9 @@ object VoidBoundUtils {
         }
     }
 
+    /**
+     * Copy of SpiritHarvestHandler$getSpiritData with a different return type
+     */
     fun getSpiritData(entity: LivingEntity): Optional<MutableList<SpiritWithCount>> {
         val key = BuiltInRegistries.ENTITY_TYPE.getKey(entity.type)
         if (SpiritDataReloadListener.HAS_NO_DATA.contains(key)) {
@@ -69,6 +75,9 @@ object VoidBoundUtils {
         }
     }
 
+    /**
+     * Creates a stream of particles form one pos to another of a specific spirit type
+     */
     fun spawnSpiritParticle(
         level: ClientLevel,
         to: Vec3,
@@ -148,6 +157,9 @@ object VoidBoundUtils {
         lightSpecs.spawnParticles()
     }
 
+    /**
+     * Helper function to get the texture corresponding to the enchantment
+     */
     fun getEnchantmentIcon(enchantment: Enchantment): ResourceLocation {
         val reg = BuiltInRegistries.ENCHANTMENT.getKey(enchantment)
         val list: EnchantSpiritDataReloadListener.EnchantingData? = EnchantSpiritDataReloadListener.ENCHANTING_DATA[reg]

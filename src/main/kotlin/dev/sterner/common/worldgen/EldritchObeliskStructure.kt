@@ -18,8 +18,9 @@ import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool
 import java.util.*
 
+@Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
 class EldritchObeliskStructure(
-    val settings: StructureSettings,
+    settings: StructureSettings,
     private val startPool: Holder<StructureTemplatePool>,
     private val startJigsawName: Optional<ResourceLocation>,
     private val maxDepth: Int,
@@ -28,41 +29,6 @@ class EldritchObeliskStructure(
     private val projectStartToHeightmap: Optional<Heightmap.Types>,
     private val maxDistanceFromCenter: Int
 ) : Structure(settings) {
-
-    constructor(
-        settings: StructureSettings,
-        startPool: Holder<StructureTemplatePool>,
-        maxDepth: Int,
-        startHeight: HeightProvider,
-        useExpansionHack: Boolean,
-        projectStartToHeightmap: Heightmap.Types
-    ) : this(
-        settings,
-        startPool,
-        Optional.empty<ResourceLocation>(),
-        maxDepth,
-        startHeight,
-        useExpansionHack,
-        Optional.of<Heightmap.Types>(projectStartToHeightmap),
-        80
-    )
-
-    constructor(
-        settings: StructureSettings,
-        startPool: Holder<StructureTemplatePool>,
-        maxDepth: Int,
-        startHeight: HeightProvider,
-        useExpansionHack: Boolean
-    ) : this(
-        settings,
-        startPool,
-        Optional.empty<ResourceLocation>(),
-        maxDepth,
-        startHeight,
-        useExpansionHack,
-        Optional.empty<Heightmap.Types>(),
-        80
-    )
 
     public override fun findGenerationPoint(context: GenerationContext): Optional<GenerationStub> {
         val chunkPos = context.chunkPos()

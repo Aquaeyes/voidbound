@@ -52,6 +52,7 @@ class OsmoticEnchanterMenu(
 
         var m: Int
 
+        //Player inventory
         var l = 0
         while (l < 3) {
             m = 0

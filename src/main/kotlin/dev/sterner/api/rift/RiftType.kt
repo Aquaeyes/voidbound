@@ -22,6 +22,9 @@ abstract class RiftType {
     private val firstColorAlpha = Color(100, 100, 255, 25)
     private val secondColorAlpha = Color(200, 100, 255, 25)
 
+    /**
+     * Renders the small middle of a Rift, in case the user cant see the shader
+     */
     open fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity) {
 
         var transparency = GenericParticleData.create(0.05f, 0.1f).build()

@@ -22,16 +22,16 @@ class EldritchRiftType : RiftType() {
                 .filter {
                     it.health / it.maxHealth <= 0.25 && it.isAlive && VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(
                         it
-                    ).spiritBinderPos == null
+                    ).eldritchRiftPos == null
                 }
             if (list.isNotEmpty()) {
                 blockEntity.entity = list.first()
-                VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(blockEntity.entity!!).spiritBinderPos =
+                VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(blockEntity.entity!!).eldritchRiftPos =
                     blockPos
                 VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.sync(blockEntity.entity!!)
             }
             blockEntity.counter = 0
-        } else if (VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(blockEntity.entity!!).spiritBinderPos != null) {
+        } else if (VoidBoundComponentRegistry.VOID_BOUND_ENTITY_COMPONENT.get(blockEntity.entity!!).eldritchRiftPos != null) {
             val spiritDataOptional = VoidBoundUtils.getSpiritData(blockEntity.entity!!)
             if (spiritDataOptional.isPresent) {
                 blockEntity.counter++

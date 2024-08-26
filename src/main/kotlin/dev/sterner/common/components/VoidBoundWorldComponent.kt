@@ -19,11 +19,24 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import java.util.*
 
+/**
+ * Keeps track of the worlds warded blockPoses and the players UUIDs connected
+ */
 class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
 
+    /**
+     * Every block can have one UUID connected to it, makes lookup time complexity O(1) in most cases
+     */
     private val posOwnerMap = mutableMapOf<GlobalPos, UUID>()
+
+    /**
+     * Only used to save calculations on rendering warded blocks
+     */
     private var cachedPositions: List<BlockPos>? = null
 
+    /**
+     * Get every warded block and cache if cache is null
+     */
     fun getAllPos(): List<BlockPos> {
         // Check if the cache is invalid
         if (cachedPositions == null) {
@@ -35,6 +48,9 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
         return cachedPositions ?: emptyList()
     }
 
+    /**
+     * Get every warded block bound to a player, cache if cache is null
+     */
     fun getAllPos(player: Player): List<BlockPos> {
         // Check if the cache is invalid
         if (cachedPositions == null) {
@@ -50,21 +66,33 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
         return posOwnerMap.isEmpty()
     }
 
+    /**
+     * Returns true if the block is warded but not to this player
+     */
     fun isPosBoundToAnotherPlayer(player: Player, pos: GlobalPos): Boolean {
         val ownerUuid = posOwnerMap[pos]
         return ownerUuid != null && ownerUuid != player.uuid
     }
 
-    //Time complexity: O(1) on average
+    /**
+     * If the pos is warded
+     * Time complexity: O(1) on average
+     */
     fun hasBlockPos(pos: GlobalPos): Boolean {
         return posOwnerMap.containsKey(pos)
     }
 
-    //Time complexity: O(1) on average
+    /**
+     * If the pos is warded by player
+     * Time complexity: O(1) on average
+     */
     fun hasBlockPos(player: Player, pos: GlobalPos): Boolean {
         return posOwnerMap[pos] == player.uuid
     }
 
+    /**
+     * Add a warded pos if it doesn't already exist and clear cache
+     */
     fun addPos(uuid: UUID, pos: GlobalPos) {
         // Only add the position if it is not already owned
         if (hasBlockPos(pos)) {
@@ -78,6 +106,9 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
         VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.sync(level)
     }
 
+    /**
+     * Removes a warded pos, and clear cache
+     */
     fun removePos(pos: GlobalPos) {
         posOwnerMap.remove(pos)
         clearCache() // Invalidate the cache
@@ -85,6 +116,9 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
         VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.sync(level)
     }
 
+    /**
+     * Removes a pos only if it's bound to this uuid
+     */
     fun removePos(uuid: UUID, pos: GlobalPos) {
         // Remove the position only if it is owned by the specified UUID
         if (posOwnerMap[pos] == uuid) {
@@ -146,6 +180,9 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
         tag.put("PlayerWardPosMap", list)
     }
 
+    /**
+     * Copy of Minecraft's getLodestoneDimension
+     */
     private fun getLodestoneDimension(compoundTag: CompoundTag): Optional<ResourceKey<Level>> {
         val dimensionTag = compoundTag["Dimension"]
         return if (dimensionTag != null) {
@@ -155,6 +192,9 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
         }
     }
 
+    /**
+     * Copy of Minecraft's addLodestoneTags
+     */
     private fun addLodestoneTags(
         lodestoneDimension: ResourceKey<Level>,
         compoundTag: CompoundTag
@@ -168,6 +208,9 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
     }
 
     companion object {
+        /**
+         * If a block manages to break, remove the ward
+         */
         fun removeWard(breakEvent: BlockEvents.BreakEvent?) {
             val pos = breakEvent?.pos
             if (pos != null) {
@@ -176,6 +219,9 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
             }
         }
 
+        /**
+         * Uses the cache to render all the warded block owned by the client player
+         */
         fun renderCubeAtPos(ctx: WorldRenderContext) {
             val camera = ctx.camera()
             val poseStack = ctx.matrixStack()

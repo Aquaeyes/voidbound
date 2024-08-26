@@ -26,7 +26,7 @@ class DestabilizedRiftType : RiftType() {
     }
 
     /**
-     * Precondition, direction assumes a value of [1 to 4]
+     * Precondition, direction assumes a value of [1 to 4] and will clamp if necessary
      */
     private fun genParticleOrbit(level: Level, blockPos: BlockPos, range: Int, state: BlockState, direction: Int) {
         val clampedDir = Mth.clamp(direction, 1, 4)

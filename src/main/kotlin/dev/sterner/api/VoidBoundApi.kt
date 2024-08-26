@@ -16,6 +16,9 @@ import team.lodestar.lodestone.helpers.TrinketsHelper
 
 object VoidBoundApi {
 
+    /**
+     * Returns true if a client player has the hallowed goggles or monocle equipped
+     */
     fun hasGoggles(): Boolean {
         val player = Minecraft.getInstance().player
         if (player != null) {
@@ -29,6 +32,9 @@ object VoidBoundApi {
         return false
     }
 
+    /**
+     * Returns true if a player has the hallowed goggles or monocle equipped
+     */
     fun hasGoggles(player: Player): Boolean {
         val bl = TrinketsHelper.hasTrinketEquipped(player, VoidBoundItemRegistry.HALLOWED_MONOCLE.get())
         val bl2 = Minecraft.getInstance().player!!.getItemBySlot(EquipmentSlot.HEAD)
@@ -38,6 +44,9 @@ object VoidBoundApi {
         return bl || bl2
     }
 
+    /**
+     * Returns how many spirits of each kind a enchantment is worth for the osmotic enchanter
+     */
     fun getSpiritFromEnchant(enchantment: Enchantment, level: Int): List<SpiritWithCount> {
 
         val reg = BuiltInRegistries.ENCHANTMENT.getKey(enchantment)
@@ -52,6 +61,9 @@ object VoidBoundApi {
         return out
     }
 
+    /**
+     * Returns false if the block being broken is warded by another player
+     */
     fun canPlayerBreakBlock(level: Level, player: Player, blockPos: BlockPos): Boolean {
         val comp = VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(level)
         if (comp.isEmpty()) {
@@ -61,6 +73,9 @@ object VoidBoundApi {
         return !comp.isPosBoundToAnotherPlayer(player, GlobalPos.of(player.level().dimension(), blockPos))
     }
 
+    /**
+     * Returns false if the block being broken is warded by any player
+     */
     fun canBlockBreak(level: Level, blockPos: BlockPos): Boolean {
         val comp = VoidBoundComponentRegistry.VOID_BOUND_WORLD_COMPONENT.get(level)
         if (comp.isEmpty()) {

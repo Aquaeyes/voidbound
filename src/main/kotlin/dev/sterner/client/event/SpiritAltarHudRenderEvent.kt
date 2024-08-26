@@ -14,6 +14,9 @@ import net.minecraft.world.phys.BlockHitResult
 
 object SpiritAltarHudRenderEvent {
 
+    /**
+     * Renders the required items a spirit infusion requires to complete the craft at crosshair
+     */
     fun spiritAltarRecipeHud(guiGraphics: GuiGraphics, partialTick: Float) {
         val client: Minecraft = Minecraft.getInstance()
 

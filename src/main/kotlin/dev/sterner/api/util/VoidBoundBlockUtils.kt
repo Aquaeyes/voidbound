@@ -19,6 +19,9 @@ object VoidBoundBlockUtils {
     private var lastPos: BlockPos? = null
     private var lastDistance: Double = 0.0
 
+    /**
+     * Finds and breaks the furthest block of a connected set of logs
+     */
     fun breakFurthestBlock(level: Level, pos: BlockPos, blockState: BlockState, player: Player): Boolean {
         lastPos = BlockPos(pos)
         lastDistance = 0.0
@@ -49,6 +52,9 @@ object VoidBoundBlockUtils {
         return worked
     }
 
+    /**
+     * Applies fortune and restraints towards a block breaking action
+     */
     private fun harvestBlock(
         level: Level,
         player: Player,
@@ -148,6 +154,9 @@ object VoidBoundBlockUtils {
         }
     }
 
+    /**
+     * Collects all connected log blocks of the same type and breaks them
+     */
     fun getLogsToBreak(
         level: Level,
         pos: BlockPos,
@@ -194,6 +203,9 @@ object VoidBoundBlockUtils {
         return getLogsToBreak(level, up.immutable(), logsToBreak, logCount, logType)
     }
 
+    /**
+     * Counts all connected log blocks
+     */
     fun getLogCount(level: Level, pos: BlockPos): Int {
         var logCount = 0
         var prevLogCount = -1

@@ -21,6 +21,9 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 
+/**
+ * Keeps track of a players tuning fork selections when interacting with a Soul stained steel golem
+ */
 class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent, CommonTickingComponent {
 
     private var highlightBlockList = mutableMapOf<BlockPos, Int>()
@@ -99,7 +102,6 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
                 }
             }
         }
-
 
         fun useBlock(
             player: Player,

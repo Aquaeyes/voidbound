@@ -68,7 +68,7 @@ class SpiritBarWidget(private var screen: OsmoticEnchanterScreen, x: Int, y: Int
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE)
 
             // Render the texture with adjusted UV for top cropping
-            VoidBoundRenderUtils.renderTexture(
+            VoidBoundRenderUtils.drawScreenIcon(
                 icon,                         // ResourceLocation
                 guiGraphics.pose(),            // PoseStack
                 builder,                       // VFXBuilders.ScreenVFXBuilder

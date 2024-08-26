@@ -10,6 +10,9 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 class TearOfCrimsonFeature(codec: Codec<NoneFeatureConfiguration?>) :
     Feature<NoneFeatureConfiguration?>(codec) {
 
+    /**
+     * Generates on the roof
+     */
     override fun place(context: FeaturePlaceContext<NoneFeatureConfiguration?>): Boolean {
         val worldGenLevel = context.level()
         val blockPos = context.origin()

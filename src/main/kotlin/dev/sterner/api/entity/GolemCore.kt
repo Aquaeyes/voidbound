@@ -5,6 +5,9 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
 
+/**
+ * implemented is false if it should notify the player from the tooltip
+ */
 enum class GolemCore(val implemented: Boolean) : StringRepresentable {
     NONE(true),
     GATHER(true),

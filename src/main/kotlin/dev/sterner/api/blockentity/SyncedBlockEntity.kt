@@ -14,7 +14,9 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-
+/**
+ * This adds even more sync from a standard LodestoneBlockEntity
+ */
 @MethodsReturnNonnullByDefault
 abstract class SyncedBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     BlockEntity(type, pos, state), CustomDataPacketHandlingBlockEntity, CustomUpdateTagHandlingBlockEntity {

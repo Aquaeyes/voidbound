@@ -36,6 +36,9 @@ object ParticleEngineMixinLogic {
     operator fun Vec3.component3() = this.z
 
 
+    /**
+     * Returns false if the player cant break the block while also generating block warding particles
+     */
     fun logic(level: Level, pos: BlockPos, blockState: BlockState, random: RandomSource, side: Direction): Boolean {
         if (Minecraft.getInstance().player != null && !canPlayerBreakBlock(
                 level,
