@@ -66,10 +66,8 @@ dependencies {
 
 	modImplementation("net.fabricmc:fabric-language-kotlin:1.11.0+kotlin.2.0.0")
 
-	//include("com.github.Chocohead:Fabric-ASM:v2.3")
 	modImplementation("com.github.Chocohead:Fabric-ASM:v2.3")
 
-	//include("me.shedaniel.cloth:cloth-config-fabric:11.1.118")
 	modImplementation("me.shedaniel.cloth:cloth-config-fabric:11.1.118")
 
 	//EMI
@@ -80,7 +78,6 @@ dependencies {
 	// Trinkets Dependency
 	modImplementation("dev.emi:trinkets:${property("trinkets_version")}")
 
-	//include("team.lodestar.lodestone:lodestone:${property("minecraft_version")}-${property("lodestone_version")}-fabric")
 	modImplementation("team.lodestar.lodestone:lodestone:${property("minecraft_version")}-${property("lodestone_version")}-fabric")
 
 	modImplementation("com.sammy:malum:${property("malum_version")}")
@@ -89,7 +86,6 @@ dependencies {
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${property("cca_version")}")
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-world:${property("cca_version")}")
 
-	//include("com.terraformersmc.terraform-api:terraform-wood-api-v1:${property("terraform_api_version")}")
 	modImplementation("com.terraformersmc.terraform-api:terraform-wood-api-v1:${property("terraform_api_version")}")
 
 	port_lib_modules.split(",").forEach { module ->
@@ -97,7 +93,6 @@ dependencies {
 		modImplementation(("io.github.fabricators_of_create.Porting-Lib:$module:${property("port_lib_version")}"))
 	}
 
-	//include("com.jamieswhiteshirt:reach-entity-attributes:${property("reach_entity_attributes_version")}")
 	modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${property("reach_entity_attributes_version")}")
 	modImplementation("maven.modrinth:fusion-connected-textures:${property("fusion_version")}-fabric-mc${property("minecraft_version")}")
 	modImplementation("net.tslat.smartbrainlib:SmartBrainLib-fabric-${property("minecraft_version")}:${property("smart_brain_lib_version")}")
