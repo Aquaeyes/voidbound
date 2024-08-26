@@ -1,6 +1,7 @@
 package dev.sterner.common.item.tool
 
 import dev.sterner.api.item.HammerLikeItem
+import dev.sterner.api.util.VoidBoundUtils
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
@@ -50,14 +51,7 @@ open class ShovelOfEarthmoverItem(
         tooltipComponents: MutableList<Component>,
         isAdvanced: TooltipFlag
     ) {
-        val tool = stack.item as UpgradableTool
-        if (tool.getNetherited(stack)) {
-            tooltipComponents.add(
-                Component.translatable("Netherited").withStyle(ChatFormatting.ITALIC).withStyle(
-                    Style.EMPTY.withColor(Color(90, 65, 0).rgb)
-                )
-            )
-        }
+        VoidBoundUtils.addNetheritedTooltip(stack, tooltipComponents)
         super.appendHoverText(stack, level, tooltipComponents, isAdvanced)
     }
 }

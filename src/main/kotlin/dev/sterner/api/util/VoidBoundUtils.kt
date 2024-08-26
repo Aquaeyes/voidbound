@@ -5,14 +5,19 @@ import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.visual_effects.SpiritLightSpecs
 import dev.sterner.VoidBound
+import dev.sterner.common.item.tool.UpgradableTool
 import dev.sterner.listener.EnchantSpiritDataReloadListener
+import net.minecraft.ChatFormatting
 import net.minecraft.advancements.Advancement
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.Style
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.MobCategory
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.phys.Vec3
 import team.lodestar.lodestone.systems.particle.ParticleEffectSpawner
@@ -20,6 +25,7 @@ import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
 import team.lodestar.lodestone.systems.particle.data.GenericParticleData
 import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData
 import team.lodestar.lodestone.systems.particle.world.LodestoneWorldParticle
+import java.awt.Color
 import java.util.*
 import java.util.function.Consumer
 import java.util.function.Supplier
@@ -171,5 +177,16 @@ object VoidBoundUtils {
                 )?.path
             }.png"
         )
+    }
+
+    fun addNetheritedTooltip(stack: ItemStack, tooltipComponents: MutableList<Component>) {
+        val tool = stack.item as UpgradableTool
+        if (tool.getNetherited(stack)) {
+            tooltipComponents.add(
+                Component.translatable("Netherited").withStyle(ChatFormatting.ITALIC).withStyle(
+                    Style.EMPTY.withColor(Color(90, 65, 0).rgb)
+                )
+            )
+        }
     }
 }

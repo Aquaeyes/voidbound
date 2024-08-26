@@ -1,6 +1,7 @@
 package dev.sterner.common.item.tool
 
 import dev.sterner.api.util.VoidBoundBlockUtils
+import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.networking.AxeOfTheStreamParticlePacket
 import dev.sterner.networking.BubbleParticlePacket
 import dev.sterner.registry.VoidBoundItemRegistry
@@ -117,14 +118,7 @@ open class AxeOfTheStreamItem(
         tooltipComponents: MutableList<Component>,
         isAdvanced: TooltipFlag
     ) {
-        val tool = stack.item as UpgradableTool
-        if (tool.getNetherited(stack)) {
-            tooltipComponents.add(
-                Component.translatable("Netherited").withStyle(ChatFormatting.ITALIC).withStyle(
-                    Style.EMPTY.withColor(Color(90, 65, 0).rgb)
-                )
-            )
-        }
+        VoidBoundUtils.addNetheritedTooltip(stack, tooltipComponents)
         super.appendHoverText(stack, level, tooltipComponents, isAdvanced)
     }
 

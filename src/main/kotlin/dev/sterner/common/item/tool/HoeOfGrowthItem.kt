@@ -1,5 +1,6 @@
 package dev.sterner.common.item.tool
 
+import dev.sterner.api.util.VoidBoundUtils
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.NonNullList
@@ -79,14 +80,7 @@ open class HoeOfGrowthItem(material: Tier?, damage: Int, speed: Float, magicDama
         tooltipComponents: MutableList<Component>,
         isAdvanced: TooltipFlag
     ) {
-        val tool = stack.item as UpgradableTool
-        if (tool.getNetherited(stack)) {
-            tooltipComponents.add(
-                Component.translatable("Netherited").withStyle(ChatFormatting.ITALIC).withStyle(
-                    Style.EMPTY.withColor(Color(90, 65, 0).rgb)
-                )
-            )
-        }
+        VoidBoundUtils.addNetheritedTooltip(stack, tooltipComponents)
         super.appendHoverText(stack, level, tooltipComponents, isAdvanced)
     }
 }
