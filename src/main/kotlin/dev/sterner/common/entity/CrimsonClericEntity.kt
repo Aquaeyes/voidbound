@@ -1,11 +1,10 @@
 package dev.sterner.common.entity
 
 import com.sammy.malum.registry.common.SpiritTypeRegistry
-import dev.sterner.common.entity.ai.goal.FocusSpiritRift
+import dev.sterner.common.entity.ai.goal.FocusSpiritRiftGoal
 import dev.sterner.common.entity.ai.goal.HealAllyGoal
 import dev.sterner.common.entity.ai.goal.SummonAllyGoal
 import dev.sterner.networking.CultistRiftParticlePacket
-import dev.sterner.networking.SpiritBinderParticlePacket
 import dev.sterner.registry.VoidBoundBlockRegistry
 import dev.sterner.registry.VoidBoundEntityTypeRegistry
 import dev.sterner.registry.VoidBoundPacketRegistry
@@ -21,7 +20,6 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.LeavesBlock
 import java.util.*
 
 class CrimsonClericEntity(level: Level) :
@@ -90,7 +88,7 @@ class CrimsonClericEntity(level: Level) :
         super.registerGoals()
         this.goalSelector.addGoal(1, SummonAllyGoal(this))
         this.goalSelector.addGoal(2, HealAllyGoal(this, 1.0, 100, 0, 10.0F))
-        this.goalSelector.addGoal(3, FocusSpiritRift(this))
+        this.goalSelector.addGoal(3, FocusSpiritRiftGoal(this))
     }
 
     override fun getArmPose(): CrimsonArmPose {
