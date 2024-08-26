@@ -23,8 +23,8 @@ import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.PackType
-import net.minecraft.world.entity.monster.EnderMan
 import org.slf4j.LoggerFactory
+import team.lodestar.lodestone.LodestoneLib
 import team.lodestar.lodestone.registry.common.LodestoneBlockEntityRegistry
 
 
@@ -35,6 +35,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
 
     override fun onInitialize() {
         LodestoneBlockEntityRegistry()
+        LodestoneLib()
         MalumMod()
         VoidBoundTags.init()
         VoidBoundPacketRegistry.registerVoidBoundPackets()

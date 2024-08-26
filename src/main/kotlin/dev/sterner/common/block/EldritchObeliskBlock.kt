@@ -15,10 +15,6 @@ import team.lodestar.lodestone.systems.block.LodestoneEntityBlock
 
 class EldritchObeliskBlock(properties: Properties) : LodestoneEntityBlock<EldritchObeliskBlockEntity>(properties) {
 
-    override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
-        return EldritchObeliskBlockEntity(pos, state)
-    }
-
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
         return Shapes.join(shape, shape2, BooleanOp.OR)
     }

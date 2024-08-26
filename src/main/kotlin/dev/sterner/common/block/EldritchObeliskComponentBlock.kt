@@ -20,8 +20,4 @@ class EldritchObeliskComponentBlock(properties: Properties?) : MultiblockCompone
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
         return Shapes.create(1/16.0, 0.0, 1/16.0, 15/16.0, 1.0, 15/16.0)
     }
-
-    override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
-        return MultiBlockComponentEntity(pos, state)
-    }
 }
