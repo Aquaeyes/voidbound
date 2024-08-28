@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "ItemEntityMixin",
+    "LodestoneBlockEntityRegistryMixin",
     "ReboundEnchantmentMixin",
     "ScytheBoomerangEntityMixin",
     "ServerPlayerGameModeMixin",

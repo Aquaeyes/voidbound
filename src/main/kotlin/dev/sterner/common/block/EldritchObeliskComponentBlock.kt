@@ -7,9 +7,11 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+import team.lodestar.lodestone.systems.multiblock.ILodestoneMultiblockComponent
 import team.lodestar.lodestone.systems.multiblock.MultiblockComponentBlock
 
-class EldritchObeliskComponentBlock(properties: Properties?) : MultiblockComponentBlock(properties) {
+class EldritchObeliskComponentBlock(properties: Properties?) : MultiblockComponentBlock(properties),
+    ILodestoneMultiblockComponent {
 
     override fun getRenderShape(state: BlockState): RenderShape {
         return RenderShape.INVISIBLE

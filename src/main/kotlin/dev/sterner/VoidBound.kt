@@ -22,7 +22,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.PackType
 import org.slf4j.LoggerFactory
 import team.lodestar.lodestone.LodestoneLib
-import team.lodestar.lodestone.registry.common.LodestoneBlockEntityRegistry
 
 
 object VoidBound : ModInitializer, ClientModInitializer {
@@ -31,9 +30,9 @@ object VoidBound : ModInitializer, ClientModInitializer {
     private val logger = LoggerFactory.getLogger(modid)
 
     override fun onInitialize() {
-        LodestoneBlockEntityRegistry()
         LodestoneLib()
         MalumMod()
+
         VoidBoundTags.init()
         VoidBoundPacketRegistry.registerVoidBoundPackets()
 
