@@ -10,6 +10,7 @@ import team.lodestar.lodestone.registry.common.LodestoneBlockEntityRegistry;
 
 /**
  * This is so sad, lodestones multiblock api is on life support
+ * MALDING
  */
 @Mixin(LodestoneBlockEntityRegistry.class)
 public class LodestoneBlockEntityRegistryMixin {
