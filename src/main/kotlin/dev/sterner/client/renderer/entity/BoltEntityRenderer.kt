@@ -28,7 +28,7 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
         entity: BoltEntity,
         yaw: Float,
         tickDelta: Float,
-        matrices: PoseStack,
+        poseStack: PoseStack,
         buffer: MultiBufferSource,
         light: Int
     ) {
@@ -64,14 +64,14 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
         }
         val offsetsY = FloatArray(segmentNumber)
         val offsetsX = FloatArray(segmentNumber)
-        matrices.pushPose()
+        poseStack.pushPose()
 
         val vertexConsumer: VertexConsumer = buffer.getBuffer(RenderType.lightning())
-        val matrix4f: Matrix4f = matrices.last().pose()
+        val matrix4f: Matrix4f = poseStack.last().pose()
 
-        matrices.mulPose(Axis.YN.rotationDegrees(entity.getViewYRot(tickDelta)))
-        matrices.mulPose(Axis.XP.rotationDegrees(entity.getViewXRot(tickDelta)))
-        matrices.translate(0.0, 0.0, 0.1)
+        poseStack.mulPose(Axis.YN.rotationDegrees(entity.getViewYRot(tickDelta)))
+        poseStack.mulPose(Axis.XP.rotationDegrees(entity.getViewXRot(tickDelta)))
+        poseStack.translate(0.0, 0.0, 0.1)
         for (branches in 0..1) {
             var lastOffsetY = 0.0f
             var lastOffsetX = 0.0f
@@ -181,7 +181,7 @@ class BoltEntityRenderer(context: EntityRendererProvider.Context?) : EntityRende
                 }
             }
         }
-        matrices.popPose()
+        poseStack.popPose()
     }
 
     companion object {

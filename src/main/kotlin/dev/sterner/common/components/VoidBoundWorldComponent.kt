@@ -224,7 +224,7 @@ class VoidBoundWorldComponent(val level: Level) : AutoSyncedComponent {
          */
         fun renderCubeAtPos(ctx: WorldRenderContext) {
             val camera = ctx.camera()
-            val poseStack = ctx.matrixStack()
+            val poseStack = ctx.poseStack()
             val localPlayer = Minecraft.getInstance().player
             if (localPlayer != null) {
                 if (localPlayer.mainHandItem.item is WandItem) {

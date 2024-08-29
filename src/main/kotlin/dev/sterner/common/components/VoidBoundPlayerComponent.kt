@@ -86,7 +86,7 @@ class VoidBoundPlayerComponent(private val player: Player) : AutoSyncedComponent
 
         fun renderCubeAtPos(ctx: WorldRenderContext) {
             val camera = ctx.camera()
-            val poseStack = ctx.matrixStack()
+            val poseStack = ctx.poseStack()
             val localPlayer = Minecraft.getInstance().player
             if (localPlayer != null) {
                 val playerComponent = VoidBoundComponentRegistry.VOID_BOUND_PLAYER_COMPONENT.get(localPlayer)

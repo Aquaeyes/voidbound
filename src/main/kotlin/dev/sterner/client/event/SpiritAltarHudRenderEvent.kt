@@ -28,9 +28,9 @@ object SpiritAltarHudRenderEvent {
                     val se = client.level!!.getBlockEntity(pos) as SpiritAltarBlockEntity
                     val recipes: List<SpiritInfusionRecipe> = se.possibleRecipes
                     if (recipes.isNotEmpty()) {
-                        val matrixStack = guiGraphics.pose()
-                        matrixStack.pushPose()
-                        matrixStack.translate(
+                        val poseStack = guiGraphics.pose()
+                        poseStack.pushPose()
+                        poseStack.translate(
                             if (client.window.guiScaledWidth % 2 != 0) 0.5 else 0.0,
                             if (client.window.guiScaledHeight % 2 != 0) 0.5 else 0.0,
                             0.0
@@ -39,7 +39,7 @@ object SpiritAltarHudRenderEvent {
                         var centerY: Int = client.window.guiScaledHeight / 2
                         startX -= recipes.size / 2 * 16
                         centerY += 10
-                        matrixStack.translate(startX.toDouble(), centerY.toDouble(), 0.0)
+                        poseStack.translate(startX.toDouble(), centerY.toDouble(), 0.0)
                         val recipe = recipes[0]
                         val extras = recipe.extraItems
                         val inventory = se.extrasInventory
@@ -62,11 +62,11 @@ object SpiritAltarHudRenderEvent {
                             if (!checked) {
                                 guiGraphics.renderItemDecorations(client.font, renderStack, 0, 0)
                             } else {
-                                VoidBoundRenderUtils.drawScreenIcon(matrixStack, VoidBoundRenderUtils.CHECKMARK)
+                                VoidBoundRenderUtils.drawScreenIcon(poseStack, VoidBoundRenderUtils.CHECKMARK)
                             }
-                            matrixStack.translate(16.0, 0.0, 0.0)
+                            poseStack.translate(16.0, 0.0, 0.0)
                         }
-                        matrixStack.popPose()
+                        poseStack.popPose()
                     }
                 }
             }

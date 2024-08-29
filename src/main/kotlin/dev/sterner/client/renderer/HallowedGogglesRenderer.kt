@@ -19,7 +19,7 @@ class HallowedGogglesRenderer : ArmorRenderer {
     }
 
     override fun render(
-        matrices: PoseStack?,
+        poseStack: PoseStack?,
         vertexConsumers: MultiBufferSource?,
         stack: ItemStack?,
         entity: LivingEntity?,
@@ -36,7 +36,7 @@ class HallowedGogglesRenderer : ArmorRenderer {
             contextModel.copyPropertiesTo(model!!)
             model!!.setAllVisible(true)
             ArmorRenderer.renderPart(
-                matrices,
+                poseStack,
                 vertexConsumers,
                 light,
                 stack,

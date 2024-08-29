@@ -65,14 +65,14 @@ object VoidBoundRenderUtils {
     /**
      * Render a texture on screen with minecraft's BufferBuilder
      */
-    fun drawScreenIcon(matrixStack: PoseStack, icon: ResourceLocation) {
-        matrixStack.pushPose()
-        val matrix: Matrix4f = matrixStack.last().pose()
+    fun drawScreenIcon(poseStack: PoseStack, icon: ResourceLocation) {
+        poseStack.pushPose()
+        val matrix: Matrix4f = poseStack.last().pose()
         val tessellator = Tesselator.getInstance()
         val bufferBuilder: BufferBuilder = tessellator.builder
         RenderSystem.setShader { GameRenderer.getPositionTexShader() }
         RenderSystem.disableDepthTest()
-        matrixStack.translate(12.0, 12.0, 0.0)
+        poseStack.translate(12.0, 12.0, 0.0)
         RenderSystem.setShaderTexture(0, icon)
         bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX)
         bufferBuilder.vertex(matrix, -2f, 6f, 0f).uv(0f, 1f).endVertex()
@@ -80,7 +80,7 @@ object VoidBoundRenderUtils {
         bufferBuilder.vertex(matrix, 6f, -2f, 0f).uv(1f, 0f).endVertex()
         bufferBuilder.vertex(matrix, -2f, -2f, 0f).uv(0f, 0f).endVertex()
         tessellator.end()
-        matrixStack.popPose()
+        poseStack.popPose()
     }
 
 

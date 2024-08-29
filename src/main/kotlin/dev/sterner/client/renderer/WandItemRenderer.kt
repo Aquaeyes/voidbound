@@ -24,7 +24,7 @@ class WandItemRenderer(val texture: String) : DynamicItemRenderer {
     override fun render(
         stack: ItemStack,
         mode: ItemDisplayContext,
-        matrices: PoseStack,
+        poseStack: PoseStack,
         vertexConsumers: MultiBufferSource,
         light: Int,
         overlay: Int
@@ -37,15 +37,15 @@ class WandItemRenderer(val texture: String) : DynamicItemRenderer {
             fociModel = FociModel(Minecraft.getInstance().entityModels.bakeLayer(FociModel.LAYER_LOCATION))
         }
 
-        matrices.pushPose()
+        poseStack.pushPose()
 
-        matrices.translate(0f, 0.75f, 0f)
+        poseStack.translate(0f, 0.75f, 0f)
 
-        matrices.translate(0.5, 0.65, 0.5)
+        poseStack.translate(0.5, 0.65, 0.5)
 
-        matrices.scale(1f, -1f, -1f)
+        poseStack.scale(1f, -1f, -1f)
         model?.renderToBuffer(
-            matrices,
+            poseStack,
             vertexConsumers.getBuffer(RenderType.entityTranslucent(VoidBound.id("textures/item/$texture.png"))),
             light,
             overlay,
@@ -60,7 +60,7 @@ class WandItemRenderer(val texture: String) : DynamicItemRenderer {
         if (focus.isPresent) {
 
             fociModel?.renderToBuffer(
-                matrices,
+                poseStack,
                 vertexConsumers.getBuffer(
                     RenderType.entityTranslucent(
                         VoidBound.id(
@@ -81,6 +81,6 @@ class WandItemRenderer(val texture: String) : DynamicItemRenderer {
             )
         }
 
-        matrices.popPose()
+        poseStack.popPose()
     }
 }
