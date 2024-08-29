@@ -83,38 +83,7 @@ object VoidBoundRenderUtils {
         matrixStack.popPose()
     }
 
-    /**
-     * Render a texture quad in world towards camera
-     */
-    fun renderWobblyWorldIcon(
-        icon: ResourceLocation,
-        poseStack: PoseStack,
-        alpha: Float
-    ) {
-        poseStack.pushPose()
-        poseStack.mulPose(Axis.ZP.rotationDegrees(180f))
-        val renderType: RenderType =
-            LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(RenderTypeToken.createCachedToken(icon))
 
-        val pct: Float = ClientTickHandler.ticksInGame / 20f
-        val ease = Easing.SINE_OUT.ease(pct, 0f, 1f, 1f)
-        val wobbleStrength: Float = 0.1f - ease * 0.075f
-
-        val positions = arrayOf(
-            Vector3f(-0.025f, -0.025f, 1.01f),
-            Vector3f(1.025f, -0.025f, 1.01f),
-            Vector3f(1.025f, 1.025f, 1.01f),
-            Vector3f(-0.025f, 1.025f, 1.01f)
-        )
-
-        TotemPoleRenderer.applyWobble(positions, wobbleStrength)
-
-        VFXBuilders.createWorld()
-            .setAlpha(alpha)
-            .setRenderType(renderType)
-            .renderQuad(poseStack, positions, 9f)
-        poseStack.popPose()
-    }
 
     /**
      * Uses the renderCubeAtPos function with a set alpha
@@ -164,6 +133,42 @@ object VoidBoundRenderUtils {
         poseStack.popPose()
     }
 
+    /**
+     * Render a texture quad in world with a VFXBuilder
+     */
+    fun renderWobblyWorldIcon(
+        icon: ResourceLocation,
+        poseStack: PoseStack,
+        alpha: Float
+    ) {
+        poseStack.pushPose()
+        poseStack.mulPose(Axis.ZP.rotationDegrees(180f))
+        val renderType: RenderType =
+            LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(RenderTypeToken.createCachedToken(icon))
+
+        val pct: Float = ClientTickHandler.ticksInGame / 20f
+        val ease = Easing.SINE_OUT.ease(pct, 0f, 1f, 1f)
+        val wobbleStrength: Float = 0.1f - ease * 0.075f
+
+        val positions = arrayOf(
+            Vector3f(-0.025f, -0.025f, 1.01f),
+            Vector3f(1.025f, -0.025f, 1.01f),
+            Vector3f(1.025f, 1.025f, 1.01f),
+            Vector3f(-0.025f, 1.025f, 1.01f)
+        )
+
+        TotemPoleRenderer.applyWobble(positions, wobbleStrength)
+
+        VFXBuilders.createWorld()
+            .setAlpha(alpha)
+            .setRenderType(renderType)
+            .renderQuad(poseStack, positions, 9f)
+        poseStack.popPose()
+    }
+
+    /**
+     * Render a texture quad in world towards camera
+     */
     fun renderWobblyOrientedWorldIcon(poseStack: PoseStack, buffer: MultiBufferSource, camera: Quaternionf, yOffset: Float, alpha: Float, spirits: Optional<MutableList<SpiritWithCount>>) {
         poseStack.pushPose()
         poseStack.translate(0.0, yOffset.toDouble(), 0.0)

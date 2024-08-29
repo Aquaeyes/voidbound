@@ -16,7 +16,7 @@ import java.awt.Color
 object RiftHudRenderEvent {
 
     /**
-     * Renders the required items a spirit infusion requires to complete the craft at crosshair
+     * Renders the spirits in a rift at crosshair
      */
     fun spiritRiftHud(guiGraphics: GuiGraphics, partialTick: Float) {
         val client: Minecraft = Minecraft.getInstance()
@@ -31,11 +31,11 @@ object RiftHudRenderEvent {
                     val filteredSpiritList = spiritRift.simpleSpiritCharge.getMutableList().filter { it.count > 0 }
 
                     if (filteredSpiritList.isNotEmpty()) {
-                        val matrixStack = guiGraphics.pose()
-                        matrixStack.pushPose()
+                        val poseStack = guiGraphics.pose()
+                        poseStack.pushPose()
 
                         // Adjust for subpixel rendering on odd screen dimensions
-                        matrixStack.translate(
+                        poseStack.translate(
                             if (client.window.guiScaledWidth % 2 != 0) 0.5 else 0.0,
                             if (client.window.guiScaledHeight % 2 != 0) 0.5 else 0.0,
                             0.0
@@ -58,31 +58,31 @@ object RiftHudRenderEvent {
                             val y = centerY + radius * Math.sin(angle)
 
                             // Move the matrix stack to the calculated position and draw the spirit icon
-                            matrixStack.pushPose()
-                            matrixStack.translate(x, y, 0.0)
+                            poseStack.pushPose()
+                            poseStack.translate(x, y, 0.0)
                             VoidBoundRenderUtils.drawScreenIcon(
-                                matrixStack,
+                                poseStack,
                                 icon = VoidBound.id("textures/spirit/$id.png")
                             )
-                            matrixStack.pushPose()
-                            matrixStack.scale(0.5f, 0.5f, 0.0f)
+                            poseStack.pushPose()
+                            poseStack.scale(0.5f, 0.5f, 0.0f)
                             Minecraft.getInstance().font.drawInBatch(
                                 spirit.count.toString(),
                                 32f, 32f,
                                 Color(255,255,255).rgb,
                                 true,
-                                matrixStack.last().pose(),
+                                poseStack.last().pose(),
                                 guiGraphics.bufferSource(),
                                 Font.DisplayMode.NORMAL,
                                 0,
                                 LightTexture.FULL_BRIGHT,
                                 true
                             )
-                            matrixStack.popPose()
-                            matrixStack.popPose()
+                            poseStack.popPose()
+                            poseStack.popPose()
                         }
 
-                        matrixStack.popPose()
+                        poseStack.popPose()
                     }
                 }
             }
