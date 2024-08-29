@@ -2,17 +2,25 @@ package dev.sterner.client.renderer.blockentity
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
+import dev.sterner.VoidBound
+import dev.sterner.api.ClientTickHandler
 import dev.sterner.api.VoidBoundApi
+import dev.sterner.api.util.VoidBoundRenderUtils
 import dev.sterner.client.renderer.blockentity.SpiritBinderBlockEntityRenderer.Companion.TOKEN
 import dev.sterner.common.blockentity.SpiritRiftBlockEntity
 import dev.sterner.registry.VoidBoundRenderTypes
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.Font
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
+import net.minecraft.util.Mth
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
+import java.awt.Color
+import java.util.*
+import kotlin.math.sqrt
 
 
 class SpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
@@ -48,10 +56,19 @@ class SpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
                 s.safeGetUniform("RotationSpeed").set(0f)
                 s.safeGetUniform("Alpha").set(alpha)
             })
+        val cam = Minecraft.getInstance().gameRenderer.mainCamera
+        poseStack.pushPose()
+        if (VoidBoundApi.hasGoggles()) {
+            //poseStack.translate(0.0,0.0,0.0)
+            //val filt = (blockEntity.simpleSpiritCharge.getMutableList().filter { it.count > 0 }).toMutableList()
+            //VoidBoundRenderUtils.renderWobblyOrientedWorldIcon(poseStack, buffer, cam.rotation(), 0f, 1f, Optional.of(filt))
+        }
+        poseStack.popPose()
 
         poseStack.pushPose()
         poseStack.translate(0.5, 0.5, 0.5)
-        val cam = Minecraft.getInstance().gameRenderer.mainCamera
+
+
         poseStack.mulPose(cam.rotation())
         poseStack.mulPose(Axis.XP.rotationDegrees(180f))
 
@@ -76,6 +93,8 @@ class SpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
             })
 
         builder.renderQuad(poseStack, 0.3f)
+
+
 
         poseStack.popPose()
     }

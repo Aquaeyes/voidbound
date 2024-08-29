@@ -44,39 +44,8 @@ object SpiritIconRenderer {
         val currentAlpha =
             Mth.clamp(1.0 - ((sqrt(squareDistance) - startFade) / (maxDistance - startFade)), 0.0, 0.85).toFloat()
 
-        val entityHeight = entity.nameTagOffsetY - 0.2f
+        val entityHeight = entity.nameTagOffsetY
 
-        poseStack.pushPose()
-        poseStack.translate(0.0, entityHeight.toDouble(), 0.0)
-        poseStack.mulPose(camera)
-        poseStack.scale(0.025f, -0.025f, 0.025f)
-
-        val depthTestEnabled = GL11.glIsEnabled(GL11.GL_DEPTH_TEST)
-        RenderSystem.enableBlend()
-        RenderSystem.defaultBlendFunc()
-        RenderSystem.enableDepthTest()
-
-        val spiritDataOptional = VoidBoundUtils.getSpiritData(entity)
-        if (spiritDataOptional.isPresent) {
-            val o = spiritDataOptional.get().size
-            poseStack.translate(0f - o * 6, 0f, 0f)
-            for ((index, spirit) in spiritDataOptional.get().withIndex()) {
-                val id = spirit.type.identifier
-                poseStack.translate(10f, 0f, index * 0.01f)
-                VoidBoundRenderUtils.renderWobblyWorldIcon(
-                    VoidBound.id("textures/spirit/$id.png"),
-                    poseStack,
-                    currentAlpha
-                )
-            }
-        }
-
-        if (depthTestEnabled) {
-            RenderSystem.enableDepthTest()
-        } else {
-            RenderSystem.disableDepthTest()
-        }
-
-        poseStack.popPose()
+        VoidBoundRenderUtils.renderWobblyOrientedWorldIcon(poseStack, buffers, camera, entityHeight, currentAlpha, VoidBoundUtils.getSpiritData(entity))
     }
 }

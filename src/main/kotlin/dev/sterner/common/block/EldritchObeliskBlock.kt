@@ -11,18 +11,13 @@ import net.minecraft.world.phys.shapes.VoxelShape
 import team.lodestar.lodestone.systems.block.LodestoneEntityBlock
 import team.lodestar.lodestone.systems.multiblock.ILodestoneMultiblockComponent
 
-class EldritchObeliskBlock(properties: Properties) : LodestoneEntityBlock<EldritchObeliskBlockEntity>(properties),
-    ILodestoneMultiblockComponent {
+class EldritchObeliskBlock(properties: Properties) : LodestoneEntityBlock<EldritchObeliskBlockEntity>(properties) {
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
         return Shapes.join(shape, shape2, BooleanOp.OR)
     }
 
     companion object {
-        fun init() {
-
-        }
-
         val shape = Shapes.create(1 / 16.0, 8 / 16.0, 1 / 16.0, 15 / 16.0, 1.0, 15 / 16.0)
         val shape2 = Shapes.create(4 / 16.0, 0.0, 4 / 16.0, 12 / 16.0, 8 / 16.0, 12 / 16.0)
     }

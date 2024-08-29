@@ -4,6 +4,7 @@ import com.google.common.collect.Multimap
 import com.sammy.malum.common.events.MalumCodexEvents
 import dev.sterner.api.ClientTickHandler
 import dev.sterner.client.event.MalumCodexEvent
+import dev.sterner.client.event.RiftHudRenderEvent
 import dev.sterner.client.event.SpiritAltarHudRenderEvent
 import dev.sterner.common.components.VoidBoundPlayerComponent
 import dev.sterner.common.components.VoidBoundWorldComponent
@@ -59,6 +60,7 @@ object VoidBoundEvents {
         WorldRenderEvents.AFTER_TRANSLUCENT.register(VoidBoundPlayerComponent.Companion::renderCubeAtPos)
         WorldRenderEvents.AFTER_TRANSLUCENT.register(VoidBoundWorldComponent.Companion::renderCubeAtPos)
         HudRenderCallback.EVENT.register(SpiritAltarHudRenderEvent::spiritAltarRecipeHud)
+        HudRenderCallback.EVENT.register(RiftHudRenderEvent::spiritRiftHud)
         ClientTickEvents.END_CLIENT_TICK.register(ClientTickHandler::clientTickEnd)
     }
 }

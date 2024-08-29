@@ -42,7 +42,6 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     var oRot: Float = 0f
     var tRot: Float = 0f
 
-
     var enchantments: MutableList<EnchantmentData> = mutableListOf()
 
     var cachedEnchantments: MutableList<Int>? = mutableListOf()
@@ -174,27 +173,11 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         val dir = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING)
 
         if (player != null) {
-            /*
-             val (clampMin, clampMax) = when (dir) {
-                Direction.SOUTH -> Pair(-45, 45)
-                Direction.NORTH -> Pair(-225, -135)
-                Direction.EAST -> Pair(-135, -45)
-                else -> Pair(45, -225) //-235, 45??????
-            }
-             */
-            val (clampMin, clampMax) = when (dir) {
-                Direction.SOUTH -> Pair(45, 135)//DONE
-                Direction.NORTH -> Pair(-45 - 90, 45 - 90)//DONE
-                Direction.EAST -> Pair(-45, 45) //DONE
-                else -> Pair(135, -180) //>:(
-            }
 
             val d: Double = player.x - (blockPos.x.toDouble() + 0.5)
             val e: Double = player.z - (blockPos.z.toDouble() + 0.5)
-            //val extra =  + Math.toRadians(270.0).toFloat()
-            //println((Mth.atan2(e, d).toFloat()) * 180 / Math.PI)
             tRot = Mth.atan2(e, d).toFloat() - (PI / 2f).toFloat()
-            //tRot = Mth.clamp(Mth.atan2(e, d).toFloat(), clampMin * (PI / 180f).toFloat(), clampMax * (PI / 180f).toFloat()) - (PI / 2f).toFloat()
+
         } else {
 
             tRot = when (dir) {
@@ -363,9 +346,5 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         activated = compound.getBoolean("Activated")
 
         super.load(compound)
-    }
-
-    companion object {
-        val RANDOM: RandomSource = RandomSource.create()
     }
 }

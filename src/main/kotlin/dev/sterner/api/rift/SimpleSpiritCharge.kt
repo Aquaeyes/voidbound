@@ -1,5 +1,6 @@
 package dev.sterner.api.rift
 
+import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import net.minecraft.nbt.CompoundTag
@@ -16,10 +17,21 @@ data class SimpleSpiritCharge(
         SpiritTypeRegistry.ELDRITCH_SPIRIT to 0,
         SpiritTypeRegistry.INFERNAL_SPIRIT to 0,
         SpiritTypeRegistry.SACRED_SPIRIT to 0,
-        SpiritTypeRegistry.WICKED_SPIRIT to 0,
-        SpiritTypeRegistry.UMBRAL_SPIRIT to 0
+        SpiritTypeRegistry.WICKED_SPIRIT to 0
     )
 ) {
+
+    fun getMutableList() : MutableList<SpiritWithCount> {
+        val list = mutableListOf<SpiritWithCount>()
+        charges.forEach { type, count ->
+            list.add(SpiritWithCount(type, count))
+        }
+        return list
+    }
+
+    fun size() : Int {
+        return charges.size
+    }
 
     fun getChargeForType(spiritType: MalumSpiritType): Int {
         return charges[spiritType]!!
