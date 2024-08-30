@@ -38,12 +38,13 @@ vec3 paintCircle (vec2 uv, vec2 center, float rad, float width, float index) {
 }
 
 
-vec3 paintRing(vec2 uv, vec2 center, float radius, float index){
+vec3 paintRing(vec2 uv, vec2 center, float radius, float index) {
     vec3 color = paintCircle(uv, center, radius, 0.095, index);
-    color *= vec3(0.9, 0.9, 0.9);
-    color += paintCircle(uv, center, radius, 0.025, index);//White
+    color *= vec3(1.1, 1.1, 1.1);  // Brightens the color
+    color += paintCircle(uv, center, radius, 0.025, index); // Adds a white ring overlay
     return color;
 }
+
 
 mat2 rotate2d(float angle){
     return mat2(cos(angle), -sin(angle),

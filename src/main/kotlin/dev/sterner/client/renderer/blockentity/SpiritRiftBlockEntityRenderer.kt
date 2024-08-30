@@ -67,7 +67,7 @@ class SpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
 
         poseStack.mulPose(cam.rotation())
         poseStack.mulPose(Axis.XP.rotationDegrees(180f))
-
+        poseStack.scale(2f, 2f, 2f)
         builder.renderQuad(poseStack, 0.5f)
 
         builder = VFXBuilders.createWorld()

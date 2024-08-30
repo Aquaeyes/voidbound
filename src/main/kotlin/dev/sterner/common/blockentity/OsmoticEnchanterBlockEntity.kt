@@ -120,6 +120,12 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     override fun tick() {
+
+        if (level!!.isClientSide) {
+            animationTick()
+        }
+        super.tick()
+
         if (activated) {
             cooldown++
 
@@ -180,15 +186,10 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
                     doEnchant()
                 }
             }
-
-            if (level!!.isClientSide) {
-                animationTick()
-            }
-            super.tick()
         }
     }
 
-    fun animationTick() {
+    private fun animationTick() {
         oRot = rot
         val player = level!!.getNearestPlayer(
             blockPos.x.toDouble() + 0.5,
