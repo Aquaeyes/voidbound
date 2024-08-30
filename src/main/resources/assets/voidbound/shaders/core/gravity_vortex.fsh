@@ -64,10 +64,6 @@ void main() {
     float radius = mod(1000 * GameTime/RingSpeed, CycleDuration);
     vec3 color;
 
-    float border = 0.25;
-    vec2 bl = smoothstep(0.0, border, uv);
-    vec2 tr = smoothstep(0.0, border, 1.0 - uv);
-
     uv.x = floor(uv.x* Width)/ Width;
     uv.y = floor(uv.y* Height)/ Height;
 
