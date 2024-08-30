@@ -21,11 +21,12 @@ data class SimpleSpiritCharge(
     )
 ) {
 
-    fun getMutableList() : MutableList<SpiritWithCount> {
+    private fun getMutableList() : MutableList<SpiritWithCount> {
         val list = mutableListOf<SpiritWithCount>()
-        charges.forEach { type, count ->
+        forEach { type, count ->
             list.add(SpiritWithCount(type, count))
         }
+
         return list
     }
 
