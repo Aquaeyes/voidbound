@@ -29,6 +29,10 @@ data class SimpleSpiritCharge(
         return list
     }
 
+    fun getNonEmptyMutableList() : MutableList<SpiritWithCount> {
+        return getMutableList().filter { it.count > 0 }.toMutableList()
+    }
+
     fun size() : Int {
         return charges.size
     }

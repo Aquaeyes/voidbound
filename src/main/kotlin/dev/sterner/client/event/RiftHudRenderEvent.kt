@@ -28,9 +28,9 @@ object RiftHudRenderEvent {
                 if (client.level!!.getBlockEntity(pos) is SpiritRiftBlockEntity) {
                     val spiritRift = client.level!!.getBlockEntity(pos) as SpiritRiftBlockEntity
 
-                    val filteredSpiritList = spiritRift.simpleSpiritCharge.getMutableList().filter { it.count > 0 }
+                    val spiritList = spiritRift.simpleSpiritCharge.getNonEmptyMutableList()
 
-                    if (filteredSpiritList.isNotEmpty()) {
+                    if (spiritList.isNotEmpty()) {
                         val poseStack = guiGraphics.pose()
                         poseStack.pushPose()
 
@@ -47,11 +47,11 @@ object RiftHudRenderEvent {
                         val radius = 10.0 // You can adjust the radius to fit your design
 
                         // Iterate over the spirits to position them in a circular pattern
-                        for ((index, spirit) in filteredSpiritList.withIndex()) {
+                        for ((index, spirit) in spiritList.withIndex()) {
                             val id = spirit.type.identifier
 
                             // Calculate the angle for this spirit
-                            val angle = ((index.toDouble() / filteredSpiritList.size) * 2 * Math.PI) - (Math.PI / 2)
+                            val angle = ((index.toDouble() / spiritList.size) * 2 * Math.PI) - (Math.PI / 2)
 
                             // Calculate the x and y positions based on the angle and radius
                             val x = centerX + radius * Math.cos(angle)
