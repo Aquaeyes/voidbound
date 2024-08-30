@@ -265,8 +265,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         }.collect(Collectors.toList()))
 
         enchantmentObjects = enchantmentObjects.filter { !it.isCurse }.toMutableList()
-        cachedEnchantments =
-            enchantmentObjects.stream().map(BuiltInRegistries.ENCHANTMENT::getId).toList().toMutableList()
+        cachedEnchantments = enchantmentObjects.stream().map(BuiltInRegistries.ENCHANTMENT::getId).toList().toMutableList()
         notifyUpdate()
     }
 

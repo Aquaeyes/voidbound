@@ -41,13 +41,6 @@ class OsmoticEnchanterScreen(
 
     override fun containerTick() {
         if (menu.shouldRefresh) {
-            if (blockEntity?.activated == false) {
-                selectedEnchants.clear()
-            } else {
-                if (blockEntity?.cachedEnchantments != null) {
-                    selectedEnchants = blockEntity?.cachedEnchantments!!.toMutableSet()
-                }
-            }
             refreshEnchants()
             menu.shouldRefresh = false
         }
@@ -67,25 +60,23 @@ class OsmoticEnchanterScreen(
         val xInMenu = (this.width - this.imageWidth) / 2
         val yInMenu = (this.height - this.imageHeight) / 2
 
+        // Add unselected enchantments
         val filteredEnchantments = blockEntity?.cachedEnchantments?.filter { it !in selectedEnchants }.orEmpty()
-
         addEnchantments(filteredEnchantments, xInMenu, yInMenu)
 
-        addStartEnchantingWidget(xInMenu, yInMenu)
-
+        // Add selected enchantments
         addSelectedEnchantments(xInMenu, yInMenu)
 
+        addStartEnchantingWidget(xInMenu, yInMenu)
         addSpiritBarWidget(xInMenu, yInMenu, true)
         addSpiritBarWidget(xInMenu, yInMenu, false)
 
-        val iterator = renderables.iterator()
-        while (iterator.hasNext()) {
-            val rend = iterator.next()
+        // Restore previous levels for selected enchantments
+        for (rend in renderables) {
             if (rend is SelectedEnchantmentWidget) {
-                for (c in cache) {
-                    if (rend.enchantment == c.enchantment) {
-                        rend.level = c.level
-                    }
+                val matchingCache = cache.find { it.enchantment == rend.enchantment }
+                if (matchingCache != null) {
+                    rend.level = matchingCache.level
                 }
             }
         }
@@ -108,6 +99,15 @@ class OsmoticEnchanterScreen(
             val widget = SelectedEnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset)
             widget.enchantment = Enchantment.byId(enchantId)
             this.addRenderableWidget(widget)
+        }
+        if (selectedEnchants.isEmpty()) {
+            blockEntity?.enchantments?.forEachIndexed { index, enchantmentData ->
+                val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 83, 5, 34, 23)
+                val widget = SelectedEnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset)
+                widget.enchantment = enchantmentData.enchantment
+                widget.level = enchantmentData.level
+                this.addRenderableWidget(widget)
+            }
         }
     }
 

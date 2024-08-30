@@ -96,10 +96,10 @@ class SelectedEnchantmentWidget(screen: OsmoticEnchanterScreen, x: Int, y: Int) 
         val border = VoidBound.id("textures/gui/enchanter_widget.png")
         guiGraphics.blit(border, x, y, 0f, 0f, width, height, width, height)
 
-        if (screen.menu.osmoticEnchanter?.activated == false) {
-            val l = Component.empty().append(Component.translatable("enchantment.level.$level"))
-            guiGraphics.drawCenteredString(Minecraft.getInstance().font, l, x + 15, y + 17, Color.WHITE.rgb)
-        }
+
+        val l = Component.empty().append(Component.translatable("enchantment.level.$level"))
+        guiGraphics.drawCenteredString(Minecraft.getInstance().font, l, x + 15, y + 17, Color.WHITE.rgb)
+
 
         super.renderWidget(guiGraphics, mouseX, mouseY, partialTick)
     }
