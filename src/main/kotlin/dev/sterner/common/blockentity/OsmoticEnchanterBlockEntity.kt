@@ -136,10 +136,10 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
                 // New code to find the nearest rift and access its spirits
                 val pos = blockPos
                 val range = 3
-                for (aroundPos in BlockPos.betweenClosed(pos.x - range, pos.y, pos.z - range, pos.x + range, pos.y + range, pos.z + range)) {
+                label@ for (aroundPos in BlockPos.betweenClosed(pos.x - range, pos.y, pos.z - range, pos.x + range, pos.y + range, pos.z + range)) {
                     if (level?.getBlockEntity(aroundPos) is SpiritRiftBlockEntity) {
                         foundRiftPos = aroundPos
-                        break
+                        break@label
                     }
                 }
 
