@@ -44,7 +44,7 @@ object RiftHudRenderEvent {
                         // Center of the screen
                         val centerX = client.window.guiScaledWidth / 2.0 - 15
                         val centerY = client.window.guiScaledHeight / 2.0 - 15 // Adjusted for your original centerY offset
-                        val radius = 10.0 // You can adjust the radius to fit your design
+                        val radius = 16.0 // You can adjust the radius to fit your design
 
                         // Iterate over the spirits to position them in a circular pattern
                         for ((index, spirit) in spiritList.withIndex()) {
@@ -66,18 +66,30 @@ object RiftHudRenderEvent {
                             )
                             poseStack.pushPose()
                             poseStack.scale(0.5f, 0.5f, 0.0f)
-                            Minecraft.getInstance().font.drawInBatch(
-                                spirit.count.toString(),
-                                32f, 32f,
-                                Color(255,255,255).rgb,
-                                true,
-                                poseStack.last().pose(),
-                                guiGraphics.bufferSource(),
-                                Font.DisplayMode.NORMAL,
-                                0,
-                                LightTexture.FULL_BRIGHT,
-                                true
-                            )
+                            if (spiritRift.infinite) {
+                                poseStack.pushPose()
+                                poseStack.scale(1.5f, 1.5f, 1.5f)
+                                poseStack.translate(8.0, 8.0, 240.0)
+                                VoidBoundRenderUtils.drawScreenIcon(
+                                    poseStack,
+                                    icon = VoidBound.id("textures/gui/infinite_light.png")
+                                )
+                                poseStack.popPose()
+                            } else {
+                                Minecraft.getInstance().font.drawInBatch(
+                                    spirit.count.toString(),
+                                    32f, 32f,
+                                    Color(255,255,255).rgb,
+                                    true,
+                                    poseStack.last().pose(),
+                                    guiGraphics.bufferSource(),
+                                    Font.DisplayMode.NORMAL,
+                                    0,
+                                    LightTexture.FULL_BRIGHT,
+                                    true
+                                )
+                            }
+
                             poseStack.popPose()
                             poseStack.popPose()
                         }

@@ -58,11 +58,7 @@ class SpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
             })
         val cam = Minecraft.getInstance().gameRenderer.mainCamera
         poseStack.pushPose()
-        if (VoidBoundApi.hasGoggles()) {
-            //poseStack.translate(0.0,0.0,0.0)
-            //val filt = (blockEntity.simpleSpiritCharge.getMutableList().filter { it.count > 0 }).toMutableList()
-            //VoidBoundRenderUtils.renderWobblyOrientedWorldIcon(poseStack, buffer, cam.rotation(), 0f, 1f, Optional.of(filt))
-        }
+
         poseStack.popPose()
 
         poseStack.pushPose()

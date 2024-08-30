@@ -40,7 +40,7 @@ class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState) :
     var counter = 0
     private var rechargeCounter = 0
 
-    private var infinite = false
+    var infinite = false
         set(value) {
             field = value
             if (value) {
@@ -53,22 +53,28 @@ class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState) :
         //TODO remove
         if (FabricLoader.getInstance().isDevelopmentEnvironment) {
             if (hand == InteractionHand.MAIN_HAND) {
-                when (riftType) {
-                    is NormalRiftType -> {
-                        riftType = VoidBoundRiftTypeRegistry.ELDRITCH.get()
-                        player.sendSystemMessage(Component.translatable("Eldritch"))
-                    }
+                if (player.isShiftKeyDown) {
+                    infinite = true
+                    notifyUpdate()
+                } else {
+                    when (riftType) {
+                        is NormalRiftType -> {
+                            riftType = VoidBoundRiftTypeRegistry.ELDRITCH.get()
+                            player.sendSystemMessage(Component.translatable("Eldritch"))
+                        }
 
-                    is EldritchRiftType -> {
-                        riftType = VoidBoundRiftTypeRegistry.DESTABILIZED.get()
-                        player.sendSystemMessage(Component.translatable("Destabilized"))
-                    }
+                        is EldritchRiftType -> {
+                            riftType = VoidBoundRiftTypeRegistry.DESTABILIZED.get()
+                            player.sendSystemMessage(Component.translatable("Destabilized"))
+                        }
 
-                    is DestabilizedRiftType -> {
-                        riftType = VoidBoundRiftTypeRegistry.NORMAL.get()
-                        player.sendSystemMessage(Component.translatable("Normal"))
+                        is DestabilizedRiftType -> {
+                            riftType = VoidBoundRiftTypeRegistry.NORMAL.get()
+                            player.sendSystemMessage(Component.translatable("Normal"))
+                        }
                     }
                 }
+
                 notifyUpdate()
             }
         }
@@ -96,12 +102,6 @@ class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState) :
             // Interpolate alpha towards targetAlpha
             alpha = Mth.lerp(0.05f, alpha, targetAlpha)
         }
-    }
-
-    fun removeSpiritFromCharge(type: MalumSpiritType, count: Int): Boolean {
-        val bl = simpleSpiritCharge.removeFromCharge(type, count)
-        notifyUpdate()
-        return bl
     }
 
     fun addSpiritToCharge(entity: PathfinderMob) {
