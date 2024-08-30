@@ -1,6 +1,7 @@
 package dev.sterner.common.blockentity
 
 import com.sammy.malum.common.block.MalumBlockEntityInventory
+import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.rift.SimpleSpiritCharge
@@ -11,9 +12,9 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtUtils
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
-import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
@@ -51,6 +52,8 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     var consumedSpirits: SimpleSpiritCharge = SimpleSpiritCharge()
 
     private var cooldown: Int = 0
+
+    var foundRiftPos: BlockPos? = null
 
     init {
         inventory = object : MalumBlockEntityInventory(1, 64) {
@@ -124,40 +127,65 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
                 // Variable to track if a spirit has been consumed
                 var spiritConsumed = false
 
-                //TODO this whole segment needs to change to accept spirits from a source, now the source is infinite
-
-                // Iterate through each spirit type, but stop after one spirit is processed
-                for (spiritType in SpiritTypeRegistry.SPIRITS) {
-                    val requiredCharge = spiritsToConsume.getChargeForType(spiritType.value)
-                    val currentCharge = consumedSpirits.getChargeForType(spiritType.value)
-
-                    // Check if more charge needs to be added for this spirit type
-                    if (currentCharge < requiredCharge) {
-                        consumedSpirits.addToCharge(spiritType.value, 1)
-                        spiritConsumed = true  // Mark that a spirit was consumed
-
-                        // Exit the loop after processing this spirit type
+                // New code to find the nearest rift and access its spirits
+                val pos = blockPos
+                val range = 3
+                for (aroundPos in BlockPos.betweenClosed(pos.x - range, pos.y, pos.z - range, pos.x + range, pos.y + range, pos.z + range)) {
+                    if (level?.getBlockEntity(aroundPos) is SpiritRiftBlockEntity) {
+                        foundRiftPos = aroundPos
                         break
                     }
                 }
 
-                // Reset cooldown if a spirit was consumed
-                if (spiritConsumed) {
-                    cooldown = 0
-                    notifyUpdate()
+                if (foundRiftPos != null && level!!.getBlockEntity(foundRiftPos!!) is SpiritRiftBlockEntity) {
+                    val rift = level!!.getBlockEntity(foundRiftPos!!) as SpiritRiftBlockEntity
+                    val riftSpirits: MutableList<SpiritWithCount> = rift.simpleSpiritCharge.getNonEmptyMutableList()
+
+                    // Iterate through each spirit type and consume from the rift if necessary
+                    for (spiritType in spiritsToConsume.getNonEmptyMutableList()) {
+                        val requiredCharge = spiritsToConsume.getChargeForType(spiritType.type)
+                        val currentCharge = consumedSpirits.getChargeForType(spiritType.type)
+
+                        // Check if more charge is needed for this spirit type
+                        if (currentCharge < requiredCharge) {
+                            // Find the corresponding spirit in the rift
+                            val riftSpirit = riftSpirits.find { it.type == spiritType.type }
+
+                            if (riftSpirit != null && riftSpirit.count > 0) {
+                                // Add one charge to the consumed spirits
+                                consumedSpirits.addToCharge(spiritType.type, 1)
+
+                                // Decrement the spirit count in the rift
+                                rift.simpleSpiritCharge.removeFromCharge(riftSpirit.type, 1)
+                                rift.notifyUpdate()
+
+                                // Mark that a spirit was consumed
+                                spiritConsumed = true
+
+                                // Exit the loop after processing this spirit type
+                                break
+                            }
+                        }
+                    }
+
+                    // Reset cooldown if a spirit was consumed
+                    if (spiritConsumed) {
+                        cooldown = 0
+                        notifyUpdate()
+                    }
+                }
+
+                // If all the spirits are consumed, perform the enchantment
+                if (consumedSpirits.getTotalCharge() >= spiritsToConsume.getTotalCharge()) {
+                    doEnchant()
                 }
             }
 
-            // If all the spirits are consumed, perform the enchantment
-            if (consumedSpirits.getTotalCharge() >= spiritsToConsume.getTotalCharge()) {
-                doEnchant()
+            if (level!!.isClientSide) {
+                animationTick()
             }
+            super.tick()
         }
-
-        if (level!!.isClientSide) {
-            animationTick()
-        }
-        super.tick()
     }
 
     fun animationTick() {
@@ -319,6 +347,11 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         consumedSpirits.serializeNBT(consumedNbt)
         compound.put("Consumed", consumedNbt)
         compound.putBoolean("Activated", activated)
+
+        if (foundRiftPos != null) {
+            compound.put("RiftPos", NbtUtils.writeBlockPos(foundRiftPos!!))
+        }
+
         super.saveAdditional(compound)
     }
 
@@ -344,6 +377,10 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             consumedSpirits = consumedSpirits.deserializeNBT(c)
         }
         activated = compound.getBoolean("Activated")
+
+        if (compound.contains("RiftPos")) {
+            foundRiftPos = NbtUtils.readBlockPos(compound.getCompound("RiftPos"))
+        }
 
         super.load(compound)
     }
