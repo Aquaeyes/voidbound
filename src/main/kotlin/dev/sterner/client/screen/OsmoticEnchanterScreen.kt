@@ -55,7 +55,8 @@ class OsmoticEnchanterScreen(
         val xInMenu = (this.width - this.imageWidth) / 2
         val yInMenu = (this.height - this.imageHeight) / 2
 
-        addEnchantments(blockEntity?.activeEnchantments, xInMenu, yInMenu)
+        addEnchantments(blockEntity?.availableEnchantments, xInMenu, yInMenu, false)
+        addEnchantments(blockEntity?.activeEnchantments, xInMenu, yInMenu, true)
 
         addStartEnchantingWidget(xInMenu, yInMenu)
         addSpiritBarWidget(xInMenu, yInMenu, true)
@@ -64,23 +65,24 @@ class OsmoticEnchanterScreen(
         blockEntity?.calculateSpiritRequired()
     }
 
-    private fun addEnchantments(enchantments: MutableList<OsmoticEnchanterBlockEntity.EnchantmentData>?, xInMenu: Int, yInMenu: Int) {
+    private fun addEnchantments(enchantments: MutableList<OsmoticEnchanterBlockEntity.EnchantmentData>?, xInMenu: Int, yInMenu: Int, selected: Boolean) {
         enchantments?.forEachIndexed { index, data ->
             var width = 16
             var height = 16
 
-            val (xOffset, yOffset) = if (data.selected) {
+            val (xOffset, yOffset) = if (selected) {
                 width = 22
                 height = 33
-                calculateWidgetPosition(index, 3, 83, 5, 34, 23, true, enchantments.size)
+                calculateWidgetPosition(index, 3, 83, 5, 34, 23)
             } else {
-                calculateWidgetPosition(index, 3, 168, 15 + 26, 17, 17, false, enchantments.size)
+                calculateWidgetPosition(index, 3, 168, 15 + 26, 17, 17)
             }
 
             val widget = EnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset, width, height)
             widget.enchantment = data.enchantment
+           // println(data.enchantment.descriptionId)
             widget.level = data.level
-            widget.selected = data.selected
+            widget.selected = selected
             this.addRenderableWidget(widget)
         }
     }
@@ -126,22 +128,11 @@ class OsmoticEnchanterScreen(
         baseX: Int,
         baseY: Int,
         offsetY: Int,
-        offsetX: Int,
-        isActive: Boolean,
-        size: Int
+        offsetX: Int
     ): Pair<Int, Int> {
-        return if (isActive) {
-            // Calculate for a 3x3 grid starting from the bottom up
-            val reversedIndex = size - index - 1  // Assuming 3x3 grid means 9 slots, adjust the index to fill from bottom up
-            val xOffset = (reversedIndex % itemsPerRow) * offsetX + baseX
-            val yOffset = (reversedIndex / itemsPerRow) * offsetY + baseY
-            Pair(xOffset, yOffset)
-        } else {
-            // Default calculation for non-active widgets
-            val xOffset = (index % itemsPerRow) * offsetX + baseX
-            val yOffset = (index / itemsPerRow) * offsetY + baseY
-            Pair(xOffset, yOffset)
-        }
+        val xOffset = (index % itemsPerRow) * offsetX + baseX
+        val yOffset = (index / itemsPerRow) * offsetY + baseY
+        return Pair(xOffset, yOffset)
     }
 
     private fun getBlockEntity(playerInventory: Inventory, blockPos: BlockPos): OsmoticEnchanterBlockEntity? {

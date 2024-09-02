@@ -37,10 +37,10 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
             return
         }
 
-        val activatedEnchantments = screen.menu.osmoticEnchanter?.activeEnchantments?.filter { it.selected }
+        val activatedEnchantments = screen.menu.osmoticEnchanter?.activeEnchantments
         val compatible = EnchantmentHelper.isEnchantmentCompatible(activatedEnchantments?.map { it.enchantment }!!, enchantment!!)
 
-        val cap = screen.menu.osmoticEnchanter?.activeEnchantments?.count { it.selected }!! < 9
+        val cap = screen.menu.osmoticEnchanter?.activeEnchantments!!.size < 9
 
         if (selected) {
             val bl = level(mouseX, mouseY)
@@ -86,7 +86,7 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
 
         guiGraphics.blit(icon, xx, yy, 0f, 0f, 16, 16, 16, 16)
 
-        val bl = EnchantmentHelper.isEnchantmentCompatible(screen.menu.osmoticEnchanter!!.activeEnchantments.filter { it.selected }.map { it.enchantment }, enchantment!!)
+        val bl = EnchantmentHelper.isEnchantmentCompatible(screen.menu.osmoticEnchanter!!.activeEnchantments.map { it.enchantment }, enchantment!!)
         if (!bl && !selected) {
             guiGraphics.blit(VoidBound.id("textures/gui/no.png"), xx + 8, yy + 8, 0f, 0f, 9, 9, 9, 9)
         }

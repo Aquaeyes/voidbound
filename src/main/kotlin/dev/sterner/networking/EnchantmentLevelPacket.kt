@@ -21,11 +21,11 @@ class EnchantmentLevelPacket(nbt: CompoundTag) : LodestoneServerNBTPacket(nbt) {
 
     constructor(buf: FriendlyByteBuf) : this(buf.readNbt()!!)
 
-    constructor(enchantment: Enchantment, level: Int, asLong: Long, active: Boolean) : this(CompoundTag().apply {
+    constructor(enchantment: Enchantment, level: Int, asLong: Long, toActivate: Boolean) : this(CompoundTag().apply {
         putInt("Enchantment", BuiltInRegistries.ENCHANTMENT.getId(enchantment))
         putInt("Level", level)
         putLong("Pos", asLong)
-        putBoolean("Active", active)
+        putBoolean("Active", toActivate)
     })
 
     override fun executeServerNbt(
@@ -40,11 +40,11 @@ class EnchantmentLevelPacket(nbt: CompoundTag) : LodestoneServerNBTPacket(nbt) {
             val enchantment: Enchantment = Enchantment.byId(data.getInt("Enchantment"))!!
             val level: Int = data.getInt("Level")
             val pos = BlockPos.of(data.getLong("Pos"))
-            val active = data.getBoolean("Active")
+            val toActivate = data.getBoolean("Active")
 
             if (player?.level()?.getBlockEntity(pos) is OsmoticEnchanterBlockEntity) {
                 val osmotic = player.level().getBlockEntity(pos) as OsmoticEnchanterBlockEntity
-                osmotic.updateEnchantmentData(enchantment, level, active)
+                osmotic.updateEnchantmentData(enchantment, level, toActivate)
                 osmotic.calculateSpiritRequired()
             }
         }
