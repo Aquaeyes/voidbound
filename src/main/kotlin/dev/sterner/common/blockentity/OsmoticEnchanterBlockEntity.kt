@@ -235,6 +235,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         time++
     }
 
+    //ENCHANTING SECTION START
 
     fun startEnchanting() {
         if (calculateSpiritRequired()) {
@@ -299,9 +300,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     fun refreshEnchants() {
-
         availableEnchantments = getValidEnchantments()
-
         notifyUpdate()
     }
 
@@ -318,6 +317,10 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         }
         return enchantments
     }
+
+    //ENCHANTING SECTION END
+
+    //DATA SECTION START
 
     override fun saveAdditional(compound: CompoundTag) {
         compound.putIntArray(
@@ -359,7 +362,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
             val enchantmentArray = compound.getIntArray("AvailableEnchants")
 
-            for ((index, enchantment) in enchantmentArray.withIndex()) {
+            for (enchantment in enchantmentArray) {
                 availableEnchantments.add(EnchantmentData(Enchantment.byId(enchantment)!!, 1))
             }
         }
@@ -377,4 +380,6 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
         super.load(compound)
     }
+
+    //DATA SECTION END
 }
