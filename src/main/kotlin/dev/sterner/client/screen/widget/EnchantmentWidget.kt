@@ -16,6 +16,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.util.Mth
 import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.EnchantmentHelper
 import java.awt.Color
 
 
@@ -36,6 +37,11 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
             return
         }
 
+        val activatedEnchantments = screen.menu.osmoticEnchanter?.activeEnchantments?.filter { it.active }
+        val compatible = EnchantmentHelper.isEnchantmentCompatible(activatedEnchantments?.map { it.enchantment }!!, enchantment!!)
+
+        val cap = screen.menu.osmoticEnchanter?.activeEnchantments?.count { it.active }!! < 9
+        println(cap)
         if (selected) {
             val bl = level(mouseX, mouseY)
             if (bl) {
@@ -43,12 +49,11 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
                 VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(EnchantmentLevelPacket(enchantment!!, level, screen.menu.pos.asLong(), false))
                 screen.menu.osmoticEnchanter?.updateEnchantmentData(enchantment!!, level, false)
             }
-        } else {
+        } else if (compatible && cap) {
             VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(EnchantmentLevelPacket(enchantment!!, level, screen.menu.pos.asLong(), true))
             screen.menu.osmoticEnchanter?.updateEnchantmentData(enchantment!!, level, true)
+            screen.refreshEnchants()
         }
-
-        screen.refreshEnchants()
 
         super.onClick(mouseX, mouseY)
     }

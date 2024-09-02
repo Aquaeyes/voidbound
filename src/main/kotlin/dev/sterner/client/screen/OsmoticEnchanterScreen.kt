@@ -90,7 +90,7 @@ class OsmoticEnchanterScreen(
         this.addRenderableWidget(StartEnchantingWidget(this, widgetX, widgetY))
     }
 
-    private fun addSpiritBarWidget(xInMenu: Int, yInMenu: Int, isScy: Boolean) {
+    private fun addSpiritBarWidget(xInMenu: Int, yInMenu: Int, isScry: Boolean) {
         val topRowSpirits = arrayOf(
             SpiritTypeRegistry.AERIAL_SPIRIT,
             SpiritTypeRegistry.AQUEOUS_SPIRIT,
@@ -109,7 +109,7 @@ class OsmoticEnchanterScreen(
             for ((index, spiritType) in spiritTypes.withIndex()) {
                 val widget = SpiritBarWidget(this, xInMenu + 12 + 17 * index, yInMenu + yOffset)
                 widget.spiritType = spiritType
-                widget.isScry = isScy
+                widget.isScry = isScry
                 this.addRenderableWidget(widget)
             }
         }
