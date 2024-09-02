@@ -3,7 +3,6 @@ package dev.sterner.client.screen.widget
 import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.client.screen.OsmoticEnchanterScreen
 import dev.sterner.networking.EnchantmentLevelPacket
-import dev.sterner.networking.RemoveEnchantPacket
 import dev.sterner.registry.VoidBoundPacketRegistry
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
@@ -13,6 +12,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
+import net.minecraft.world.item.enchantment.Enchantments
 
 
 open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int, width: Int, height: Int) :
@@ -31,17 +31,13 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
         if (screen.menu.osmoticEnchanter?.activated == true) {
             return
         }
-
-        if (enchantment != null && !EnchantmentHelper.isEnchantmentCompatible(screen.selectedEnchants.map { Enchantment.byId(it) }, enchantment!!)) {
-            //return
-        }
         var remove = false
+        var bl = EnchantmentHelper.isEnchantmentCompatible(screen.selectedEnchants.map { Enchantment.byId(it) }, enchantment!!)
+
         if (screen.selectedEnchants.contains(id)) {
             screen.selectedEnchants.remove(id)
             remove = true
-            //VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(RemoveEnchantPacket(id, screen.menu.pos))
-
-        } else if (!screen.selectedEnchants.contains(id) && screen.selectedEnchants.size < 9) {
+        } else if (!screen.selectedEnchants.contains(id) && screen.selectedEnchants.size < 9 && bl) {
             screen.selectedEnchants.add(BuiltInRegistries.ENCHANTMENT.getId(enchantment))
         }
 
