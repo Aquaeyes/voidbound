@@ -96,7 +96,7 @@ class SpiritBarWidget(private var screen: OsmoticEnchanterScreen, x: Int, y: Int
     private fun calcNormal(targetSpirits: SimpleSpiritCharge?): Float {
         var normalizer = 0f
         if (targetSpirits != null) {
-            normalizer = targetSpirits.getChargeForType(spiritType!!) / 256f
+            normalizer = targetSpirits.getChargeForType(spiritType!!) / 128f
             normalizer = Mth.clamp(normalizer, 0.0f, 1.0f)
         }
         return normalizer

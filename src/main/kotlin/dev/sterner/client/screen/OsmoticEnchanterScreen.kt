@@ -15,7 +15,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.item.enchantment.Enchantment
 
 
 class OsmoticEnchanterScreen(
@@ -71,9 +70,9 @@ class OsmoticEnchanterScreen(
             val (xOffset, yOffset) = if (data.active) {
                 width = 22
                 height = 33
-                calculateWidgetPosition(index, 3, 83, 5, 34, 23)
+                calculateWidgetPosition(index, 3, 83, 5, 34, 23, true, enchantments.size)
             } else {
-                calculateWidgetPosition(index, 3, 168, 15 + 26, 17, 17)
+                calculateWidgetPosition(index, 3, 168, 15 + 26, 17, 17, false, enchantments.size)
             }
 
             val widget = EnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset, width, height)
@@ -125,11 +124,22 @@ class OsmoticEnchanterScreen(
         baseX: Int,
         baseY: Int,
         offsetY: Int,
-        offsetX: Int
+        offsetX: Int,
+        isActive: Boolean,
+        size: Int
     ): Pair<Int, Int> {
-        val xOffset = (index % itemsPerRow) * offsetX + baseX
-        val yOffset = (index / itemsPerRow) * offsetY + baseY
-        return Pair(xOffset, yOffset)
+        return if (isActive) {
+            // Calculate for a 3x3 grid starting from the bottom up
+            val reversedIndex = size - index - 1  // Assuming 3x3 grid means 9 slots, adjust the index to fill from bottom up
+            val xOffset = (reversedIndex % itemsPerRow) * offsetX + baseX
+            val yOffset = (reversedIndex / itemsPerRow) * offsetY + baseY
+            Pair(xOffset, yOffset)
+        } else {
+            // Default calculation for non-active widgets
+            val xOffset = (index % itemsPerRow) * offsetX + baseX
+            val yOffset = (index / itemsPerRow) * offsetY + baseY
+            Pair(xOffset, yOffset)
+        }
     }
 
     private fun getBlockEntity(playerInventory: Inventory, blockPos: BlockPos): OsmoticEnchanterBlockEntity? {

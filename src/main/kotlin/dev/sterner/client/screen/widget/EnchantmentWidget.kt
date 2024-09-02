@@ -41,13 +41,14 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
         val compatible = EnchantmentHelper.isEnchantmentCompatible(activatedEnchantments?.map { it.enchantment }!!, enchantment!!)
 
         val cap = screen.menu.osmoticEnchanter?.activeEnchantments?.count { it.active }!! < 9
-        println(cap)
+
         if (selected) {
             val bl = level(mouseX, mouseY)
             if (bl) {
                 selected = !selected
                 VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(EnchantmentLevelPacket(enchantment!!, level, screen.menu.pos.asLong(), false))
                 screen.menu.osmoticEnchanter?.updateEnchantmentData(enchantment!!, level, false)
+                screen.refreshEnchants()
             }
         } else if (compatible && cap) {
             VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(EnchantmentLevelPacket(enchantment!!, level, screen.menu.pos.asLong(), true))
