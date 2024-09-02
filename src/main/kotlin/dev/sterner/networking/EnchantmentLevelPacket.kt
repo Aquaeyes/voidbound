@@ -45,6 +45,7 @@ class EnchantmentLevelPacket(nbt: CompoundTag) : LodestoneServerNBTPacket(nbt) {
             if (player?.level()?.getBlockEntity(pos) is OsmoticEnchanterBlockEntity) {
                 val osmotic = player.level().getBlockEntity(pos) as OsmoticEnchanterBlockEntity
                 osmotic.updateEnchantmentData(enchantment, level, active)
+                osmotic.calculateSpiritRequired()
             }
         }
     }

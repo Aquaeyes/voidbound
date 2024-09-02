@@ -12,12 +12,14 @@ import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.Style
 import net.minecraft.util.Mth
 import org.lwjgl.opengl.GL11
 import team.lodestar.lodestone.helpers.RenderHelper
 import team.lodestar.lodestone.registry.client.LodestoneShaderRegistry
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
 import team.lodestar.lodestone.systems.rendering.shader.ExtendedShaderInstance
+import java.awt.Color
 import java.util.function.Supplier
 
 class SpiritBarWidget(private var screen: OsmoticEnchanterScreen, x: Int, y: Int) : AbstractWidget(
@@ -87,7 +89,14 @@ class SpiritBarWidget(private var screen: OsmoticEnchanterScreen, x: Int, y: Int
 
             // Tooltip logic: show the tooltip if the mouse is over the bar
             if (mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + maxBarHeight) {
-                tooltip = Tooltip.create(Component.translatable(spiritType!!.identifier))
+                val name = Component.translatable(spiritType!!.identifier.replaceFirstChar { it.uppercase() })
+
+                val targetCount = targetSpirits?.getChargeForType(spiritType!!)
+                val consumedCount = consumedSpirits?.getChargeForType(spiritType!!)
+
+                val count = Component.translatable("\n$consumedCount / $targetCount").setStyle(Style.EMPTY.withColor(Color.LIGHT_GRAY.rgb))
+
+                tooltip = Tooltip.create(name.append(count))
             }
         }
     }
@@ -96,7 +105,7 @@ class SpiritBarWidget(private var screen: OsmoticEnchanterScreen, x: Int, y: Int
     private fun calcNormal(targetSpirits: SimpleSpiritCharge?): Float {
         var normalizer = 0f
         if (targetSpirits != null) {
-            normalizer = targetSpirits.getChargeForType(spiritType!!) / 128f
+            normalizer = targetSpirits.getChargeForType(spiritType!!) / screen.maxSpiritCharge.toFloat()
             normalizer = Mth.clamp(normalizer, 0.0f, 1.0f)
         }
         return normalizer

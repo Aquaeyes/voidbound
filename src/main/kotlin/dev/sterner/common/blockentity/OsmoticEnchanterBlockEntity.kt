@@ -33,7 +33,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     state
 ) {
 
-    data class EnchantmentData(val enchantment: Enchantment, val level: Int, val active: Boolean)
+    data class EnchantmentData(val enchantment: Enchantment, val level: Int, val selected: Boolean)
 
     var time: Int = 0
     var rot: Float = 0f
@@ -78,7 +78,8 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         var bl = false
         val spirits = SimpleSpiritCharge()
 
-        for (enchantmentInfo in this.activeEnchantments) {
+        val act = this.activeEnchantments.filter { it.selected }
+        for (enchantmentInfo in act) {
             val sc = VoidBoundApi.getSpiritFromEnchant(enchantmentInfo.enchantment, enchantmentInfo.level)
             for (spirit in sc) {
                 spirits.addToCharge(spirit.type, spirit.count)
@@ -99,7 +100,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     fun updateEnchantmentData(enchantment: Enchantment, level: Int, active: Boolean) {
-        activeEnchantments.removeIf { it.enchantment == enchantment }
+        activeEnchantments.removeAll { it.enchantment == enchantment }
         activeEnchantments.add(EnchantmentData(enchantment, level, active))
         calculateSpiritRequired()
         notifyUpdate()
@@ -274,7 +275,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
      * Enchant the item and reset the enchanter
      */
     private fun doEnchant() {
-        for (enchantment in this.activeEnchantments) {
+        for (enchantment in this.activeEnchantments.filter { it.selected }) {
             inventory.getStackInSlot(0).enchant(enchantment.enchantment, enchantment.level)
         }
         activeEnchantments.clear()
@@ -324,7 +325,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             activeEnchantments.stream().mapToInt { i -> BuiltInRegistries.ENCHANTMENT.getId(i.enchantment) }.toArray()
         )
         compound.putIntArray("Level", activeEnchantments.stream().mapToInt { i -> i.level }.toArray())
-        compound.putIntArray("ActiveEnchant", activeEnchantments.stream().mapToInt { i -> if (i.active) 1 else 0 }.toArray())
+        compound.putIntArray("ActiveEnchant", activeEnchantments.stream().mapToInt { i -> if (i.selected) 1 else 0 }.toArray())
 
         spiritsToConsume.serializeNBT(compound)
         val consumedNbt = CompoundTag()

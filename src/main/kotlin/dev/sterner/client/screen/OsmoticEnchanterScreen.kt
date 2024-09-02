@@ -60,6 +60,8 @@ class OsmoticEnchanterScreen(
         addStartEnchantingWidget(xInMenu, yInMenu)
         addSpiritBarWidget(xInMenu, yInMenu, true)
         addSpiritBarWidget(xInMenu, yInMenu, false)
+
+        blockEntity?.calculateSpiritRequired()
     }
 
     private fun addEnchantments(enchantments: MutableList<OsmoticEnchanterBlockEntity.EnchantmentData>?, xInMenu: Int, yInMenu: Int) {
@@ -67,7 +69,7 @@ class OsmoticEnchanterScreen(
             var width = 16
             var height = 16
 
-            val (xOffset, yOffset) = if (data.active) {
+            val (xOffset, yOffset) = if (data.selected) {
                 width = 22
                 height = 33
                 calculateWidgetPosition(index, 3, 83, 5, 34, 23, true, enchantments.size)
@@ -78,7 +80,7 @@ class OsmoticEnchanterScreen(
             val widget = EnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset, width, height)
             widget.enchantment = data.enchantment
             widget.level = data.level
-            widget.selected = data.active
+            widget.selected = data.selected
             this.addRenderableWidget(widget)
         }
     }
