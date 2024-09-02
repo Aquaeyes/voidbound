@@ -103,9 +103,11 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         return bl
     }
 
-    fun receiveScreenData(enchantment: Enchantment, level: Int) {
+    fun receiveScreenData(enchantment: Enchantment, level: Int, remove: Boolean = false) {
         enchantments.removeIf { it.enchantment == enchantment }
-        enchantments.add(EnchantmentData(enchantment, level))
+        if (!remove) {
+            enchantments.add(EnchantmentData(enchantment, level))
+        }
         calculateSpiritRequired()
         notifyUpdate()
     }

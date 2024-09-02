@@ -12,6 +12,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.EnchantmentHelper
 
 
 open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int, width: Int, height: Int) :
@@ -31,21 +32,27 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
             return
         }
 
+        if (enchantment != null && !EnchantmentHelper.isEnchantmentCompatible(screen.selectedEnchants.map { Enchantment.byId(it) }, enchantment!!)) {
+            //return
+        }
+        var remove = false
         if (screen.selectedEnchants.contains(id)) {
             screen.selectedEnchants.remove(id)
-
-            VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(RemoveEnchantPacket(id, screen.menu.pos))
+            remove = true
+            //VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(RemoveEnchantPacket(id, screen.menu.pos))
 
         } else if (!screen.selectedEnchants.contains(id) && screen.selectedEnchants.size < 9) {
             screen.selectedEnchants.add(BuiltInRegistries.ENCHANTMENT.getId(enchantment))
-            VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(
-                EnchantmentLevelPacket(
-                    enchantment!!,
-                    level,
-                    screen.menu.pos.asLong()
-                )
-            )
         }
+
+        VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(
+            EnchantmentLevelPacket(
+                enchantment!!,
+                level,
+                screen.menu.pos.asLong(),
+                remove
+            )
+        )
 
         screen.refreshEnchants()
         super.onClick(mouseX, mouseY)

@@ -32,6 +32,7 @@ class RemoveEnchantPacket(val enchantment: Int, val pos: BlockPos) : LodestoneSe
             if (be is OsmoticEnchanterBlockEntity) {
                 be.enchantments.removeIf { BuiltInRegistries.ENCHANTMENT.getId(it.enchantment) == enchantment }
                 be.calculateSpiritRequired()
+                be.notifyUpdate()
             }
         }
     }

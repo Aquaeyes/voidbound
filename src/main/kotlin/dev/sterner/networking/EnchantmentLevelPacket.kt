@@ -21,10 +21,11 @@ class EnchantmentLevelPacket(nbt: CompoundTag) : LodestoneServerNBTPacket(nbt) {
 
     constructor(buf: FriendlyByteBuf) : this(buf.readNbt()!!)
 
-    constructor(enchantment: Enchantment, level: Int, asLong: Long) : this(CompoundTag().apply {
+    constructor(enchantment: Enchantment, level: Int, asLong: Long, remove: Boolean) : this(CompoundTag().apply {
         putInt("Enchantment", BuiltInRegistries.ENCHANTMENT.getId(enchantment))
         putInt("Level", level)
         putLong("Pos", asLong)
+        putBoolean("Remove", remove)
     })
 
     override fun executeServerNbt(
@@ -39,10 +40,11 @@ class EnchantmentLevelPacket(nbt: CompoundTag) : LodestoneServerNBTPacket(nbt) {
             val enchantment: Enchantment = Enchantment.byId(data.getInt("Enchantment"))!!
             val level: Int = data.getInt("Level")
             val pos = BlockPos.of(data.getLong("Pos"))
+            val remove = data.getBoolean("Remove")
 
             if (player?.level()?.getBlockEntity(pos) is OsmoticEnchanterBlockEntity) {
                 val osmotic = player.level().getBlockEntity(pos) as OsmoticEnchanterBlockEntity
-                osmotic.receiveScreenData(enchantment, level)
+                osmotic.receiveScreenData(enchantment, level, remove)
             }
         }
     }

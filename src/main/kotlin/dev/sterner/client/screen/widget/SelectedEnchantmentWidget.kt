@@ -47,7 +47,8 @@ class SelectedEnchantmentWidget(screen: OsmoticEnchanterScreen, x: Int, y: Int) 
                         EnchantmentLevelPacket(
                             enchantment!!,
                             level,
-                            screen.menu.pos.asLong()
+                            screen.menu.pos.asLong(),
+                            false
                         )
                     )
                     screen.menu.osmoticEnchanter!!.receiveScreenData(enchantment!!, level)
@@ -62,7 +63,8 @@ class SelectedEnchantmentWidget(screen: OsmoticEnchanterScreen, x: Int, y: Int) 
                     EnchantmentLevelPacket(
                         enchantment!!,
                         level,
-                        screen.menu.pos.asLong()
+                        screen.menu.pos.asLong(),
+                        false
                     )
                 )
                 screen.menu.osmoticEnchanter!!.receiveScreenData(enchantment!!, level)
