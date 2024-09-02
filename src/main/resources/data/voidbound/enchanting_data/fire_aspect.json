@@ -4,19 +4,19 @@
   "spirits": [
     {
       "spirit": "infernal",
-      "count": 20
+      "count": 10
     },
     {
       "spirit": "wicked",
-      "count": 16
+      "count": 8
     },
     {
       "spirit": "eldritch",
-      "count": 16
+      "count": 8
     },
     {
       "spirit": "arcane",
-      "count": 16
+      "count": 8
     }
   ]
 }

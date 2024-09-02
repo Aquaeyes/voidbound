@@ -41,7 +41,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     var time: Int = 0
     var rot: Float = 0f
     var oRot: Float = 0f
-    var tRot: Float = 0f
+    private var tRot: Float = 0f
 
     var enchantments: MutableList<EnchantmentData> = mutableListOf()
 
@@ -53,7 +53,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
     private var cooldown: Int = 0
 
-    var foundRiftPos: BlockPos? = null
+    private var foundRiftPos: BlockPos? = null
 
     init {
         inventory = object : MalumBlockEntityInventory(1, 64) {
@@ -133,62 +133,90 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
                 // Variable to track if a spirit has been consumed
                 var spiritConsumed = false
 
-                // New code to find the nearest rift and access its spirits
-                val pos = blockPos
-                val range = 3
-                label@ for (aroundPos in BlockPos.betweenClosed(pos.x - range, pos.y, pos.z - range, pos.x + range, pos.y + range, pos.z + range)) {
-                    if (level?.getBlockEntity(aroundPos) is SpiritRiftBlockEntity) {
-                        foundRiftPos = aroundPos
-                        break@label
-                    }
+                //Look for a nearby Rift
+                tickFindRift()
+
+                //Try to consume spirit from saved rift
+                spiritConsumed = tickCloseRift()
+
+                //If no spirit was consumed, try to consume from other source
+                if (!spiritConsumed) {
+                    spiritConsumed = tickOtherSpiritSource()
                 }
 
-                if (foundRiftPos != null && level!!.getBlockEntity(foundRiftPos!!) is SpiritRiftBlockEntity) {
-                    val rift = level!!.getBlockEntity(foundRiftPos!!) as SpiritRiftBlockEntity
-                    val riftSpirits: MutableList<SpiritWithCount> = rift.simpleSpiritCharge.getNonEmptyMutableList()
-
-                    // Iterate through each spirit type and consume from the rift if necessary
-                    for (spiritType in spiritsToConsume.getNonEmptyMutableList()) {
-                        val requiredCharge = spiritsToConsume.getChargeForType(spiritType.type)
-                        val currentCharge = consumedSpirits.getChargeForType(spiritType.type)
-
-                        // Check if more charge is needed for this spirit type
-                        if (currentCharge < requiredCharge) {
-                            // Find the corresponding spirit in the rift
-                            val riftSpirit = riftSpirits.find { it.type == spiritType.type }
-
-                            if (riftSpirit != null && riftSpirit.count > 0) {
-                                // Add one charge to the consumed spirits
-                                consumedSpirits.addToCharge(spiritType.type, 1)
-
-                                // Decrement the spirit count in the rift
-                                rift.simpleSpiritCharge.removeFromCharge(riftSpirit.type, 1)
-                                rift.notifyUpdate()
-
-                                // Mark that a spirit was consumed
-                                spiritConsumed = true
-
-                                // Exit the loop after processing this spirit type
-                                break
-                            }
-                        }
-                    }
-
-                    // Reset cooldown if a spirit was consumed
-                    if (spiritConsumed) {
-                        cooldown = 0
-                        notifyUpdate()
-                    }
+                // Reset cooldown if a spirit was consumed
+                if (spiritConsumed) {
+                    cooldown = 0
                 }
 
                 // If all the spirits are consumed, perform the enchantment
                 if (consumedSpirits.getTotalCharge() >= spiritsToConsume.getTotalCharge()) {
                     doEnchant()
                 }
+
+                notifyUpdate()
             }
         }
     }
 
+    //TODO add another way to generate spirit from shards
+    private fun tickOtherSpiritSource(): Boolean {
+        return false
+    }
+
+    /**
+     * Called in the tick function, looks for a rift close by with a default of 3 blocks in radius
+     */
+    private fun tickFindRift(range: Int = 3) {
+        val pos = blockPos
+        for (aroundPos in BlockPos.betweenClosed(pos.x - range, pos.y, pos.z - range, pos.x + range, pos.y + range, pos.z + range)) {
+            if (level?.getBlockEntity(aroundPos) is SpiritRiftBlockEntity) {
+                foundRiftPos = aroundPos
+                break
+            }
+        }
+    }
+
+    /**
+     * If foundRiftPos has been found, get its charge and start transfer spirits to the enchanter.
+     * Returns true if a transaction was successful
+     */
+    private fun tickCloseRift(): Boolean {
+        if (foundRiftPos != null && level!!.getBlockEntity(foundRiftPos!!) is SpiritRiftBlockEntity) {
+            val rift = level!!.getBlockEntity(foundRiftPos!!) as SpiritRiftBlockEntity
+            val riftSpirits: MutableList<SpiritWithCount> = rift.simpleSpiritCharge.getNonEmptyMutableList()
+
+            var i = 0
+            while (i < spiritsToConsume.getNonEmptyMutableList().size) {
+                val spiritType = spiritsToConsume.getNonEmptyMutableList()[i]
+                val requiredCharge = spiritsToConsume.getChargeForType(spiritType.type)
+                val currentCharge = consumedSpirits.getChargeForType(spiritType.type)
+
+                if (currentCharge < requiredCharge) {
+                    // Find the corresponding spirit in the rift
+                    val riftSpirit = riftSpirits.find { it.type == spiritType.type }
+
+                    if (riftSpirit != null && riftSpirit.count > 0) {
+                        // Transfer one spirit at a time
+                        consumedSpirits.addToCharge(spiritType.type, 1)
+                        rift.simpleSpiritCharge.removeFromCharge(riftSpirit.type, 1)
+                        rift.notifyUpdate()
+
+                        // Return true after transferring one spirit to prevent jittering
+                        return true
+                    }
+                } else {
+                    // If the current spirit type's charge is full, move to the next one
+                    i++
+                }
+            }
+        }
+        return false
+    }
+
+    /**
+     * Handles the book model rotating towards the player withing 3 blocks
+     */
     private fun animationTick() {
         oRot = rot
         val player = level!!.getNearestPlayer(
@@ -247,6 +275,9 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         time++
     }
 
+    /**
+     * Enchant the item and reset the enchanter
+     */
     private fun doEnchant() {
         for (enchantment in this.enchantments) {
             inventory.getStackInSlot(0).enchant(enchantment.enchantment, enchantment.level)

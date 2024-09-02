@@ -4,23 +4,23 @@
   "spirits": [
     {
       "spirit": "aerial",
-      "count": 16
+      "count": 8
     },
     {
       "spirit": "aqueous",
-      "count": 16
+      "count": 8
     },
     {
       "spirit": "earthen",
-      "count": 16
+      "count": 8
     },
     {
       "spirit": "infernal",
-      "count": 16
+      "count": 8
     },
     {
       "spirit": "wicked",
-      "count": 16
+      "count": 8
     }
   ]
 }

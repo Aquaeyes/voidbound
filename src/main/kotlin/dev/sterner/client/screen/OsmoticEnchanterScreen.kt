@@ -26,7 +26,7 @@ class OsmoticEnchanterScreen(
 
     private var blockEntity: OsmoticEnchanterBlockEntity? = null
     var selectedEnchants: MutableSet<Int> = mutableSetOf()
-    var maxSpiritCharge = 256
+    var maxSpiritCharge = 128
 
     init {
         imageWidth = 232
@@ -81,7 +81,7 @@ class OsmoticEnchanterScreen(
             }
         }
 
-        blockEntity?.calculateSpiritRequired()
+        //blockEntity?.calculateSpiritRequired()
     }
 
     private fun addEnchantments(enchantments: List<Int>, xInMenu: Int, yInMenu: Int) {

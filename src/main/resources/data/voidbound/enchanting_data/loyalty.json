@@ -4,19 +4,19 @@
   "spirits": [
     {
       "spirit": "aerial",
-      "count": 16
+      "count": 8
     },
     {
       "spirit": "aqueous",
-      "count": 16
+      "count": 8
     },
     {
       "spirit": "eldritch",
-      "count": 16
+      "count": 8
     },
     {
       "spirit": "arcane",
-      "count": 16
+      "count": 8
     }
   ]
 }

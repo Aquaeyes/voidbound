@@ -86,12 +86,8 @@ class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState) :
         if (level != null) {
 
             if (infinite) {
-                rechargeCounter++
-                if (rechargeCounter == 20 * 2) {
-                    rechargeCounter = 0
-                    simpleSpiritCharge.rechargeInfiniteCount()
-                    notifyUpdate()
-                }
+                simpleSpiritCharge.rechargeInfiniteCount()
+                notifyUpdate()
             }
 
             riftType.tick(level!!, blockPos, this)

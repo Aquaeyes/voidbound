@@ -4,15 +4,15 @@
   "spirits": [
     {
       "spirit": "aerial",
-      "count": 16
+      "count": 8
     },
     {
       "spirit": "earthen",
-      "count": 16
+      "count": 8
     },
     {
       "spirit": "arcane",
-      "count": 16
+      "count": 8
     }
   ]
 }

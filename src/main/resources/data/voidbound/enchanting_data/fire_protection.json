@@ -4,19 +4,19 @@
   "spirits": [
     {
       "spirit": "aqueous",
-      "count": 16
+      "count": 8
     },
     {
       "spirit": "infernal",
-      "count": 16
+      "count": 8
     },
     {
       "spirit": "wicked",
-      "count": 16
+      "count": 8
     },
     {
       "spirit": "arcane",
-      "count": 16
+      "count": 8
     }
   ]
 }
