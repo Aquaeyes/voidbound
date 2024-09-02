@@ -2,7 +2,6 @@ package dev.sterner.common.blockentity
 
 import com.sammy.malum.common.block.MalumBlockEntityInventory
 import com.sammy.malum.core.systems.recipe.SpiritWithCount
-import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.rift.SimpleSpiritCharge
 import dev.sterner.networking.UpdateSpiritAmountPacket
@@ -26,9 +25,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import team.lodestar.lodestone.helpers.BlockHelper
 import team.lodestar.lodestone.systems.blockentity.ItemHolderBlockEntity
 import java.util.*
-import java.util.stream.Collectors
 import kotlin.math.PI
-import kotlin.streams.toList
 
 
 class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolderBlockEntity(
@@ -36,16 +33,15 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     state
 ) {
 
-    data class EnchantmentData(val enchantment: Enchantment, val level: Int)
+    data class EnchantmentData(val enchantment: Enchantment, val level: Int, val active: Boolean)
 
     var time: Int = 0
     var rot: Float = 0f
     var oRot: Float = 0f
     private var tRot: Float = 0f
 
-    var enchantments: MutableList<EnchantmentData> = mutableListOf()
+    var activeEnchantments: MutableList<EnchantmentData> = mutableListOf()
 
-    var cachedEnchantments: MutableList<Int>? = mutableListOf()
     var activated = false
 
     var spiritsToConsume: SimpleSpiritCharge = SimpleSpiritCharge()
@@ -60,8 +56,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
             public override fun onContentsChanged(slot: Int) {
                 spiritsToConsume = SimpleSpiritCharge()
                 consumedSpirits = SimpleSpiritCharge()
-                cachedEnchantments = mutableListOf()
-                enchantments = mutableListOf()
+                activeEnchantments = mutableListOf()
                 refreshEnchants()
                 this.setChanged()
                 needsSync = true
@@ -83,7 +78,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         var bl = false
         val spirits = SimpleSpiritCharge()
 
-        for (enchantmentInfo in this.enchantments) {
+        for (enchantmentInfo in this.activeEnchantments) {
             val sc = VoidBoundApi.getSpiritFromEnchant(enchantmentInfo.enchantment, enchantmentInfo.level)
             for (spirit in sc) {
                 spirits.addToCharge(spirit.type, spirit.count)
@@ -103,11 +98,9 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         return bl
     }
 
-    fun receiveScreenData(enchantment: Enchantment, level: Int, remove: Boolean = false) {
-        enchantments.removeIf { it.enchantment == enchantment }
-        if (!remove) {
-            enchantments.add(EnchantmentData(enchantment, level))
-        }
+    fun updateEnchantmentData(enchantment: Enchantment, level: Int, active: Boolean) {
+        activeEnchantments.removeIf { it.enchantment == enchantment }
+        activeEnchantments.add(EnchantmentData(enchantment, level, active))
         calculateSpiritRequired()
         notifyUpdate()
     }
@@ -281,10 +274,10 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
      * Enchant the item and reset the enchanter
      */
     private fun doEnchant() {
-        for (enchantment in this.enchantments) {
+        for (enchantment in this.activeEnchantments) {
             inventory.getStackInSlot(0).enchant(enchantment.enchantment, enchantment.level)
         }
-        enchantments.clear()
+        activeEnchantments.clear()
         refreshEnchants()
         spiritsToConsume = SimpleSpiritCharge()
         consumedSpirits = SimpleSpiritCharge()
@@ -294,24 +287,14 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     fun refreshEnchants() {
-        var enchantmentObjects = getAvailableEnchants(enchantments.stream().map { enchantmentInfo: EnchantmentData ->
-            enchantmentInfo.enchantment
-        }.collect(Collectors.toList()))
-
-        enchantmentObjects = enchantmentObjects.filter { !it.isCurse }.toMutableList()
-        cachedEnchantments = enchantmentObjects.stream().map(BuiltInRegistries.ENCHANTMENT::getId).toList().toMutableList()
+        activeEnchantments = getValidEnchantments()
         notifyUpdate()
-    }
-
-    private fun canApply(itemStack: ItemStack, enchantment: Enchantment, currentEnchants: List<Enchantment?>): Boolean {
-        return canApply(itemStack, enchantment, currentEnchants, true)
     }
 
     private fun canApply(
         itemStack: ItemStack,
         enchantment: Enchantment,
-        currentEnchants: List<Enchantment?>,
-        checkConflicts: Boolean
+        currentEnchants: List<Enchantment?>
     ): Boolean {
         if (!enchantment.canEnchant(itemStack) || currentEnchants.contains(enchantment)) {
             return false
@@ -320,48 +303,17 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         if (EnchantmentHelper.getEnchantments(itemStack).keys.contains(enchantment)) {
             return false
         }
-
-        if (checkConflicts) {
-            for (curEnchant in currentEnchants) {
-                if (!curEnchant!!.isCompatibleWith(enchantment)) {
-                    return false
-                }
-            }
-        }
         return true
     }
 
-    private fun getValidEnchantments(): List<Enchantment> {
-        val enchantments: MutableList<Enchantment> = ArrayList()
+    private fun getValidEnchantments(): MutableList<EnchantmentData> {
+        val enchantments: MutableList<EnchantmentData> = ArrayList()
         if (inventory.getStackInSlot(0) == ItemStack.EMPTY) return enchantments
         val item = inventory.getStackInSlot(0)
         for (enchantment in BuiltInRegistries.ENCHANTMENT) {
-            if (enchantment.canEnchant(item) && item.isEnchantable && canApply(
-                    item,
-                    enchantment,
-                    enchantments,
-                    false
-                )
-            ) {
-                enchantments.add(enchantment)
+            if (enchantment.canEnchant(item) && item.isEnchantable && canApply(item, enchantment, enchantments.map { it.enchantment }) && !enchantment.isCurse) {
+                enchantments.add(EnchantmentData(enchantment, 1, false))
             }
-        }
-        return enchantments
-    }
-
-    private fun getAvailableEnchants(currentEnchants: List<Enchantment?>): MutableList<Enchantment> {
-        val enchantments: MutableList<Enchantment> = ArrayList()
-        if (inventory.getStackInSlot(0) == ItemStack.EMPTY) return enchantments
-        val item: ItemStack = inventory.getStackInSlot(0)
-        val valid: List<Enchantment> = getValidEnchantments()
-        for (validEnchant in valid) {
-            if (item.item.enchantmentValue != 0 && canApply(
-                    item,
-                    validEnchant,
-                    enchantments,
-                    false
-                ) && canApply(item, validEnchant, currentEnchants)
-            ) enchantments.add(validEnchant)
         }
         return enchantments
     }
@@ -369,12 +321,11 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     override fun saveAdditional(compound: CompoundTag) {
         compound.putIntArray(
             "Enchants",
-            enchantments.stream().mapToInt { i -> BuiltInRegistries.ENCHANTMENT.getId(i.enchantment) }.toArray()
+            activeEnchantments.stream().mapToInt { i -> BuiltInRegistries.ENCHANTMENT.getId(i.enchantment) }.toArray()
         )
-        compound.putIntArray("Level", enchantments.stream().mapToInt { i -> i.level }.toArray())
+        compound.putIntArray("Level", activeEnchantments.stream().mapToInt { i -> i.level }.toArray())
+        compound.putIntArray("ActiveEnchant", activeEnchantments.stream().mapToInt { i -> if (i.active) 1 else 0 }.toArray())
 
-        cachedEnchantments?.stream()?.mapToInt { i -> i }?.toList()?.toMutableList()
-            ?.let { compound.putIntArray("Cache", it) }
         spiritsToConsume.serializeNBT(compound)
         val consumedNbt = CompoundTag()
         consumedSpirits.serializeNBT(consumedNbt)
@@ -389,21 +340,18 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     override fun load(compound: CompoundTag) {
-        if (compound.contains("Enchants")) {
-            enchantments.clear()
+        if (compound.contains("Enchants") && compound.contains("ActiveEnchant")) {
+            activeEnchantments.clear()
 
             val enchantmentArray = compound.getIntArray("Enchants")
             val levelArray = compound.getIntArray("Level")
+            val activeArray = compound.getIntArray("ActiveEnchant")
 
             for ((index, enchantment) in enchantmentArray.withIndex()) {
-                enchantments.add(EnchantmentData(Enchantment.byId(enchantment)!!, levelArray[index]))
+                activeEnchantments.add(EnchantmentData(Enchantment.byId(enchantment)!!, levelArray[index], activeArray[index] == 1))
             }
         }
-        if (compound.contains("Cache")) {
-            cachedEnchantments?.clear()
-            val cachedEnchantmentArray = compound.getIntArray("Cache")
-            Arrays.stream(cachedEnchantmentArray).forEach { i -> cachedEnchantments?.add(i) }
-        }
+
         spiritsToConsume = spiritsToConsume.deserializeNBT(compound)
         if (compound.contains("Consumed")) {
             val c = compound.get("Consumed") as CompoundTag

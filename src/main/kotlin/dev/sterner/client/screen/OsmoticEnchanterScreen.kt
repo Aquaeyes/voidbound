@@ -4,7 +4,6 @@ import com.sammy.malum.core.systems.spirit.MalumSpiritType
 import com.sammy.malum.registry.common.SpiritTypeRegistry
 import dev.sterner.VoidBound
 import dev.sterner.client.screen.widget.EnchantmentWidget
-import dev.sterner.client.screen.widget.SelectedEnchantmentWidget
 import dev.sterner.client.screen.widget.SpiritBarWidget
 import dev.sterner.client.screen.widget.StartEnchantingWidget
 import dev.sterner.common.blockentity.OsmoticEnchanterBlockEntity
@@ -25,7 +24,6 @@ class OsmoticEnchanterScreen(
 ) : AbstractContainerScreen<OsmoticEnchanterMenu>(menu, playerInventory, title) {
 
     private var blockEntity: OsmoticEnchanterBlockEntity? = null
-    var selectedEnchants: MutableSet<Int> = mutableSetOf()
     var maxSpiritCharge = 128
 
     init {
@@ -53,61 +51,36 @@ class OsmoticEnchanterScreen(
     }
 
     fun refreshEnchants() {
-        val cache = renderables.filterIsInstance<SelectedEnchantmentWidget>().toMutableList()
-
         clearWidgets()
 
         val xInMenu = (this.width - this.imageWidth) / 2
         val yInMenu = (this.height - this.imageHeight) / 2
 
-        // Add unselected enchantments
-        val filteredEnchantments = blockEntity?.cachedEnchantments?.filter { it !in selectedEnchants }.orEmpty()
-        addEnchantments(filteredEnchantments, xInMenu, yInMenu)
-
-        // Add selected enchantments
-        addSelectedEnchantments(xInMenu, yInMenu)
+        addEnchantments(blockEntity?.activeEnchantments, xInMenu, yInMenu)
 
         addStartEnchantingWidget(xInMenu, yInMenu)
         addSpiritBarWidget(xInMenu, yInMenu, true)
         addSpiritBarWidget(xInMenu, yInMenu, false)
-
-        // Restore previous levels for selected enchantments
-        for (rend in renderables) {
-            if (rend is SelectedEnchantmentWidget) {
-                val matchingCache = cache.find { it.enchantment == rend.enchantment }
-                if (matchingCache != null) {
-                    rend.level = matchingCache.level
-                }
-            }
-        }
-
-        //blockEntity?.calculateSpiritRequired()
     }
 
-    private fun addEnchantments(enchantments: List<Int>, xInMenu: Int, yInMenu: Int) {
-        enchantments.forEachIndexed { index, enchantId ->
-            val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 168, 15 + 26, 17, 17)
-            val widget = EnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset, 16, 16)
-            widget.enchantment = Enchantment.byId(enchantId)
-            this.addRenderableWidget(widget)
-        }
-    }
+    private fun addEnchantments(enchantments: MutableList<OsmoticEnchanterBlockEntity.EnchantmentData>?, xInMenu: Int, yInMenu: Int) {
+        enchantments?.forEachIndexed { index, data ->
+            var width = 16
+            var height = 16
 
-    private fun addSelectedEnchantments(xInMenu: Int, yInMenu: Int) {
-        selectedEnchants.forEachIndexed { index, enchantId ->
-            val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 83, 5, 34, 23)
-            val widget = SelectedEnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset)
-            widget.enchantment = Enchantment.byId(enchantId)
-            this.addRenderableWidget(widget)
-        }
-        if (selectedEnchants.isEmpty()) {
-            blockEntity?.enchantments?.forEachIndexed { index, enchantmentData ->
-                val (xOffset, yOffset) = calculateWidgetPosition(index, 3, 83, 5, 34, 23)
-                val widget = SelectedEnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset)
-                widget.enchantment = enchantmentData.enchantment
-                widget.level = enchantmentData.level
-                this.addRenderableWidget(widget)
+            val (xOffset, yOffset) = if (data.active) {
+                width = 22
+                height = 33
+                calculateWidgetPosition(index, 3, 83, 5, 34, 23)
+            } else {
+                calculateWidgetPosition(index, 3, 168, 15 + 26, 17, 17)
             }
+
+            val widget = EnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset, width, height)
+            widget.enchantment = data.enchantment
+            widget.level = data.level
+            widget.selected = data.active
+            this.addRenderableWidget(widget)
         }
     }
 

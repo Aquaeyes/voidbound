@@ -78,8 +78,7 @@ class OsmoticEnchanterBlock(properties: Properties) : BaseEntityBlock(properties
 
             // Check if there are selected enchantments
             if (!osmoticEnchanter.activated) {
-                osmoticEnchanter.enchantments.clear()
-                osmoticEnchanter.cachedEnchantments?.clear()
+                osmoticEnchanter.activeEnchantments.clear()
             }
 
             osmoticEnchanter.refreshEnchants()
