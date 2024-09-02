@@ -8,6 +8,7 @@ import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.common.rift.DestabilizedRiftType
 import dev.sterner.common.rift.EldritchRiftType
 import dev.sterner.common.rift.NormalRiftType
+import dev.sterner.common.rift.PoolRiftType
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundRiftTypeRegistry
 import net.fabricmc.loader.api.FabricLoader
@@ -69,6 +70,11 @@ class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState) :
                         }
 
                         is DestabilizedRiftType -> {
+                            riftType = VoidBoundRiftTypeRegistry.POOL.get()
+                            player.sendSystemMessage(Component.translatable("Pool"))
+                        }
+
+                        is PoolRiftType -> {
                             riftType = VoidBoundRiftTypeRegistry.NORMAL.get()
                             player.sendSystemMessage(Component.translatable("Normal"))
                         }
@@ -86,7 +92,7 @@ class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState) :
         if (level != null) {
 
             if (infinite) {
-                simpleSpiritCharge.rechargeInfiniteCount()
+                simpleSpiritCharge.setInfiniteCount()
                 notifyUpdate()
             }
 

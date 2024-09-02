@@ -5,6 +5,7 @@ import dev.sterner.api.rift.RiftType
 import dev.sterner.common.rift.DestabilizedRiftType
 import dev.sterner.common.rift.EldritchRiftType
 import dev.sterner.common.rift.NormalRiftType
+import dev.sterner.common.rift.PoolRiftType
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
@@ -28,5 +29,9 @@ object VoidBoundRiftTypeRegistry {
 
     val ELDRITCH: RegistryObject<EldritchRiftType> = RIFT_TYPES.register("eldritch") {
         EldritchRiftType()
+    }
+
+    val POOL: RegistryObject<PoolRiftType> = RIFT_TYPES.register("pool") {
+        PoolRiftType()
     }
 }

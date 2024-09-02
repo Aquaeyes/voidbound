@@ -81,7 +81,7 @@ data class SimpleSpiritCharge(
         return charges.values.sum()
     }
 
-    fun rechargeInfiniteCount() {
+    fun rechargeAllCount() {
         charges.forEach { (type, count) ->
             if (count < 50) {
                 charges[type] = count + 1
