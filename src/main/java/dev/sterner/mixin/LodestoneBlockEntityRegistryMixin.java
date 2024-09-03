@@ -1,7 +1,6 @@
 package dev.sterner.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import dev.sterner.common.block.EldritchObeliskComponentBlock;
 import dev.sterner.registry.VoidBoundBlockRegistry;
 import net.minecraft.world.level.block.Block;
 import org.spongepowered.asm.mixin.Mixin;
