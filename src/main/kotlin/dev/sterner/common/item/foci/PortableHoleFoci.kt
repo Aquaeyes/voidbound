@@ -45,8 +45,13 @@ class PortableHoleFoci : IWandFocus {
                 ) {
                     return
                 }
+
                 if (block.isAir) {
                     break
+                }
+
+                if (distance >= maxDistance - 1) {
+                    return
                 }
 
                 when (blockHit.direction) {
