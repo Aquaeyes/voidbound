@@ -19,9 +19,11 @@ object VoidBoundKeyBindings {
     }
 
     private fun listenFociKey(minecraft: Minecraft) {
-        if (fociKeyBind?.isDown == true) {
-            if (minecraft.screen == null && minecraft.player != null && minecraft.player!!.mainHandItem.item is WandItem) {
-                minecraft.setScreen(FociSelectionScreen(minecraft.player!!))
+        if (minecraft.player != null) {
+            if (fociKeyBind?.isDown == true) {
+                if (minecraft.screen == null && minecraft.player!!.mainHandItem.item is WandItem) {
+                    minecraft.setScreen(FociSelectionScreen(minecraft.player!!))
+                }
             }
         }
     }

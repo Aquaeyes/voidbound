@@ -73,7 +73,7 @@ class ShockFoci : IWandFocus {
         if (hit != null && blockHit.distanceTo(player) > hit.entity.distanceTo(player)) {
             val hitEntity = hit.entity
 
-            hitEntity.hurt(player.damageSources().magic(), 4f)
+            hitEntity.hurt(player.damageSources().magic(), 2f)
         }
     }
 
