@@ -19,6 +19,7 @@ public class SpiritAltarBlockEntityMixin {
 
     @Shadow public SpiritInfusionRecipe recipe;
 
+    //TODO add this fix to base malum
     @WrapOperation(method = "craft", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;setTag(Lnet/minecraft/nbt/CompoundTag;)V"))
     private void spirit_altar_craft(ItemStack instance, CompoundTag compoundTag, Operation<Void> original, @Local(ordinal = 0) ItemStack inputStack) {
         var tag = instance.getTag();

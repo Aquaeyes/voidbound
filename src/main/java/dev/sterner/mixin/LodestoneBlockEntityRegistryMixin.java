@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import team.lodestar.lodestone.registry.common.LodestoneBlockEntityRegistry;
 
 /**
- * This is so sad, lodestones multiblock api is on life support
+ * This is so sad, lodestones multiblock api is on life support on fabric due to loading order
  * MALDING
  */
 @Mixin(LodestoneBlockEntityRegistry.class)
