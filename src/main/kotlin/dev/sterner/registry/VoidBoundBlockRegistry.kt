@@ -21,7 +21,9 @@ object VoidBoundBlockRegistry {
                 .mapColor(MapColor.STONE)
                 .requiresCorrectToolForDrops()
                 .strength(1.5F, 8.0F)
-        )
+        ).setBlockEntity {
+            VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER.get()
+        } as SpiritBinderBlock
     }
 
     var SPIRIT_STABILIZER: RegistryObject<SpiritBinderStabilizerBlock> = BLOCKS.register("spirit_stabilizer") {
@@ -34,7 +36,9 @@ object VoidBoundBlockRegistry {
     }
 
     var SPIRIT_RIFT: RegistryObject<SpiritRiftBlock> = BLOCKS.register("spirit_rift") {
-        SpiritRiftBlock(Properties.of())
+        SpiritRiftBlock(Properties.of()).setBlockEntity {
+            VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get()
+        } as SpiritRiftBlock
     }
 
     var CRIMSON_RITES: RegistryObject<CrimsonRitesBlock> = BLOCKS.register("crimson_rites") {
@@ -49,7 +53,9 @@ object VoidBoundBlockRegistry {
                 .strength(-1.0F, 3600000.0F)
                 .noLootTable()
                 .pushReaction(PushReaction.BLOCK)
-        )
+        ).setBlockEntity {
+            VoidBoundBlockEntityTypeRegistry.PORTABLE_HOLE.get()
+        } as PortableHoleBlock
     }
 
     var OSMOTIC_ENCHANTER: RegistryObject<OsmoticEnchanterBlock> = BLOCKS.register("osmotic_enchanter") {
@@ -73,7 +79,7 @@ object VoidBoundBlockRegistry {
         CloakedTearBlock(FabricBlockSettings.create().noOcclusion())
     }
 
-    val ELDRITCH_OBELISK: RegistryObject<Block> = BLOCKS.register(
+    val ELDRITCH_OBELISK: RegistryObject<EldritchObeliskBlock> = BLOCKS.register(
         "eldritch_obelisk"
     ) {
         EldritchObeliskBlock(
@@ -83,8 +89,9 @@ object VoidBoundBlockRegistry {
         )
             .setBlockEntity {
                 VoidBoundBlockEntityTypeRegistry.ELDRITCH_OBELISK.get()
-            }
+            } as EldritchObeliskBlock
     }
+
     val ELDRITCH_OBELISK_COMPONENT: RegistryObject<EldritchObeliskComponentBlock> = BLOCKS.register(
         "eldritch_obelisk_component"
     ) {

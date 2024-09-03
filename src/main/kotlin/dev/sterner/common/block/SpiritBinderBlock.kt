@@ -28,8 +28,9 @@ import net.minecraft.world.phys.shapes.BooleanOp
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+import team.lodestar.lodestone.systems.block.LodestoneEntityBlock
 
-class SpiritBinderBlock(properties: Properties) : BaseEntityBlock(
+class SpiritBinderBlock(properties: Properties) : LodestoneEntityBlock<SpiritBinderBlockEntity>(
     properties.noOcclusion()
 ) {
 

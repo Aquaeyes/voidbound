@@ -1,24 +1,23 @@
 package dev.sterner.common.blockentity
 
 import dev.sterner.api.blockentity.SpiritBinderModifier
-import dev.sterner.api.blockentity.SyncedBlockEntity
 import dev.sterner.common.block.SpiritBinderBlock
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.level.block.state.BlockState
 import org.joml.Vector3f
+import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity
 
-class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlockEntity(
+class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : LodestoneBlockEntity(
     VoidBoundBlockEntityTypeRegistry.SPIRIT_BINDER.get(), pos, blockState
 ) {
 
     var color: Vector3f = Vector3f(0.8f, 0.07f, 0.8f)
 
     var rift: SpiritRiftBlockEntity? = null
-    private var needsSync = true
 
-    fun tick() {
+    override fun tick() {
         if (needsSync) {
             init()
             needsSync = false
@@ -41,7 +40,7 @@ class SpiritBinderBlockEntity(pos: BlockPos, blockState: BlockState) : SyncedBlo
         }
     }
 
-    fun init() {
+    override fun init() {
         val riftBe = level?.getBlockEntity(blockPos.above())
         if (rift != null) {
             rift = riftBe as SpiritRiftBlockEntity

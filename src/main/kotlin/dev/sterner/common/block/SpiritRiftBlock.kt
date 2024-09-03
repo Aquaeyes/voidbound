@@ -17,9 +17,10 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+import team.lodestar.lodestone.systems.block.LodestoneEntityBlock
 
 class SpiritRiftBlock(properties: Properties) :
-    BaseEntityBlock(properties.noOcclusion().noCollission().lightLevel { 10 }) {
+    LodestoneEntityBlock<SpiritRiftBlockEntity>(properties.noOcclusion().noCollission().lightLevel { 10 }) {
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
         return VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get().create(pos, state)

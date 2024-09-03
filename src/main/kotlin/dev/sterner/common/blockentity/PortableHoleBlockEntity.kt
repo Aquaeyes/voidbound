@@ -1,6 +1,5 @@
 package dev.sterner.common.blockentity
 
-import dev.sterner.api.blockentity.SyncedBlockEntity
 import dev.sterner.common.item.foci.PortableHoleFoci
 import dev.sterner.registry.VoidBoundBlockEntityTypeRegistry
 import dev.sterner.registry.VoidBoundBlockRegistry
@@ -14,9 +13,10 @@ import net.minecraft.nbt.NbtUtils
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity
 import java.util.*
 
-class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEntity(
+class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : LodestoneBlockEntity(
     VoidBoundBlockEntityTypeRegistry.PORTABLE_HOLE.get(), pos,
     state
 ) {
@@ -44,7 +44,7 @@ class PortableHoleBlockEntity(pos: BlockPos, state: BlockState) : SyncedBlockEnt
         notifyUpdate()
     }
 
-    fun tick() {
+    override fun tick() {
         if (level == null || originalBlockState == null) {
             return
         }

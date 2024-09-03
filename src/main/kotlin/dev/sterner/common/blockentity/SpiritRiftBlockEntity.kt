@@ -1,6 +1,5 @@
 package dev.sterner.common.blockentity
 
-import dev.sterner.api.blockentity.SyncedBlockEntity
 import dev.sterner.api.rift.RiftType
 import dev.sterner.api.rift.SimpleSpiritCharge
 import dev.sterner.api.util.VoidBoundUtils
@@ -21,9 +20,10 @@ import net.minecraft.world.entity.PathfinderMob
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity
 
 class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState) :
-    SyncedBlockEntity(VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get(), pos, state) {
+    LodestoneBlockEntity(VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get(), pos, state) {
 
     private var riftType: RiftType = VoidBoundRiftTypeRegistry.NORMAL.get()
     var simpleSpiritCharge = SimpleSpiritCharge()
@@ -86,7 +86,7 @@ class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
 
-    fun tick() {
+    override fun tick() {
 
         if (level != null) {
 
