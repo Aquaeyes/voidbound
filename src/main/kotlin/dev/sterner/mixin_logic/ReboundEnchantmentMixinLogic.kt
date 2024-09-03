@@ -6,7 +6,6 @@ import dev.sterner.api.IchoriumScytheGhost
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
 
-@Suppress("KotlinConstantConditions")
 object ReboundEnchantmentMixinLogic {
 
     fun logic(player: ServerPlayer, stack: ItemStack, baseDamage: Float, magicDamage: Float, yOffset: Int) {
@@ -19,6 +18,7 @@ object ReboundEnchantmentMixinLogic {
         entity.setData(player, baseDamage, magicDamage, 0)
         entity.item = stack
 
+        @Suppress("KotlinConstantConditions")
         (entity as IchoriumScytheGhost).setGhost(true)
 
         entity.shootFromRotation(
