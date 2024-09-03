@@ -13,6 +13,7 @@ import com.sammy.malum.client.screen.codex.screens.ArcanaProgressionScreen
 import com.sammy.malum.client.screen.codex.screens.VoidProgressionScreen
 import dev.sterner.VoidBound
 import dev.sterner.VoidBound.modid
+import dev.sterner.client.IchorRevelationHandler
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.nbt.CompoundTag
 
@@ -132,8 +133,8 @@ object MalumCodexEvent {
                     )
                 )
                 .setEntryVisibleWhen {
-                    VoidRevelationHandler.hasSeenTheRevelation(
-                        RevelationType.ICHOR
+                    IchorRevelationHandler.hasSeenTheRevelation(
+                        IchorRevelationHandler.RevelationType.ICHOR
                     )
                 }
         }
@@ -154,8 +155,8 @@ object MalumCodexEvent {
                     )
                 )
                 .setEntryVisibleWhen {
-                    VoidRevelationHandler.hasSeenTheRevelation(
-                        RevelationType.ICHOR
+                    IchorRevelationHandler.hasSeenTheRevelation(
+                        IchorRevelationHandler.RevelationType.ICHOR
                     )
                 }
         }
@@ -176,8 +177,8 @@ object MalumCodexEvent {
                     )
                 )
                 .setEntryVisibleWhen {
-                    VoidRevelationHandler.hasSeenTheRevelation(
-                        RevelationType.ICHOR
+                    IchorRevelationHandler.hasSeenTheRevelation(
+                        IchorRevelationHandler.RevelationType.ICHOR
                     )
                 }
         }
@@ -198,8 +199,8 @@ object MalumCodexEvent {
                     )
                 )
                 .setEntryVisibleWhen {
-                    VoidRevelationHandler.hasSeenTheRevelation(
-                        RevelationType.ICHOR
+                    IchorRevelationHandler.hasSeenTheRevelation(
+                        IchorRevelationHandler.RevelationType.ICHOR
                     )
                 }
         }
@@ -220,8 +221,8 @@ object MalumCodexEvent {
                     )
                 )
                 .setEntryVisibleWhen {
-                    VoidRevelationHandler.hasSeenTheRevelation(
-                        RevelationType.ICHOR
+                    IchorRevelationHandler.hasSeenTheRevelation(
+                        IchorRevelationHandler.RevelationType.ICHOR
                     )
                 }
         }
@@ -242,8 +243,8 @@ object MalumCodexEvent {
                     )
                 )
                 .setEntryVisibleWhen {
-                    VoidRevelationHandler.hasSeenTheRevelation(
-                        RevelationType.ICHOR
+                    IchorRevelationHandler.hasSeenTheRevelation(
+                        IchorRevelationHandler.RevelationType.ICHOR
                     )
                 }
         }

@@ -45,15 +45,12 @@ repositories {
 	maven("https://mvn.devos.one/snapshots/")
 	maven("https://mvn.devos.one/releases/")
 	maven("https://maven.jamieswhiteshirt.com/libs-release")
-	//maven("https://maven.greenhouseteam.dev/releases/")
-	maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") // Forge Config API Port
 	maven("https://maven.shedaniel.me/")
 	maven("https://dl.cloudsmith.io/public/tslat/sbl/maven/")
 	maven("https://maven.nucleoid.xyz/")
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
 	minecraft("com.mojang:minecraft:${property("minecraft_version")}")
 
 	mappings(loom.layered {
@@ -80,7 +77,7 @@ dependencies {
 
 	modImplementation("team.lodestar.lodestone:lodestone:${property("minecraft_version")}-${property("lodestone_version")}-fabric")
 
-	modImplementation("com.sammy:malum:${property("malum_version")}")
+	modImplementation("maven.modrinth:malum:${property("malum_version")}")
 
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${property("cca_version")}")
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${property("cca_version")}")
@@ -130,12 +127,6 @@ java {
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 }
-
-//jar {
-////    exclude 'com/sammy/malum/core/data/**'
-//	exclude 'com/sammy/malum/client/model/bbmodels/**'
-//	exclude 'assets/malum/models/block/bbmodels/**'
-//}
 
 tasks.withType<JavaCompile> {
 	options.encoding = "UTF-8"

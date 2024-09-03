@@ -4,6 +4,7 @@ import com.sammy.malum.client.VoidRevelationHandler
 import com.sammy.malum.client.VoidRevelationHandler.RevelationType
 import dev.sterner.VoidBound
 import dev.sterner.api.util.VoidBoundUtils
+import dev.sterner.client.IchorRevelationHandler
 import dev.sterner.registry.VoidBoundBlockRegistry
 import net.minecraft.client.Minecraft
 import net.minecraft.nbt.CompoundTag
@@ -61,7 +62,7 @@ class CrimsonBookItem(properties: Properties) : BlockItem(VoidBoundBlockRegistry
             )
         }
         if (giveAdvancement && level.isClientSide) {
-            VoidRevelationHandler.seeTheRevelation(RevelationType.ICHOR)
+            IchorRevelationHandler.seeTheRevelation(IchorRevelationHandler.RevelationType.ICHOR)
         }
 
         return super.use(level, player, usedHand)
