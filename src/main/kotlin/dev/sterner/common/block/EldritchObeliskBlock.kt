@@ -9,7 +9,6 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import team.lodestar.lodestone.systems.block.LodestoneEntityBlock
-import team.lodestar.lodestone.systems.multiblock.ILodestoneMultiblockComponent
 
 class EldritchObeliskBlock(properties: Properties) : LodestoneEntityBlock<EldritchObeliskBlockEntity>(properties) {
 

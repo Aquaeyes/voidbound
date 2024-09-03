@@ -28,7 +28,7 @@ import team.lodestar.lodestone.systems.rendering.VFXBuilders
 import team.lodestar.lodestone.systems.rendering.VFXBuilders.ScreenVFXBuilder
 import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken
 import java.awt.Color
-import java.util.Optional
+import java.util.*
 
 
 object VoidBoundRenderUtils {
@@ -82,7 +82,6 @@ object VoidBoundRenderUtils {
         tessellator.end()
         poseStack.popPose()
     }
-
 
 
     /**
@@ -169,7 +168,14 @@ object VoidBoundRenderUtils {
     /**
      * Render a texture quad in world towards camera
      */
-    fun renderWobblyOrientedWorldIcon(poseStack: PoseStack, buffer: MultiBufferSource, camera: Quaternionf, yOffset: Float, alpha: Float, spirits: Optional<MutableList<SpiritWithCount>>) {
+    fun renderWobblyOrientedWorldIcon(
+        poseStack: PoseStack,
+        buffer: MultiBufferSource,
+        camera: Quaternionf,
+        yOffset: Float,
+        alpha: Float,
+        spirits: Optional<MutableList<SpiritWithCount>>
+    ) {
         poseStack.pushPose()
         poseStack.translate(0.0, yOffset.toDouble(), 0.0)
         poseStack.mulPose(camera)
@@ -203,7 +209,7 @@ object VoidBoundRenderUtils {
 
                 font.drawInBatch(
                     spirit.count.toString(),
-                    0f, 0f, Color(255,255,255).rgb,
+                    0f, 0f, Color(255, 255, 255).rgb,
                     true,
                     poseStack.last().pose(),
                     buffer,

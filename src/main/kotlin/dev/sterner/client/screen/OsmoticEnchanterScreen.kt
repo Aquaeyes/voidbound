@@ -65,7 +65,12 @@ class OsmoticEnchanterScreen(
         blockEntity?.calculateSpiritRequired()
     }
 
-    private fun addEnchantments(enchantments: MutableList<OsmoticEnchanterBlockEntity.EnchantmentData>?, xInMenu: Int, yInMenu: Int, selected: Boolean) {
+    private fun addEnchantments(
+        enchantments: MutableList<OsmoticEnchanterBlockEntity.EnchantmentData>?,
+        xInMenu: Int,
+        yInMenu: Int,
+        selected: Boolean
+    ) {
         enchantments?.forEachIndexed { index, data ->
             var width = 16
             var height = 16
@@ -80,7 +85,7 @@ class OsmoticEnchanterScreen(
 
             val widget = EnchantmentWidget(this, xInMenu + xOffset, yInMenu + yOffset, width, height)
             widget.enchantment = data.enchantment
-           // println(data.enchantment.descriptionId)
+            // println(data.enchantment.descriptionId)
             widget.level = data.level
             widget.selected = selected
             this.addRenderableWidget(widget)

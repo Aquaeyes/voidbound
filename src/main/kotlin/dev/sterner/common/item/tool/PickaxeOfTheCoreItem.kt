@@ -2,9 +2,7 @@ package dev.sterner.common.item.tool
 
 import dev.sterner.api.item.HammerLikeItem
 import dev.sterner.api.util.VoidBoundUtils
-import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.Style
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ItemStack
@@ -14,7 +12,6 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import team.lodestar.lodestone.systems.item.tools.magic.MagicPickaxeItem
-import java.awt.Color
 
 
 open class PickaxeOfTheCoreItem(

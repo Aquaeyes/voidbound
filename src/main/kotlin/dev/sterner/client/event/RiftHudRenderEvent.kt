@@ -43,7 +43,8 @@ object RiftHudRenderEvent {
 
                         // Center of the screen
                         val centerX = client.window.guiScaledWidth / 2.0 - 15
-                        val centerY = client.window.guiScaledHeight / 2.0 - 15 // Adjusted for your original centerY offset
+                        val centerY =
+                            client.window.guiScaledHeight / 2.0 - 15 // Adjusted for your original centerY offset
                         val radius = 16.0 // You can adjust the radius to fit your design
 
                         // Iterate over the spirits to position them in a circular pattern
@@ -79,7 +80,7 @@ object RiftHudRenderEvent {
                                 Minecraft.getInstance().font.drawInBatch(
                                     spirit.count.toString(),
                                     32f, 32f,
-                                    Color(255,255,255).rgb,
+                                    Color(255, 255, 255).rgb,
                                     true,
                                     poseStack.last().pose(),
                                     guiGraphics.bufferSource(),

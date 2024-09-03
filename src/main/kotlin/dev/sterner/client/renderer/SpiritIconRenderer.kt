@@ -1,8 +1,6 @@
 package dev.sterner.client.renderer
 
-import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
-import dev.sterner.VoidBound
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.util.VoidBoundRenderUtils
 import dev.sterner.api.util.VoidBoundUtils
@@ -12,7 +10,6 @@ import net.minecraft.util.Mth
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import org.joml.Quaternionf
-import org.lwjgl.opengl.GL11
 import kotlin.math.sqrt
 
 
@@ -46,6 +43,13 @@ object SpiritIconRenderer {
 
         val entityHeight = entity.nameTagOffsetY
 
-        VoidBoundRenderUtils.renderWobblyOrientedWorldIcon(poseStack, buffers, camera, entityHeight, currentAlpha, VoidBoundUtils.getSpiritData(entity))
+        VoidBoundRenderUtils.renderWobblyOrientedWorldIcon(
+            poseStack,
+            buffers,
+            camera,
+            entityHeight,
+            currentAlpha,
+            VoidBoundUtils.getSpiritData(entity)
+        )
     }
 }

@@ -38,7 +38,8 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
         }
 
         val activatedEnchantments = screen.menu.osmoticEnchanter?.activeEnchantments
-        val compatible = EnchantmentHelper.isEnchantmentCompatible(activatedEnchantments?.map { it.enchantment }!!, enchantment!!)
+        val compatible =
+            EnchantmentHelper.isEnchantmentCompatible(activatedEnchantments?.map { it.enchantment }!!, enchantment!!)
 
         val cap = screen.menu.osmoticEnchanter?.activeEnchantments!!.size < 9
 
@@ -46,12 +47,26 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
             val bl = level(mouseX, mouseY)
             if (bl) {
                 selected = !selected
-                VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(EnchantmentLevelPacket(enchantment!!, level, screen.menu.pos.asLong(), false))
+                VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(
+                    EnchantmentLevelPacket(
+                        enchantment!!,
+                        level,
+                        screen.menu.pos.asLong(),
+                        false
+                    )
+                )
                 screen.menu.osmoticEnchanter?.updateEnchantmentData(enchantment!!, level, false)
                 screen.refreshEnchants()
             }
         } else if (compatible && cap) {
-            VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(EnchantmentLevelPacket(enchantment!!, level, screen.menu.pos.asLong(), true))
+            VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(
+                EnchantmentLevelPacket(
+                    enchantment!!,
+                    level,
+                    screen.menu.pos.asLong(),
+                    true
+                )
+            )
             screen.menu.osmoticEnchanter?.updateEnchantmentData(enchantment!!, level, true)
             screen.refreshEnchants()
         }
@@ -86,7 +101,10 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
 
         guiGraphics.blit(icon, xx, yy, 0f, 0f, 16, 16, 16, 16)
 
-        val bl = EnchantmentHelper.isEnchantmentCompatible(screen.menu.osmoticEnchanter!!.activeEnchantments.map { it.enchantment }, enchantment!!)
+        val bl = EnchantmentHelper.isEnchantmentCompatible(
+            screen.menu.osmoticEnchanter!!.activeEnchantments.map { it.enchantment },
+            enchantment!!
+        )
         if (!bl && !selected) {
             guiGraphics.blit(VoidBound.id("textures/gui/no.png"), xx + 8, yy + 8, 0f, 0f, 9, 9, 9, 9)
         }
@@ -98,7 +116,7 @@ open class EnchantmentWidget(var screen: OsmoticEnchanterScreen, x: Int, y: Int,
         }
     }
 
-    private fun level(mouseX: Double, mouseY: Double) : Boolean {
+    private fun level(mouseX: Double, mouseY: Double): Boolean {
         val area1XStart: Double = x + 6.0
         val area1XEnd: Double = x + 16.0
         val area1YStart: Double = y.toDouble()

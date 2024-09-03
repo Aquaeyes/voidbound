@@ -94,7 +94,8 @@ class SpiritBarWidget(private var screen: OsmoticEnchanterScreen, x: Int, y: Int
                 val targetCount = targetSpirits?.getChargeForType(spiritType!!)
                 val consumedCount = consumedSpirits?.getChargeForType(spiritType!!)
 
-                val count = Component.translatable("\n$consumedCount / $targetCount").setStyle(Style.EMPTY.withColor(Color.LIGHT_GRAY.rgb))
+                val count = Component.translatable("\n$consumedCount / $targetCount")
+                    .setStyle(Style.EMPTY.withColor(Color.LIGHT_GRAY.rgb))
 
                 tooltip = Tooltip.create(name.append(count))
             }

@@ -1,11 +1,9 @@
 package dev.sterner.common.item.tool
 
 import dev.sterner.api.util.VoidBoundUtils
-import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.NonNullList
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.Style
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.Containers
@@ -20,7 +18,6 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import team.lodestar.lodestone.systems.item.tools.magic.MagicHoeItem
-import java.awt.Color
 
 open class HoeOfGrowthItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) :
     MagicHoeItem(

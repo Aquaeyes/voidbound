@@ -1,7 +1,5 @@
 package dev.sterner.client.event
 
-import com.sammy.malum.client.VoidRevelationHandler
-import com.sammy.malum.client.VoidRevelationHandler.RevelationType
 import com.sammy.malum.client.screen.codex.BookWidgetStyle
 import com.sammy.malum.client.screen.codex.PlacedBookEntry
 import com.sammy.malum.client.screen.codex.PlacedBookEntryBuilder
@@ -111,8 +109,20 @@ object MalumCodexEvent {
                         VoidBoundItemRegistry.TEAR_OF_ENDER.get()
                     ).setStyle(VOID_GILDED)
                 }
-                .addPage(HeadlineTextItemPage("void.dimensional_tear", "void.dimensional_tear.1", VoidBoundItemRegistry.TEAR_OF_ENDER.get()))
-                .addPage(HeadlineTextItemPage("void.dimensional_tear", "void.dimensional_tear.2", VoidBoundItemRegistry.TEAR_OF_CRIMSON.get()))
+                .addPage(
+                    HeadlineTextItemPage(
+                        "void.dimensional_tear",
+                        "void.dimensional_tear.1",
+                        VoidBoundItemRegistry.TEAR_OF_ENDER.get()
+                    )
+                )
+                .addPage(
+                    HeadlineTextItemPage(
+                        "void.dimensional_tear",
+                        "void.dimensional_tear.2",
+                        VoidBoundItemRegistry.TEAR_OF_CRIMSON.get()
+                    )
+                )
 
         }
 
@@ -260,9 +270,11 @@ object MalumCodexEvent {
                 it.setIcon(item).setStyle(VOID_GILDED)
             }
                 .addPage(HeadlineTextPage("call_of_the_void", "call_of_the_void.1"))
-                .addPage(SpiritInfusionPage.fromOutput(
-                    VoidBoundItemRegistry.CALL_OF_THE_VOID.get()
-                ))
+                .addPage(
+                    SpiritInfusionPage.fromOutput(
+                        VoidBoundItemRegistry.CALL_OF_THE_VOID.get()
+                    )
+                )
         }
 
         screen?.addEntry("soul_steel_golem", 2, -2) { builder ->

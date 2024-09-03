@@ -2,25 +2,17 @@ package dev.sterner.client.renderer.blockentity
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
-import dev.sterner.VoidBound
-import dev.sterner.api.ClientTickHandler
 import dev.sterner.api.VoidBoundApi
-import dev.sterner.api.util.VoidBoundRenderUtils
 import dev.sterner.client.renderer.blockentity.SpiritBinderBlockEntityRenderer.Companion.TOKEN
 import dev.sterner.common.blockentity.SpiritRiftBlockEntity
 import dev.sterner.registry.VoidBoundRenderTypes
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.Font
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
-import net.minecraft.util.Mth
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry
 import team.lodestar.lodestone.systems.rendering.VFXBuilders
-import java.awt.Color
-import java.util.*
-import kotlin.math.sqrt
 
 
 class SpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :

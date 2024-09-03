@@ -17,15 +17,12 @@ import net.minecraft.util.Mth
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.EnchantmentMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import team.lodestar.lodestone.helpers.BlockHelper
 import team.lodestar.lodestone.systems.blockentity.ItemHolderBlockEntity
-import java.util.*
 import kotlin.math.PI
 
 
@@ -125,7 +122,14 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
      */
     private fun tickFindRift(range: Int = 3) {
         val pos = blockPos
-        for (aroundPos in BlockPos.betweenClosed(pos.x - range, pos.y, pos.z - range, pos.x + range, pos.y + range, pos.z + range)) {
+        for (aroundPos in BlockPos.betweenClosed(
+            pos.x - range,
+            pos.y,
+            pos.z - range,
+            pos.x + range,
+            pos.y + range,
+            pos.z + range
+        )) {
             if (level?.getBlockEntity(aroundPos) is SpiritRiftBlockEntity) {
                 foundRiftPos = aroundPos
                 break
@@ -291,7 +295,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         notifyUpdate()
     }
 
-    fun resetEnchanter(){
+    fun resetEnchanter() {
         activeEnchantments.clear()
         availableEnchantments.clear()
         spiritsToConsume = SimpleSpiritCharge()
@@ -325,7 +329,8 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     override fun saveAdditional(compound: CompoundTag) {
         compound.putIntArray(
             "AvailableEnchants",
-            availableEnchantments.stream().mapToInt { i -> BuiltInRegistries.ENCHANTMENT.getId(i.enchantment) }.toArray()
+            availableEnchantments.stream().mapToInt { i -> BuiltInRegistries.ENCHANTMENT.getId(i.enchantment) }
+                .toArray()
         )
         compound.putIntArray(
             "ActiveEnchants",

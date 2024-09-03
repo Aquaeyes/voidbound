@@ -21,7 +21,7 @@ data class SimpleSpiritCharge(
     )
 ) {
 
-    private fun getMutableList() : MutableList<SpiritWithCount> {
+    private fun getMutableList(): MutableList<SpiritWithCount> {
         val list = mutableListOf<SpiritWithCount>()
         forEach { type, count ->
             list.add(SpiritWithCount(type, count))
@@ -30,11 +30,11 @@ data class SimpleSpiritCharge(
         return list
     }
 
-    fun getNonEmptyMutableList() : MutableList<SpiritWithCount> {
+    fun getNonEmptyMutableList(): MutableList<SpiritWithCount> {
         return getMutableList().filter { it.count > 0 }.toMutableList()
     }
 
-    fun size() : Int {
+    fun size(): Int {
         return charges.size
     }
 

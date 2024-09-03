@@ -1,7 +1,5 @@
 package dev.sterner.common.item
 
-import com.sammy.malum.client.VoidRevelationHandler
-import com.sammy.malum.client.VoidRevelationHandler.RevelationType
 import dev.sterner.VoidBound
 import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.client.IchorRevelationHandler
