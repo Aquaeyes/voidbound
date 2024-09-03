@@ -12,6 +12,7 @@
     "ward.BlockBehaviourMixin",
     "ward.EndermanTakeBlockGoalMixin",
     "ward.ExplosionMixin",
+    "ward.FallingBlockMixin",
     "ward.ItemMixin",
     "ward.LevelMixin",
     "ward.PistonBaseBlockMixin"

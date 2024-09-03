@@ -7,6 +7,7 @@ import com.sammy.malum.client.screen.codex.PlacedBookEntry
 import com.sammy.malum.client.screen.codex.PlacedBookEntryBuilder
 import com.sammy.malum.client.screen.codex.objects.progression.ProgressionEntryObject
 import com.sammy.malum.client.screen.codex.pages.recipe.SpiritInfusionPage
+import com.sammy.malum.client.screen.codex.pages.text.HeadlineTextItemPage
 import com.sammy.malum.client.screen.codex.pages.text.HeadlineTextPage
 import com.sammy.malum.client.screen.codex.screens.ArcanaProgressionScreen
 import com.sammy.malum.client.screen.codex.screens.VoidProgressionScreen
@@ -100,7 +101,22 @@ object MalumCodexEvent {
         }
 
         screen?.addEntry(
-            "void.ichor", 0, -2
+            "void.dimensional_tear", 0, -2
+        ) { b: PlacedBookEntryBuilder ->
+            b
+                .withTraceFragmentEntry()
+                .configureWidget { w: ProgressionEntryObject ->
+                    w.setIcon(
+                        VoidBoundItemRegistry.TEAR_OF_ENDER.get()
+                    ).setStyle(VOID_GILDED)
+                }
+                .addPage(HeadlineTextItemPage("void.dimensional_tear", "void.dimensional_tear.1", VoidBoundItemRegistry.TEAR_OF_ENDER.get()))
+                .addPage(HeadlineTextItemPage("void.dimensional_tear", "void.dimensional_tear.2", VoidBoundItemRegistry.TEAR_OF_CRIMSON.get()))
+
+        }
+
+        screen?.addEntry(
+            "void.ichor", 0, -3
         ) { b: PlacedBookEntryBuilder ->
             b
                 .withTraceFragmentEntry()
@@ -123,10 +139,9 @@ object MalumCodexEvent {
         }
 
         screen?.addEntry(
-            "void.ichorium_scythe", 1, -3
+            "void.ichorium_scythe", 1, -4
         ) { b: PlacedBookEntryBuilder ->
             b
-                .withTraceFragmentEntry()
                 .configureWidget { w: ProgressionEntryObject ->
                     w.setIcon(
                         VoidBoundItemRegistry.ICHORIUM_SCYTHE.get()
@@ -146,10 +161,9 @@ object MalumCodexEvent {
         }
 
         screen?.addEntry(
-            "void.ichorium_pickaxe", -1, -3
+            "void.ichorium_pickaxe", -1, -4
         ) { b: PlacedBookEntryBuilder ->
             b
-                .withTraceFragmentEntry()
                 .configureWidget { w: ProgressionEntryObject ->
                     w.setIcon(
                         VoidBoundItemRegistry.ICHORIUM_PICKAXE.get()
@@ -169,10 +183,9 @@ object MalumCodexEvent {
         }
 
         screen?.addEntry(
-            "void.ichorium_sword", 0, -4
+            "void.ichorium_sword", 0, -5
         ) { b: PlacedBookEntryBuilder ->
             b
-                .withTraceFragmentEntry()
                 .configureWidget { w: ProgressionEntryObject ->
                     w.setIcon(
                         VoidBoundItemRegistry.ICHORIUM_SWORD.get()
@@ -192,10 +205,9 @@ object MalumCodexEvent {
         }
 
         screen?.addEntry(
-            "void.ichorium_shovel", -2, -4
+            "void.ichorium_shovel", -2, -5
         ) { b: PlacedBookEntryBuilder ->
             b
-                .withTraceFragmentEntry()
                 .configureWidget { w: ProgressionEntryObject ->
                     w.setIcon(
                         VoidBoundItemRegistry.ICHORIUM_SHOVEL.get()
@@ -215,10 +227,9 @@ object MalumCodexEvent {
         }
 
         screen?.addEntry(
-            "void.ichorium_axe", 2, -4
+            "void.ichorium_axe", 2, -5
         ) { b: PlacedBookEntryBuilder ->
             b
-                .withTraceFragmentEntry()
                 .configureWidget { w: ProgressionEntryObject ->
                     w.setIcon(
                         VoidBoundItemRegistry.ICHORIUM_AXE.get()
@@ -246,7 +257,11 @@ object MalumCodexEvent {
                 tag.putBoolean("Glowing", true)
                 item.tag = tag
                 it.setIcon(item).setStyle(VOID_GILDED)
-            }.addPage(HeadlineTextPage("call_of_the_void", "call_of_the_void.1"))
+            }
+                .addPage(HeadlineTextPage("call_of_the_void", "call_of_the_void.1"))
+                .addPage(SpiritInfusionPage.fromOutput(
+                    VoidBoundItemRegistry.CALL_OF_THE_VOID.get()
+                ))
         }
 
         screen?.addEntry("soul_steel_golem", 2, -2) { builder ->
