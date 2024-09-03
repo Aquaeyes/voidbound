@@ -3,6 +3,8 @@ package dev.sterner.common.blockentity
 import com.sammy.malum.common.block.MalumBlockEntityInventory
 import com.sammy.malum.common.block.storage.jar.SpiritJarBlockEntity
 import com.sammy.malum.core.systems.recipe.SpiritWithCount
+import com.sammy.malum.core.systems.spirit.MalumSpiritType
+import com.sammy.malum.visual_effects.SpiritLightSpecs
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.rift.SimpleSpiritCharge
 import dev.sterner.networking.UpdateSpiritAmountPacket
@@ -20,10 +22,19 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.phys.Vec3
 import team.lodestar.lodestone.helpers.BlockHelper
 import team.lodestar.lodestone.systems.blockentity.ItemHolderBlockEntity
+import team.lodestar.lodestone.systems.particle.ParticleEffectSpawner
+import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
+import team.lodestar.lodestone.systems.particle.data.GenericParticleData
+import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData
+import team.lodestar.lodestone.systems.particle.world.LodestoneWorldParticle
+import java.util.function.Consumer
+import java.util.function.Supplier
 import kotlin.math.PI
 
 
@@ -177,7 +188,7 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
                 val spirits = jarBlockEntity.type
                 val count = jarBlockEntity.count
                 if (count > 0 && spirits == spiritType.type) {
-                    println("Consume $spirits $count")
+                    spawnSpiritJarParticle(level!!, worldPosition, jarBlockEntity.blockPos!!, spirits)
                     consumedSpirits.addToCharge(spiritType.type, 1)
                     notifyUpdate()
 
@@ -192,6 +203,76 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         }
 
         return false
+    }
+
+    private fun spawnSpiritJarParticle(level: Level, worldPosition: BlockPos, blockPos: BlockPos, type: MalumSpiritType) {
+
+        val behavior =
+            Consumer<WorldParticleBuilder> { b: WorldParticleBuilder ->
+                b.addTickActor { p: LodestoneWorldParticle ->
+                    val particlePos = Vec3(p.x, p.y, p.z)
+                    val direction = worldPosition.center.subtract(particlePos).normalize()
+                    p.particleSpeed = direction.scale(0.05)
+                }
+            }
+        val rand = level.random
+
+        val xRand: Double?
+        val yRand: Double?
+        val zRand: Double?
+
+
+        xRand = blockPos.x + rand.nextDouble() - 0.5
+        yRand = blockPos.y + 0.25 + (rand.nextDouble() - 0.5)
+        zRand = blockPos.z + rand.nextDouble() - 0.5
+
+
+        val startPos = Vec3(xRand, yRand, zRand)
+
+        val distance = startPos.distanceTo(Vec3(worldPosition.x + 0.5, worldPosition.y + 1.5, worldPosition.z + 0.5))
+        val baseLifetime = 10
+        val speed = 0.05
+        val adjustedLifetime = (distance / speed).toInt().coerceAtLeast(baseLifetime) - 20
+
+        val lightSpecs: ParticleEffectSpawner =
+            SpiritLightSpecs.spiritLightSpecs(level, Vec3(xRand, yRand, zRand), type)
+        lightSpecs.builder.act { b: WorldParticleBuilder ->
+            b.act(behavior)
+                .modifyColorData { d: ColorParticleData ->
+                    d.multiplyCoefficient(0.35f)
+                }
+                .modifyData(
+                    Supplier { b.scaleData },
+                    Consumer { d: GenericParticleData ->
+                        d.multiplyValue(2.0f).multiplyCoefficient(0.9f)
+                    })
+                .modifyData(
+                    Supplier { b.transparencyData },
+                    Consumer { d: GenericParticleData ->
+                        d.multiplyCoefficient(0.9f)
+                    }).multiplyLifetime(1.5f)
+                .setLifetime(b.particleOptions.lifetimeSupplier.get() as Int + adjustedLifetime)
+        }
+
+        lightSpecs.bloomBuilder.act { b: WorldParticleBuilder ->
+            b.act(behavior).modifyColorData { d: ColorParticleData ->
+                d.multiplyCoefficient(0.35f)
+            }
+                .modifyData(
+                    Supplier { b.scaleData },
+                    Consumer { d: GenericParticleData ->
+                        d.multiplyValue(1.6f).multiplyCoefficient(0.9f)
+                    })
+                .modifyData(
+                    Supplier { b.transparencyData },
+                    Consumer { d: GenericParticleData ->
+                        d.multiplyCoefficient(0.9f)
+                    })
+                .setLifetime(((b.particleOptions.lifetimeSupplier.get() as Int).toFloat() + adjustedLifetime).toInt())
+        }
+
+        lightSpecs.spawnParticles()
+
     }
 
     /**
