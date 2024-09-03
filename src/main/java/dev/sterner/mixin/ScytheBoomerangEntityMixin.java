@@ -3,7 +3,7 @@ package dev.sterner.mixin;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.sammy.malum.common.entity.boomerang.ScytheBoomerangEntity;
-import dev.sterner.api.IchoriumScytheGhost;
+import dev.sterner.api.entity.IchoriumScytheGhost;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;

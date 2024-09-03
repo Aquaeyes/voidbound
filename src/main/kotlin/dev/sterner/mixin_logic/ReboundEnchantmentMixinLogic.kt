@@ -2,7 +2,7 @@ package dev.sterner.mixin_logic
 
 import com.sammy.malum.common.entity.boomerang.ScytheBoomerangEntity
 import com.sammy.malum.registry.common.AttributeRegistry
-import dev.sterner.api.IchoriumScytheGhost
+import dev.sterner.api.entity.IchoriumScytheGhost
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
 
