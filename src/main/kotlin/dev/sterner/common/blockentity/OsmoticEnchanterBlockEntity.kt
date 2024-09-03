@@ -1,6 +1,7 @@
 package dev.sterner.common.blockentity
 
 import com.sammy.malum.common.block.MalumBlockEntityInventory
+import com.sammy.malum.common.block.storage.jar.SpiritJarBlockEntity
 import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.rift.SimpleSpiritCharge
@@ -49,6 +50,8 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     private var cooldown: Int = 0
 
     private var foundRiftPos: BlockPos? = null
+    private var foundJarPosList: MutableList<BlockPos> = mutableListOf()
+    private var jarCooldown = 0
 
     init {
         inventory = object : MalumBlockEntityInventory(1, 64) {
@@ -112,8 +115,82 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         }
     }
 
-    //TODO add another way to generate spirit from shards
-    private fun tickOtherSpiritSource(): Boolean {
+    private fun tickOtherSpiritSource(range: Int = 6): Boolean {
+        val jarList = mutableListOf<BlockPos>()
+
+        jarCooldown++
+        if (jarCooldown > 20) {
+            jarCooldown = 0
+            if (foundJarPosList.isEmpty()) {
+                val pos = blockPos
+                for (aroundPos in BlockPos.betweenClosed(
+                    pos.x - range,
+                    pos.y,
+                    pos.z - range,
+                    pos.x + range,
+                    pos.y + range,
+                    pos.z + range
+                )) {
+                    if (level?.getBlockEntity(aroundPos) is SpiritJarBlockEntity) {
+                        jarList.add(aroundPos.immutable())
+                    }
+                }
+                if (jarList.isNotEmpty()) {
+                    foundJarPosList = jarList
+                    return true
+                }
+            }
+        }
+
+        if (foundJarPosList.isNotEmpty()) {
+            var i = 0
+            while (i < foundJarPosList.size) {
+                val jarPos = foundJarPosList[i]
+                if (level?.getBlockEntity(jarPos) is SpiritJarBlockEntity) {
+                    val jarBlockEntity = level!!.getBlockEntity(jarPos) as SpiritJarBlockEntity
+
+                    val drained = tryDrainSpiritFromJar(jarBlockEntity)
+                    if (drained) {
+                        break
+                    }
+                } else {
+                    foundJarPosList.removeAt(i)
+                    continue  // Skip incrementing i to check the next item
+                }
+                i++
+            }
+        }
+
+        return false
+    }
+
+    private fun tryDrainSpiritFromJar(jarBlockEntity: SpiritJarBlockEntity): Boolean {
+        val spiritsList = spiritsToConsume.getNonEmptyMutableList()
+
+        var i = 0
+        while (i < spiritsList.size) {
+            val spiritType = spiritsList[i]
+            val requiredCharge = spiritsToConsume.getChargeForType(spiritType.type)
+            val currentCharge = consumedSpirits.getChargeForType(spiritType.type)
+
+            if (currentCharge < requiredCharge) {
+                val spirits = jarBlockEntity.type
+                val count = jarBlockEntity.count
+                if (count > 0 && spirits == spiritType.type) {
+                    println("Consume $spirits $count")
+                    consumedSpirits.addToCharge(spiritType.type, 1)
+                    notifyUpdate()
+
+                    jarBlockEntity.extractItem(0, 1)
+                    jarBlockEntity.notifyUpdate()
+
+                    // Exit after successful draining
+                    return true
+                }
+            }
+            i++
+        }
+
         return false
     }
 

@@ -17,19 +17,4 @@ class IchoriumScytheItem(tier: Tier?, attackDamageIn: Float, attackSpeedIn: Floa
         attackSpeedIn - 1.2f,
         4f,
         builderIn
-    ) {
-
-    override fun appendHoverText(
-        stack: ItemStack,
-        level: Level?,
-        tooltipComponents: MutableList<Component>,
-        isAdvanced: TooltipFlag
-    ) {
-        tooltipComponents.add(
-            Component.translatable("Not yet implemented").withStyle(ChatFormatting.ITALIC).withStyle(
-                Style.EMPTY.withColor(Color.red.rgb)
-            )
-        )
-        super.appendHoverText(stack, level, tooltipComponents, isAdvanced)
-    }
-}
+    )

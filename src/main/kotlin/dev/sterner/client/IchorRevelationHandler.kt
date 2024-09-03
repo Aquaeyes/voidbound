@@ -31,13 +31,9 @@ object IchorRevelationHandler {
         if (!checkedFile) {
             try {
                 val s = Files.readString(path, StandardCharsets.UTF_8)
-                val data = GSON.fromJson(
-                    s,
-                    RevelationData::class.java
-                ) as RevelationData
-                if (data != null) {
-                    revelationState = data.hasSeenIt
-                }
+                val data = GSON.fromJson(s, RevelationData::class.java) as RevelationData
+                revelationState = data.hasSeenIt
+
             } catch (var2: JsonSyntaxException) {
                 revelationState = RevelationType.CLUELESS
             } catch (var2: IOException) {
@@ -61,8 +57,7 @@ object IchorRevelationHandler {
                 val data = RevelationData()
                 data.hasSeenIt = type
                 Files.writeString(path, GSON.toJson(data), StandardCharsets.UTF_8)
-            } catch (var2: IOException) {
-            }
+            } catch (_: IOException){}
         }
     }
 

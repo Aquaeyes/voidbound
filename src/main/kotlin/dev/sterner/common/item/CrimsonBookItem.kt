@@ -1,11 +1,15 @@
 package dev.sterner.common.item
 
+import com.sammy.malum.client.VoidRevelationHandler
+import com.sammy.malum.client.screen.codex.BookEntry
 import dev.sterner.VoidBound
 import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.client.IchorRevelationHandler
 import dev.sterner.registry.VoidBoundBlockRegistry
 import net.minecraft.client.Minecraft
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.Style
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -15,6 +19,7 @@ import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
+import java.awt.Color
 
 
 class CrimsonBookItem(properties: Properties) : BlockItem(VoidBoundBlockRegistry.CRIMSON_RITES.get(), properties) {
@@ -52,16 +57,24 @@ class CrimsonBookItem(properties: Properties) : BlockItem(VoidBoundBlockRegistry
             giveAdvancement = true
         }
 
-        if (giveAdvancement && player is ServerPlayer) {
-            VoidBoundUtils.grantAdvancementCriterion(
-                player,
-                VoidBound.id("revelationary/ichor_requirement_advancement"),
-                "opened_crimson_rites"
-            )
+        if (!BookEntry.AFTER_UMBRAL_CRYSTAL.asBoolean) {
+            giveAdvancement = false
         }
-        if (giveAdvancement && level.isClientSide) {
-            IchorRevelationHandler.seeTheRevelation(IchorRevelationHandler.RevelationType.ICHOR)
+
+        if (giveAdvancement) {
+            if (player is ServerPlayer) {
+                VoidBoundUtils.grantAdvancementCriterion(
+                    player,
+                    VoidBound.id("revelationary/ichor_requirement_advancement"),
+                    "opened_crimson_rites"
+                )
+            } else {
+                IchorRevelationHandler.seeTheRevelation(IchorRevelationHandler.RevelationType.ICHOR)
+            }
+        } else if (player is ServerPlayer && item.tag!!.getBoolean("open")) {
+            player.sendSystemMessage(Component.translatable("voidbound.dontknowthis").setStyle(Style.EMPTY.withColor(Color(200,100,200).rgb)))
         }
+
 
         return super.use(level, player, usedHand)
     }

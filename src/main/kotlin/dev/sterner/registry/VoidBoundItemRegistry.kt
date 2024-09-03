@@ -65,7 +65,7 @@ object VoidBoundItemRegistry {
     }
 
     val EMPTY_SPIRIT_SHARD: RegistryObject<Item> = ITEMS.register("empty_spirit_shard") {
-        Item(Item.Properties())
+        EmptySpiritShard(Item.Properties())
     }
 
     val DIVIDER: RegistryObject<Item> = ITEMS.register("divider") {

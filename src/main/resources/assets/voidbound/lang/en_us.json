@@ -176,7 +176,7 @@
   "malum.gui.book.entry.void.ichorium_scythe": "Ichorium Scythe",
   "malum.gui.book.entry.void.ichorium_scythe.description": "Blood of the Gods",
   "malum.gui.book.entry.page.headline.void.ichorium_scythe": "Ichorium Scythe",
-  "malum.gui.book.entry.page.text.void.ichorium_scythe.1": "Use them",
+  "malum.gui.book.entry.page.text.void.ichorium_scythe.1": "Enchant with Rebound and it shoots 3 scythes",
 
   "malum.gui.book.entry.void.ichorium_sword": "Ichorium Sword",
   "malum.gui.book.entry.void.ichorium_sword.description": "Blood of the Gods",
@@ -205,6 +205,8 @@
 
   "advancements.voidbound.strange_matter.description": "I'll find some no Matter what",
   "advancements.voidbound.strange_matter.title": "Hell and Void",
+
+  "voidbound.dontknowthis": "You don't understand it",
 
   "category.voidbound": "Malum: Voidbound",
   "key.voidbound.foci_select" : "Select Foci"
