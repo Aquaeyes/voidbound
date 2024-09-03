@@ -55,16 +55,12 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
     init {
         inventory = object : MalumBlockEntityInventory(1, 64) {
+
             public override fun onContentsChanged(slot: Int) {
-                spiritsToConsume = SimpleSpiritCharge()
-                consumedSpirits = SimpleSpiritCharge()
-                availableEnchantments = mutableListOf()
-                activeEnchantments = mutableListOf()
-                refreshEnchants()
+                resetEnchanter()
                 this.setChanged()
                 needsSync = true
                 BlockHelper.updateAndNotifyState(level, worldPosition)
-                updateData()
                 super.onContentsChanged(slot)
             }
         }
@@ -289,14 +285,18 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         for (enchantment in this.activeEnchantments) {
             inventory.getStackInSlot(0).enchant(enchantment.enchantment, enchantment.level)
         }
-        activeEnchantments.clear()
-        availableEnchantments.clear()
-        refreshEnchants()
-        spiritsToConsume = SimpleSpiritCharge()
-        consumedSpirits = SimpleSpiritCharge()
+        resetEnchanter()
         activated = false
         cooldown = 0
         notifyUpdate()
+    }
+
+    fun resetEnchanter(){
+        activeEnchantments.clear()
+        availableEnchantments.clear()
+        spiritsToConsume = SimpleSpiritCharge()
+        consumedSpirits = SimpleSpiritCharge()
+        refreshEnchants()
     }
 
     fun refreshEnchants() {
