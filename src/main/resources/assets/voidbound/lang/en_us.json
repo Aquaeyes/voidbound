@@ -204,7 +204,7 @@
   "malum.gui.book.entry.void.osmotic_enchanter": "Osmotic Enchanter",
   "malum.gui.book.entry.void.osmotic_enchanter.description": "Enchant everything",
   "malum.gui.book.entry.page.headline.void.osmotic_enchanter": "Osmotic Enchanter",
-  "malum.gui.book.entry.page.text.void.osmotic_enchanter.1": "Consumes Spirits to enchant items, from Jars or A Spirit Rift",
+  "malum.gui.book.entry.page.text.void.osmotic_enchanter.1": "Consumes Spirits to enchant items, from Jars or A Spirit Rift if it has stored spirits",
 
   "advancements.voidbound.strange_matter.description": "I'll find some no Matter what",
   "advancements.voidbound.strange_matter.title": "Hell and Void",
@@ -226,22 +226,22 @@
   "malum.gui.book.entry.void.thoughts_about_nether": "Thoughts about The Nether",
   "malum.gui.book.entry.void.thoughts_about_nether.description": "I need to solve this",
   "malum.gui.book.entry.page.headline.void.thoughts_about_nether": "The Nether",
-  "malum.gui.book.entry.page.text.void.thoughts_about_nether.1": "The truth about this dimension has been reveled to me. I'm closer to the Tears",
+  "malum.gui.book.entry.page.text.void.thoughts_about_nether.1": "The truth about this \"hellish\" dimension has been reveled to me. I'm closer to the Tears",
 
   "malum.gui.book.entry.void.thoughts_about_end": "Thoughts about The End",
   "malum.gui.book.entry.void.thoughts_about_end.description": "I need to solve this",
   "malum.gui.book.entry.page.headline.void.thoughts_about_end": "The End",
-  "malum.gui.book.entry.page.text.void.thoughts_about_end.1": "The truth about this dimension has been reveled to me, I'm closer to the Tears",
+  "malum.gui.book.entry.page.text.void.thoughts_about_end.1": "The truth about this \"heavenly\" dimension has been reveled to me, I'm closer to the Tears",
 
 
   "malum.gui.book.entry.void.spirit_rift": "Spirit Rift",
   "malum.gui.book.entry.void.spirit_rift.description": "A source of spirit",
   "malum.gui.book.entry.page.headline.void.spirit_rift": "The Normal Rift",
-  "malum.gui.book.entry.page.text.void.spirit_rift.1": "Does more or less nothing special",
+  "malum.gui.book.entry.page.text.void.spirit_rift.1": " Does more or less nothing special",
   "malum.gui.book.entry.page.headline.void.spirit_rift.1": "The Eldritch Rift",
-  "malum.gui.book.entry.page.text.void.spirit_rift.2": "Sucks Spirits out of mobs with less than 25% hp",
+  "malum.gui.book.entry.page.text.void.spirit_rift.2": "Sucks Spirits out of mobs with less than 25% hp, the spirits are stored and can be used within 3 block os a Osmotic Enchanter",
   "malum.gui.book.entry.page.headline.void.spirit_rift.2": "The Pool Rift",
-  "malum.gui.book.entry.page.text.void.spirit_rift.3": "Gives Spirits",
+  "malum.gui.book.entry.page.text.void.spirit_rift.3": "Generates spirits slowly over time",
   "malum.gui.book.entry.page.headline.void.spirit_rift.3": "The Destabilized Rift",
   "malum.gui.book.entry.page.text.void.spirit_rift.4": "?!?!",
 

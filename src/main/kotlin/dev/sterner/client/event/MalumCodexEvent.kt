@@ -11,6 +11,7 @@ import com.sammy.malum.client.screen.codex.pages.recipe.SpiritInfusionPage
 import com.sammy.malum.client.screen.codex.pages.text.HeadlineTextItemPage
 import com.sammy.malum.client.screen.codex.pages.text.HeadlineTextPage
 import com.sammy.malum.client.screen.codex.pages.text.TextPage
+import com.sammy.malum.client.screen.codex.pages.text.WeepingWellTextPage
 import com.sammy.malum.client.screen.codex.screens.ArcanaProgressionScreen
 import com.sammy.malum.client.screen.codex.screens.VoidProgressionScreen
 import dev.sterner.VoidBound
@@ -18,6 +19,7 @@ import dev.sterner.VoidBound.modid
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.registry.VoidBoundItemRegistry
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.item.ItemStack
 import java.util.function.Consumer
 
 object MalumCodexEvent {
@@ -118,10 +120,12 @@ object MalumCodexEvent {
                         y,
                         VoidBound.id("textures/gui/light.png")
                     )
-                }.addPage(HeadlineTextPage("void.spirit_rift", "void.spirit_rift.1"))
-                .addPage(HeadlineTextPage("void.spirit_rift.1", "void.spirit_rift.2"))
-                .addPage(HeadlineTextPage("void.spirit_rift.2", "void.spirit_rift.3"))
-                .addPage(HeadlineTextPage("void.spirit_rift.3", "void.spirit_rift.4"))
+                }
+                .addPage(WeepingWellTextPage("void.spirit_rift.1", "void.spirit_rift.2", ItemStack.EMPTY.item))
+                //.addPage(HeadlineTextPage("void.spirit_rift", "void.spirit_rift.1"))
+                //.addPage(HeadlineTextPage("void.spirit_rift.1", "void.spirit_rift.2"))
+                //.addPage(HeadlineTextPage("void.spirit_rift.2", "void.spirit_rift.3"))
+                //.addPage(HeadlineTextPage("void.spirit_rift.3", "void.spirit_rift.4"))
         }
 
         screen?.addEntry(
