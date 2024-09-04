@@ -90,6 +90,15 @@ data class SimpleSpiritCharge(
         }
     }
 
+    fun rechargeRandomCount() {
+        val validTypes = charges.filter { (_, count) -> count < 50 }.keys
+
+        if (validTypes.isNotEmpty()) {
+            val randomType = validTypes.random()
+            charges[randomType] = (charges[randomType] ?: 0) + 1
+        }
+    }
+
     fun addToCharge(type: MalumSpiritType) {
         charges[type] = charges.getOrDefault(type, 0) + 1
     }
