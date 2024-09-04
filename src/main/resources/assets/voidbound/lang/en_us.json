@@ -214,8 +214,11 @@
 
   "voidbound.dontknowthis": "You don't understand it",
   "voidbound.weirdtear": "The liquid appalls you, it dissipates",
-  "voidbound.revelation.nether": "There's something I need to discover about the nothingness",
-  "voidbound.revelation.end": "There's something I need to discover about the nothingness",
+  "voidbound.revelation.nether": "Whispers of this realm are beginning to unravel before me.",
+  "voidbound.revelation.end": "Whispers of this realm are beginning to unravel before me.",
+
+  "voidbound.revelation.pre_well_nether": "A truth about the void beckons me to uncover its secrets.",
+  "voidbound.revelation.pre_well_end": "A truth about the void beckons me to uncover its secrets.",
 
   "category.voidbound": "Malum: Voidbound",
   "key.voidbound.foci_select" : "Select Foci"

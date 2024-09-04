@@ -1,8 +1,13 @@
 package dev.sterner.common.item
 
 import dev.sterner.registry.VoidBoundComponentRegistry
+import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
@@ -18,5 +23,18 @@ class IchorItem(properties: Properties) : Item(properties) {
             }
         }
         super.inventoryTick(stack, level, entity, slotId, isSelected)
+    }
+
+    override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
+
+        if (FabricLoader.getInstance().isDevelopmentEnvironment) {
+            if (level.isClientSide) {
+                var comp = VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.get(player)
+                comp.addThought(Component.translatable("voidbound.thought"), 20 * 5)
+                comp.addThought(Component.translatable("voidbound.thought2"), 20 * 6)
+            }
+        }
+
+        return super.use(level, player, usedHand)
     }
 }

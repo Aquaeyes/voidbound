@@ -1,6 +1,7 @@
 package dev.sterner.api
 
 import com.sammy.malum.client.VoidRevelationHandler
+import com.sammy.malum.common.container.WeaversWorkbenchContainer.component
 import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import dev.sterner.listener.EnchantSpiritDataReloadListener
 import dev.sterner.registry.VoidBoundComponentRegistry
@@ -9,6 +10,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.enchantment.Enchantment
@@ -114,5 +116,11 @@ object VoidBoundApi {
             return comp.hasCrimsonKnowledge && comp.hasWellKnowledge && comp.hasEndKnowledge && comp.hasNetherKnowledge
         }
         return false
+    }
+
+    fun addThought(player: Player, text: Component, duration: Int){
+        VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.maybeGet(player).ifPresent {
+            it.addThought(text, duration)
+        }
     }
 }

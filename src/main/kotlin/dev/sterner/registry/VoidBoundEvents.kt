@@ -3,10 +3,7 @@ package dev.sterner.registry
 import com.google.common.collect.Multimap
 import com.sammy.malum.common.events.MalumCodexEvents
 import dev.sterner.api.ClientTickHandler
-import dev.sterner.client.event.MalumCodexEvent
-import dev.sterner.client.event.RiftHudRenderEvent
-import dev.sterner.client.event.SpiritAltarHudRenderEvent
-import dev.sterner.client.event.SpiritJarHudRenderEvent
+import dev.sterner.client.event.*
 import dev.sterner.common.components.VoidBoundPlayerComponent
 import dev.sterner.common.components.VoidBoundWorldComponent
 import dev.sterner.common.item.tool.AxeOfTheStreamItem
@@ -63,6 +60,7 @@ object VoidBoundEvents {
         HudRenderCallback.EVENT.register(SpiritAltarHudRenderEvent::spiritAltarRecipeHud)
         HudRenderCallback.EVENT.register(RiftHudRenderEvent::spiritRiftHud)
         HudRenderCallback.EVENT.register(SpiritJarHudRenderEvent::spiritJarHud)
+        HudRenderCallback.EVENT.register(ThoughtsTextHudRenderEvent::renderThoughts)
         ClientTickEvents.END_CLIENT_TICK.register(ClientTickHandler::clientTickEnd)
     }
 }
