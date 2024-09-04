@@ -230,6 +230,18 @@
   "malum.gui.book.entry.page.headline.void.thoughts_about_end": "The End",
   "malum.gui.book.entry.page.text.void.thoughts_about_end.1": "The truth about this dimension has been reveled to me, I'm closer to the Tears",
 
+
+  "malum.gui.book.entry.void.spirit_rift": "Spirit Rift",
+  "malum.gui.book.entry.void.spirit_rift.description": "A source of spirit",
+  "malum.gui.book.entry.page.headline.void.spirit_rift": "The Normal Rift",
+  "malum.gui.book.entry.page.text.void.spirit_rift.1": "Does more or less nothing special",
+  "malum.gui.book.entry.page.headline.void.spirit_rift.1": "The Eldritch Rift",
+  "malum.gui.book.entry.page.text.void.spirit_rift.2": "Sucks Spirits out of mobs with less than 25% hp",
+  "malum.gui.book.entry.page.headline.void.spirit_rift.2": "The Pool Rift",
+  "malum.gui.book.entry.page.text.void.spirit_rift.3": "Gives Spirits",
+  "malum.gui.book.entry.page.headline.void.spirit_rift.3": "The Destabilized Rift",
+  "malum.gui.book.entry.page.text.void.spirit_rift.4": "?!?!",
+
   "category.voidbound": "Malum: Voidbound",
   "key.voidbound.foci_select" : "Select Foci"
 }

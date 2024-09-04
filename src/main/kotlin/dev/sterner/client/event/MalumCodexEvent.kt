@@ -104,6 +104,26 @@ object MalumCodexEvent {
                 .afterUmbralCrystal()
         }
 
+        screen?.addEntry("void.spirit_rift", -6, 10
+        ) { b: PlacedBookEntryBuilder ->
+
+            b.configureWidget { w: ProgressionEntryObject ->
+                w.setStyle(DARK_VOID)
+            }
+                .withTraceFragmentEntry()
+                .setWidgetSupplier { e: BookEntry?, x: Int, y: Int ->
+                    IconObject(
+                        e,
+                        x,
+                        y,
+                        VoidBound.id("textures/gui/light.png")
+                    )
+                }.addPage(HeadlineTextPage("void.spirit_rift", "void.spirit_rift.1"))
+                .addPage(HeadlineTextPage("void.spirit_rift.1", "void.spirit_rift.2"))
+                .addPage(HeadlineTextPage("void.spirit_rift.2", "void.spirit_rift.3"))
+                .addPage(HeadlineTextPage("void.spirit_rift.3", "void.spirit_rift.4"))
+        }
+
         screen?.addEntry(
             "void.dimensional_tear", 0, -2
         ) { b: PlacedBookEntryBuilder ->
@@ -142,9 +162,11 @@ object MalumCodexEvent {
 
         screen?.addEntry("void.thoughts_about_nether", 1, -2
         ) { b: PlacedBookEntryBuilder ->
-            b.withEmptyFragmentEntry(BookWidgetStyle.SMALL_WITHERED).configureWidget { w: ProgressionEntryObject ->
+            b.configureWidget { w: ProgressionEntryObject ->
                 w.setStyle(DARK_VOID)
-            }.setWidgetSupplier { e: BookEntry?, x: Int, y: Int ->
+            }
+                .withTraceFragmentEntry()
+                .setWidgetSupplier { e: BookEntry?, x: Int, y: Int ->
                 IconObject(
                     e,
                     x,
@@ -159,9 +181,11 @@ object MalumCodexEvent {
 
         screen?.addEntry("void.thoughts_about_end", 2, -2
         ) { b: PlacedBookEntryBuilder ->
-            b.withEmptyFragmentEntry(BookWidgetStyle.SMALL_WITHERED).configureWidget { w: ProgressionEntryObject ->
+            b.configureWidget { w: ProgressionEntryObject ->
                 w.setStyle(DARK_VOID)
-            }.setWidgetSupplier { e: BookEntry?, x: Int, y: Int ->
+            }
+                .withTraceFragmentEntry()
+                .setWidgetSupplier { e: BookEntry?, x: Int, y: Int ->
                 IconObject(
                     e,
                     x,

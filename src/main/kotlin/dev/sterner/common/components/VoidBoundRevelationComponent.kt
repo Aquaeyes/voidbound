@@ -33,9 +33,7 @@ class VoidBoundRevelationComponent(private val player: Player) : AutoSyncedCompo
             if (thoughtData.delay > 0) {
                 thoughtData.delay -= 1
                 if (thoughtData.delay <= 0) {
-                    player.playSound(VoidBoundSoundEvents.SOUL_SPEAK.get(),
-                        1.0f,
-                        1.0f)
+                    player.playSound(VoidBoundSoundEvents.SOUL_SPEAK.get(), 1.0f, 1.0f)
                 }
             } else {
                 // Handle duration countdown

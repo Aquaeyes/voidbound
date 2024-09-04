@@ -27,7 +27,7 @@ object ThoughtsTextHudRenderEvent {
         val font = minecraft.font
         val window = minecraft.window
         val baseX = window.guiScaledWidth - 120f // Right margin
-        var baseY = window.guiScaledHeight - 18f // Bottom margin
+        var baseY = window.guiScaledHeight - 30f // Bottom margin
         val maxWidth = 220 // Set a max width for wrapping
 
         // Render each thought
