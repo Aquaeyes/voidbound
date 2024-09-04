@@ -75,10 +75,6 @@ object VoidBoundBlockRegistry {
         TearBlock(TearBlock.Type.CRIMSON, FabricBlockSettings.create().noOcclusion())
     }
 
-    var TEAR_CLOAK: RegistryObject<CloakedTearBlock> = BLOCKS.register("tear_cloak") {
-        CloakedTearBlock(FabricBlockSettings.create().noOcclusion())
-    }
-
     val ELDRITCH_OBELISK: RegistryObject<EldritchObeliskBlock> = BLOCKS.register(
         "eldritch_obelisk"
     ) {
