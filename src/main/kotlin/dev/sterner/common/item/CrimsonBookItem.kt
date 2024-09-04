@@ -57,18 +57,7 @@ class CrimsonBookItem(properties: Properties) : BlockItem(VoidBoundBlockRegistry
             giveAdvancement = true
         }
 
-        if (!BookEntry.AFTER_UMBRAL_CRYSTAL.asBoolean) {
-            giveAdvancement = false
-        }
-
         if (giveAdvancement) {
-            if (player is ServerPlayer) {
-                VoidBoundUtils.grantAdvancementCriterion(
-                    player,
-                    VoidBound.id("ichor_requirement_advancement"),
-                    "opened_crimson_rites"
-                )
-            }
             VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.get(player).hasCrimsonKnowledge = true
         } else if (player is ServerPlayer && item.tag!!.getBoolean("open")) {
             player.sendSystemMessage(Component.translatable("voidbound.dontknowthis").setStyle(Style.EMPTY.withColor(Color(200,100,200).rgb)))

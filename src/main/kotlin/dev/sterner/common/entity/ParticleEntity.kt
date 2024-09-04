@@ -99,6 +99,11 @@ class ParticleEntity(level: Level) : Entity(VoidBoundEntityTypeRegistry.PARTICLE
     }
 
     private fun spawnParticles(x: Double, y: Double, z: Double) {
+
+        if (!level().isClientSide) {
+            return
+        }
+
         if (this.spiritType != null) {
             val motion = this.deltaMovement
             val norm = motion.normalize().scale(0.05000000074505806)

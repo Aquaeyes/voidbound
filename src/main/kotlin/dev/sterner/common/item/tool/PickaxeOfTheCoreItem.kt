@@ -15,7 +15,7 @@ import team.lodestar.lodestone.systems.item.tools.magic.MagicPickaxeItem
 
 
 open class PickaxeOfTheCoreItem(
-    material: Tier?,
+    val material: Tier,
     damage: Int,
     speed: Float,
     magicDamage: Float,
@@ -26,6 +26,10 @@ open class PickaxeOfTheCoreItem(
         magicDamage,
         properties
     ), HammerLikeItem, UpgradableTool {
+
+    override fun getHammerTier(): Tier {
+        return material
+    }
 
     override fun getDestroySpeed(stack: ItemStack, state: BlockState): Float {
         return super.getDestroySpeed(stack, state) + getExtraMiningSpeed(stack)

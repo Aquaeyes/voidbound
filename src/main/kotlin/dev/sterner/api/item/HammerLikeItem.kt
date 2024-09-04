@@ -25,7 +25,7 @@ interface HammerLikeItem {
 
     fun getRadius(): Int
     fun getDepth(): Int
-    fun getTier(): Tier
+    fun getHammerTier(): Tier
     fun getBlockTags(): TagKey<Block>
 
     fun causeAoe(
@@ -50,7 +50,7 @@ interface HammerLikeItem {
     }
 
     fun actualIsCorrectToolForDrops(state: BlockState): Boolean {
-        val i = getTier().level
+        val i = getHammerTier().level
         return if (i < 3 && state.`is`(BlockTags.NEEDS_DIAMOND_TOOL)) {
             false
         } else if (i < 2 && state.`is`(BlockTags.NEEDS_IRON_TOOL)) {

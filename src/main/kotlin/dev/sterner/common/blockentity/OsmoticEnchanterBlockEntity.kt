@@ -132,24 +132,22 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
         jarCooldown++
         if (jarCooldown > 20) {
             jarCooldown = 0
-            if (foundJarPosList.isEmpty()) {
-                val pos = blockPos
-                for (aroundPos in BlockPos.betweenClosed(
-                    pos.x - range,
-                    pos.y,
-                    pos.z - range,
-                    pos.x + range,
-                    pos.y + range,
-                    pos.z + range
-                )) {
-                    if (level?.getBlockEntity(aroundPos) is SpiritJarBlockEntity) {
-                        jarList.add(aroundPos.immutable())
-                    }
+            val pos = blockPos
+            for (aroundPos in BlockPos.betweenClosed(
+                pos.x - range,
+                pos.y,
+                pos.z - range,
+                pos.x + range,
+                pos.y + range,
+                pos.z + range
+            )) {
+                if (level?.getBlockEntity(aroundPos) is SpiritJarBlockEntity) {
+                    jarList.add(aroundPos.immutable())
                 }
-                if (jarList.isNotEmpty()) {
-                    foundJarPosList = jarList
-                    return true
-                }
+            }
+            if (jarList.isNotEmpty()) {
+                foundJarPosList = jarList
+                return true
             }
         }
 
@@ -206,6 +204,10 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
     }
 
     private fun spawnSpiritJarParticle(level: Level, worldPosition: BlockPos, blockPos: BlockPos, type: MalumSpiritType) {
+
+        if (!level.isClientSide) {
+            return
+        }
 
         val behavior =
             Consumer<WorldParticleBuilder> { b: WorldParticleBuilder ->

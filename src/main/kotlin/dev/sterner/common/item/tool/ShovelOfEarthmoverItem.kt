@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState
 import team.lodestar.lodestone.systems.item.tools.magic.MagicShovelItem
 
 open class ShovelOfEarthmoverItem(
-    material: Tier?,
+    val material: Tier,
     damage: Int,
     speed: Float,
     magicDamage: Float,
@@ -26,6 +26,8 @@ open class ShovelOfEarthmoverItem(
         properties
     ), HammerLikeItem, UpgradableTool {
 
+
+
     override fun getDestroySpeed(stack: ItemStack, state: BlockState): Float {
         return super.getDestroySpeed(stack, state) + getExtraMiningSpeed(stack)
     }
@@ -36,6 +38,10 @@ open class ShovelOfEarthmoverItem(
 
     override fun getDepth(): Int {
         return 1
+    }
+
+    override fun getHammerTier(): Tier {
+        return material
     }
 
     override fun getBlockTags(): TagKey<Block> {

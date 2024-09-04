@@ -40,44 +40,48 @@ object ParticleEngineMixinLogic {
      * Returns false if the player cant break the block while also generating block warding particles
      */
     fun logic(level: Level, pos: BlockPos, blockState: BlockState, random: RandomSource, side: Direction): Boolean {
-        if (Minecraft.getInstance().player != null && !canPlayerBreakBlock(
-                level,
-                Minecraft.getInstance().player!!, pos
-            )
-        ) {
-            val (x, y, z) = VoidBoundPosUtils.getFaceCoords(level, blockState, pos, side)
+        if (level.isClientSide) {
+            if (Minecraft.getInstance().player != null && !canPlayerBreakBlock(
+                    level,
+                    Minecraft.getInstance().player!!, pos
+                )
+            ) {
+                val (x, y, z) = VoidBoundPosUtils.getFaceCoords(level, blockState, pos, side)
 
-            val lightSpecs =
-                SpiritLightSpecs.spiritLightSpecs(level, Vec3(x, y, z), AURIC_COLOR_DATA)
-            lightSpecs.builder.multiplyLifetime(1.5f)
-            lightSpecs.bloomBuilder.multiplyLifetime(1.5f)
-            lightSpecs.spawnParticles()
+                val lightSpecs =
+                    SpiritLightSpecs.spiritLightSpecs(level, Vec3(x, y, z), AURIC_COLOR_DATA)
+                lightSpecs.builder.multiplyLifetime(1.5f)
+                lightSpecs.bloomBuilder.multiplyLifetime(1.5f)
+                lightSpecs.spawnParticles()
 
-            for (ix in 0..2) {
-                val lifetime = (RandomHelper.randomBetween(random, 60, 80) * (1 - ix / 3f)).toInt()
+                for (ix in 0..2) {
+                    val lifetime = (RandomHelper.randomBetween(random, 60, 80) * (1 - ix / 3f)).toInt()
+                    val spinData =
+                        SpinParticleData.createRandomDirection(random, 0f, RandomHelper.randomBetween(random, 0f, 0.4f), 0f)
+                            .randomSpinOffset(random).build()
+
+                    val scale =
+                        GenericParticleData.create(0.05f, 0.1f, 0.15f).setEasing(Easing.QUINTIC_OUT, Easing.SINE_IN)
+                            .build()
+                    val tans =
+                        GenericParticleData.create(0.5f, 0.6f, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build()
+
+                    spawnWardParticles(level, x, y, z, side, tans, scale, spinData, lifetime)
+                }
+
+                val lifetime = (RandomHelper.randomBetween(random, 60, 80))
                 val spinData =
                     SpinParticleData.createRandomDirection(random, 0f, RandomHelper.randomBetween(random, 0f, 0.4f), 0f)
                         .randomSpinOffset(random).build()
-
-                val scale =
-                    GenericParticleData.create(0.05f, 0.1f, 0.15f).setEasing(Easing.QUINTIC_OUT, Easing.SINE_IN)
-                        .build()
-                val tans =
-                    GenericParticleData.create(0.5f, 0.6f, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build()
-
-                spawnWardParticles(level, x, y, z, side, tans, scale, spinData, lifetime)
+                val scaleData =
+                    GenericParticleData.create(0.02f, 0.03f, 0.04f).setEasing(Easing.QUINTIC_OUT, Easing.SINE_IN).build()
+                val trans = GenericParticleData.create(0.7f, 0.9f, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build()
+                spawnWardParticles(level, x, y, z, side, trans, scaleData, spinData, lifetime)
+                return false
             }
-
-            val lifetime = (RandomHelper.randomBetween(random, 60, 80))
-            val spinData =
-                SpinParticleData.createRandomDirection(random, 0f, RandomHelper.randomBetween(random, 0f, 0.4f), 0f)
-                    .randomSpinOffset(random).build()
-            val scaleData =
-                GenericParticleData.create(0.02f, 0.03f, 0.04f).setEasing(Easing.QUINTIC_OUT, Easing.SINE_IN).build()
-            val trans = GenericParticleData.create(0.7f, 0.9f, 0f).setEasing(Easing.SINE_IN_OUT, Easing.SINE_IN).build()
-            spawnWardParticles(level, x, y, z, side, trans, scaleData, spinData, lifetime)
-            return false
         }
+
+
 
         return true
     }

@@ -10,7 +10,7 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import java.awt.Color
 
-class IchoriumPickaxeItem(material: Tier?, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) :
+class IchoriumPickaxeItem(material: Tier, damage: Int, speed: Float, magicDamage: Float, properties: Properties?) :
     PickaxeOfTheCoreItem(
         material, damage, speed,
         magicDamage,

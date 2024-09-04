@@ -89,6 +89,9 @@ class ShockFoci : IWandFocus {
             pos: Vec3,
             pct: Float
         ) {
+            if (!pLevel.isClientSide) {
+                return
+            }
             val random = pLevel.random
 
             val spinData = SpinParticleData.createRandomDirection(random, 0.25f, 0.5f)
