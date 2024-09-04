@@ -54,6 +54,24 @@ object VoidBoundUtils {
         }
     }
 
+    fun hasAdvancementCriterion(
+        serverPlayerEntity: ServerPlayer,
+        advancementIdentifier: ResourceLocation
+    ) : Boolean {
+        if (serverPlayerEntity.getServer() == null) {
+            return false
+        }
+        val sal = serverPlayerEntity.getServer()!!.advancements
+        val tracker = serverPlayerEntity.advancements
+
+        val advancement: Advancement? = sal.getAdvancement(advancementIdentifier)
+
+        if (advancement != null) {
+            return tracker.getOrStartProgress(advancement).isDone
+        }
+        return false
+    }
+
     /**
      * Copy of SpiritHarvestHandler$getSpiritData with a different return type
      */

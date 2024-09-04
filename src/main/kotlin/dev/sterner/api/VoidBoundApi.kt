@@ -1,5 +1,6 @@
 package dev.sterner.api
 
+import com.sammy.malum.client.VoidRevelationHandler
 import com.sammy.malum.core.systems.recipe.SpiritWithCount
 import dev.sterner.listener.EnchantSpiritDataReloadListener
 import dev.sterner.registry.VoidBoundComponentRegistry
@@ -86,5 +87,32 @@ object VoidBoundApi {
             return false
         }
         return true
+    }
+
+    fun hasTearKnowledgeClient(): Boolean {
+        val player = Minecraft.getInstance().player
+        if (player != null) {
+            val comp = VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.get(player)
+            return comp.hasWellKnowledge && comp.hasEndKnowledge && comp.hasNetherKnowledge
+        }
+        return false
+    }
+
+    fun hasIchorKnowledgeClient(): Boolean {
+        val player = Minecraft.getInstance().player
+        if (player != null) {
+            val comp = VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.get(player)
+            return comp.hasIchorKnowledge && comp.hasCrimsonKnowledge && comp.hasWellKnowledge && comp.hasEndKnowledge && comp.hasNetherKnowledge
+        }
+        return false
+    }
+
+    fun hasCrimsonKnowledgeClient(): Boolean {
+        val player = Minecraft.getInstance().player
+        if (player != null) {
+            val comp = VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.get(player)
+            return comp.hasCrimsonKnowledge && comp.hasWellKnowledge && comp.hasEndKnowledge && comp.hasNetherKnowledge
+        }
+        return false
     }
 }

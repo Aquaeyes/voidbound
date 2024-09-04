@@ -206,7 +206,13 @@
   "advancements.voidbound.strange_matter.description": "I'll find some no Matter what",
   "advancements.voidbound.strange_matter.title": "Hell and Void",
 
+  "advancements.voidbound.ichor.description": "A drop of Blood",
+  "advancements.voidbound.ichor.title": "Ichor",
+
   "voidbound.dontknowthis": "You don't understand it",
+  "voidbound.weirdtear": "The liquid appalls you, it dissipates",
+  "voidbound.revelation.nether": "There's something about this dimension",
+  "voidbound.revelation.end": "There's something about this dimension",
 
   "category.voidbound": "Malum: Voidbound",
   "key.voidbound.foci_select" : "Select Foci"

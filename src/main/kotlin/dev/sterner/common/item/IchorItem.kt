@@ -1,28 +1,22 @@
 package dev.sterner.common.item
 
-import de.dafuqs.revelationary.api.revelations.RevelationAware
-import dev.sterner.VoidBound
-import dev.sterner.registry.VoidBoundItemRegistry
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.util.Tuple
+import dev.sterner.registry.VoidBoundComponentRegistry
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 
-class IchorItem(properties: Properties) : Item(properties), RevelationAware {
+class IchorItem(properties: Properties) : Item(properties) {
 
-    init {
-        RevelationAware.register(this)
-    }
+    override fun inventoryTick(stack: ItemStack, level: Level, entity: Entity, slotId: Int, isSelected: Boolean) {
+        if (entity is ServerPlayer) {
+            val comp = VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.get(entity)
 
-    override fun getCloakAdvancementIdentifier(): ResourceLocation {
-        return VoidBound.id("revelationary/ichor_requirement_advancement")
-    }
-
-    override fun getBlockStateCloaks(): MutableMap<BlockState, BlockState> {
-        return mutableMapOf()
-    }
-
-    override fun getItemCloak(): Tuple<Item, Item> {
-        return Tuple(this, VoidBoundItemRegistry.STRANGE_MATTER.get())
+            if (!comp.hasIchorKnowledge) {
+                comp.hasIchorKnowledge = true
+            }
+        }
+        super.inventoryTick(stack, level, entity, slotId, isSelected)
     }
 }

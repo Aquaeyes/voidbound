@@ -4,8 +4,8 @@ import com.sammy.malum.client.VoidRevelationHandler
 import com.sammy.malum.client.screen.codex.BookEntry
 import dev.sterner.VoidBound
 import dev.sterner.api.util.VoidBoundUtils
-import dev.sterner.client.IchorRevelationHandler
 import dev.sterner.registry.VoidBoundBlockRegistry
+import dev.sterner.registry.VoidBoundComponentRegistry
 import net.minecraft.client.Minecraft
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
@@ -65,12 +65,11 @@ class CrimsonBookItem(properties: Properties) : BlockItem(VoidBoundBlockRegistry
             if (player is ServerPlayer) {
                 VoidBoundUtils.grantAdvancementCriterion(
                     player,
-                    VoidBound.id("revelationary/ichor_requirement_advancement"),
+                    VoidBound.id("ichor_requirement_advancement"),
                     "opened_crimson_rites"
                 )
-            } else {
-                IchorRevelationHandler.seeTheRevelation(IchorRevelationHandler.RevelationType.ICHOR)
             }
+            VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.get(player).hasCrimsonKnowledge = true
         } else if (player is ServerPlayer && item.tag!!.getBoolean("open")) {
             player.sendSystemMessage(Component.translatable("voidbound.dontknowthis").setStyle(Style.EMPTY.withColor(Color(200,100,200).rgb)))
         }

@@ -8,6 +8,7 @@
     "ReboundEnchantmentMixin",
     "ScytheBoomerangEntityMixin",
     "ServerPlayerGameModeMixin",
+    "ServerPlayerMixin",
     "SpiritAltarBlockEntityMixin",
     "ward.BlockBehaviourMixin",
     "ward.EndermanTakeBlockGoalMixin",

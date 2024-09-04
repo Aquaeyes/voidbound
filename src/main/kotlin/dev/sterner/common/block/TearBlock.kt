@@ -1,48 +1,46 @@
 package dev.sterner.common.block
 
-import de.dafuqs.revelationary.api.revelations.RevelationAware
 import dev.sterner.VoidBound
-import dev.sterner.registry.VoidBoundBlockRegistry
+import dev.sterner.api.util.VoidBoundUtils
+import dev.sterner.common.components.VoidBoundRevelationComponent
+import dev.sterner.registry.VoidBoundComponentRegistry
 import dev.sterner.registry.VoidBoundItemRegistry
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.util.Tuple
-import net.minecraft.world.item.Item
+import dev.sterner.registry.VoidBoundPacketRegistry
+import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.Component
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.Containers
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 
-class TearBlock(val type: Type, properties: Properties) : CloakedTearBlock(properties), RevelationAware {
+class TearBlock(val type: Type, properties: Properties) : CloakedTearBlock(properties) {
 
-    init {
-        RevelationAware.register(this)
+    override fun playerDestroy(
+        level: Level,
+        player: Player,
+        pos: BlockPos,
+        state: BlockState,
+        blockEntity: BlockEntity?,
+        tool: ItemStack
+    ) {
+
+        val comp = VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.get(player)
+        if (comp.isTearKnowledgeComplete()) {
+
+            var item = VoidBoundItemRegistry.TEAR_OF_ENDER.get()
+            if (type == Type.ENDER) {
+                item = VoidBoundItemRegistry.TEAR_OF_CRIMSON.get()
+            }
+
+            Containers.dropItemStack(level, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, ItemStack(item))
+        }
+
+        super.playerDestroy(level, player, pos, state, blockEntity, tool)
     }
 
-    override fun getCloakAdvancementIdentifier(): ResourceLocation {
-        return VoidBound.id("revelationary/ichor_requirement_advancement")
-    }
-
-    override fun getBlockStateCloaks(): MutableMap<BlockState, BlockState> {
-        val cloaks: MutableMap<BlockState, BlockState> = mutableMapOf()
-        cloaks[this.defaultBlockState()] = VoidBoundBlockRegistry.TEAR_CLOAK.get().defaultBlockState()
-        return cloaks
-    }
-
-    override fun getItemCloak(): Tuple<Item, Item> {
-        val end = Tuple(VoidBoundItemRegistry.TEAR_OF_ENDER.get(), VoidBoundItemRegistry.STRANGE_MATTER.get())
-        val crim = Tuple(VoidBoundItemRegistry.TEAR_OF_CRIMSON.get(), VoidBoundItemRegistry.STRANGE_MATTER.get())
-
-        return if (type == Type.CRIMSON) crim else end
-    }
-
-    /*
-
-    override fun getCloakedItemTranslation(): Tuple<Item, MutableComponent> {
-        val crim = VoidBoundItemRegistry.TEAR_OF_CRIMSON.get()
-        val end = VoidBoundItemRegistry.TEAR_OF_ENDER.get()
-
-        return Tuple(if(type == Type.CRIMSON) crim else end, Component.translatable("item.voidbound.strange_matter"))
-    }
-
-
-     */
     enum class Type {
         CRIMSON,
         ENDER

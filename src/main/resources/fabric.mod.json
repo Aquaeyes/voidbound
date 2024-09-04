@@ -41,14 +41,14 @@
     "fabric-api": "*",
     "fabric-language-kotlin": "*",
     "malum": "*",
-    "revelationary": "*",
     "smartbrainlib": "*"
   },
   "custom": {
     "cardinal-components": [
       "voidbound:world",
       "voidbound:entity",
-      "voidbound:player"
+      "voidbound:player",
+      "voidbound:revelation"
     ]
   }
 }

@@ -11,8 +11,9 @@ import com.sammy.malum.client.screen.codex.screens.ArcanaProgressionScreen
 import com.sammy.malum.client.screen.codex.screens.VoidProgressionScreen
 import dev.sterner.VoidBound
 import dev.sterner.VoidBound.modid
-import dev.sterner.client.IchorRevelationHandler
+import dev.sterner.api.VoidBoundApi
 import dev.sterner.registry.VoidBoundItemRegistry
+import net.minecraft.client.Minecraft
 import net.minecraft.nbt.CompoundTag
 
 object MalumCodexEvent {
@@ -123,6 +124,9 @@ object MalumCodexEvent {
                         VoidBoundItemRegistry.TEAR_OF_CRIMSON.get()
                     )
                 )
+                .setEntryVisibleWhen {
+                    VoidBoundApi.hasTearKnowledgeClient()
+                }
 
         }
 
@@ -143,9 +147,7 @@ object MalumCodexEvent {
                     )
                 )
                 .setEntryVisibleWhen {
-                    IchorRevelationHandler.hasSeenTheRevelation(
-                        IchorRevelationHandler.RevelationType.ICHOR
-                    )
+                    VoidBoundApi.hasCrimsonKnowledgeClient()
                 }
         }
 
@@ -165,9 +167,7 @@ object MalumCodexEvent {
                     )
                 )
                 .setEntryVisibleWhen {
-                    IchorRevelationHandler.hasSeenTheRevelation(
-                        IchorRevelationHandler.RevelationType.ICHOR
-                    )
+                    VoidBoundApi.hasIchorKnowledgeClient()
                 }
         }
 
@@ -187,9 +187,7 @@ object MalumCodexEvent {
                     )
                 )
                 .setEntryVisibleWhen {
-                    IchorRevelationHandler.hasSeenTheRevelation(
-                        IchorRevelationHandler.RevelationType.ICHOR
-                    )
+                    VoidBoundApi.hasIchorKnowledgeClient()
                 }
         }
 
@@ -209,9 +207,7 @@ object MalumCodexEvent {
                     )
                 )
                 .setEntryVisibleWhen {
-                    IchorRevelationHandler.hasSeenTheRevelation(
-                        IchorRevelationHandler.RevelationType.ICHOR
-                    )
+                    VoidBoundApi.hasIchorKnowledgeClient()
                 }
         }
 
@@ -231,9 +227,7 @@ object MalumCodexEvent {
                     )
                 )
                 .setEntryVisibleWhen {
-                    IchorRevelationHandler.hasSeenTheRevelation(
-                        IchorRevelationHandler.RevelationType.ICHOR
-                    )
+                    VoidBoundApi.hasIchorKnowledgeClient()
                 }
         }
 
@@ -253,9 +247,7 @@ object MalumCodexEvent {
                     )
                 )
                 .setEntryVisibleWhen {
-                    IchorRevelationHandler.hasSeenTheRevelation(
-                        IchorRevelationHandler.RevelationType.ICHOR
-                    )
+                    VoidBoundApi.hasIchorKnowledgeClient()
                 }
         }
     }

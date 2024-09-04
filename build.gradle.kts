@@ -94,7 +94,7 @@ dependencies {
 	modImplementation("maven.modrinth:fusion-connected-textures:${property("fusion_version")}-fabric-mc${property("minecraft_version")}")
 	modImplementation("net.tslat.smartbrainlib:SmartBrainLib-fabric-${property("minecraft_version")}:${property("smart_brain_lib_version")}")
 
-	modImplementation ("maven.modrinth:Revelationary:${property("revelationary_version")}")
+	//modImplementation ("maven.modrinth:Revelationary:${property("revelationary_version")}")
 
 	modImplementation("eu.pb4:common-protection-api:${property("protection_api_version")}")
 	include("eu.pb4:common-protection-api:${property("protection_api_version")}")
