@@ -118,7 +118,7 @@ object VoidBoundApi {
         return false
     }
 
-    fun addThought(player: Player, text: Component, duration: Int){
+    fun addThought(player: Player, text: Component, duration: Int = 20 * 5){
         VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.maybeGet(player).ifPresent {
             it.addThought(text, duration, 20 * 5)
         }

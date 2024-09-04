@@ -220,6 +220,9 @@
   "voidbound.revelation.pre_well_nether": "A truth about the void beckons me to uncover its secrets.",
   "voidbound.revelation.pre_well_end": "A truth about the void beckons me to uncover its secrets.",
 
+  "voidbound.no_crimsonrites": "You don't understand",
+  "voidbound.crimsonrites": "You begin to grasp the secret of merging light with shadow",
+
   "malum.gui.book.entry.void.thoughts_about_nether": "Thoughts about The Nether",
   "malum.gui.book.entry.void.thoughts_about_nether.description": "I need to solve this",
   "malum.gui.book.entry.page.headline.void.thoughts_about_nether": "The Nether",

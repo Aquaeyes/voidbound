@@ -1,19 +1,13 @@
 package dev.sterner.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.sammy.malum.registry.common.block.BlockRegistry;
 import dev.sterner.mixin_logic.ServerPlayerMixinLogic;
-import dev.sterner.registry.VoidBoundComponentRegistry;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;

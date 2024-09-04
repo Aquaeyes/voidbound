@@ -3,6 +3,7 @@ package dev.sterner.common.item
 import com.sammy.malum.client.VoidRevelationHandler
 import com.sammy.malum.client.screen.codex.BookEntry
 import dev.sterner.VoidBound
+import dev.sterner.api.VoidBoundApi
 import dev.sterner.api.util.VoidBoundUtils
 import dev.sterner.registry.VoidBoundBlockRegistry
 import dev.sterner.registry.VoidBoundComponentRegistry
@@ -59,8 +60,9 @@ class CrimsonBookItem(properties: Properties) : BlockItem(VoidBoundBlockRegistry
 
         if (giveAdvancement) {
             VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.get(player).hasCrimsonKnowledge = true
-        } else if (player is ServerPlayer && item.tag!!.getBoolean("open")) {
-            player.sendSystemMessage(Component.translatable("voidbound.dontknowthis").setStyle(Style.EMPTY.withColor(Color(200,100,200).rgb)))
+            VoidBoundApi.addThought(player, Component.translatable("voidbound.crimsonrites"))
+        } else if (item.tag!!.getBoolean("open")) {
+            VoidBoundApi.addThought(player, Component.translatable("voidbound.no_crimsonrites"))
         }
 
 

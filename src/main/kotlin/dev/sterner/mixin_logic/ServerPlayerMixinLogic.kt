@@ -48,7 +48,7 @@ object ServerPlayerMixinLogic {
             if (comp.hasWellKnowledge) {
                 comp.hasEndKnowledge = true
                 if (!comp.hasReceivedEndMessage) {
-                    VoidBoundApi.addThought(player, Component.translatable("voidbound.revelation.end"), 20 * 6)
+                    VoidBoundApi.addThought(player, Component.translatable("voidbound.revelation.end"), 20 * 5)
                     comp.hasReceivedEndMessage = true
                 }
 
