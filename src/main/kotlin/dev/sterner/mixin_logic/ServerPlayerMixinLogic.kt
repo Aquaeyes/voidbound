@@ -29,7 +29,6 @@ object ServerPlayerMixinLogic {
     fun logic2(player: ServerPlayer, level: ServerLevel, resourceKey: ResourceKey<Level>, resourceKey2: ResourceKey<Level>) {
         val comp = VOID_BOUND_REVELATION_COMPONENT[player]
 
-        //level.playSound(null, player, VoidBoundSoundEvents.SOUL_SPEAK.get(), SoundSource.PLAYERS, 1f, 1f)
         if (resourceKey === Level.OVERWORLD && resourceKey2 === Level.NETHER) {
             if (comp.hasWellKnowledge) {
                 comp.hasNetherKnowledge = true

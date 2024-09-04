@@ -8,7 +8,6 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -23,7 +22,7 @@ class SpiritRiftBlock(properties: Properties) :
     LodestoneEntityBlock<SpiritRiftBlockEntity>(properties.noOcclusion().noCollission().lightLevel { 10 }) {
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
-        return VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get().create(pos, state)
+        return VoidBoundBlockEntityTypeRegistry.SPIRIT_RIFT.get().create(pos, state)
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {

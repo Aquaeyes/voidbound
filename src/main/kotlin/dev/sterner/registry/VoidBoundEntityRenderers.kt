@@ -22,7 +22,7 @@ object VoidBoundEntityRenderers {
             ::SpiritStabilizerBlockEntityRenderer
         )
         BlockEntityRenderers.register(
-            VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get(),
+            VoidBoundBlockEntityTypeRegistry.SPIRIT_RIFT.get(),
             ::SpiritRiftBlockEntityRenderer
         )
         BlockEntityRenderers.register(

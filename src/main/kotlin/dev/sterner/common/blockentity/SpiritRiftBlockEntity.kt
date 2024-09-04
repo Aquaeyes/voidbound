@@ -23,9 +23,9 @@ import net.minecraft.world.phys.BlockHitResult
 import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity
 
 class SpiritRiftBlockEntity(pos: BlockPos, state: BlockState) :
-    LodestoneBlockEntity(VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get(), pos, state) {
+    LodestoneBlockEntity(VoidBoundBlockEntityTypeRegistry.SPIRIT_RIFT.get(), pos, state) {
 
-    private var riftType: RiftType = VoidBoundRiftTypeRegistry.NORMAL.get()
+    private var riftType: RiftType = VoidBoundRiftTypeRegistry.ELDRITCH.get()
     var simpleSpiritCharge = SimpleSpiritCharge()
 
     val x = (worldPosition.x.toFloat() + 0.5f).toDouble()

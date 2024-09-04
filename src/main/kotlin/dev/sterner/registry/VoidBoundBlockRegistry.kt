@@ -37,7 +37,7 @@ object VoidBoundBlockRegistry {
 
     var SPIRIT_RIFT: RegistryObject<SpiritRiftBlock> = BLOCKS.register("spirit_rift") {
         SpiritRiftBlock(Properties.of()).setBlockEntity {
-            VoidBoundBlockEntityTypeRegistry.DESTABILIZED_SPIRIT_RIFT.get()
+            VoidBoundBlockEntityTypeRegistry.SPIRIT_RIFT.get()
         } as SpiritRiftBlock
     }
 

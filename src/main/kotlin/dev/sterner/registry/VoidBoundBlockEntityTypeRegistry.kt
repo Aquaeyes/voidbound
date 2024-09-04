@@ -33,7 +33,7 @@ object VoidBoundBlockEntityTypeRegistry {
                 .build(null)
         }
 
-    var DESTABILIZED_SPIRIT_RIFT: RegistryObject<BlockEntityType<SpiritRiftBlockEntity>> =
+    var SPIRIT_RIFT: RegistryObject<BlockEntityType<SpiritRiftBlockEntity>> =
         BLOCK_ENTITY_TYPES.register("destabilized_spirit_rift") {
             BlockEntityType.Builder.of(
                 { pos, state -> SpiritRiftBlockEntity(pos, state) },
