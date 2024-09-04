@@ -1,6 +1,5 @@
 package dev.sterner.client.event
 
-import com.mojang.authlib.minecraft.client.MinecraftClient
 import com.mojang.blaze3d.systems.RenderSystem
 import dev.sterner.registry.VoidBoundComponentRegistry
 import net.minecraft.client.Minecraft
@@ -10,7 +9,6 @@ import net.minecraft.client.renderer.LightTexture
 import net.minecraft.network.chat.Component
 import org.joml.Matrix4f
 import java.awt.Color
-import kotlin.math.min
 
 object ThoughtsTextHudRenderEvent {
 

@@ -1,5 +1,7 @@
 package dev.sterner.mixin_logic
 
+import com.sammy.malum.common.components.MalumComponents
+import com.sammy.malum.common.components.MalumPlayerDataComponent
 import com.sammy.malum.registry.common.block.BlockRegistry
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.registry.VoidBoundComponentRegistry.Companion.VOID_BOUND_REVELATION_COMPONENT

@@ -12,26 +12,51 @@ class VoidBoundRevelationComponent(private val player: Player) : AutoSyncedCompo
 
     var thoughtsQueue: MutableMap<Component, Int> = mutableMapOf()
 
+    override fun tick() {
+        // Ensure the queue does not exceed 16 elements
+        while (thoughtsQueue.size > 16) {
+            val firstEntry = thoughtsQueue.entries.firstOrNull()
+            if (firstEntry != null) {
+                thoughtsQueue.remove(firstEntry.key)
+            }
+        }
+
+        val iterator = thoughtsQueue.iterator()
+        while (iterator.hasNext()) {
+            val entry = iterator.next()
+            val remainingTime = entry.value - 1
+            if (remainingTime <= 0) {
+                iterator.remove() // Remove the thought if the time is up
+            } else {
+                thoughtsQueue[entry.key] = remainingTime
+            }
+        }
+    }
+
     var hasWellKnowledge: Boolean = false
         set(value) {
             field = value
             sync()
         }
+
     var hasEndKnowledge: Boolean = false
         set(value) {
             field = value
             sync()
         }
+
     var hasNetherKnowledge: Boolean = false
         set(value) {
             field = value
             sync()
         }
+
     var hasCrimsonKnowledge: Boolean = false
         set(value) {
             field = value
             sync()
         }
+
     var hasIchorKnowledge: Boolean = false
         set(value) {
             field = value
@@ -65,7 +90,6 @@ class VoidBoundRevelationComponent(private val player: Player) : AutoSyncedCompo
     fun isTearKnowledgeComplete(): Boolean {
         return hasWellKnowledge && hasEndKnowledge && hasNetherKnowledge
     }
-
 
     fun addThought(thought: Component, durationTicks: Int) {
         thoughtsQueue[thought] = durationTicks
@@ -122,26 +146,5 @@ class VoidBoundRevelationComponent(private val player: Player) : AutoSyncedCompo
             thoughtsList.add(thoughtTag)
         }
         tag.put("ThoughtsQueue", thoughtsList)
-    }
-
-    override fun tick() {
-        // Ensure the queue does not exceed 16 elements
-        while (thoughtsQueue.size > 16) {
-            val firstEntry = thoughtsQueue.entries.firstOrNull()
-            if (firstEntry != null) {
-                thoughtsQueue.remove(firstEntry.key)
-            }
-        }
-
-        val iterator = thoughtsQueue.iterator()
-        while (iterator.hasNext()) {
-            val entry = iterator.next()
-            val remainingTime = entry.value - 1
-            if (remainingTime <= 0) {
-                iterator.remove() // Remove the thought if the time is up
-            } else {
-                thoughtsQueue[entry.key] = remainingTime
-            }
-        }
     }
 }
