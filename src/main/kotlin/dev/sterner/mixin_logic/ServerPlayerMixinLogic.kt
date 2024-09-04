@@ -29,7 +29,7 @@ object ServerPlayerMixinLogic {
     fun logic2(player: ServerPlayer, level: ServerLevel, resourceKey: ResourceKey<Level>, resourceKey2: ResourceKey<Level>) {
         val comp = VOID_BOUND_REVELATION_COMPONENT[player]
 
-        if (resourceKey === Level.OVERWORLD && resourceKey2 === Level.NETHER) {
+        if (resourceKey2 === Level.NETHER) {
             if (comp.hasWellKnowledge) {
                 comp.hasNetherKnowledge = true
                 if (!comp.hasReceivedNetherMessage) {
@@ -44,7 +44,7 @@ object ServerPlayerMixinLogic {
                 }
             }
         }
-        if (resourceKey === Level.OVERWORLD && resourceKey2 === Level.END) {
+        if (resourceKey2 === Level.END) {
             if (comp.hasWellKnowledge) {
                 comp.hasEndKnowledge = true
                 if (!comp.hasReceivedEndMessage) {
