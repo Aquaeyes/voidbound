@@ -47,6 +47,7 @@ object VoidBound : ModInitializer, ClientModInitializer {
         VoidBoundRiftTypeRegistry.RIFT_TYPES.register()
         VoidBoundMenuTypeRegistry.MENU_TYPES.register()
         VoidBoundStructureRegistry.STRUCTURES.register()
+        VoidBoundSoundEvents.SOUNDS.register()
 
         VoidBoundCreativeTabRegistry.init()
         VoidBoundEvents.init()

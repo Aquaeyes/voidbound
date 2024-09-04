@@ -33,10 +33,13 @@ object ThoughtsTextHudRenderEvent {
         // Render each thought
         thoughtsQueue.entries.forEachIndexed { _, entry ->
             val thought = entry.key
-            val durationTicks = entry.value
+            val durationTicks = entry.value.duration
 
             // Calculate opacity for fade-out effect (last 20 ticks, i.e., 1 second)
             val opacity = if (durationTicks > 20) 255 else (durationTicks / 20.0 * 255).toInt().coerceAtLeast(0)
+            if (entry.value.delay > 0) {
+                return
+            }
 
             // Wrap the text to fit within maxWidth
             val wrappedLines = wrapText(font, thought, maxWidth)

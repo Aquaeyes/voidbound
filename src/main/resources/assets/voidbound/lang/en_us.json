@@ -220,11 +220,6 @@
   "voidbound.revelation.pre_well_nether": "A truth about the void beckons me to uncover its secrets.",
   "voidbound.revelation.pre_well_end": "A truth about the void beckons me to uncover its secrets.",
 
-  "void.thoughts_about_nether": "Nether",
-  "void.thoughts_about_nether.1": "Text",
-  "void.thoughts_about_end": "End",
-  "void.thoughts_about_end.1": "Text",
-
   "malum.gui.book.entry.void.thoughts_about_nether": "Thoughts about The Nether",
   "malum.gui.book.entry.void.thoughts_about_nether.description": "I need to solve this",
   "malum.gui.book.entry.page.headline.void.thoughts_about_nether": "The Nether",

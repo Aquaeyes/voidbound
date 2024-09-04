@@ -3,6 +3,7 @@ package dev.sterner.common.components
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent
 import dev.sterner.registry.VoidBoundComponentRegistry
+import dev.sterner.registry.VoidBoundSoundEvents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.network.chat.Component
@@ -10,7 +11,9 @@ import net.minecraft.world.entity.player.Player
 
 class VoidBoundRevelationComponent(private val player: Player) : AutoSyncedComponent, CommonTickingComponent {
 
-    var thoughtsQueue: MutableMap<Component, Int> = mutableMapOf()
+    data class ThoughtData(var duration: Int, var delay: Int)
+
+    var thoughtsQueue: MutableMap<Component, ThoughtData> = mutableMapOf()
 
     override fun tick() {
         // Ensure the queue does not exceed 16 elements
@@ -24,11 +27,24 @@ class VoidBoundRevelationComponent(private val player: Player) : AutoSyncedCompo
         val iterator = thoughtsQueue.iterator()
         while (iterator.hasNext()) {
             val entry = iterator.next()
-            val remainingTime = entry.value - 1
-            if (remainingTime <= 0) {
-                iterator.remove() // Remove the thought if the time is up
+            val thoughtData = entry.value
+
+            // Handle delay countdown
+            if (thoughtData.delay > 0) {
+                thoughtData.delay -= 1
+                if (thoughtData.delay <= 0) {
+                    player.playSound(VoidBoundSoundEvents.SOUL_SPEAK.get(),
+                        1.0f,
+                        1.0f)
+                }
             } else {
-                thoughtsQueue[entry.key] = remainingTime
+                // Handle duration countdown
+                val remainingTime = thoughtData.duration - 1
+                if (remainingTime <= 0) {
+                    iterator.remove() // Remove the thought if the time is up
+                } else {
+                    thoughtData.duration = remainingTime
+                }
             }
         }
     }
@@ -72,6 +88,7 @@ class VoidBoundRevelationComponent(private val player: Player) : AutoSyncedCompo
     var hasReceivedPreWellNetherMessage: Boolean = false
         set(value) {
             field = value
+
             sync()
         }
 
@@ -91,8 +108,9 @@ class VoidBoundRevelationComponent(private val player: Player) : AutoSyncedCompo
         return hasWellKnowledge && hasEndKnowledge && hasNetherKnowledge
     }
 
-    fun addThought(thought: Component, durationTicks: Int) {
-        thoughtsQueue[thought] = durationTicks
+    fun addThought(thought: Component, durationTicks: Int, delayTicks: Int) {
+        val data = ThoughtData(durationTicks, delayTicks)
+        thoughtsQueue[thought] = data
         sync()
     }
 
@@ -119,8 +137,9 @@ class VoidBoundRevelationComponent(private val player: Player) : AutoSyncedCompo
             val thoughtTag = thoughtsList.getCompound(i)
             val thought = Component.Serializer.fromJson(thoughtTag.getString("Text"))
             val duration = thoughtTag.getInt("Duration")
+            val delay = thoughtTag.getInt("Delay")
             if (thought != null) {
-                thoughtsQueue[thought] = duration
+                thoughtsQueue[thought] = ThoughtData(duration, delay)
             }
         }
     }
@@ -139,10 +158,11 @@ class VoidBoundRevelationComponent(private val player: Player) : AutoSyncedCompo
         tag.putBoolean("hasReceivedPreWellEndMessage", hasReceivedPreWellEndMessage)
 
         val thoughtsList = ListTag()
-        thoughtsQueue.forEach { (thought, duration) ->
+        thoughtsQueue.forEach { (thought, data) ->
             val thoughtTag = CompoundTag()
             thoughtTag.putString("Text", Component.Serializer.toJson(thought))
-            thoughtTag.putInt("Duration", duration)
+            thoughtTag.putInt("Duration", data.duration)
+            thoughtTag.putInt("Delay", data.delay)
             thoughtsList.add(thoughtTag)
         }
         tag.put("ThoughtsQueue", thoughtsList)
