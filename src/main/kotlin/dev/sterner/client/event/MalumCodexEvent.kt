@@ -160,7 +160,7 @@ object MalumCodexEvent {
 
         }
 
-        screen?.addEntry("void.thoughts_about_nether", 1, -2
+        screen?.addEntry("void.thoughts_about_nether", -1, -2
         ) { b: PlacedBookEntryBuilder ->
             b.configureWidget { w: ProgressionEntryObject ->
                 w.setStyle(DARK_VOID)
@@ -179,7 +179,7 @@ object MalumCodexEvent {
             }
         }
 
-        screen?.addEntry("void.thoughts_about_end", 2, -2
+        screen?.addEntry("void.thoughts_about_end", 1, -2
         ) { b: PlacedBookEntryBuilder ->
             b.configureWidget { w: ProgressionEntryObject ->
                 w.setStyle(DARK_VOID)
