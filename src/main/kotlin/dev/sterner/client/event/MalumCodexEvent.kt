@@ -194,7 +194,7 @@ object MalumCodexEvent {
                 )
             }.addPage(HeadlineTextPage("void.thoughts_about_end", "void.thoughts_about_end.1"))
                 .setEntryVisibleWhen {
-                    VoidBoundApi.hasNetherMessage()
+                    VoidBoundApi.hasEndMessage()
                 }
         }
 
