@@ -1,20 +1,24 @@
 package dev.sterner.client.event
 
+import com.sammy.malum.MalumMod
+import com.sammy.malum.client.screen.codex.BookEntry
 import com.sammy.malum.client.screen.codex.BookWidgetStyle
 import com.sammy.malum.client.screen.codex.PlacedBookEntry
 import com.sammy.malum.client.screen.codex.PlacedBookEntryBuilder
+import com.sammy.malum.client.screen.codex.objects.progression.IconObject
 import com.sammy.malum.client.screen.codex.objects.progression.ProgressionEntryObject
 import com.sammy.malum.client.screen.codex.pages.recipe.SpiritInfusionPage
 import com.sammy.malum.client.screen.codex.pages.text.HeadlineTextItemPage
 import com.sammy.malum.client.screen.codex.pages.text.HeadlineTextPage
+import com.sammy.malum.client.screen.codex.pages.text.TextPage
 import com.sammy.malum.client.screen.codex.screens.ArcanaProgressionScreen
 import com.sammy.malum.client.screen.codex.screens.VoidProgressionScreen
 import dev.sterner.VoidBound
 import dev.sterner.VoidBound.modid
 import dev.sterner.api.VoidBoundApi
 import dev.sterner.registry.VoidBoundItemRegistry
-import net.minecraft.client.Minecraft
 import net.minecraft.nbt.CompoundTag
+import java.util.function.Consumer
 
 object MalumCodexEvent {
 
@@ -134,6 +138,40 @@ object MalumCodexEvent {
                     VoidBoundApi.hasTearKnowledgeClient()
                 }
 
+        }
+
+        screen?.addEntry("void.thoughts_about_nether", 1, -2
+        ) { b: PlacedBookEntryBuilder ->
+            b.withEmptyFragmentEntry(BookWidgetStyle.SMALL_WITHERED).configureWidget { w: ProgressionEntryObject ->
+                w.setStyle(DARK_VOID)
+            }.setWidgetSupplier { e: BookEntry?, x: Int, y: Int ->
+                IconObject(
+                    e,
+                    x,
+                    y,
+                    VoidBound.id("textures/gui/nether.png")
+                )
+            }.addPage(HeadlineTextPage("void.thoughts_about_nether", "void.thoughts_about_nether.1"))
+                .setEntryVisibleWhen {
+                    VoidBoundApi.hasNetherMessage()
+            }
+        }
+
+        screen?.addEntry("void.thoughts_about_end", 2, -2
+        ) { b: PlacedBookEntryBuilder ->
+            b.withEmptyFragmentEntry(BookWidgetStyle.SMALL_WITHERED).configureWidget { w: ProgressionEntryObject ->
+                w.setStyle(DARK_VOID)
+            }.setWidgetSupplier { e: BookEntry?, x: Int, y: Int ->
+                IconObject(
+                    e,
+                    x,
+                    y,
+                    VoidBound.id("textures/gui/ender.png")
+                )
+            }.addPage(HeadlineTextPage("void.thoughts_about_end", "void.thoughts_about_end.1"))
+                .setEntryVisibleWhen {
+                    VoidBoundApi.hasNetherMessage()
+                }
         }
 
         screen?.addEntry(

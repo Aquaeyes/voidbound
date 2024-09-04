@@ -220,6 +220,21 @@
   "voidbound.revelation.pre_well_nether": "A truth about the void beckons me to uncover its secrets.",
   "voidbound.revelation.pre_well_end": "A truth about the void beckons me to uncover its secrets.",
 
+  "void.thoughts_about_nether": "Nether",
+  "void.thoughts_about_nether.1": "Text",
+  "void.thoughts_about_end": "End",
+  "void.thoughts_about_end.1": "Text",
+
+  "malum.gui.book.entry.void.thoughts_about_nether": "Thoughts about The Nether",
+  "malum.gui.book.entry.void.thoughts_about_nether.description": "I need to solve this",
+  "malum.gui.book.entry.page.headline.void.thoughts_about_nether": "The Nether",
+  "malum.gui.book.entry.page.text.void.thoughts_about_nether.1": "The truth about this dimension has been reveled to me. I'm closer to the Tears",
+
+  "malum.gui.book.entry.void.thoughts_about_end": "Thoughts about The End",
+  "malum.gui.book.entry.void.thoughts_about_end.description": "I need to solve this",
+  "malum.gui.book.entry.page.headline.void.thoughts_about_end": "The End",
+  "malum.gui.book.entry.page.text.void.thoughts_about_end.1": "The truth about this dimension has been reveled to me, I'm closer to the Tears",
+
   "category.voidbound": "Malum: Voidbound",
   "key.voidbound.foci_select" : "Select Foci"
 }

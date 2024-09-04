@@ -95,7 +95,7 @@ object VoidBoundApi {
         val player = Minecraft.getInstance().player
         if (player != null) {
             val comp = VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.get(player)
-            return comp.hasWellKnowledge && comp.hasEndKnowledge && comp.hasNetherKnowledge
+            return comp.isTearKnowledgeComplete()
         }
         return false
     }
@@ -122,5 +122,21 @@ object VoidBoundApi {
         VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.maybeGet(player).ifPresent {
             it.addThought(text, duration)
         }
+    }
+
+    fun hasNetherMessage() : Boolean {
+        val component = VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.maybeGet(Minecraft.getInstance().player)
+        if (component.isPresent) {
+            return component.get().hasReceivedNetherMessage
+        }
+        return false
+    }
+
+    fun hasEndMessage() : Boolean {
+        val component = VoidBoundComponentRegistry.VOID_BOUND_REVELATION_COMPONENT.maybeGet(Minecraft.getInstance().player)
+        if (component.isPresent) {
+            return component.get().hasReceivedEndMessage
+        }
+        return false
     }
 }
