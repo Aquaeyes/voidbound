@@ -44,72 +44,73 @@ class ExcavationFoci : IWandFocus {
     private var blockState: BlockState? = null
 
     override fun onUsingFocusTick(stack: ItemStack, level: Level, player: Player) {
-        val client = Minecraft.getInstance()
-        val maxReach = 10.0
-        val tickDelta = 1.0f
-        val includeFluids = false
+        if (level.isClientSide) {
+            val client = Minecraft.getInstance()
+            val maxReach = 10.0
+            val tickDelta = 1.0f
+            val includeFluids = false
 
-        val hit: HitResult? = client.cameraEntity?.pick(maxReach, tickDelta, includeFluids)
+            val hit: HitResult? = client.cameraEntity?.pick(maxReach, tickDelta, includeFluids)
 
-        if (hit != null) {
-            if (hit.type == HitResult.Type.BLOCK) {
-                val blockHit = hit as BlockHitResult
-                val blockPos = blockHit.blockPos
-                val newState = client.level?.getBlockState(blockPos) ?: return
+            if (hit != null) {
+                if (hit.type == HitResult.Type.BLOCK) {
+                    val blockHit = hit as BlockHitResult
+                    val blockPos = blockHit.blockPos
+                    val newState = client.level?.getBlockState(blockPos) ?: return
 
-                if (blockState != newState) {
-                    this.breakTime = 0
-                    this.breakProgress = -1
-                }
+                    if (blockState != newState) {
+                        this.breakTime = 0
+                        this.breakProgress = -1
+                    }
 
-                blockState = newState
+                    blockState = newState
 
 
-                val pos = getProjectileSpawnPos(player, InteractionHand.MAIN_HAND, 1.5f, 0.6f)
-                spawnChargeParticles(player.level(), player, pos, 0.5f)
-                spec(level, player.lookAngle.normalize(), pos, SpiritTypeRegistry.EARTHEN_SPIRIT, level.random)
+                    val pos = getProjectileSpawnPos(player, InteractionHand.MAIN_HAND, 1.5f, 0.6f)
+                    spawnChargeParticles(player.level(), player, pos, 0.5f)
+                    spec(level, player.lookAngle.normalize(), pos, SpiritTypeRegistry.EARTHEN_SPIRIT, level.random)
 
-                if (!VoidBoundApi.canPlayerBreakBlock(level, player, blockPos)) {
-                    ParticleEngineMixinLogic.logic(level, blockPos, blockState!!, level.random, hit.direction)
-                    return
-                }
+                    if (!VoidBoundApi.canPlayerBreakBlock(level, player, blockPos)) {
+                        ParticleEngineMixinLogic.logic(level, blockPos, blockState!!, level.random, hit.direction)
+                        return
+                    }
 
-                timeToBreak = (20 * blockState!!.getDestroySpeed(level, blockPos))
-                val coordPos: List<Vec3> = VoidBoundPosUtils.getFaceCoords(level, blockState!!, blockPos)
-                for (pos1 in coordPos) {
-                    val lightSpecs: ParticleEffectSpawner =
-                        SpiritLightSpecs.spiritLightSpecs(level, pos1, SpiritTypeRegistry.EARTHEN_SPIRIT)
-                    lightSpecs.builder.multiplyLifetime(1.5f)
-                    lightSpecs.bloomBuilder.multiplyLifetime(1.5f)
+                    timeToBreak = (20 * blockState!!.getDestroySpeed(level, blockPos))
+                    val coordPos: List<Vec3> = VoidBoundPosUtils.getFaceCoords(level, blockState!!, blockPos)
+                    for (pos1 in coordPos) {
+                        val lightSpecs: ParticleEffectSpawner =
+                            SpiritLightSpecs.spiritLightSpecs(level, pos1, SpiritTypeRegistry.EARTHEN_SPIRIT)
+                        lightSpecs.builder.multiplyLifetime(1.5f)
+                        lightSpecs.bloomBuilder.multiplyLifetime(1.5f)
 
-                    lightSpecs.spawnParticles()
-                    lightSpecs.spawnParticles()
-                }
-                this.breakTime++
-                val progress: Int = (this.breakTime / this.timeToBreak!!.toFloat() * 10).toInt()
+                        lightSpecs.spawnParticles()
+                        lightSpecs.spawnParticles()
+                    }
+                    this.breakTime++
+                    val progress: Int = (this.breakTime / this.timeToBreak!!.toFloat() * 10).toInt()
 
-                VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(
-                    ExcavationPacket(
-                        blockPos,
-                        breakTime,
-                        timeToBreak!!.toInt(),
-                        progress
+                    VoidBoundPacketRegistry.VOID_BOUND_CHANNEL.sendToServer(
+                        ExcavationPacket(
+                            blockPos,
+                            breakTime,
+                            timeToBreak!!.toInt(),
+                            progress
+                        )
                     )
-                )
 
+                    if (breakTime % 6 == 0) {
+                        level.playSound(player, blockPos, blockState!!.soundType.breakSound, SoundSource.BLOCKS)
+                    }
 
-                if (breakTime % 6 == 0) {
-                    level.playSound(player, blockPos, blockState!!.soundType.breakSound, SoundSource.BLOCKS)
-                }
+                    if (progress != this.breakProgress) {
+                        this.breakProgress = progress
+                    }
+                    level.destroyBlockProgress(player.id + ExcavationPacket.generatePosHash(blockPos), blockPos, progress)
 
-                if (progress != this.breakProgress) {
-                    this.breakProgress = progress
-                }
-                level.destroyBlockProgress(player.id + ExcavationPacket.generatePosHash(blockPos), blockPos, progress)
-
-                if (this.breakTime >= this.timeToBreak!!) {
-                    this.breakTime = 0
-                    this.breakProgress = -1
+                    if (this.breakTime >= this.timeToBreak!!) {
+                        this.breakTime = 0
+                        this.breakProgress = -1
+                    }
                 }
             }
         }

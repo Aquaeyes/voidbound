@@ -1,7 +1,5 @@
 package dev.sterner.registry
 
-import com.sammy.malum.MalumMod
-import com.sammy.malum.registry.common.SoundRegistry
 import dev.sterner.VoidBound
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject
@@ -14,6 +12,12 @@ object VoidBoundSoundEvents {
 
 
     val SOUL_SPEAK: RegistryObject<SoundEvent> =
-        SoundRegistry.register(SoundEvent.createVariableRangeEvent(VoidBound.id("soul_speak")))
+        register(SoundEvent.createVariableRangeEvent(VoidBound.id("soul_speak")))
+
+    fun register(soundEvent: SoundEvent): RegistryObject<SoundEvent> {
+        return SOUNDS.register(
+            soundEvent.location.path
+        ) { soundEvent }
+    }
 
 }
