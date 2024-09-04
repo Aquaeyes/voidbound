@@ -111,16 +111,22 @@ object MalumCodexEvent {
                     ).setStyle(VOID_GILDED)
                 }
                 .addPage(
-                    HeadlineTextItemPage(
-                        "void.dimensional_tear",
-                        "void.dimensional_tear.1",
-                        VoidBoundItemRegistry.TEAR_OF_ENDER.get()
+                    HeadlineTextPage(
+                    "void.dimensional_tear",
+                    "void.dimensional_tear.1"
                     )
                 )
                 .addPage(
                     HeadlineTextItemPage(
                         "void.dimensional_tear",
                         "void.dimensional_tear.2",
+                        VoidBoundItemRegistry.TEAR_OF_ENDER.get()
+                    )
+                )
+                .addPage(
+                    HeadlineTextItemPage(
+                        "void.dimensional_tear",
+                        "void.dimensional_tear.3",
                         VoidBoundItemRegistry.TEAR_OF_CRIMSON.get()
                     )
                 )

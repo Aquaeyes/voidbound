@@ -2,6 +2,7 @@ package dev.sterner.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.sammy.malum.registry.common.block.BlockRegistry;
+import dev.sterner.mixin_logic.ServerPlayerMixinLogic;
 import dev.sterner.registry.VoidBoundComponentRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -20,17 +21,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ServerPlayer.class)
 public abstract class ServerPlayerMixin {
 
-    @Shadow public abstract void sendSystemMessage(Component component);
-
     @Inject(method = "onInsideBlock", at = @At("HEAD"))
     private void voidbound$onInsideBlock(BlockState state, CallbackInfo ci) {
-        if (state.is(BlockRegistry.PRIMORDIAL_SOUP.get())) {
-            ServerPlayer player = (ServerPlayer) (Object) this;
-            var comp = VoidBoundComponentRegistry.Companion.getVOID_BOUND_REVELATION_COMPONENT().get(player);
-            if (!comp.getHasWellKnowledge()) {
-                comp.setHasWellKnowledge(true);
-            }
-        }
+        ServerPlayerMixinLogic.INSTANCE.logic1((ServerPlayer) (Object) this, state);
     }
 
     @Inject(method = "triggerDimensionChangeTriggers", at = @At(
@@ -39,21 +32,7 @@ public abstract class ServerPlayerMixin {
 
     ))
     private void voidbound$triggerDimensionChangeTriggers(ServerLevel level, CallbackInfo ci, @Local(ordinal = 0) ResourceKey<Level> resourceKey, @Local(ordinal = 1) ResourceKey<Level> resourceKey2) {
-
         ServerPlayer player = (ServerPlayer) (Object) this;
-        var comp = VoidBoundComponentRegistry.Companion.getVOID_BOUND_REVELATION_COMPONENT().get(player);
-
-        if (resourceKey == Level.OVERWORLD && resourceKey2 == Level.NETHER){
-            if (comp.getHasWellKnowledge()) {
-                comp.setHasNetherKnowledge(true);
-                this.sendSystemMessage(Component.translatable("voidbound.revelation.nether"));
-            }
-        }
-        if (resourceKey == Level.OVERWORLD && resourceKey2 == Level.END){
-            if (comp.getHasWellKnowledge()) {
-                comp.setHasEndKnowledge(true);
-                this.sendSystemMessage(Component.translatable("voidbound.revelation.nether"));
-            }
-        }
+        ServerPlayerMixinLogic.INSTANCE.logic2(player, level, resourceKey, resourceKey2);
     }
 }

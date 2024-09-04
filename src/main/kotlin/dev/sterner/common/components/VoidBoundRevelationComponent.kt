@@ -33,6 +33,18 @@ class VoidBoundRevelationComponent(private val player: Player) : AutoSyncedCompo
             sync()
         }
 
+    var hasRecievedNetherMessage: Boolean = false
+        set(value) {
+            field = value
+            sync()
+        }
+
+    var hasRecievedEndMessage: Boolean = false
+        set(value) {
+            field = value
+            sync()
+        }
+
     fun isTearKnowledgeComplete(): Boolean {
         return hasWellKnowledge && hasEndKnowledge && hasNetherKnowledge
     }
@@ -47,6 +59,10 @@ class VoidBoundRevelationComponent(private val player: Player) : AutoSyncedCompo
         hasNetherKnowledge = tag.getBoolean("hasNetherKnowledge")
         hasCrimsonKnowledge = tag.getBoolean("hasCrimsonKnowledge")
         hasIchorKnowledge = tag.getBoolean("hasIchorKnowledge")
+
+        hasRecievedNetherMessage = tag.getBoolean("hasRecievedNetherMessage")
+        hasRecievedEndMessage = tag.getBoolean("hasRecievedEndMessage")
+
     }
 
     override fun writeToNbt(tag: CompoundTag) {
@@ -55,5 +71,8 @@ class VoidBoundRevelationComponent(private val player: Player) : AutoSyncedCompo
         tag.putBoolean("hasNetherKnowledge", hasNetherKnowledge)
         tag.putBoolean("hasCrimsonKnowledge", hasCrimsonKnowledge)
         tag.putBoolean("hasIchorKnowledge", hasIchorKnowledge)
+
+        tag.putBoolean("hasRecievedNetherMessage", hasRecievedNetherMessage)
+        tag.putBoolean("hasRecievedEndMessage", hasRecievedEndMessage)
     }
 }

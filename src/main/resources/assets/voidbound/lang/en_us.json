@@ -164,14 +164,17 @@
 
   "malum.gui.book.entry.void.dimensional_tear": "Dimensional Tear",
   "malum.gui.book.entry.void.dimensional_tear.description": "Interdimensional sadness",
-  "malum.gui.book.entry.page.headline.void.dimensional_tear": "Dimensional Tear",
-  "malum.gui.book.entry.page.text.void.dimensional_tear.1": "Accumulated essence of its dimension, poring down from its roof",
-  "malum.gui.book.entry.page.text.void.dimensional_tear.2": "",
+  "malum.gui.book.entry.page.headline.void.dimensional_tear": "Dimensional Tears",
+  "malum.gui.book.entry.page.headline.void.nether": "Crimson",
+  "malum.gui.book.entry.page.headline.void.end": "Ender",
+  "malum.gui.book.entry.page.text.void.dimensional_tear.1": "Accumulated essence of its dimension, poring down from its roof. The secrets of the well needs to be discovered, after which one has to discover the dimensions secrets",
+  "malum.gui.book.entry.page.text.void.dimensional_tear.2": "A Crimson liquid accumulated in the Nether, pouring down ever so slightly from the Netherrack",
+  "malum.gui.book.entry.page.text.void.dimensional_tear.3": "A Ender liquid accumulated in the End, crying from the End Stone",
 
   "malum.gui.book.entry.void.ichor": "Ichor",
   "malum.gui.book.entry.void.ichor.description": "Blood of the Gods",
   "malum.gui.book.entry.page.headline.void.ichor": "Ichor",
-  "malum.gui.book.entry.page.text.void.ichor.1": "Use them",
+  "malum.gui.book.entry.page.text.void.ichor.1": "With the essence of heaven and hell, fused together with pure power, will unlock the very potential of matter and not",
 
   "malum.gui.book.entry.void.ichorium_scythe": "Ichorium Scythe",
   "malum.gui.book.entry.void.ichorium_scythe.description": "Blood of the Gods",
@@ -201,7 +204,7 @@
   "malum.gui.book.entry.void.osmotic_enchanter": "Osmotic Enchanter",
   "malum.gui.book.entry.void.osmotic_enchanter.description": "Enchant everything",
   "malum.gui.book.entry.page.headline.void.osmotic_enchanter": "Osmotic Enchanter",
-  "malum.gui.book.entry.page.text.void.osmotic_enchanter.1": "Consumes Spirits to enchant items",
+  "malum.gui.book.entry.page.text.void.osmotic_enchanter.1": "Consumes Spirits to enchant items, from Jars or A Spirit Rift",
 
   "advancements.voidbound.strange_matter.description": "I'll find some no Matter what",
   "advancements.voidbound.strange_matter.title": "Hell and Void",
@@ -211,8 +214,8 @@
 
   "voidbound.dontknowthis": "You don't understand it",
   "voidbound.weirdtear": "The liquid appalls you, it dissipates",
-  "voidbound.revelation.nether": "There's something about this dimension",
-  "voidbound.revelation.end": "There's something about this dimension",
+  "voidbound.revelation.nether": "There's something I need to discover about the nothingness",
+  "voidbound.revelation.end": "There's something I need to discover about the nothingness",
 
   "category.voidbound": "Malum: Voidbound",
   "key.voidbound.foci_select" : "Select Foci"
