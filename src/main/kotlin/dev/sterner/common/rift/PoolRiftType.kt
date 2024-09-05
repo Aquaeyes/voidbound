@@ -11,7 +11,6 @@ class PoolRiftType : RiftType() {
 
     override fun tick(level: Level, blockPos: BlockPos, blockEntity: SpiritRiftBlockEntity) {
         cooldown++
-        println(cooldown)
         if (cooldown >= 20 * 30) {
             cooldown = 0
             blockEntity.simpleSpiritCharge.rechargeRandomCount()
