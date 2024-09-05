@@ -66,7 +66,7 @@ class TearBlock(val type: Type, properties: Properties) : Block(properties) {
         if (comp.isTearKnowledgeComplete()) {
 
             var item = VoidBoundItemRegistry.TEAR_OF_ENDER.get()
-            if (type == Type.ENDER) {
+            if (type == Type.CRIMSON) {
                 item = VoidBoundItemRegistry.TEAR_OF_CRIMSON.get()
             }
 

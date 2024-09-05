@@ -29,18 +29,6 @@ class SpiritRiftBlock(properties: Properties) :
         return Shapes.box(5 / 16.0, 5 / 16.0, 5 / 16.0, 11 / 16.0, 11 / 16.0, 11 / 16.0)
     }
 
-    override fun <T : BlockEntity?> getTicker(
-        level: Level,
-        state: BlockState,
-        blockEntityType: BlockEntityType<T>
-    ): BlockEntityTicker<T> {
-        return BlockEntityTicker { _, _, _, blockEntity ->
-            if (blockEntity is SpiritRiftBlockEntity) {
-                (blockEntity as SpiritRiftBlockEntity).tick()
-            }
-        }
-    }
-
     override fun use(
         state: BlockState,
         level: Level,
