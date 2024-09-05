@@ -1,11 +1,18 @@
 package dev.sterner.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import dev.sterner.registry.VoidBoundBlockRegistry;
 import net.minecraft.world.level.block.Block;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import team.lodestar.lodestone.registry.common.LodestoneBlockEntityRegistry;
+import team.lodestar.lodestone.systems.multiblock.ILodestoneMultiblockComponent;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This is so sad, lodestones multiblock api is on life support on fabric due to loading order
@@ -15,15 +22,25 @@ import team.lodestar.lodestone.registry.common.LodestoneBlockEntityRegistry;
 public class LodestoneBlockEntityRegistryMixin {
 
     @ModifyReturnValue(method = "getBlocks", at = @At("RETURN"))
-    private static Block[] getBlocks(Block[] original) {
+    private static Block[] getBlocks(Block[] original, @Local(argsOnly = true) Class<?>... blockClasses) {
 
-        Block[] modified = new Block[original.length + 1];
+        List<Block> modifiedList = new ArrayList<>(Arrays.asList(original));
 
-        System.arraycopy(original, 0, modified, 0, original.length);
+        if (containsMyClassInstance2(ILodestoneMultiblockComponent.class, blockClasses)) {
+            modifiedList.add(VoidBoundBlockRegistry.INSTANCE.getELDRITCH_OBELISK_COMPONENT().get());
+        }
 
-        Block myNewBlock = VoidBoundBlockRegistry.INSTANCE.getELDRITCH_OBELISK_COMPONENT().get();
-        modified[original.length] = myNewBlock;
+        return modifiedList.toArray(new Block[0]);
+    }
 
-        return modified;
+    @Unique
+    private static boolean containsMyClassInstance2(Class<?> interfaced, Class<?>... blockClasses) {
+        for (Class<?> blockClass : blockClasses) {
+            // Check if interfaced is assignable from blockClass
+            if (interfaced.isAssignableFrom(blockClass)) {
+                return true; // Found a class that is or extends interfaced
+            }
+        }
+        return false; // None of the classes matched
     }
 }

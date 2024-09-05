@@ -4,6 +4,8 @@ import dev.sterner.common.blockentity.OsmoticEnchanterBlockEntity
 import dev.sterner.registry.VoidBoundMenuTypeRegistry
 import net.minecraft.core.BlockPos
 import net.minecraft.network.FriendlyByteBuf
+import net.minecraft.world.Container
+import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -27,8 +29,7 @@ class OsmoticEnchanterMenu(
 
         if (inventory.player.level().getBlockEntity(pos) is OsmoticEnchanterBlockEntity) {
             osmoticEnchanter = inventory.player.level().getBlockEntity(pos) as OsmoticEnchanterBlockEntity
-            this.inventory = osmoticEnchanter?.inventory
-            this.addSlot(object : Slot(this.inventory!!, 0, 14 + 18 * 5 + 5, 14 + 18 * 5 - 14 + 24) {
+            this.addSlot(object : Slot(osmoticEnchanter!!, 0, 14 + 18 * 5 + 5, 14 + 18 * 5 - 14 + 24) {
 
                 override fun mayPlace(stack: ItemStack): Boolean {
                     return stack.isEnchantable
@@ -36,6 +37,7 @@ class OsmoticEnchanterMenu(
 
                 override fun set(stack: ItemStack) {
                     shouldRefresh = true
+
                     super.set(stack)
                 }
 
@@ -76,15 +78,15 @@ class OsmoticEnchanterMenu(
         if (slot.hasItem()) {
             val itemStack1 = slot.item
             itemStack = itemStack1.copy()
-            if (index < this.inventory!!.containerSize) {
+            if (index < this.inventory!!.stacks.size) {
                 if (!this.moveItemStackTo(
-                        itemStack1, this.inventory!!.containerSize,
+                        itemStack1, this.inventory!!.stacks.size,
                         slots.size, true
                     )
                 ) {
                     return ItemStack.EMPTY
                 }
-            } else if (!this.moveItemStackTo(itemStack1, 0, this.inventory!!.containerSize, false)) {
+            } else if (!this.moveItemStackTo(itemStack1, 0, this.inventory!!.stacks.size, false)) {
                 return ItemStack.EMPTY
             }
 

@@ -28,6 +28,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.Vec3
 import team.lodestar.lodestone.helpers.BlockHelper
 import team.lodestar.lodestone.systems.blockentity.ItemHolderBlockEntity
+import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity
 import team.lodestar.lodestone.systems.particle.ParticleEffectSpawner
 import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder
 import team.lodestar.lodestone.systems.particle.data.GenericParticleData
@@ -38,7 +39,7 @@ import java.util.function.Supplier
 import kotlin.math.PI
 
 
-class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolderBlockEntity(
+class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : VoudBoundItemHolderBlockEntity(
     VoidBoundBlockEntityTypeRegistry.OSMOTIC_ENCHANTER.get(), pos,
     state
 ) {
@@ -66,22 +67,19 @@ class OsmoticEnchanterBlockEntity(pos: BlockPos, state: BlockState?) : ItemHolde
 
     init {
         inventory = object : MalumBlockEntityInventory(1, 64) {
-
-            public override fun onContentsChanged(slot: Int) {
-                resetEnchanter()
-                this.setChanged()
-                needsSync = true
-                BlockHelper.updateAndNotifyState(level, worldPosition)
+            override fun onContentsChanged(slot: Int) {
                 super.onContentsChanged(slot)
+                resetEnchanter()
+                needsSync = true
+                notifyUpdate()
+                BlockHelper.updateAndNotifyState(level, worldPosition)
             }
         }
     }
 
     override fun onUse(player: Player, hand: InteractionHand?): InteractionResult {
         if (player.mainHandItem.isEnchantable) {
-            inventory.interact(
-                this, player.level(), player, hand
-            ) { s: ItemStack? -> true }
+            inventory.interact(player.level(), player, hand)
         }
         return InteractionResult.SUCCESS
     }

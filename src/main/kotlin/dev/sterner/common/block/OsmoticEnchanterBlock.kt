@@ -117,7 +117,7 @@ class OsmoticEnchanterBlock(properties: Properties) : BaseEntityBlock(properties
         }
         val blockEntity = level.getBlockEntity(pos)
         if (blockEntity is OsmoticEnchanterBlockEntity) {
-            Containers.dropContents(level, pos, blockEntity.inventory)
+            Containers.dropContents(level, pos, blockEntity.inventory.stacks)
             level.updateNeighbourForOutputSignal(pos, this)
         }
         if (state.getValue(BlockStateProperties.HAS_BOOK)) {
