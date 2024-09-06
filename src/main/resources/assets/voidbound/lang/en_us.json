@@ -130,7 +130,7 @@
   "malum.gui.book.entry.hallowed_wand": "Wands",
   "malum.gui.book.entry.hallowed_wand.description": "Thaum is that you?",
   "malum.gui.book.entry.page.headline.hallowed_wand": "Hallowed Wand",
-  "malum.gui.book.entry.page.text.hallowed_wand.1": "Used with Foci",
+  "malum.gui.book.entry.page.text.hallowed_wand.1": "Used with Foci. To add a Foci to the wand use it like a Bundle, adding it bu applying a foci to the Wand in the inventory. To then select a different foci, use the keybind to open foci selection screen",
 
   "malum.gui.book.entry.boots_of_the_traveller": "Boots of the Traveller",
   "malum.gui.book.entry.boots_of_the_traveller.description": "Thaum is that you?",
