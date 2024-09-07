@@ -7,7 +7,7 @@
   "authors": [
     "MrSterner"
   ],
-  "license": "ARR",
+  "license": "Custom",
   "icon": "assets/voidbound/icon.png",
   "environment": "*",
   "entrypoints": {
@@ -41,6 +41,7 @@
     "fabric-api": "*",
     "fabric-language-kotlin": "*",
     "malum": "*",
+    "lodestone": ">=1.20.1-1.6.2.2",
     "smartbrainlib": "*"
   },
   "custom": {
