@@ -59,6 +59,16 @@
   "block.voidbound.osmotic_enchanter": "Osmotic Enchanter",
   "itemGroup.voidbound": "Void Bound",
 
+  "entity.voidbound.particle_entity": "Particle",
+  "entity.voidbound.soul_steel_golem": "Soul Steel Golem",
+  "entity.voidbound.crimson_knight": "Crimson Knight",
+  "entity.voidbound.crimson_archer": "Crimson Archer",
+  "entity.voidbound.crimson_cleric": "Crimson Cleric",
+  "entity.voidbound.crimson_necromancer": "Crimson Necromancer",
+  "entity.voidbound.crimson_heavy_knight": "Crimson Heavy Knight",
+  "entity.voidbound.crimson_jester": "Crimson Jester",
+  "entity.voidbound.bolt": "Bolt",
+
   "malum.gui.book.entry.call_of_the_void": "Call of the Void",
   "malum.gui.book.entry.call_of_the_void.description": "Endless darkness in a lost void",
   "malum.gui.book.entry.page.headline.call_of_the_void": "Call of the Void",

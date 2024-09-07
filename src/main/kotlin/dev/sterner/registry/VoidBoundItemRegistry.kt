@@ -153,7 +153,7 @@ object VoidBoundItemRegistry {
     }
 
     val SHOVEL_OF_THE_EARTHMOVER: RegistryObject<ShovelOfEarthmoverItem> = ITEMS.register("shovel_of_the_earthmover") {
-        ShovelOfEarthmoverItem(VoidBoundTiers.ELEMENTAL, 2, 0f, 2f, Item.Properties().stacksTo(1))
+        ShovelOfEarthmoverItem(VoidBoundTiers.ELEMENTAL, -2, 0f, 2f, Item.Properties().stacksTo(1))
     }
 
     val SWORD_OF_THE_ZEPHYR: RegistryObject<SwordOfTheZephyrItem> = ITEMS.register("sword_of_the_zephyr") {
@@ -201,7 +201,7 @@ object VoidBoundItemRegistry {
     }
 
     val ICHORIUM_SHOVEL: RegistryObject<ShovelOfEarthmoverItem> = ITEMS.register("ichorium_shovel") {
-        IchoriumShovelItem(VoidBoundTiers.ICHORIUM, 2, 0f, 2f, ichorProptery)
+        IchoriumShovelItem(VoidBoundTiers.ICHORIUM, -2, 0f, 2f, ichorProptery)
     }
 
     val ICHORIUM_SWORD: RegistryObject<SwordOfTheZephyrItem> = ITEMS.register("ichorium_sword") {
