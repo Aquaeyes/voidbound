@@ -20,9 +20,10 @@ enum class ItemAbility(private val equipmentSlot: EquipmentSlot?, private val cl
     fun getAbilityFromItem(item: Item): List<ItemAbility> {
         val list = mutableListOf<ItemAbility>()
         for (ability in entries) {
-            if (ability.equipmentSlot == equipmentSlot) {
+            // Check if the item matches the clazz or the equipmentSlot
+            if (ability.equipmentSlot == null && ability.clazz?.isInstance(item) == true) {
                 list.add(ability)
-            } else if (ability.clazz?.isInstance(item) == true) {
+            } else if (ability.equipmentSlot != null && item is ArmorItem && item.equipmentSlot == ability.equipmentSlot) {
                 list.add(ability)
             }
         }

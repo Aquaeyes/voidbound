@@ -16,16 +16,20 @@ interface UpgradableAbilityItem {
             listTag.add(ab)
         }
         val tag = CompoundTag()
-        tag.put("abilities", listTag)
+        tag.put("Abilities", listTag)
         return tag
     }
 
     fun readNbt(tag: CompoundTag): List<ItemAbilityWithLevel> {
-        val tagList = tag.getList("abilities", 10)
+        val tagList = tag.getList("Abilities", 10)
         val list = mutableListOf<ItemAbilityWithLevel>()
-        for (ability in tagList) {
 
-            val a = ItemAbilityWithLevel.readNbt()
+        for (i in 0 until tagList.size) {
+            val abilityTag = tagList.getCompound(i)
+            val ability = ItemAbilityWithLevel.readNbt(abilityTag)
+            list.add(ability)
         }
+
+        return list
     }
 }
