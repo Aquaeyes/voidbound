@@ -18,6 +18,10 @@ import team.lodestar.lodestone.systems.rendering.VFXBuilders
 class SpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
     BlockEntityRenderer<SpiritRiftBlockEntity> {
 
+    var renderType = VoidBoundRenderTypes.GRAVITY_VORTEX.apply(TOKEN)
+    val copy = LodestoneRenderTypeRegistry.copy(renderType)
+    val copy2 = LodestoneRenderTypeRegistry.copy(renderType)
+
     override fun render(
         blockEntity: SpiritRiftBlockEntity,
         partialTick: Float,
@@ -26,9 +30,7 @@ class SpiritRiftBlockEntityRenderer(ctx: BlockEntityRendererProvider.Context) :
         packedLight: Int,
         packedOverlay: Int
     ) {
-        var renderType = VoidBoundRenderTypes.GRAVITY_VORTEX.apply(TOKEN)
-        val copy = LodestoneRenderTypeRegistry.copy(renderType)
-        val copy2 = LodestoneRenderTypeRegistry.copy(renderType)
+
 
         var alpha = 0.1f
 
